@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_toolbar">#3F51B5</color>
+    <color name="color_view">#aaa</color>
+    <color name="color_selector">#1296db</color>
+    <color name="color_normal">#8a8a8a</color>
 </resources>

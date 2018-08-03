@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp48"
+        android:background="@color/color_toolbar"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageButton
+                android:id="@+id/iv_toolbarBack"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="@dimen/dp48"
+                android:background="@null"
+                android:src="@mipmap/icon_backarrow" />
+
+
+            <TextView
+                android:id="@+id/tv_toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="标题"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp16" />
+
+
+            <TextView
+                android:id="@+id/tv_toolbarMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxEms="8"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp13"
+                android:text="操作"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:id="@+id/view"
+        style="@style/MyView" />
+</LinearLayout>
