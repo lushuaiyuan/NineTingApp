@@ -29,7 +29,7 @@ public class SampleApplicationLike extends DefaultApplicationLike {
         super.onCreate();
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId
         // 调试时，将第三个参数改为true
-        Bugly.init(getApplication(), "900029763", false);
+        Bugly.init(getApplication(), "6bf38193c5", false);
     }
 
 
@@ -48,5 +48,11 @@ public class SampleApplicationLike extends DefaultApplicationLike {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public void registerActivityLifecycleCallback(Application.ActivityLifecycleCallbacks callbacks) {
         getApplication().registerActivityLifecycleCallbacks(callbacks);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Beta.unInit();
     }
 }

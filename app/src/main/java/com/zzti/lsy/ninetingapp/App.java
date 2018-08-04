@@ -1,6 +1,5 @@
 package com.zzti.lsy.ninetingapp;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
