@@ -11,10 +11,15 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
-        <TextView
-            android:text="首页____"
+
+        <Button
+            android:id="@+id/btn_photo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="@dimen/dp8"
+            android:text="拍照"
+            android:textColor="@color/color_white" />
 
     </LinearLayout>
 </LinearLayout>

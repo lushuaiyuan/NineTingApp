@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imageView"
+    android:layout_width="@dimen/dp70"
+    android:scaleType="fitXY"
+    android:layout_height="@dimen/dp70"
+    android:layout_margin="@dimen/dp5" />

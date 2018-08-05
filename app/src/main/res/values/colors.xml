@@ -8,4 +8,8 @@
     <color name="color_view">#aaa</color>
     <color name="color_selector">#1296db</color>
     <color name="color_normal">#8a8a8a</color>
+    <color name="color_black">#000</color>
+    <color name="color_textBlack">#99000000</color>
+    <color name="whiteSmoke">#F5F5F5</color>
+
 </resources>
