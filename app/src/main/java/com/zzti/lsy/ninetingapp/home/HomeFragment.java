@@ -38,6 +38,6 @@ public class HomeFragment extends BaseFragment {
 
     @OnClick(R.id.btn_photo)
     public void viewClick() {
-        startActivity(new Intent(mActivity, TestPhotoActivity.class));
+        startActivity(new Intent(mActivity, CarListActivity.class));
     }
 }

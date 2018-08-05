@@ -35,7 +35,7 @@
     <style name="MyView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
-        <item name="android:background">@color/color_view</item>
+        <item name="android:background">@color/color_e5e5e5</item>
     </style>
 
     <style name="anim_upPop">
@@ -58,4 +58,31 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+    <style name="list_LL">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingBottom">@dimen/dp5</item>
+        <item name="android:paddingLeft">@dimen/dp10</item>
+        <item name="android:paddingRight">@dimen/dp10</item>
+        <item name="android:paddingTop">@dimen/dp5</item>
+    </style>
+
+    <style name="list_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">@dimen/dp15</item>
+    </style>
+
+    <style name="list_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/dp8</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">@dimen/dp15</item>
+    </style>
+
 </resources>

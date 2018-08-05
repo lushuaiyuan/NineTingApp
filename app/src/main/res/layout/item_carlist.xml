@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/list_LL">
+
+        <TextView
+            style="@style/list_title"
+            android:text="车牌号" />
+
+        <TextView
+            android:id="@+id/tv_carNumber"
+            style="@style/list_content"
+            android:text="车牌号" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/list_LL">
+
+        <TextView
+            style="@style/list_title"
+            android:text="车辆类型" />
+
+        <TextView
+            android:id="@+id/tv_carType"
+            style="@style/list_content"
+            android:text="车辆类型" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/list_LL">
+
+        <TextView
+            style="@style/list_title"
+            android:text="车辆识别代码" />
+
+        <TextView
+            android:id="@+id/tv_carVin"
+            style="@style/list_content"
+            android:text="车辆识别代码" />
+    </LinearLayout>
+
+    <View
+        style="@style/MyView"
+        android:layout_marginTop="@dimen/dp5" />
+
+</LinearLayout>
