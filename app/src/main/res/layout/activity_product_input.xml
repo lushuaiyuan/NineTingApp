@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white">
+
+    <include
+        android:id="@+id/view_title"
+        layout="@layout/view_toolbar" />
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp10"
+        android:text="2018-08-06"
+        android:textColor="@color/color_6bcfd7"
+        android:textSize="@dimen/dp14" />
+
+    <TextView
+        android:id="@+id/tv_carNumber_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp15"
+        android:text="车牌号"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dp15" />
+
+    <TextView
+        android:id="@+id/tv_carNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_carNumber_Title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/select_shape"
+        android:gravity="center"
+        android:hint="点击选择"
+        android:padding="@dimen/dp10"
+        android:text=""
+        android:textColor="@color/color_666666"
+        android:textColorHint="@color/color_999999"
+        android:textSize="@dimen/dp14" />
+
+    <TextView
+        android:id="@+id/tv_address_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_carNumber"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp15"
+        android:text="施工工地"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dp15" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_address_Title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/select_shape"
+        android:gravity="center"
+        android:hint="点击选择"
+        android:padding="@dimen/dp10"
+        android:text=""
+        android:textColor="@color/color_666666"
+        android:textColorHint="@color/color_999999"
+        android:textSize="@dimen/dp14" />
+
+    <TextView
+        android:id="@+id/tv_amount_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_address"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp15"
+        android:text="生产方量"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dp15" />
+
+    <RelativeLayout
+        android:id="@+id/rl_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_amount_Title"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/select_shape">
+
+
+        <EditText
+            android:id="@+id/et_amount"
+            android:layout_width="@dimen/dp200"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:gravity="center"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="@dimen/dp10"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingRight="@dimen/dp20"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp10"
+            android:text="平方"
+            android:textSize="@dimen/dp13" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_oilMass_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_amount"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp15"
+        android:text="加油量"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dp15" />
+
+    <RelativeLayout
+        android:id="@+id/rl_oilMass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_oilMass_Title"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/select_shape">
+
+
+        <EditText
+            android:id="@+id/et_oilMass"
+            android:layout_width="@dimen/dp200"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:gravity="center"
+            android:inputType="text"
+            android:padding="@dimen/dp10"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp10"
+            android:text="升"
+            android:textSize="@dimen/dp13" />
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_oilMass"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginRight="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp16"
+        android:background="@drawable/btn_solid_shape"
+        android:padding="@dimen/dp10"
+        android:text="提交"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/dp15" />
+</RelativeLayout>

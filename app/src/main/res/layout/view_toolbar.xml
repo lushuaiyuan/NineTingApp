@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp48"
-        android:background="@color/color_toolbar"
+        android:background="@color/color_white"
         app:contentInsetStart="0dp">
 
         <RelativeLayout
@@ -31,8 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="标题"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/dp16" />
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp17" />
 
 
             <TextView
@@ -46,7 +46,7 @@
                 android:maxLines="1"
                 android:paddingLeft="@dimen/dp10"
                 android:paddingRight="@dimen/dp10"
-                android:textColor="@color/color_white"
+                android:textColor="@color/color_333333"
                 android:textSize="@dimen/dp13"
                 android:text="操作"
                 android:visibility="gone"/>

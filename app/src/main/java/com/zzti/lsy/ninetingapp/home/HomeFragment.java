@@ -1,10 +1,11 @@
 package com.zzti.lsy.ninetingapp.home;
 
 import android.content.Intent;
+import android.view.View;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
-import com.zzti.lsy.ninetingapp.photo.TestPhotoActivity;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import butterknife.OnClick;
 
@@ -36,8 +37,25 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    @OnClick(R.id.btn_photo)
-    public void viewClick() {
-        startActivity(new Intent(mActivity, CarListActivity.class));
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5})
+    public void viewClick(View view) {
+        switch (view.getId()) {
+            case R.id.rl_menu1:
+                startActivity(new Intent(mActivity, ProductInputActivity.class));
+                break;
+            case R.id.rl_menu2:
+                UIUtils.showT("菜单2");
+                break;
+            case R.id.rl_menu3:
+                UIUtils.showT("菜单3");
+                break;
+            case R.id.rl_menu4:
+                UIUtils.showT("菜单4");
+                break;
+            case R.id.rl_menu5:
+                UIUtils.showT("菜单5");
+                break;
+        }
     }
+
 }

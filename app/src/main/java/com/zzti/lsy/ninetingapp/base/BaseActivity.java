@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -17,6 +18,7 @@ import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.utils.ActivityStack;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.CustomDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
-        setStatusBar(getResources().getColor(R.color.colorPrimary), 100);
+        setStatusBar(getResources().getColor(R.color.colorPrimary), 255);
         ButterKnife.bind(this);
         ActivityStack.get()
                 .add(this);
@@ -87,7 +89,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract int getContentViewId();
 
-    protected  boolean openEventBus(){
+    protected boolean openEventBus() {
         return false;
     }
 
@@ -181,5 +183,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         lp.alpha = alpha;
         getWindow().setAttributes(lp);
     }
-
 }

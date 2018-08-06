@@ -60,12 +60,17 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
 
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
+    //baseRecycleViewAdapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
-
+    //eventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
     //拍照
     implementation 'com.jph.takephoto:takephoto_library:4.0.3'
-
+    //gilde
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
+    //图表
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
 }

@@ -4,8 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/color_333333</item>
     </style>
 
     <style name="AppTheme.Launcher">
@@ -82,6 +82,24 @@
         <item name="android:layout_marginLeft">@dimen/dp8</item>
         <item name="android:gravity">right</item>
         <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">@dimen/dp15</item>
+    </style>
+
+    <style name="home_menubg">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingBottom">@dimen/dp30</item>
+        <item name="android:paddingTop">@dimen/dp30</item>
+    </style>
+
+    <style name="home_menu">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:drawablePadding">@dimen/dp10</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_white</item>
         <item name="android:textSize">@dimen/dp15</item>
     </style>
 

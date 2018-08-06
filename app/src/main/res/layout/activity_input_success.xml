@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white">
+
+    <include
+        android:id="@+id/view_title"
+        layout="@layout/view_toolbar" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp40"
+        android:background="@mipmap/iv_submit_success" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp10"
+        android:text="提交成功"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/dp20" />
+
+    <Button
+        android:id="@+id/btn_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp40"
+        android:layout_marginLeft="@dimen/dp38"
+        android:layout_marginRight="@dimen/dp38"
+        android:layout_marginTop="@dimen/dp16"
+        android:background="@drawable/btn_empty_shape"
+        android:padding="@dimen/dp10"
+        android:text="生成表格"
+        android:textColor="@color/color_6bcfd7"
+        android:textSize="@dimen/dp15" />
+
+    <Button
+        android:id="@+id/btn_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_form"
+        android:layout_marginBottom="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp38"
+        android:layout_marginRight="@dimen/dp38"
+        android:layout_marginTop="@dimen/dp16"
+        android:background="@drawable/btn_solid_shape"
+        android:padding="@dimen/dp10"
+        android:text="继续录入"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/dp15" />
+
+
+</RelativeLayout>

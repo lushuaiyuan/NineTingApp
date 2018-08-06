@@ -1,5 +1,3 @@
-package com.zzti.lsy.ninetingapp;
-
 import android.content.Context;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -9,10 +7,12 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tencent.bugly.Bugly;
 import com.tencent.tinker.loader.app.TinkerApplication;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
+import com.zzti.lsy.ninetingapp.R;
 
 /**
  * @autor：on lsy on 2017/8/12 10:13
@@ -24,6 +24,7 @@ public class App extends TinkerApplication {
         super(ShareConstants.TINKER_ENABLE_ALL, "com.zzti.lsy.ninetingapp.utils.SampleApplicationLike",
                 "com.tencent.tinker.loader.TinkerLoader", false);
     }
+
     private static Context mContext;
 
     //static 代码段可以防止内存泄露
@@ -32,7 +33,7 @@ public class App extends TinkerApplication {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                layout.setPrimaryColorsId(R.color.color_f5f5f5, R.color.color_666666);//全局设置主题颜色
+                layout.setPrimaryColorsId(R.color.color_f5f5f5, R.color.color_normal);//全局设置主题颜色
                 return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
             }
         });
@@ -40,7 +41,6 @@ public class App extends TinkerApplication {
         SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                //指定为经典Footer，默认是 BallPulseFooter
                 return new ClassicsFooter(context).setDrawableSize(20);
             }
         });

@@ -51,6 +51,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".photo.TestPhotoActivity" />
         <activity android:name=".home.CarListActivity" />
+        <activity android:name=".home.ProductInputActivity" />
+        <activity android:name=".home.InputSuccessActivity" />
     </application>
 
 </manifest>
