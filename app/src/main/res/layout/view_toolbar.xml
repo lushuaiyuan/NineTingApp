@@ -8,7 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp48"
+        android:layout_height="@dimen/dp44"
         android:background="@color/color_white"
         app:contentInsetStart="0dp">
 
@@ -38,19 +38,28 @@
             <TextView
                 android:id="@+id/tv_toolbarMenu"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxEms="8"
-                android:maxLines="1"
                 android:paddingLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
                 android:paddingRight="@dimen/dp10"
+                android:text="操作"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dp13"
-                android:text="操作"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
+            <ImageView
+                android:id="@+id/iv_toolbarMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp48"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp16"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp10"
+                android:scaleType="center"
+                android:src="@mipmap/icon_calendar"
+                android:visibility="gone" />
 
         </RelativeLayout>
 

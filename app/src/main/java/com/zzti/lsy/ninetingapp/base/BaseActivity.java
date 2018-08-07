@@ -1,11 +1,14 @@
 package com.zzti.lsy.ninetingapp.base;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -25,6 +28,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.reflect.Method;
+
 import butterknife.ButterKnife;
 
 /**
@@ -36,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected ImageView ivToolbarBack;
-    //    protected ImageView ivToolbarMenu;
+        protected ImageView ivToolbarMenu;
     protected TextView tvToolbarMenu;
     protected TextView tvToolbarTitle;
     protected Toolbar mToolBar;
@@ -59,24 +64,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             initTitle();
         }
-        initAllMembersView(savedInstanceState);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         if (openEventBus()) {
             EventBus.getDefault().register(this);
         }
+        initAllMembersView(savedInstanceState);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (openEventBus()) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMianThread(EventMessage paramEventCenter) {
@@ -99,7 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ivToolbarBack = mToolBar.findViewById(R.id.iv_toolbarBack);
         tvToolbarTitle = mToolBar.findViewById(R.id.tv_toolbarTitle);
         tvToolbarMenu = mToolBar.findViewById(R.id.tv_toolbarMenu);
-//        ivToolbarMenu = mToolBar.findViewById(R.id.iv_toolbarMenu);
+        ivToolbarMenu = mToolBar.findViewById(R.id.iv_toolbarMenu);
         if (ivToolbarBack != null) {
             ivToolbarBack.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View paramAnonymousView) {
@@ -157,10 +150,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         ButterKnife.bind(this).unbind();
         cancelDia(true);
+        if (openEventBus()) {
+            EventBus.getDefault().unregister(this);
+        }
+        OkHttpManager.cancel(this);
         // 结束Activity&从堆栈中移除
         ActivityStack.get()
                 .remove(this);
-        OkHttpManager.cancel(this);
     }
 
     /**

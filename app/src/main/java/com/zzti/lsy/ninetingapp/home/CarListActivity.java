@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ public class CarListActivity extends BaseActivity implements BaseQuickAdapter.On
     RecyclerView mRecycleView;
     private CarListAdapter carListAdapter;
     private List<CarEntity> carListData;
+    private int flag = -1; //-1默认进入到详情界面 1代表获取车牌号
 
     @Override
     public int getContentViewId() {
@@ -38,6 +40,7 @@ public class CarListActivity extends BaseActivity implements BaseQuickAdapter.On
     }
 
     private void initData() {
+        flag = UIUtils.getInt4Intent(this, "FLAG");
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         carListData = new ArrayList<>();
         carListAdapter = new CarListAdapter(carListData);
@@ -49,18 +52,28 @@ public class CarListActivity extends BaseActivity implements BaseQuickAdapter.On
             carEntity.setCarNumber("豫A5555" + i);
             carEntity.setCarType("宇通00" + i);
             carEntity.setCarVin("AFWE2323ASDFA" + i);
+            carListData.add(carEntity);
         }
         carListAdapter.notifyDataSetChanged();
     }
 
     private void initView() {
         setTitle("车辆列表");
-        smartRefreshLayout.setEnableLoadMore(true);
+        smartRefreshLayout.setEnableLoadMore(false);
         smartRefreshLayout.setEnableRefresh(true);
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        UIUtils.showT("进入详情");
+        if (flag == -1) {
+            startActivity(new Intent(this, CarDetailActivity.class));
+        } else if (flag == 1) {
+            Intent intent = new Intent();
+            intent.putExtra("carNumber", carListData.get(position).getCarNumber());
+            setResult(2, intent);
+            finish();
+        }
     }
+
+
 }

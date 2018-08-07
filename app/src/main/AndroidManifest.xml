@@ -51,8 +51,10 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".photo.TestPhotoActivity" />
         <activity android:name=".home.CarListActivity" />
-        <activity android:name=".home.ProductInputActivity" />
+        <activity android:name=".home.ProductInputActivity" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".home.InputSuccessActivity" />
+        <activity android:name=".home.FormListActivity" />
+        <activity android:name=".home.OneCarProDetailActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_gray_selector"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp8"
+        android:paddingTop="@dimen/dp8">
+
+        <TextView
+            android:id="@+id/tv_carNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp13" />
+
+        <TextView
+            android:id="@+id/tv_projectAddress_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp13" />
+
+        <TextView
+            android:id="@+id/tv_proAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp13" />
+
+        <TextView
+            android:id="@+id/tv_oilMass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp13" />
+    </LinearLayout>
+
+    <View style="@style/MyView" />
+</LinearLayout>

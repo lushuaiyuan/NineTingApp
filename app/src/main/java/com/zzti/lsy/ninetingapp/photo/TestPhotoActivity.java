@@ -1,6 +1,5 @@
 package com.zzti.lsy.ninetingapp.photo;
 
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,7 +39,7 @@ public class TestPhotoActivity extends TakePhotoActivity implements View.OnClick
     @Override
     public int getContentViewId() {
         view = LayoutInflater.from(this).
-                inflate(R.layout.activity_testphoto, null);
+                inflate(R.layout.activity_list, null);
         return R.layout.activity_testphoto;
     }
 
@@ -67,8 +66,7 @@ public class TestPhotoActivity extends TakePhotoActivity implements View.OnClick
     }
 
     private void initPop() {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View contentview = inflater.inflate(R.layout.popup_photo, null);
+        View contentview = getLayoutInflater().inflate(R.layout.popup_photo, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
         popupWindow = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
