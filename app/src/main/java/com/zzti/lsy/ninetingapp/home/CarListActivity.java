@@ -59,8 +59,10 @@ public class CarListActivity extends BaseActivity implements BaseQuickAdapter.On
 
     private void initView() {
         setTitle("车辆列表");
-        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setEnableLoadMore(true);
         smartRefreshLayout.setEnableRefresh(true);
+        //使上拉加载具有弹性效果：
+        smartRefreshLayout.setEnableAutoLoadMore(false);
     }
 
     @Override

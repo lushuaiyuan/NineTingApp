@@ -24,6 +24,7 @@ public class App extends TinkerApplication {
         super(ShareConstants.TINKER_ENABLE_ALL, "com.zzti.lsy.ninetingapp.utils.SampleApplicationLike",
                 "com.tencent.tinker.loader.TinkerLoader", false);
     }
+
     private static Context mContext;
 
     //static 代码段可以防止内存泄露
@@ -32,16 +33,17 @@ public class App extends TinkerApplication {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                layout.setPrimaryColorsId(R.color.color_f5f5f5, R.color.color_666666);//全局设置主题颜色
-                return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+                layout.setPrimaryColorsId(R.color.color_ffdee2e2, R.color.color_888);//全局设置主题颜色
+                return new ClassicsHeader(get());//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
             }
         });
         //设置全局的Footer构建器
         SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+                layout.setPrimaryColorsId(R.color.color_ffdee2e2, R.color.color_888);//全局设置主题颜色
                 //指定为经典Footer，默认是 BallPulseFooter
-                return new ClassicsFooter(context).setDrawableSize(20);
+                return new ClassicsFooter(get()).setDrawableSize(20);
             }
         });
     }

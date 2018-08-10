@@ -49,12 +49,29 @@
         </provider>
 
         <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".photo.TestPhotoActivity" />
         <activity android:name=".home.CarListActivity" />
-        <activity android:name=".home.ProductInputActivity" android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".home.InputSuccessActivity" />
+        <activity
+            android:name=".home.ProductInputActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".home.SuccessActivity" />
         <activity android:name=".home.FormListActivity" />
         <activity android:name=".home.OneCarProDetailActivity" />
+        <activity
+            android:name=".home.PartsInputActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".home.PartsListActivity"
+            android:hardwareAccelerated="false" />
+        <activity android:name=".home.PartsDetailActivity" />
+        <activity android:name=".home.InWayDetailActivity" />
+        <activity android:name=".home.PartsOutListActivity" />
+        <activity
+            android:name=".home.PartsOutDetailActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".home.PartsInListActivity" />
+        <activity android:name=".home.PartsInDetailActivity" />
     </application>
 
 </manifest>

@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp10"
-                android:layout_marginLeft="@dimen/dp8"
+                android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp10"
                 android:text="统计"
                 android:textColor="@color/color_666666"
@@ -37,9 +37,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp10"
-                android:layout_marginLeft="@dimen/dp8"
-                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginBottom="@dimen/dp16"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp20"
                 android:text="工作台"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/dp16" />
@@ -48,8 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp8"
-                android:paddingRight="@dimen/dp8">
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16">
 
                 <RelativeLayout
                     android:id="@+id/rl_menu1"
@@ -58,7 +58,7 @@
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_input"
+                        android:drawableLeft="@mipmap/icon_menu1"
                         android:text="生产录入" />
                 </RelativeLayout>
 
@@ -70,7 +70,7 @@
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_pro_statistics"
+                        android:drawableLeft="@mipmap/icon_menu2"
                         android:text="生产统计" />
                 </RelativeLayout>
 
@@ -81,8 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp10"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp8"
-                android:paddingRight="@dimen/dp8">
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16">
 
                 <RelativeLayout
                     android:id="@+id/rl_menu3"
@@ -91,7 +91,7 @@
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_op"
+                        android:drawableLeft="@mipmap/icon_menu3"
                         android:text="维修申请" />
                 </RelativeLayout>
 
@@ -103,7 +103,7 @@
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_op_record"
+                        android:drawableLeft="@mipmap/icon_menu4"
                         android:text="维修记录" />
                 </RelativeLayout>
 
@@ -115,31 +115,25 @@
                 android:layout_marginBottom="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp8"
-                android:paddingRight="@dimen/dp8">
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16">
 
                 <RelativeLayout
                     android:id="@+id/rl_menu5"
                     style="@style/home_menubg"
-                    android:background="@drawable/home_menu1_selector">
+                    android:background="@drawable/home_menu5_selector">
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_op_statistics"
+                        android:drawableLeft="@mipmap/icon_menu5"
                         android:text="维修统计" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_menu6"
                     style="@style/home_menubg"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:background="@drawable/home_menu2_selector"
                     android:visibility="invisible">
 
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu1"
-                        android:text="生产录入" />
                 </RelativeLayout>
 
             </LinearLayout>

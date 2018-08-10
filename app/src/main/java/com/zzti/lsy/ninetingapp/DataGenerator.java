@@ -3,6 +3,7 @@ package com.zzti.lsy.ninetingapp;
 import android.support.v4.app.Fragment;
 
 import com.zzti.lsy.ninetingapp.home.HomeFragment;
+import com.zzti.lsy.ninetingapp.home.PartsManagerFragment;
 import com.zzti.lsy.ninetingapp.mine.MineFragment;
 import com.zzti.lsy.ninetingapp.task.TaskFragment;
 
@@ -12,10 +13,11 @@ import com.zzti.lsy.ninetingapp.task.TaskFragment;
 public class DataGenerator {
 
     public static Fragment[] getFragments() {
-        Fragment fragments[] = new Fragment[3];
+        Fragment fragments[] = new Fragment[4];
         fragments[0] = HomeFragment.newInstance();
-        fragments[1] = TaskFragment.newInstance();
-        fragments[2] = MineFragment.newInstance();
+        fragments[1] = PartsManagerFragment.newInstance();
+        fragments[2] = TaskFragment.newInstance();
+        fragments[3] = MineFragment.newInstance();
         return fragments;
     }
 

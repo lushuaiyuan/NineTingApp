@@ -39,7 +39,7 @@ public class MAlertDialog {
                             final OnConfirmListener confirmListener, boolean flag) {
         // 加载布局文件
         View view = View.inflate(activity, R.layout.view_alert, null);
-        view.setBackgroundResource(R.drawable.circular_shape);
+        view.setBackgroundResource(R.drawable.circular_white_shape);
         TextView tvTitle = view.findViewById(R.id.title);
         final TextView tvContent = view.findViewById(R.id.message);
         TextView confirm = view.findViewById(R.id.confirm);

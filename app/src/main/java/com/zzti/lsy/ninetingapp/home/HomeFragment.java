@@ -29,7 +29,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         tvToolbarTitle.setText("首页");
-
     }
 
     @Override

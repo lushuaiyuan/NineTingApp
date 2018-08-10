@@ -26,7 +26,7 @@
                 android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginRight="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp16"
-                android:background="@drawable/circular_shape"
+                android:background="@drawable/circular_white_shape"
                 android:padding="@dimen/dp15">
 
                 <TextView
@@ -74,11 +74,12 @@
                 android:text="生产统计" />
 
             <RelativeLayout
+                android:id="@+id/rl_oilMass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginRight="@dimen/dp16"
-                android:background="@drawable/circular_shape">
+                android:background="@drawable/circular_selector">
 
                 <LinearLayout
                     android:id="@+id/ll_orilmass"
@@ -156,12 +157,13 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_proAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginRight="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/circular_shape">
+                android:background="@drawable/circular_selector">
 
                 <LinearLayout
                     android:id="@+id/ll_proAmount"
@@ -239,12 +241,13 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_ratio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginRight="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/circular_shape">
+                android:background="@drawable/circular_selector">
 
                 <LinearLayout
                     android:id="@+id/ll_ratio"
@@ -322,7 +325,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp15"
                 android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp20"
                 android:text="今日统计" />
@@ -335,12 +337,12 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:id="@+id/rl_oilMass"
+                    android:id="@+id/rl_oilMassToday"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dp100"
                     android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
-                    android:background="@drawable/circular_shape">
+                    android:background="@drawable/circular_selector">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -403,13 +405,13 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_proAmount"
+                    android:id="@+id/rl_proAmountToday"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dp100"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
-                    android:background="@drawable/circular_shape">
+                    android:background="@drawable/circular_selector">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -472,12 +474,12 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_ratio"
+                    android:id="@+id/rl_ratioToday"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dp100"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_weight="1"
-                    android:background="@drawable/circular_shape">
+                    android:background="@drawable/circular_selector">
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -1,15 +1,11 @@
 package com.zzti.lsy.ninetingapp.home;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,17 +15,13 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAddressAdapter;
-import com.zzti.lsy.ninetingapp.home.entity.CarEntity;
 import com.zzti.lsy.ninetingapp.home.entity.ProjectAddressEntitiy;
 import com.zzti.lsy.ninetingapp.network.Constant;
-import com.zzti.lsy.ninetingapp.network.OkHttpManager;
-import com.zzti.lsy.ninetingapp.photo.TestPhotoActivity;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
@@ -140,11 +132,14 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
                     break;
                 }
                 hideSoftInput(etAmount);
+                //TODO
                 if (UIUtils.isNetworkConnected()) {
                     showDia();
                     submitInputData();
                 }
-                startActivity(new Intent(this, InputSuccessActivity.class));
+                Intent intent1 = new Intent(this, SuccessActivity.class);
+                intent1.putExtra("TAG", 1);
+                startActivity(intent1);
                 break;
         }
     }

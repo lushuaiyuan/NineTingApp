@@ -16,11 +16,13 @@
         android:fillViewport="true"
         android:scrollbars="none">
 
-        <RelativeLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_time"
@@ -33,82 +35,34 @@
                 android:textSize="@dimen/dp14" />
 
             <TextView
-                android:id="@+id/tv_carNumber_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_time"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp15"
-                android:text="车牌号"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp15" />
+                style="@style/MyEditTextTitle"
+                android:text="车牌号" />
 
             <TextView
                 android:id="@+id/tv_carNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_carNumber_Title"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp8"
-                android:background="@drawable/select_shape"
-                android:gravity="center"
-                android:hint="点击选择"
-                android:padding="@dimen/dp10"
-                android:text=""
-                android:textColor="@color/color_666666"
-                android:textColorHint="@color/color_999999"
-                android:textSize="@dimen/dp14" />
+                style="@style/MyEditText"
+                android:hint="点击选择" />
 
             <TextView
-                android:id="@+id/tv_address_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_carNumber"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp15"
-                android:text="施工工地"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp15" />
+                style="@style/MyEditTextTitle"
+                android:text="施工工地" />
 
             <TextView
                 android:id="@+id/tv_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_address_Title"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp8"
-                android:background="@drawable/select_shape"
-                android:gravity="center"
-                android:hint="点击选择"
-                android:padding="@dimen/dp10"
-                android:text=""
-                android:textColor="@color/color_666666"
-                android:textColorHint="@color/color_999999"
-                android:textSize="@dimen/dp14" />
+                style="@style/MyEditText"
+                android:hint="点击选择" />
 
             <TextView
-                android:id="@+id/tv_amount_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_address"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp15"
-                android:text="生产方量"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp15" />
+                style="@style/MyEditTextTitle"
+                android:text="生产方量" />
 
             <RelativeLayout
                 android:id="@+id/rl_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_amount_Title"
                 android:layout_marginLeft="@dimen/dp20"
                 android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp10"
                 android:background="@drawable/select_shape">
 
 
@@ -123,7 +77,7 @@
                     android:padding="@dimen/dp10"
                     android:paddingLeft="@dimen/dp20"
                     android:paddingRight="@dimen/dp20"
-                    android:textColor="@color/color_666666"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp14" />
 
                 <TextView
@@ -132,6 +86,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp10"
+                    android:textColor="@color/color_999999"
                     android:text="平方"
                     android:textSize="@dimen/dp13" />
 
@@ -142,8 +97,6 @@
                 android:id="@+id/tv_oilMass_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rl_amount"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp15"
                 android:text="加油量"
                 android:textColor="@color/color_666666"
@@ -153,10 +106,9 @@
                 android:id="@+id/rl_oilMass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_oilMass_Title"
                 android:layout_marginLeft="@dimen/dp20"
                 android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp10"
                 android:background="@drawable/select_shape">
 
 
@@ -168,7 +120,7 @@
                     android:background="@null"
                     android:gravity="center"
                     android:padding="@dimen/dp10"
-                    android:textColor="@color/color_666666"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp14" />
 
                 <TextView
@@ -178,6 +130,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp10"
                     android:text="升"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp13" />
 
 
@@ -188,7 +141,6 @@
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rl_oilMass"
                 android:layout_marginLeft="@dimen/dp30"
                 android:layout_marginRight="@dimen/dp30"
                 android:layout_marginTop="@dimen/dp16"
@@ -197,6 +149,6 @@
                 android:text="提交"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/dp15" />
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

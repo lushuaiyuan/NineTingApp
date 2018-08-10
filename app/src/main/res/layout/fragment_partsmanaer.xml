@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/iv_partmanage" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp16"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp20"
+                android:text="工作台"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16">
+
+                <RelativeLayout
+                    android:id="@+id/rl_menu1"
+                    style="@style/home_menubg"
+                    android:background="@drawable/home_menu1_selector">
+
+                    <TextView
+                        style="@style/home_menu"
+                        android:drawableLeft="@mipmap/icon_menu6"
+                        android:text="配件列表" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_menu2"
+                    style="@style/home_menubg"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:background="@drawable/home_menu2_selector">
+
+                    <TextView
+                        style="@style/home_menu"
+                        android:drawableLeft="@mipmap/icon_menu1"
+                        android:text="配件录入" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16">
+
+                <RelativeLayout
+                    android:id="@+id/rl_menu3"
+                    style="@style/home_menubg"
+                    android:background="@drawable/home_menu3_selector">
+
+                    <TextView
+                        style="@style/home_menu"
+                        android:drawableLeft="@mipmap/icon_menu7"
+                        android:text="配件入库" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_menu4"
+                    style="@style/home_menubg"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:background="@drawable/home_menu4_selector">
+
+                    <TextView
+                        style="@style/home_menu"
+                        android:drawableLeft="@mipmap/icon_menu8"
+                        android:text="配件出库" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16">
+
+                <RelativeLayout
+                    android:id="@+id/rl_menu5"
+                    style="@style/home_menubg"
+                    android:background="@drawable/home_menu5_selector">
+
+                    <TextView
+                        style="@style/home_menu"
+                        android:drawableLeft="@mipmap/icon_menu9"
+                        android:text="日用品管理" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    style="@style/home_menubg"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:visibility="invisible">
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

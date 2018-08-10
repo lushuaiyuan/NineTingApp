@@ -18,6 +18,7 @@
         android:background="@mipmap/iv_submit_success" />
 
     <TextView
+        android:id="@+id/tv_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/image"
@@ -37,25 +38,19 @@
         android:layout_marginRight="@dimen/dp38"
         android:layout_marginTop="@dimen/dp16"
         android:background="@drawable/btn_empty_shape"
-        android:padding="@dimen/dp10"
         android:text="生成表格"
         android:textColor="@color/color_6bcfd7"
         android:textSize="@dimen/dp15" />
 
     <Button
         android:id="@+id/btn_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/MyButton"
         android:layout_above="@id/btn_form"
         android:layout_marginBottom="@dimen/dp20"
         android:layout_marginLeft="@dimen/dp38"
         android:layout_marginRight="@dimen/dp38"
         android:layout_marginTop="@dimen/dp16"
-        android:background="@drawable/btn_solid_shape"
-        android:padding="@dimen/dp10"
-        android:text="继续录入"
-        android:textColor="@color/color_white"
-        android:textSize="@dimen/dp15" />
+        android:text="继续录入" />
 
 
 </RelativeLayout>

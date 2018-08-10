@@ -19,8 +19,8 @@
             android:layout_height="match_parent"
             android:background="@color/color_f5f5f5"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/dp8"
-            android:paddingTop="@dimen/dp8">
+            android:paddingBottom="@dimen/dp15"
+            android:paddingTop="@dimen/dp15">
 
         </android.support.v7.widget.RecyclerView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

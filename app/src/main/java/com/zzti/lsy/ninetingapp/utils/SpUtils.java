@@ -9,10 +9,17 @@ import com.zzti.lsy.ninetingapp.App;
 
 /**
  * @author lsy
- *         sp工具类
+ * sp工具类
  */
 public class SpUtils {
     private static final String NAME = "nineTing";
+    public static final String USERNAME = "userName";//用户名
+    public static final String LOGINSTATE = "loginState";//登录状态
+    /**
+     * 操作员类型  1代表统计员  2代表配件管理员
+     */
+    public static final String OPTYPE = "opType";
+
     private static SpUtils instance = new SpUtils();
     private static SharedPreferences sp;//单例
 

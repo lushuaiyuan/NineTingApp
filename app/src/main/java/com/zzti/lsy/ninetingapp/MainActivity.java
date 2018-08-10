@@ -8,6 +8,7 @@ import android.widget.RadioGroup;
 
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.utils.ActivityStack;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import butterknife.BindView;
@@ -38,13 +39,17 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radio_button_home:
-                        mFragment = mFragments[0];
+                        if(SpUtils.getInstance().getInt("opType",-1)==1) {
+                            mFragment = mFragments[0];
+                        }else if(SpUtils.getInstance().getInt("opType",-1)==2){
+                            mFragment = mFragments[1];
+                        }
                         break;
                     case R.id.radio_button_message:
-                        mFragment = mFragments[1];
+                        mFragment = mFragments[2];
                         break;
                     case R.id.radio_button_mine:
-                        mFragment = mFragments[2];
+                        mFragment = mFragments[3];
                         break;
                 }
                 if (mFragments != null) {

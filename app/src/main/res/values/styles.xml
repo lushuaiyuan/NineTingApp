@@ -103,4 +103,38 @@
         <item name="android:textSize">@dimen/dp15</item>
     </style>
 
+    <style name="MyEditTextTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">@dimen/dp15</item>
+        <item name="android:textColor">@color/color_666666</item>
+        <item name="android:textSize">@dimen/dp15</item>
+    </style>
+
+    <style name="MyEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/dp20</item>
+        <item name="android:layout_marginRight">@dimen/dp20</item>
+        <item name="android:layout_marginTop">@dimen/dp10</item>
+        <item name="android:background">@drawable/select_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">text</item>
+        <item name="android:padding">@dimen/dp10</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">@dimen/dp14</item>
+    </style>
+
+    <style name="MyButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/btn_solid_shape</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textSize">@dimen/dp15</item>
+    </style>
+
+
 </resources>

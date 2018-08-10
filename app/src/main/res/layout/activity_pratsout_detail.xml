@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/view_title"
+        layout="@layout/view_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="出库时间" />
+
+            <TextView
+                android:id="@+id/tv_outTime"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="出库数量" />
+
+            <EditText
+                android:id="@+id/et_amount"
+                style="@style/MyEditText"
+                android:inputType="number" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="出库目的地" />
+
+            <TextView
+                android:id="@+id/tv_outAddress"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="出库原因" />
+
+            <EditText
+                android:id="@+id/et_reason"
+                style="@style/MyEditText" />
+
+
+            <Button
+                android:id="@+id/btn_out"
+                style="@style/MyButton"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginRight="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp16"
+                android:text="出库" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
