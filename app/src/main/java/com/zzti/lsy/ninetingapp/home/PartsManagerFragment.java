@@ -35,7 +35,7 @@ public class PartsManagerFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1: //配件列表
@@ -50,8 +50,11 @@ public class PartsManagerFragment extends BaseFragment {
             case R.id.rl_menu4://配件入库
                 startActivity(new Intent(mActivity, PartsOutListActivity.class));
                 break;
-            case R.id.rl_menu5://日用品管理
-
+            case R.id.rl_menu5://日用品列表
+                startActivity(new Intent(mActivity, LifeGoodsListActivity.class));
+                break;
+            case R.id.rl_menu6://日用品采购出库
+                startActivity(new Intent(mActivity, LifeGoodsOutInActivity.class));
                 break;
         }
     }

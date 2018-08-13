@@ -76,7 +76,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_menu3"
                     style="@style/home_menubg"
-                    android:background="@drawable/home_menu3_selector">
+                    android:background="@drawable/home_menu5_selector">
 
                     <TextView
                         style="@style/home_menu"
@@ -88,7 +88,7 @@
                     android:id="@+id/rl_menu4"
                     style="@style/home_menubg"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:background="@drawable/home_menu4_selector">
+                    android:background="@drawable/home_menu7_selector">
 
                     <TextView
                         style="@style/home_menu"
@@ -110,19 +110,24 @@
                 <RelativeLayout
                     android:id="@+id/rl_menu5"
                     style="@style/home_menubg"
-                    android:background="@drawable/home_menu5_selector">
+                    android:background="@drawable/home_menu4_selector">
 
                     <TextView
                         style="@style/home_menu"
                         android:drawableLeft="@mipmap/icon_menu9"
-                        android:text="日用品管理" />
+                        android:text="日用品列表" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_menu6"
                     style="@style/home_menubg"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:visibility="invisible">
+                    android:background="@drawable/home_menu8_selector">
 
+                    <TextView
+                        style="@style/home_menu"
+                        android:drawableLeft="@mipmap/icon_menu9"
+                        android:text="日用品采购出库" />
                 </RelativeLayout>
 
             </LinearLayout>

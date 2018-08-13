@@ -44,9 +44,10 @@
                 android:layout_marginRight="@dimen/dp10"
                 android:paddingRight="@dimen/dp10"
                 android:text="操作"
+                android:layout_centerVertical="true"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dp13"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/iv_toolbarMenu"

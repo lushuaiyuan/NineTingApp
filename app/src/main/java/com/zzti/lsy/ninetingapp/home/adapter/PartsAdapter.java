@@ -25,13 +25,13 @@ public class PartsAdapter extends BaseQuickAdapter<PartsEntity, BaseViewHolder> 
         helper.setText(R.id.tv_num, item.getNum());
         helper.setText(R.id.tv_price, item.getPrice());
         if (tag == 1) {//配件出库列表
-            helper.getView(R.id.tv_oprator).setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_oprator, "在库");
+            helper.getView(R.id.tv_operator).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_operator, "在库");
         } else if (tag == 2) { //配件入库列表
-            helper.getView(R.id.tv_oprator).setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_oprator, "入库");
+            helper.getView(R.id.tv_operator).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_operator, "入库");
         } else {
-            helper.getView(R.id.tv_oprator).setVisibility(View.GONE);
+            helper.getView(R.id.tv_operator).setVisibility(View.GONE);
         }
     }
 
