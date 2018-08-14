@@ -12,6 +12,7 @@ import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.ProAdapter;
@@ -30,6 +31,8 @@ import butterknife.BindView;
  * 生产表格
  */
 public class FormListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
     private List<ProEntity> proEntities;
@@ -69,6 +72,10 @@ public class FormListActivity extends BaseActivity implements BaseQuickAdapter.O
         setTitle(DateUtil.getCurrentDate());
         ivToolbarMenu.setVisibility(View.VISIBLE);
         ivToolbarMenu.setOnClickListener(this);
+        smartRefreshLayout.setEnableLoadMore(true);
+        smartRefreshLayout.setEnableRefresh(true);
+        //使上拉加载具有弹性效果：
+        smartRefreshLayout.setEnableAutoLoadMore(false);
     }
 
     @Override

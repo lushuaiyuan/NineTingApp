@@ -38,10 +38,10 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.radio_button_home:
-                        if(SpUtils.getInstance().getInt("opType",-1)==1) {
+                    case R.id.radio_button_home://
+                        if (SpUtils.getInstance().getInt("opType", -1) == 1) { //生产员
                             mFragment = mFragments[0];
-                        }else if(SpUtils.getInstance().getInt("opType",-1)==2){
+                        } else if (SpUtils.getInstance().getInt("opType", -1) == 2) {//设备管理员
                             mFragment = mFragments[1];
                         }
                         break;

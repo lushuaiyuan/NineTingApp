@@ -39,7 +39,7 @@ public class SuccessActivity extends BaseActivity {
         initData();
     }
 
-    int tag = 0; //1代表生产员的生产录入成功 2代表配件管理员的配件录入成功  3配件管理员入库成功 4配件管理员出库成功
+    int tag = 0; //1代表生产员的生产录入成功 2代表配件管理员的配件录入成功  3配件管理员入库成功 4配件管理员出库成功  5配件管理员对日用品出库成功
 
     private void initData() {
         tag = UIUtils.getInt4Intent(this, "TAG");
@@ -63,6 +63,11 @@ public class SuccessActivity extends BaseActivity {
             tvMessage.setText("出库成功");
             btnInput.setText("查看出库详情");
             btnForm.setText("查看出库列表");
+        } else if (tag == 5) {
+            setTitle("出库结果");
+            tvMessage.setText("出库成功");
+            btnInput.setText("查看出库详情");
+            btnForm.setText("查看出库列表");
         }
 
     }
@@ -81,6 +86,9 @@ public class SuccessActivity extends BaseActivity {
                 } else if (tag == 4) { //查看配件在途详情
                     startActivity(new Intent(this, InWayDetailActivity.class));
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
+                } else if (tag == 5) { //查看日用品出库详情
+                    startActivity(new Intent(this, LifeGoodsOutDetailActivity.class));
+                    EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 }
 
                 finish();
@@ -93,6 +101,9 @@ public class SuccessActivity extends BaseActivity {
                     startActivity(new Intent(this, PartsListActivity.class));
                 } else if (tag == 4) {//设备管理员查看配件出库列表
                     startActivity(new Intent(this, PartsOutListActivity.class));
+                } else if (tag == 5) {//设备管理员查看配件出库列表
+                    UIUtils.showT("跳转到哪个地方？");
+//                    startActivity(new Intent(this, PartsOutListActivity.class));
                 }
                 EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 break;

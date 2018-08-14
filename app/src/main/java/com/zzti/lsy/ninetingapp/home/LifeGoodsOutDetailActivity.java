@@ -19,10 +19,10 @@ public class LifeGoodsOutDetailActivity extends BaseActivity {
     TextView tvGoodsName;
     @BindView(R.id.tv_operator)
     TextView tvOperator;
-    @BindView(R.id.tv_amount)
-    TextView tvAmount;
-    @BindView(R.id.tv_price)
-    TextView tvPrice;
+    @BindView(R.id.tv_outAmount)
+    TextView tvOutAmount;
+    @BindView(R.id.tv_outTime)
+    TextView tvOutTime;
     @BindView(R.id.tv_recipient)
     TextView tvRecipient;
 

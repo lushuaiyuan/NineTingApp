@@ -45,6 +45,7 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
         //TODO
         for (int i = 0; i < 5; i++) {
             LifeGoodsEntity lifeGoodsEntity = new LifeGoodsEntity();
+            lifeGoodsEntity.setOutTime("2018-08-14");
             lifeGoodsEntity.setGoodsName("易损牌手套");
             lifeGoodsEntity.setOperatorName("lsy");
             lifeGoodsEntity.setAmount("105");
@@ -56,5 +57,9 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
 
     private void initView() {
         setTitle("表格查看");
+        smartRefreshLayout.setEnableLoadMore(true);
+        smartRefreshLayout.setEnableRefresh(true);
+        //使上拉加载具有弹性效果：
+        smartRefreshLayout.setEnableAutoLoadMore(false);
     }
 }

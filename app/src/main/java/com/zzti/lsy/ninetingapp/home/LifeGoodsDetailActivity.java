@@ -49,11 +49,11 @@ public class LifeGoodsDetailActivity extends BaseActivity {
     @OnClick({R.id.btn_out, R.id.btn_outRecord})
     public void viewClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_out:
-
+            case R.id.btn_out://日用品出库
+                startActivity(new Intent(this, LifeGoodsOutActivity.class));
                 break;
             case R.id.btn_outRecord:
-                startActivity(new Intent(this,LifeGoodsOutRecordActivity.class));
+                startActivity(new Intent(this, LifeGoodsOutRecordActivity.class));
                 break;
         }
     }

@@ -1,22 +1,33 @@
 package com.zzti.lsy.ninetingapp.mine;
 
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
+import com.zzti.lsy.ninetingapp.photo.CustomHelper;
 import com.zzti.lsy.ninetingapp.utils.ActivityStack;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * author：anxin on 2018/8/3 16:39
  */
 public class MineFragment extends BaseFragment {
-    @BindView(R.id.tv_loginOut)
-    TextView tvLoginOut;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_type)
+    TextView tvType;
+
 
     public static MineFragment newInstance() {
         MineFragment taskFragment = new MineFragment();
@@ -30,14 +41,26 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvToolbarTitle.setText("我的");
     }
 
     @Override
     protected void initData() {
-        tvLoginOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        tvName.setText(SpUtils.getInstance().getString(SpUtils.USERNAME, ""));
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, 0) == 1) {
+            tvType.setText("生产员");
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, 0) == 2) {
+            tvType.setText("配件管理员");
+        }
+    }
+
+
+    @OnClick({R.id.ll_myMsg, R.id.ll_logOut})
+    public void viewClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_myMsg:
+                startActivity(new Intent(mActivity, MyMessageActivity.class));
+                break;
+            case R.id.ll_logOut:
                 MAlertDialog.show(mActivity, "提示", "确定退出？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
                     @Override
                     public void onConfirmClick(String msg) {
@@ -52,7 +75,8 @@ public class MineFragment extends BaseFragment {
 
                     }
                 }, true);
-            }
-        });
+                break;
+        }
     }
+
 }

@@ -4,18 +4,110 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/view_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_loginOut"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp300"
+            android:background="@mipmap/iv_mine">
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="@dimen/dp80"
+                android:layout_height="@dimen/dp80"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp40"
+                android:background="@mipmap/iv_submit_success" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_head"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp10"
+                android:text="罗罗诺亚·索隆"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp17" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp5"
+                android:text="配件管理员"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp14" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_myMsg"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="退出登录" />
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@drawable/white_gray_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp16">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_mine" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_weight="1"
+                android:text="个人信息"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_right_arrow" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_logOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@drawable/white_gray_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp16">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_logout" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_weight="1"
+                android:text="退出登录"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_right_arrow" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

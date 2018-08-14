@@ -72,14 +72,18 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".home.PartsInListActivity" />
         <activity android:name=".home.PartsInDetailActivity" /><!--配件入库详情-->
-        <activity android:name=".home.LifeGoodsOutInActivity"
-            android:hardwareAccelerated="false"/><!--日用品出入库-->
-        <activity android:name=".home.LifeGoodsListActivity"
+        <activity
+            android:name=".home.LifeGoodsOutInActivity"
+            android:hardwareAccelerated="false"
+            android:windowSoftInputMode="adjustResize" /><!--日用品出入库-->
+        <activity
+            android:name=".home.LifeGoodsListActivity"
             android:hardwareAccelerated="false" /><!--日用品列表-->
         <activity android:name=".home.LifeGoodsDetailActivity" /><!--日用品详情-->
         <activity android:name=".home.LifeGoodsOutRecordActivity" /><!--日用品出库记录-->
         <activity android:name=".home.LifeGoodsOutDetailActivity" /><!--日用品出库详情-->
         <activity android:name=".home.LifeGoodsOutActivity" /><!--日用品出库-->
+        <activity android:name=".mine.MyMessageActivity" /><!--个人信息-->
 
     </application>
 
