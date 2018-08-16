@@ -51,10 +51,12 @@ public class PartsManagerFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, PartsOutListActivity.class));
                 break;
             case R.id.rl_menu5://日用品列表
-                startActivity(new Intent(mActivity, LifeGoodsListActivity.class));
+//                startActivity(new Intent(mActivity, LifeGoodsListActivity.class));
+                startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
                 break;
             case R.id.rl_menu6://日用品采购出库
-                startActivity(new Intent(mActivity, LifeGoodsOutInActivity.class));
+//                startActivity(new Intent(mActivity, LifeGoodsOutInActivity.class));
+                startActivity(new Intent(mActivity, MaintenanceRequestActivity.class));
                 break;
         }
     }

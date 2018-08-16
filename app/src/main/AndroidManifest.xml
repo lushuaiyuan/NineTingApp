@@ -94,6 +94,9 @@
         <activity
             android:name=".home.MaintenanceRequestActivity"
             android:windowSoftInputMode="adjustResize" />
+        <!--设备维修记录-->
+        <activity android:name=".home.MaintenanceRecordActivity" />
+
         <!--个人信息-->
         <activity android:name=".mine.MyMessageActivity" />
 

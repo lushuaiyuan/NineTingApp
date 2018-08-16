@@ -3,6 +3,7 @@ package com.zzti.lsy.ninetingapp.home;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -17,6 +18,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.zzti.lsy.ninetingapp.R;
+import com.zzti.lsy.ninetingapp.home.adapter.CarMaintenanceAdapter;
+import com.zzti.lsy.ninetingapp.home.entity.CarMaintenanceEntity;
 import com.zzti.lsy.ninetingapp.photo.CustomHelper;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.photo.TakePhotoActivity;
@@ -32,7 +35,7 @@ import butterknife.OnClick;
 /**
  * 维修申请
  */
-public class MaintenanceRequestActivity extends TakePhotoActivity implements PopupWindow.OnDismissListener, View.OnClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener {
+public class MaintenanceRequestActivity extends TakePhotoActivity implements PopupWindow.OnDismissListener, View.OnClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.tv_carNumber)
     TextView tvCarNumber;
     @BindView(R.id.tv_address)
@@ -65,10 +68,12 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     private TextView tvPhoto;
     private TextView tvSelectPhoto;
     private TextView tvCancel;
+
     private PhotoAdapter photoAdapter;
     private List<String> pics;
     //维修明细
-
+    private CarMaintenanceAdapter carMaintenanceAdapter;
+    private List<CarMaintenanceEntity> carMaintenanceEntities;
 
     @Override
     public int getContentViewId() {
@@ -84,7 +89,17 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     }
 
     private void initData() {
+        CarMaintenanceEntity carMaintenanceEntity = new CarMaintenanceEntity();
+        carMaintenanceEntity.setReason("1");
+        carMaintenanceEntity.setPartsAmount("1");
+
         //TODO 明细的
+        recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
+        carMaintenanceEntities = new ArrayList<>();
+        carMaintenanceEntities.add(carMaintenanceEntity);
+        carMaintenanceAdapter = new CarMaintenanceAdapter(carMaintenanceEntities);
+        recycleViewDetail.setAdapter(carMaintenanceAdapter);
+        carMaintenanceAdapter.setOnItemChildClickListener(this);
 
         //TODO 照片的
         pics = new ArrayList<>();
@@ -144,13 +159,17 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
 
                 break;
             case R.id.tv_addDetail://增加明细
-
+                CarMaintenanceEntity carMaintenanceEntity = new CarMaintenanceEntity();
+                carMaintenanceEntity.setReason("1");
+                carMaintenanceEntity.setPartsAmount("1");
+                carMaintenanceEntities.add(carMaintenanceEntity);
+                carMaintenanceAdapter.notifyDataSetChanged();
                 break;
             case R.id.ll_maintenanceTime://计划维修时间
 
                 break;
             case R.id.btn_submit://提交
-
+                finish();
                 break;
         }
     }
@@ -239,5 +258,32 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
             }, true);
         }
         return false;
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId()) {
+            case R.id.tv_delete:
+                carMaintenanceEntities.remove(position);
+                carMaintenanceAdapter.notifyDataSetChanged();
+                break;
+            case R.id.ib_sub:
+                CarMaintenanceEntity carMaintenanceEntity1 = carMaintenanceEntities.get(position);
+                int amount1 = Integer.parseInt(carMaintenanceEntity1.getPartsAmount());
+                amount1--;
+                carMaintenanceEntity1.setPartsAmount(String.valueOf(amount1));
+                carMaintenanceAdapter.notifyDataSetChanged();
+                break;
+            case R.id.ib_add:
+                CarMaintenanceEntity carMaintenanceEntity2 = carMaintenanceEntities.get(position);
+                int amount2 = Integer.parseInt(carMaintenanceEntity2.getPartsAmount());
+                amount2++;
+                carMaintenanceEntity2.setPartsAmount(String.valueOf(amount2));
+                carMaintenanceAdapter.notifyDataSetChanged();
+                break;
+            case R.id.ll_partsName:
+                break;
+
+        }
     }
 }
