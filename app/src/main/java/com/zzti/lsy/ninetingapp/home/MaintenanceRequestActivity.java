@@ -9,24 +9,37 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.home.adapter.CarMaintenanceAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.ProjectAddressAdapter;
 import com.zzti.lsy.ninetingapp.home.entity.CarMaintenanceEntity;
+import com.zzti.lsy.ninetingapp.home.entity.ProjectAddressEntitiy;
+import com.zzti.lsy.ninetingapp.network.Constant;
 import com.zzti.lsy.ninetingapp.photo.CustomHelper;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.photo.TakePhotoActivity;
+import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,7 +48,7 @@ import butterknife.OnClick;
 /**
  * 维修申请
  */
-public class MaintenanceRequestActivity extends TakePhotoActivity implements PopupWindow.OnDismissListener, View.OnClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener {
+public class MaintenanceRequestActivity extends TakePhotoActivity implements PopupWindow.OnDismissListener, View.OnClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener, AdapterView.OnItemClickListener {
     @BindView(R.id.tv_carNumber)
     TextView tvCarNumber;
     @BindView(R.id.tv_address)
@@ -68,9 +81,14 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     private TextView tvPhoto;
     private TextView tvSelectPhoto;
     private TextView tvCancel;
-
     private PhotoAdapter photoAdapter;
     private List<String> pics;
+    //项目部
+    private PopupWindow popupWindowProject;
+    private ListView mListView;
+    private ProjectAddressAdapter projectAddressAdapter;
+    private List<ProjectAddressEntitiy> projectAddressEntitiys;
+
     //维修明细
     private CarMaintenanceAdapter carMaintenanceAdapter;
     private List<CarMaintenanceEntity> carMaintenanceEntities;
@@ -109,12 +127,56 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         recyclerViewPhoto.setAdapter(photoAdapter);
         photoAdapter.setOnItemClickListener(this);
         photoAdapter.setOnItemLongClickListener(this);
+
+        //TODO
+        for (int i = 0; i < 6; i++) {
+            ProjectAddressEntitiy projectAddressEntitiy = new ProjectAddressEntitiy();
+            projectAddressEntitiy.setId("5555" + i);
+            projectAddressEntitiy.setName("项目部" + i);
+            projectAddressEntitiys.add(projectAddressEntitiy);
+        }
+        projectAddressAdapter.notifyDataSetChanged();
     }
 
     private void initView() {
         setTitle("维修申请");
         customHelper = CustomHelper.of(view);
+        //解决卡顿问题
+        recycleViewDetail.setHasFixedSize(true);
+        recycleViewDetail.setNestedScrollingEnabled(false);
+        recyclerViewPhoto.setHasFixedSize(true);
+        recyclerViewPhoto.setNestedScrollingEnabled(false);
+
         initPop();
+        initPop_project();
+    }
+
+    private void initPop_project() {
+        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+        contentview.setFocusable(true); // 这个很重要
+        contentview.setFocusableInTouchMode(true);
+        popupWindowProject = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowProject.setFocusable(true);
+        popupWindowProject.setOutsideTouchable(true);
+        //设置消失监听
+        popupWindowProject.setOnDismissListener(this);
+        popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        contentview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    popupWindowProject.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        mListView = contentview.findViewById(R.id.pop_list);
+        projectAddressEntitiys = new ArrayList<>();
+        projectAddressAdapter = new ProjectAddressAdapter(projectAddressEntitiys);
+        mListView.setAdapter(projectAddressAdapter);
+        mListView.setOnItemClickListener(this);
+        popupWindowProject.setAnimationStyle(R.style.anim_bottomPop);
     }
 
     private void initPop() {
@@ -153,12 +215,33 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
 
                 break;
             case R.id.ll_address://项目地址
-
+                if (projectAddressEntitiys.size() > 0) {
+                    hideSoftInput(tvAddress);
+                    //设置背景色
+                    setBackgroundAlpha(0.5f);
+                    if (projectAddressEntitiys.size() >= 5) {
+                        //动态设置listView的高度
+                        View listItem = projectAddressAdapter.getView(0, null, mListView);
+                        listItem.measure(0, 0);
+                        int totalHei = (listItem.getMeasuredHeight() + mListView.getDividerHeight()) * 5;
+                        mListView.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = mListView.getLayoutParams();
+                        params.height = totalHei;
+                        mListView.setLayoutParams(params);
+                    }
+                    popupWindowProject.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
+                } else {
+                    UIUtils.showT(Constant.NONDATA);
+                }
                 break;
             case R.id.ll_maintenanceType://维修类型
 
                 break;
             case R.id.tv_addDetail://增加明细
+                if (carMaintenanceEntities.size() >= 5) {
+                    UIUtils.showT("最多添加5条明细");
+                    break;
+                }
                 CarMaintenanceEntity carMaintenanceEntity = new CarMaintenanceEntity();
                 carMaintenanceEntity.setReason("1");
                 carMaintenanceEntity.setPartsAmount("1");
@@ -166,12 +249,33 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 carMaintenanceAdapter.notifyDataSetChanged();
                 break;
             case R.id.ll_maintenanceTime://计划维修时间
-
+                showCustomTime();
                 break;
             case R.id.btn_submit://提交
                 finish();
                 break;
         }
+    }
+
+    /**
+     * 显示时间选择器
+     */
+    private void showCustomTime() {
+        Calendar instance = Calendar.getInstance();
+        instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
+        //时间选择器
+        TimePickerView pvTime = new TimePickerBuilder(MaintenanceRequestActivity.this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                tvMaintenanceTime.setText(DateUtil.getDateString(date));
+                //TODO  查询数据
+
+            }
+        }).setDate(instance).setType(new boolean[]{true, true, true, true, true, false})
+                .setLabel(" 年", " 月", " 日", "时", "分", "")
+                .isCenterLabel(false).build();
+        pvTime.show();
+
     }
 
     @Override
@@ -282,8 +386,15 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 carMaintenanceAdapter.notifyDataSetChanged();
                 break;
             case R.id.ll_partsName:
+
                 break;
 
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        tvAddress.setText(projectAddressEntitiys.get(i).getName());
+        popupWindowProject.dismiss();
     }
 }

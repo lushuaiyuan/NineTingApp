@@ -34,13 +34,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="车牌号"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp14" />
 
                 <TextView
                     android:id="@+id/tv_carNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_marginLeft="@dimen/dp15"
                     android:layout_toRightOf="@id/tv_carNumber_Title"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />
@@ -52,6 +53,7 @@
                     android:layout_below="@id/tv_carNumber_Title"
                     android:layout_marginTop="@dimen/dp16"
                     android:text="施工工地"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp14" />
 
                 <TextView
@@ -59,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/tv_projectAddress_Title"
-                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_marginLeft="@dimen/dp15"
                     android:layout_toRightOf="@id/tv_projectAddress_Title"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />

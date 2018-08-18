@@ -79,8 +79,7 @@
             android:clipToPadding="false"
             android:paddingBottom="@dimen/dp15"
             android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp15">
+            android:paddingRight="@dimen/dp16">
 
 
         </android.support.v7.widget.RecyclerView>

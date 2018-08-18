@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/white_gray_selector">
+    android:background="@drawable/black_selector">
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_conditionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -13,11 +13,12 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp8"
-        android:text="项目部A"
-        android:textColor="@color/color_666666"
+        android:text="待处理"
+        android:textColor="@color/color_white"
         android:textSize="@dimen/dp14" />
 
     <View
         style="@style/MyView"
-        android:layout_below="@id/tv_name" />
+        android:layout_below="@id/tv_name"
+        android:background="@color/color_111111" />
 </RelativeLayout>

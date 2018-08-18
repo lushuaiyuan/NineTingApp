@@ -12,8 +12,16 @@ public class CarMaintenanceEntity extends BaseEntity {
     private String partsAmount;//配件数量
 
     private String carNumber;//车牌号
-    private String planTime;//计划维修时间
+    private String plantTime;//计划维修时间
     private String state;//维修申请状态
+
+    public String getPlantTime() {
+        return plantTime;
+    }
+
+    public void setPlantTime(String plantTime) {
+        this.plantTime = plantTime;
+    }
 
     public String getReason() {
         return reason;
@@ -55,13 +63,6 @@ public class CarMaintenanceEntity extends BaseEntity {
         this.carNumber = carNumber;
     }
 
-    public String getPlanTime() {
-        return planTime;
-    }
-
-    public void setPlanTime(String planTime) {
-        this.planTime = planTime;
-    }
 
     public String getState() {
         return state;

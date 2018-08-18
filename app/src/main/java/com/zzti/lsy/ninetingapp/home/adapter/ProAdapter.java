@@ -19,7 +19,7 @@ public class ProAdapter extends BaseQuickAdapter<ProEntity, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, ProEntity item) {
         helper.setText(R.id.tv_carNumber, item.getCarNumber());
-        helper.setText(R.id.tv_projectAddress_name, item.getProjectAddress());
+        helper.setText(R.id.tv_name, item.getProjectAddress());
         helper.setText(R.id.tv_proAmount, item.getProAmount());
         helper.setText(R.id.tv_oilMass, item.getOilMass());
     }
