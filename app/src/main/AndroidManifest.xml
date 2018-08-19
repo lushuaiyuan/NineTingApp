@@ -49,60 +49,86 @@
         </provider>
 
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".photo.TestPhotoActivity" />
-        <activity android:name=".home.CarListActivity" />
-        <activity
-            android:name=".home.ProductInputActivity"
-            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".home.SuccessActivity" />
-        <activity android:name=".home.FormListActivity" />
-        <activity android:name=".home.OneCarProDetailActivity" />
         <activity
-            android:name=".home.PartsInputActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".LoginActivity"
+            android:theme="@style/LoginTheme" />
+
+        <!--设备列表-->
         <activity
-            android:name=".home.PartsListActivity"
+            android:name=".home.device.DeviceListActivity"
             android:hardwareAccelerated="false" />
-        <activity android:name=".home.PartsDetailActivity" />
-        <activity android:name=".home.InWayDetailActivity" />
-        <activity android:name=".home.PartsOutListActivity" />
+        <activity android:name=".home.device.DeviceDetailActivity" />
+        <!--设备录入-->
         <activity
-            android:name=".home.PartsOutDetailActivity"
+            android:name=".home.device.DeviceInputActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".home.PartsInListActivity" />
+        <!--生产录入-->
+        <activity
+            android:name=".home.production.ProductInputActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <!--生产表格-->
+        <activity android:name=".home.production.FormListActivity" />
+        <!--单车生产明细-->
+        <activity android:name=".home.production.OneCarProDetailActivity" />
+        <!--配件录入-->
+        <activity
+            android:name=".home.parts.PartsInputActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <!--配件列表-->
+        <activity
+            android:name=".home.parts.PartsListActivity"
+            android:hardwareAccelerated="false" />
+
+        <!--配件详情-->
+        <activity android:name=".home.parts.PartsDetailActivity" />
+
+        <!--配件在库详情-->
+        <activity android:name=".home.parts.PartsInWayDetailActivity" />
+
+        <!--配件出库列表-->
+        <activity android:name=".home.parts.PartsOutListActivity" />
+
+        <!--配件出库详情-->
+        <activity
+            android:name=".home.parts.PartsOutDetailActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!--配件-->
+        <activity android:name=".home.parts.PartsInListActivity" />
+
         <!--配件入库详情-->
-        <activity android:name=".home.PartsInDetailActivity" />
+        <activity android:name=".home.parts.PartsInDetailActivity" />
+
         <!--日用品出入库-->
         <activity
-            android:name=".home.LifeGoodsOutInActivity"
+            android:name=".home.parts.LifeGoodsOutInActivity"
             android:hardwareAccelerated="false"
             android:windowSoftInputMode="adjustResize" />
         <!--日用品列表-->
         <activity
-            android:name=".home.LifeGoodsListActivity"
+            android:name=".home.parts.LifeGoodsListActivity"
             android:hardwareAccelerated="false" />
         <!--日用品详情-->
-        <activity android:name=".home.LifeGoodsDetailActivity" />
+        <activity android:name=".home.parts.LifeGoodsDetailActivity" />
         <!--日用品出库记录-->
-        <activity android:name=".home.LifeGoodsOutRecordActivity" />
+        <activity android:name=".home.parts.LifeGoodsOutRecordActivity" />
         <!--日用品出库详情-->
-        <activity android:name=".home.LifeGoodsOutDetailActivity" />
+        <activity android:name=".home.parts.LifeGoodsOutDetailActivity" />
         <!--日用品出库-->
-        <activity android:name=".home.LifeGoodsOutActivity" />
+        <activity android:name=".home.parts.LifeGoodsOutActivity" />
         <!--设备维修申请-->
         <activity
-            android:name=".home.MaintenanceRequestActivity"
+            android:name=".home.machinery.MaintenanceRequestActivity"
             android:windowSoftInputMode="adjustResize" />
         <!--设备维修记录-->
         <activity
-            android:name=".home.MaintenanceRecordActivity"
+            android:name=".home.machinery.MaintenanceRecordActivity"
             android:hardwareAccelerated="false" />
         <!--设备维修记录详情-->
         <activity
-            android:name=".home.MaintenanceRecordDetailActivity"
+            android:name=".home.machinery.MaintenanceRecordDetailActivity"
             android:hardwareAccelerated="false" />
-
         <!--个人信息-->
         <activity android:name=".mine.MyMessageActivity" />
 

@@ -14,6 +14,11 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="LoginTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!-- This disables the black preview screen -->
+        <item name="android:windowDisablePreview">true</item><!--intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK）出现白屏-->
+    </style>
+
     <style name="RadioGroupButtonStyle">
         <!-- 这个属性是去掉button 默认样式-->
         <item name="android:button">@null</item>

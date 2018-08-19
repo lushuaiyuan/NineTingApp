@@ -10,6 +10,14 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
+import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
+import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutDetailActivity;
+import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutInActivity;
+import com.zzti.lsy.ninetingapp.home.parts.PartsInListActivity;
+import com.zzti.lsy.ninetingapp.home.parts.PartsInWayDetailActivity;
+import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
+import com.zzti.lsy.ninetingapp.home.parts.PartsOutListActivity;
+import com.zzti.lsy.ninetingapp.home.production.FormListActivity;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,7 +47,7 @@ public class SuccessActivity extends BaseActivity {
         initData();
     }
 
-    int tag = 0; //1代表生产员的生产录入成功 2代表配件管理员的配件录入成功  3配件管理员入库成功 4配件管理员出库成功  5配件管理员对日用品出库成功
+    int tag = 0; //1代表生产员的生产录入成功 2代表配件管理员的配件录入成功  3配件管理员入库成功 4配件管理员出库成功  5配件管理员对日用品出库成功 6设备管理员录入成功
 
     private void initData() {
         tag = UIUtils.getInt4Intent(this, "TAG");
@@ -68,6 +76,11 @@ public class SuccessActivity extends BaseActivity {
             tvMessage.setText("出库成功");
             btnInput.setText("查看出库详情");
             btnForm.setText("查看出库列表");
+        } else if (tag == 6) {
+            setTitle("录入结果");
+            tvMessage.setText("录入成功");
+            btnInput.setText("继续录入");
+            btnForm.setText("查看列表");
         }
 
     }
@@ -84,26 +97,26 @@ public class SuccessActivity extends BaseActivity {
                     startActivity(new Intent(this, PartsInListActivity.class));
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 } else if (tag == 4) { //查看配件在途详情
-                    startActivity(new Intent(this, InWayDetailActivity.class));
+                    startActivity(new Intent(this, PartsInWayDetailActivity.class));
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 } else if (tag == 5) { //查看日用品出库详情
                     startActivity(new Intent(this, LifeGoodsOutDetailActivity.class));
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 }
-
                 finish();
                 break;
             case R.id.btn_form:
                 finish();
                 if (tag == 1) {//生产员查看统计
                     startActivity(new Intent(this, FormListActivity.class));
-                } else if (tag == 2) {//设备管理员查看配件列表
+                } else if (tag == 2) {//配件管理员查看配件列表
                     startActivity(new Intent(this, PartsListActivity.class));
-                } else if (tag == 4) {//设备管理员查看配件出库列表
+                } else if (tag == 4) {//配件管理员查看配件出库列表
                     startActivity(new Intent(this, PartsOutListActivity.class));
-                } else if (tag == 5) {//设备管理员查看配件出库列表
-                    UIUtils.showT("跳转到哪个地方？");
-//                    startActivity(new Intent(this, PartsOutListActivity.class));
+                } else if (tag == 5) {//配件管理员对日用品出库成功 查看出库列表
+                    startActivity(new Intent(this, LifeGoodsOutInActivity.class));
+                } else if (tag == 6) {//设备管理员录入成功
+                    startActivity(new Intent(this, DeviceListActivity.class));
                 }
                 EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 break;

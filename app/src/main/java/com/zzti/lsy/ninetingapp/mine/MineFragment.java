@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.zzti.lsy.ninetingapp.LoginActivity;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.photo.CustomHelper;
@@ -67,7 +68,11 @@ public class MineFragment extends BaseFragment {
                         SpUtils.getInstance().put(SpUtils.USERNAME, "");
                         SpUtils.getInstance().put(SpUtils.LOGINSTATE, false);
                         SpUtils.getInstance().put(SpUtils.OPTYPE, -1);
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                         ActivityStack.get().exit();
+
                     }
 
                     @Override

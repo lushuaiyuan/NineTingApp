@@ -41,15 +41,17 @@ public class MainActivity extends BaseActivity {
                     case R.id.radio_button_home://
                         if (SpUtils.getInstance().getInt("opType", -1) == 1) { //生产员
                             mFragment = mFragments[0];
-                        } else if (SpUtils.getInstance().getInt("opType", -1) == 2) {//设备管理员
+                        } else if (SpUtils.getInstance().getInt("opType", -1) == 2) {//配件管理员
                             mFragment = mFragments[1];
+                        } else if (SpUtils.getInstance().getInt("opType", -1) == 3) {//设备管理员
+                            mFragment = mFragments[2];
                         }
                         break;
                     case R.id.radio_button_message:
-                        mFragment = mFragments[2];
+                        mFragment = mFragments[3];
                         break;
                     case R.id.radio_button_mine:
-                        mFragment = mFragments[3];
+                        mFragment = mFragments[4];
                         break;
                 }
                 if (mFragments != null) {

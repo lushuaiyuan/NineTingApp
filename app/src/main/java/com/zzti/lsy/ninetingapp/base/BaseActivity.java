@@ -41,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected ImageView ivToolbarBack;
-        protected ImageView ivToolbarMenu;
+    protected ImageView ivToolbarMenu;
     protected TextView tvToolbarMenu;
     protected TextView tvToolbarTitle;
     protected Toolbar mToolBar;

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp134"
+        android:layout_height="@dimen/dp120"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@drawable/circular_selector">
+
+        <TextView
+            android:id="@+id/tv_carNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:text="车牌号"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dp12" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_endDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textColor="@color/color_fe81b3"
+                android:textSize="@dimen/dp22"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp3"
+                android:text="天"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp12" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_endDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dp10"
+            android:text="2019.01.01"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dp12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/dp10"
+            android:text="到期"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dp12" />
+    </RelativeLayout>
+</LinearLayout>
