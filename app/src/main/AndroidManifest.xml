@@ -11,6 +11,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
+    //读取系统信息，包含系统版本等信息，用作统计
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    //获取统计数据
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    //使用步行AR导航，配置Camera权限
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -19,6 +26,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="qx6yIs55adKilIUP3Xk9NE5fAVQN9TdQ" />
+
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
@@ -58,11 +69,42 @@
         <activity
             android:name=".home.device.DeviceListActivity"
             android:hardwareAccelerated="false" />
+
+        <!--设备详情-->
         <activity android:name=".home.device.DeviceDetailActivity" />
+
+        <!--地图详情-->
+        <activity android:name=".home.device.MapActivity" />
+
         <!--设备录入-->
         <activity
             android:name=".home.device.DeviceInputActivity"
             android:windowSoftInputMode="adjustResize" />
+
+        <!--设备录入保险年审-->
+        <activity android:name=".home.device.YearInsuranceActivity" />
+
+        <!--设备入库列表-->
+        <activity
+            android:name=".home.device.DeviceInputListActivity"
+            android:hardwareAccelerated="false" />
+
+        <!--设备入库详情-->
+        <activity android:name=".home.device.DeviceInputDetailActivity" />
+
+        <!--设备出库列表-->
+        <activity
+            android:name=".home.device.DeviceOutputListActivity"
+            android:hardwareAccelerated="false" />
+
+        <!--设备出库-->
+        <activity android:name=".home.device.DeviceOutputActivity" />
+
+        <!--设备出库详情-->
+        <activity android:name=".home.device.DeviceOutputDetailActivity" />
+
+        <!--设备表格查看-->
+        <activity android:name=".home.device.DeviceFormActivity" />
         <!--生产录入-->
         <activity
             android:name=".home.production.ProductInputActivity"
@@ -85,6 +127,7 @@
 
         <!--配件在库详情-->
         <activity android:name=".home.parts.PartsInWayDetailActivity" />
+
 
         <!--配件出库列表-->
         <activity android:name=".home.parts.PartsOutListActivity" />
@@ -117,18 +160,20 @@
         <activity android:name=".home.parts.LifeGoodsOutDetailActivity" />
         <!--日用品出库-->
         <activity android:name=".home.parts.LifeGoodsOutActivity" />
-        <!--设备维修申请-->
+        <!--机械维修申请-->
         <activity
             android:name=".home.machinery.MaintenanceRequestActivity"
             android:windowSoftInputMode="adjustResize" />
-        <!--设备维修记录-->
+        <!--机械维修记录-->
         <activity
             android:name=".home.machinery.MaintenanceRecordActivity"
             android:hardwareAccelerated="false" />
-        <!--设备维修记录详情-->
+        <!--机械维修记录详情-->
         <activity
             android:name=".home.machinery.MaintenanceRecordDetailActivity"
             android:hardwareAccelerated="false" />
+
+
         <!--个人信息-->
         <activity android:name=".mine.MyMessageActivity" />
 

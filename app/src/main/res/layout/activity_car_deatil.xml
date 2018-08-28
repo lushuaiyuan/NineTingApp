@@ -2,9 +2,103 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
+    android:background="@color/color_f5f5f5"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <include layout="@layout/view_toolbar" />
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp16"
+        android:background="@drawable/circular_white_shape"
+        android:padding="@dimen/dp15">
+
+        <TextView
+            android:id="@+id/tv_carNumber_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="车牌号"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:id="@+id/tv_carNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_toRightOf="@id/tv_carNumber_Title"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp15" />
+
+
+        <TextView
+            android:id="@+id/tv_projectAddress_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_carNumber_Title"
+            android:layout_marginTop="@dimen/dp15"
+            android:text="项目"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:id="@+id/tv_projectAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_projectAddress_Title"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_toRightOf="@id/tv_projectAddress_Title"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp15" />
+
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="状态"
+            android:textSize="@dimen/dp14" />
+
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/radio_group_carDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp8">
+
+        <RadioButton
+            android:id="@+id/radio_button_carDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="@dimen/dp8"
+            android:text="车辆详情"
+            android:textColor="@drawable/radiobutton_cardetail_textcolor"
+            android:textSize="@dimen/dp18" />
+
+        <RadioButton
+            android:id="@+id/radio_button_bxns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="@dimen/dp8"
+            android:text="保险年审"
+            android:textColor="@drawable/radiobutton_cardetail_textcolor"
+            android:textSize="@dimen/dp18" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/home_carDetail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

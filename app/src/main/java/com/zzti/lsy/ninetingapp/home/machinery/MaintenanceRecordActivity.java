@@ -18,13 +18,13 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.CarMaintenanceRecordAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
 import com.zzti.lsy.ninetingapp.home.entity.CarMaintenanceEntity;
 import com.zzti.lsy.ninetingapp.home.entity.ConditionEntity;
+import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -154,7 +154,7 @@ public class MaintenanceRecordActivity extends BaseActivity implements AdapterVi
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowCondition = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtil.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowCondition = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowCondition.setFocusable(true);
         popupWindowCondition.setOutsideTouchable(true);
         //设置消失监听

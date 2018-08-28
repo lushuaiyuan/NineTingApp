@@ -40,7 +40,7 @@ public class DeviceManageFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        tvToolbarTitle.setText("首页");
     }
 
     @Override
@@ -81,16 +81,16 @@ public class DeviceManageFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, DeviceInputActivity.class));
                 break;
             case R.id.rl_menu3://设备入库
-
+                startActivity(new Intent(mActivity, DeviceInputListActivity.class));
                 break;
-            case R.id.rl_menu4://设备入库
-
+            case R.id.rl_menu4://设备出库
+                startActivity(new Intent(mActivity, DeviceOutputListActivity.class));
                 break;
             case R.id.rl_menu5://年审、保险
 
                 break;
             case R.id.rl_menu6://查看表格
-
+                startActivity(new Intent(mActivity, DeviceFormActivity.class));
                 break;
         }
     }

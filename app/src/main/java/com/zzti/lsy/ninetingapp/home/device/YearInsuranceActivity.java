@@ -33,10 +33,11 @@ public class YearInsuranceActivity extends BaseActivity {
         setTitle("设备录入");
     }
 
-    @OnClick(R.id.btn_submit)
+    @OnClick(R.id.btn_inputYearInsurance)
     public void viewClick(View view) {
         Intent intent = new Intent(this, SuccessActivity.class);
         intent.putExtra("TAG", 6);
         startActivity(intent);
+        finish();
     }
 }

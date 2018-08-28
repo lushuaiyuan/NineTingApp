@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f5f5f5"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp16"
+                android:background="@drawable/circular_white_shape"
+                android:padding="@dimen/dp15">
+
+                <TextView
+                    android:id="@+id/tv_carNumber_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="车牌号"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_carNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_toRightOf="@id/tv_carNumber_Title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+
+
+                <TextView
+                    android:id="@+id/tv_projectAddress_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_carNumber_Title"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:text="项目部"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_projectAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/tv_projectAddress_Title"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_toRightOf="@id/tv_projectAddress_Title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp20"
+                android:text="详情"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp18" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp16"
+                android:background="@drawable/circular_white_shape"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp16"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="入库时间"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp14" />
+
+                    <TextView
+                        android:id="@+id/tv_inTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="2018-01-01"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp16" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp16"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="入库目数量"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp14" />
+
+                    <TextView
+                        android:id="@+id/tv_inNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="1"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp16" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp16"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="入库目的地"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp14" />
+
+                    <TextView
+                        android:id="@+id/tv_inDestination"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="滁州仓库"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp16" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp16"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="入库原因"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp14" />
+
+                    <TextView
+                        android:id="@+id/tv_inReason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:lineSpacingMultiplier="1.2"
+                        android:text="层因太贵没人开得起，望大佬儿收下，以解我仓"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp16" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_input"
+                style="@style/MyButton"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginRight="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp20"
+                android:text="入库" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

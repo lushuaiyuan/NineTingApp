@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,6 +53,19 @@ public class DeviceInputActivity extends BaseActivity {
 
     private void initData() {
 
+    }
+
+    @Override
+    protected boolean openEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void onEventComing(EventMessage paramEventCenter) {
+        super.onEventComing(paramEventCenter);
+        if (paramEventCenter.getEventCode() == C.EventCode.A && (Boolean) paramEventCenter.getData()) {
+            finish();
+        }
     }
 
     private void initView() {

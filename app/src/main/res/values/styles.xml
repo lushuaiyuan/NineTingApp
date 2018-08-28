@@ -146,7 +146,7 @@
         <item name="android:inputType">text</item>
         <item name="android:padding">@dimen/dp10</item>
         <item name="android:textColor">@color/color_999999</item>
-        <item name="android:textSize">@dimen/dp14</item>
+        <item name="android:textSize">@dimen/dp15</item>
     </style>
 
     <style name="MyButton">
