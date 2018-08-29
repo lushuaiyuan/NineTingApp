@@ -68,7 +68,6 @@ public class DeviceManageFragment extends BaseFragment {
         homeHintAdapter = new HomeHintAdapter(homeHintEntitiesBx);
         mRecycleViewBx.setAdapter(homeHintAdapter);
 
-
     }
 
     @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6})
@@ -87,7 +86,7 @@ public class DeviceManageFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, DeviceOutputListActivity.class));
                 break;
             case R.id.rl_menu5://年审、保险
-
+                startActivity(new Intent(mActivity, BxNsActivity.class));
                 break;
             case R.id.rl_menu6://查看表格
                 startActivity(new Intent(mActivity, DeviceFormActivity.class));

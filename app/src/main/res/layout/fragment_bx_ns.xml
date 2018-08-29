@@ -42,9 +42,9 @@
 
 
                         <ImageView
-                            android:layout_width="@dimen/dp30"
-                            android:layout_height="@dimen/dp30"
-                            android:background="#FFD8D8D8" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/icon_ns" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -122,9 +122,9 @@
 
 
                         <ImageView
-                            android:layout_width="@dimen/dp30"
-                            android:layout_height="@dimen/dp30"
-                            android:background="#FFD8D8D8" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/icon_bx" />
 
                         <TextView
                             android:layout_width="wrap_content"

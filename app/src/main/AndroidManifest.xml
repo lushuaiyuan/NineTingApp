@@ -105,6 +105,12 @@
 
         <!--设备表格查看-->
         <activity android:name=".home.device.DeviceFormActivity" />
+
+        <!--设备保险和年审-->
+        <activity
+            android:name=".home.device.BxNsActivity"
+            android:hardwareAccelerated="false" />
+
         <!--生产录入-->
         <activity
             android:name=".home.production.ProductInputActivity"

@@ -16,7 +16,8 @@
 
     <style name="LoginTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!-- This disables the black preview screen -->
-        <item name="android:windowDisablePreview">true</item><!--intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK）出现白屏-->
+        <item name="android:windowDisablePreview">true
+        </item><!--intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK）出现白屏-->
     </style>
 
     <style name="RadioGroupButtonStyle">
@@ -157,5 +158,9 @@
         <item name="android:textSize">@dimen/dp15</item>
     </style>
 
+    <style name="TabLayoutTitleTextAppearance">
+        <item name="android:textSize">@dimen/dp17</item>
+        <item name="android:textColor">@color/color_666666</item>
+    </style>
 
 </resources>

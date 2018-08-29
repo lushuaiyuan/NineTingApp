@@ -1,4 +1,4 @@
-package com.zzti.lsy.ninetingapp.home.parts;
+package com.zzti.lsy.ninetingapp.home.device;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.TitleFragmentPagerAdapter;
+import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsInFragment;
+import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutFragment;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -23,9 +25,9 @@ import butterknife.OnClick;
 import static com.zzti.lsy.ninetingapp.utils.UIUtils.dip2px;
 
 /**
- * 日用品出库采购
+ * 保险年审
  */
-public class LifeGoodsOutInActivity extends BaseActivity {
+public class BxNsActivity extends BaseActivity {
     @BindView(R.id.tab)
     TabLayout mTabLayout;
     @BindView(R.id.viewpager)
@@ -46,10 +48,10 @@ public class LifeGoodsOutInActivity extends BaseActivity {
 
     private void initData() {
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new LifeGoodsOutFragment());
-        fragments.add(new LifeGoodsInFragment());
+        fragments.add(new BxFragment());
+        fragments.add(new NsFragment());
 
-        TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"出库", "采购"});
+        TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"保险", "年审"});
         mViewPager.setAdapter(adapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
@@ -58,6 +60,7 @@ public class LifeGoodsOutInActivity extends BaseActivity {
     private void initView() {
 
     }
+
 
 
     @OnClick(R.id.iv_toolbarBack)

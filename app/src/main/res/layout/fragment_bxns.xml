@@ -29,7 +29,7 @@
             app:tabIndicatorColor="@color/color_6bcfd7"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/color_6bcfd7"
-            app:tabTextAppearance="@style/TabLayoutTitleTextAppearance" />
+            app:tabTextColor="@color/color_666666" />
     </RelativeLayout>
 
 

@@ -9,6 +9,33 @@ public class HomeHintEntity extends BaseEntity {
     private String carNumber;
     private String endDay;
     private String endDate;
+    private String buyDate;
+    private String validityTime;
+    private String projectAddress;
+
+    public String getBuyDate() {
+        return buyDate;
+    }
+
+    public void setBuyDate(String buyDate) {
+        this.buyDate = buyDate;
+    }
+
+    public String getValidityTime() {
+        return validityTime;
+    }
+
+    public void setValidityTime(String validityTime) {
+        this.validityTime = validityTime;
+    }
+
+    public String getProjectAddress() {
+        return projectAddress;
+    }
+
+    public void setProjectAddress(String projectAddress) {
+        this.projectAddress = projectAddress;
+    }
 
     public String getCarNumber() {
         return carNumber;
