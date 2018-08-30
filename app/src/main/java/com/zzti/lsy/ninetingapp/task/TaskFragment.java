@@ -1,5 +1,7 @@
 package com.zzti.lsy.ninetingapp.task;
 
+import android.view.View;
+
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 
@@ -20,6 +22,7 @@ public class TaskFragment extends BaseFragment {
     @Override
     protected void initView() {
         tvToolbarTitle.setText("消息");
+        ivToolbarBack.setVisibility(View.GONE);
     }
 
     @Override

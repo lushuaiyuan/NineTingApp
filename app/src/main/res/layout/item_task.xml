@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_gray_selector"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp16">
+
+        <ImageView
+            android:id="@+id/iv_task"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_taskTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="审批"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <TextView
+                android:id="@+id/tv_taskContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你的维修申请已通过"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp13" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_taskTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9/29"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp12" />
+    </LinearLayout>
+
+    <View style="@style/MyView" />
+</LinearLayout>
