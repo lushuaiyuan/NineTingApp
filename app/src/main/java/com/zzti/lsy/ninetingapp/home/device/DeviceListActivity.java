@@ -91,7 +91,9 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         if (flag == -1) {
-            startActivity(new Intent(this, DeviceDetailActivity.class));
+            Intent intent = new Intent(this, DeviceDetailActivity.class);
+            intent.putExtra("TAG", 0);
+            startActivity(intent);
         } else if (flag == 1) {
             Intent intent = new Intent();
             intent.putExtra("carNumber", deviceListData.get(position).getCarNumber());

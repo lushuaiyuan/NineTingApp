@@ -12,6 +12,7 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import butterknife.BindView;
 
@@ -45,13 +46,14 @@ public class DeviceDetailActivity extends BaseActivity {
         initData();
     }
 
-    private void initData() {
+    private int tag;
 
+    private void initData() {
     }
 
     private void initView() {
         setTitle("车辆详情");
-
+        tag = UIUtils.getInt4Intent(this, "TAG");
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             Fragment mFragment = null;
 
@@ -74,7 +76,11 @@ public class DeviceDetailActivity extends BaseActivity {
                 }
             }
         });
-        // 保证第一次会回调OnCheckedChangeListener
-        radioButtonCarDetail.setChecked(true);
+        if (tag == 0) {
+            // 保证第一次会回调OnCheckedChangeListener
+            radioButtonCarDetail.setChecked(true);
+        } else if (tag == 1) {
+            radioButtonBxNs.setChecked(true);
+        }
     }
 }

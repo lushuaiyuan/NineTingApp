@@ -5,7 +5,7 @@ import com.zzti.lsy.ninetingapp.base.BaseEntity;
 /**
  * 首页提醒的实体类
  */
-public class HomeHintEntity extends BaseEntity {
+public class NsBxEntity extends BaseEntity {
     private String carNumber;
     private String endDay;
     private String endDate;
