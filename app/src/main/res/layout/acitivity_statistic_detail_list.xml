@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f5f5f5"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp16">
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="类型"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp16"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_typeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="516"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp16"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_typeUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="单位"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp11"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_white"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/dp16"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

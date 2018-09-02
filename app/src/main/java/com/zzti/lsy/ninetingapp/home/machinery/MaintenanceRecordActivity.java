@@ -100,11 +100,11 @@ public class MaintenanceRecordActivity extends BaseActivity implements AdapterVi
         //使上拉加载具有弹性效果：
         smartRefreshLayout.setEnableAutoLoadMore(false);
         initPop_condition();
-        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) ==1) {//机械师
-
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 4) {//项目经理
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 4) {//项目经理
 
         } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 5) {//总经理
+
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 6) {//机械师
 
         }
     }

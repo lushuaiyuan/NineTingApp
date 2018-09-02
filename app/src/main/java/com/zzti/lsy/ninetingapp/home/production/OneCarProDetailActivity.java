@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.home.production;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -36,13 +37,19 @@ public class OneCarProDetailActivity extends BaseActivity {
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_oilMass:
-
+                Intent intent1 = new Intent(this, StatisticDetialListActivity.class);
+                intent1.putExtra("TYPE", 1);
+                startActivity(intent1);
                 break;
             case R.id.rl_proAmount:
-
+                Intent intent2 = new Intent(this, StatisticDetialListActivity.class);
+                intent2.putExtra("TYPE", 2);
+                startActivity(intent2);
                 break;
             case R.id.rl_ratio:
-
+                Intent intent3 = new Intent(this, StatisticDetialListActivity.class);
+                intent3.putExtra("TYPE", 3);
+                startActivity(intent3);
                 break;
             case R.id.rl_oilMassToday:
 

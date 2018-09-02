@@ -119,6 +119,9 @@
         <activity android:name=".home.production.FormListActivity" />
         <!--单车生产明细-->
         <activity android:name=".home.production.OneCarProDetailActivity" />
+
+        <activity android:name=".home.production.StatisticDetialListActivity" />
+
         <!--配件录入-->
         <activity
             android:name=".home.parts.PartsInputActivity"

@@ -45,10 +45,11 @@ public class ProductManageFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, ProductInputActivity.class));
                 break;
             case R.id.rl_menu2:
+                startActivity(new Intent(mActivity, FormListActivity.class));
                 break;
-            case R.id.rl_menu3:
-                startActivity(new Intent(mActivity, MaintenanceRequestActivity.class));
-                break;
+//            case R.id.rl_menu3:
+//                startActivity(new Intent(mActivity, MaintenanceRequestActivity.class));
+//                break;
 //            case R.id.rl_menu4:
 //                startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
 //                break;

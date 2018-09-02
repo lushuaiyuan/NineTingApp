@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * 时间工具类
@@ -416,7 +417,6 @@ public class DateUtil {
     }
 
 
-
     /**
      * 时间戳转换成字符串
      *
@@ -432,14 +432,47 @@ public class DateUtil {
             format = "yyyy-MM-dd";
         }
         SimpleDateFormat sdf = new SimpleDateFormat(format);
-        if(seconds.length() == 10) {
+        if (seconds.length() == 10) {
             return sdf.format(new Date(Long.valueOf(seconds + "000")));
-        }else{
+        } else {
             return sdf.format(new Date(Long.valueOf(seconds)));
         }
     }
 
+    public static boolean IsToday(String day) {
 
+        Calendar pre = Calendar.getInstance();
+        Date predate = new Date(System.currentTimeMillis());
+        pre.setTime(predate);
+
+        Calendar cal = Calendar.getInstance();
+        try {
+            Date date = getDateFormat().parse(day);
+            cal.setTime(date);
+
+            if (cal.get(Calendar.YEAR) == (pre.get(Calendar.YEAR))) {
+                int diffDay = cal.get(Calendar.DAY_OF_YEAR)
+                        - pre.get(Calendar.DAY_OF_YEAR);
+
+                if (diffDay == 0) {
+                    return true;
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public static SimpleDateFormat getDateFormat() {
+        if (null == DateLocal.get()) {
+            DateLocal.set(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA));
+        }
+        return DateLocal.get();
+    }
+
+    private static ThreadLocal<SimpleDateFormat> DateLocal = new ThreadLocal<>();
 
 
 }
