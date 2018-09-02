@@ -5,6 +5,7 @@
     android:background="@color/color_white"
     android:orientation="vertical">
 
+    <include layout="@layout/view_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +22,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/iv_partmanage" />
+                android:background="@mipmap/iv_partmanage"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"

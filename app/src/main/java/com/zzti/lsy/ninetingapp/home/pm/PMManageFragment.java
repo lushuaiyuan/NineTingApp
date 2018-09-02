@@ -1,6 +1,7 @@
-package com.zzti.lsy.ninetingapp.home.device;
+package com.zzti.lsy.ninetingapp.home.pm;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +11,12 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeBxAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
+import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
+import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
+import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.home.entity.NsBxEntity;
+import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceRecordActivity;
+import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +25,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 设备管理员 operator 3
+ * 项目经理 operator 4
  */
-public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
+public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.recycleView_ns)
     RecyclerView mRecycleViewNs;
     @BindView(R.id.recycleView_bx)
@@ -31,14 +37,9 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
     private HomeBxAdapter homeBxAdapter;
     private HomeNsAdapter homeNsAdapter;
 
-    public static DeviceManageFragment newInstance() {
-        DeviceManageFragment fragment = new DeviceManageFragment();
-        return fragment;
-    }
-
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_home_manage;
+        return R.layout.fragment_pm_manage;
     }
 
     @Override
@@ -75,37 +76,40 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
         homeBxAdapter.setOnItemClickListener(this);
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
+    public static Fragment newInstance() {
+        PMManageFragment fragment = new PMManageFragment();
+        return fragment;
+    }
+
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
     public void viewClick(View view) {
         switch (view.getId()) {
-            case R.id.rl_menu1: //设备列表
+            case R.id.rl_menu1:
                 startActivity(new Intent(mActivity, DeviceListActivity.class));
                 break;
-            case R.id.rl_menu2://设备录入
-                startActivity(new Intent(mActivity, DeviceInputActivity.class));
+            case R.id.rl_menu2:
+                startActivity(new Intent(mActivity, PartsListActivity.class));
                 break;
-            case R.id.rl_menu3://设备入库
-                startActivity(new Intent(mActivity, DeviceInputListActivity.class));
+            case R.id.rl_menu3:
+
                 break;
-            case R.id.rl_menu4://设备出库
-                startActivity(new Intent(mActivity, DeviceOutputListActivity.class));
+            case R.id.rl_menu4:
+                startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
                 break;
-            case R.id.rl_menu5://年审、保险
-                startActivity(new Intent(mActivity, BxNsActivity.class));
-                break;
-            case R.id.rl_menu6://查看表格
-                startActivity(new Intent(mActivity, DeviceFormActivity.class));
-                break;
-            case R.id.tv_lookMore_bx:
-                Intent intent1 = new Intent(mActivity, BxNsActivity.class);
-                intent1.putExtra("TAG", 0);
-                startActivity(intent1);
+            case R.id.rl_menu5:
+
                 break;
             case R.id.tv_lookMore_ns:
+                Intent intent1 = new Intent(mActivity, BxNsActivity.class);
+                intent1.putExtra("TAG", 1);
+                startActivity(intent1);
+                break;
+            case R.id.tv_lookMore_bx:
                 Intent intent2 = new Intent(mActivity, BxNsActivity.class);
-                intent2.putExtra("TAG", 1);
+                intent2.putExtra("TAG", 0);
                 startActivity(intent2);
                 break;
+
         }
     }
 

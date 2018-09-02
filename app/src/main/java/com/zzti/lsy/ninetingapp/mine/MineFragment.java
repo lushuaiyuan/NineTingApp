@@ -47,10 +47,18 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initData() {
         tvName.setText(SpUtils.getInstance().getString(SpUtils.USERNAME, ""));
-        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, 0) == 1) {
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) {
             tvType.setText("生产员");
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, 0) == 2) {
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {
             tvType.setText("配件管理员");
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 3) {
+            tvType.setText("设备管理员");
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 4) {
+            tvType.setText("项目经理");
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, 0) == -1) {
+            tvType.setText("总经理");
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 6) {
+            tvType.setText("机械师");
         }
     }
 

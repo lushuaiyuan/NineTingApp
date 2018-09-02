@@ -16,7 +16,7 @@ public class SpUtils {
     public static final String USERNAME = "userName";//用户名
     public static final String LOGINSTATE = "loginState";//登录状态
     /**
-     * 操作员类型  1代表统计员  2代表配件管理员
+     * 操作员类型  1生产管理员  2配件管理员 3设备管理员 4项目经理 5总经理 6机械师
      */
     public static final String OPTYPE = "opType";
 

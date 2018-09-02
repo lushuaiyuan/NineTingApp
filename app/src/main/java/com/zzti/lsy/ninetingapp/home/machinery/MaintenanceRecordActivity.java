@@ -25,6 +25,7 @@ import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
 import com.zzti.lsy.ninetingapp.home.entity.CarMaintenanceEntity;
 import com.zzti.lsy.ninetingapp.home.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -99,7 +100,13 @@ public class MaintenanceRecordActivity extends BaseActivity implements AdapterVi
         //使上拉加载具有弹性效果：
         smartRefreshLayout.setEnableAutoLoadMore(false);
         initPop_condition();
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) ==1) {//机械师
 
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 4) {//项目经理
+
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 5) {//总经理
+
+        }
     }
 
     private int condition;

@@ -45,13 +45,19 @@ public class MainActivity extends BaseActivity {
                             mFragment = mFragments[1];
                         } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 3) {//设备管理员
                             mFragment = mFragments[2];
+                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 4) {//项目经理
+                            mFragment = mFragments[3];
+                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 5) {//总经理
+                            mFragment = mFragments[4];
+                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 6) {//机械师
+                            mFragment = mFragments[5];
                         }
                         break;
                     case R.id.radio_button_message:
-                        mFragment = mFragments[3];
+                        mFragment = mFragments[6];
                         break;
                     case R.id.radio_button_mine:
-                        mFragment = mFragments[4];
+                        mFragment = mFragments[7];
                         break;
                 }
                 if (mFragments != null) {

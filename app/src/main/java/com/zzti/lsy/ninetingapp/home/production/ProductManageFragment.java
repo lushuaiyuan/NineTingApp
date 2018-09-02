@@ -13,13 +13,13 @@ import butterknife.OnClick;
 
 /**
  * author：anxin on 2018/8/3 16:39
- * 首页
+ * 生产管理员 operator 1
  */
-public class HomeFragment extends BaseFragment {
+public class ProductManageFragment extends BaseFragment {
 
 
-    public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
+    public static ProductManageFragment newInstance() {
+        ProductManageFragment fragment = new ProductManageFragment();
         return fragment;
     }
 
@@ -38,7 +38,7 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1:
@@ -49,12 +49,15 @@ public class HomeFragment extends BaseFragment {
             case R.id.rl_menu3:
                 startActivity(new Intent(mActivity, MaintenanceRequestActivity.class));
                 break;
-            case R.id.rl_menu4:
-                startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
-                break;
-            case R.id.rl_menu5:
-                UIUtils.showT("菜单5");
-                break;
+//            case R.id.rl_menu4:
+//                startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
+//                break;
+//            case R.id.rl_menu5:
+//                UIUtils.showT("菜单5");
+//                break;
+//            case R.id.rl_menu6:
+//
+//                break;
         }
     }
 

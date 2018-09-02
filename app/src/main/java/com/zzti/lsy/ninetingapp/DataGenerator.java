@@ -5,7 +5,10 @@ import android.support.v4.app.Fragment;
 import com.zzti.lsy.ninetingapp.home.device.BXNSFragment;
 import com.zzti.lsy.ninetingapp.home.device.CarDetailFragment;
 import com.zzti.lsy.ninetingapp.home.device.DeviceManageFragment;
-import com.zzti.lsy.ninetingapp.home.production.HomeFragment;
+import com.zzti.lsy.ninetingapp.home.generalmanager.GeneralManagerFragment;
+import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceManageFragment;
+import com.zzti.lsy.ninetingapp.home.pm.PMManageFragment;
+import com.zzti.lsy.ninetingapp.home.production.ProductManageFragment;
 import com.zzti.lsy.ninetingapp.home.parts.PartsManagerFragment;
 import com.zzti.lsy.ninetingapp.mine.MineFragment;
 import com.zzti.lsy.ninetingapp.task.TaskFragment;
@@ -16,12 +19,15 @@ import com.zzti.lsy.ninetingapp.task.TaskFragment;
 public class DataGenerator {
 
     public static Fragment[] getFragments() {
-        Fragment fragments[] = new Fragment[5];
-        fragments[0] = HomeFragment.newInstance();
+        Fragment fragments[] = new Fragment[8];
+        fragments[0] = ProductManageFragment.newInstance();
         fragments[1] = PartsManagerFragment.newInstance();
         fragments[2] = DeviceManageFragment.newInstance();
-        fragments[3] = TaskFragment.newInstance();
-        fragments[4] = MineFragment.newInstance();
+        fragments[3] = PMManageFragment.newInstance();
+        fragments[4] = GeneralManagerFragment.newInstance();
+        fragments[5] = MaintenanceManageFragment.newInstance();
+        fragments[6] = TaskFragment.newInstance();
+        fragments[7] = MineFragment.newInstance();
         return fragments;
     }
 

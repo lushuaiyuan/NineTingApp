@@ -10,7 +10,7 @@ import butterknife.OnClick;
 
 /**
  * author：anxin on 2018/8/8 14:14
- * 配件管理员
+ * 配件管理员 operator 2
  */
 public class PartsManagerFragment extends BaseFragment {
 
@@ -26,7 +26,7 @@ public class PartsManagerFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        tvToolbarTitle.setText("首页");
     }
 
     @Override

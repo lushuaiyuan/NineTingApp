@@ -21,6 +21,25 @@
         android:background="@color/color_6bcfd7" />
 
     <EditText
+        android:id="@+id/et_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@null"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        android:hint="角色编号123456"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="@dimen/dp10"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dp15" />
+
+    <View
+        style="@style/MyView"
+        android:background="@color/color_6bcfd7" />
+
+    <EditText
         android:id="@+id/et_userName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

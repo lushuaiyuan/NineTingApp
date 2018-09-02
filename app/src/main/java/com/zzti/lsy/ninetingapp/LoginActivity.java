@@ -24,6 +24,9 @@ public class LoginActivity extends BaseActivity {
     EditText etUserName;
     @BindView(R.id.et_pwd)
     EditText etPwd;
+    @BindView(R.id.et_type)
+    EditText etType;
+
     @BindView(R.id.iv_showPwd)
     ImageView ivShowPwd;
 
@@ -88,7 +91,7 @@ public class LoginActivity extends BaseActivity {
         cancelDia();
         SpUtils.getInstance().put(SpUtils.USERNAME, etUserName.getText().toString());
         SpUtils.getInstance().put(SpUtils.LOGINSTATE, true);
-        SpUtils.getInstance().put(SpUtils.OPTYPE, 1);//操作员类型
+        SpUtils.getInstance().put(SpUtils.OPTYPE, Integer.parseInt(etType.getText().toString()));//操作员类型
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
