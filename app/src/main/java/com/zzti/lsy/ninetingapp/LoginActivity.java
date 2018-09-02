@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity {
         cancelDia();
         SpUtils.getInstance().put(SpUtils.USERNAME, etUserName.getText().toString());
         SpUtils.getInstance().put(SpUtils.LOGINSTATE, true);
-        SpUtils.getInstance().put(SpUtils.OPTYPE, 3);//操作员类型
+        SpUtils.getInstance().put(SpUtils.OPTYPE, 1);//操作员类型
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

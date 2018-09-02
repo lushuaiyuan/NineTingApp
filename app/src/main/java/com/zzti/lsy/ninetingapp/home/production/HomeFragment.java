@@ -5,6 +5,8 @@ import android.view.View;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
+import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceRecordActivity;
+import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceRequestActivity;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import butterknife.OnClick;
@@ -43,13 +45,12 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, ProductInputActivity.class));
                 break;
             case R.id.rl_menu2:
-                UIUtils.showT("菜单2");
                 break;
             case R.id.rl_menu3:
-                UIUtils.showT("菜单3");
+                startActivity(new Intent(mActivity, MaintenanceRequestActivity.class));
                 break;
             case R.id.rl_menu4:
-                UIUtils.showT("菜单4");
+                startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
                 break;
             case R.id.rl_menu5:
                 UIUtils.showT("菜单5");

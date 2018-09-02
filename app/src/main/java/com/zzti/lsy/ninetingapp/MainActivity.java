@@ -39,11 +39,11 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radio_button_home://
-                        if (SpUtils.getInstance().getInt("opType", -1) == 1) { //生产员
+                        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) { //生产员
                             mFragment = mFragments[0];
-                        } else if (SpUtils.getInstance().getInt("opType", -1) == 2) {//配件管理员
+                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//配件管理员
                             mFragment = mFragments[1];
-                        } else if (SpUtils.getInstance().getInt("opType", -1) == 3) {//设备管理员
+                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 3) {//设备管理员
                             mFragment = mFragments[2];
                         }
                         break;
