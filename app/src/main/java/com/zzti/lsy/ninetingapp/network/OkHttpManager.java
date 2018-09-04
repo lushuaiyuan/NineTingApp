@@ -8,6 +8,8 @@ import android.support.v4.util.ArrayMap;
 import com.google.gson.JsonObject;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -143,7 +145,7 @@ public final class OkHttpManager {
 
     private static <T> void basePost(String url,
                                      ArrayMap<String, String> headers,
-                                     JsonObject params,
+                                     JSONObject params,
                                      Object tag,
                                      OnResponse<T> onResponse) {
         final RequestBody reqBody = RequestBody.create(JSON,
@@ -242,7 +244,7 @@ public final class OkHttpManager {
 
     public static <T> void postNoToken(String url,
                                        ArrayMap<String, String> headers,
-                                       JsonObject params,
+                                       JSONObject params,
                                        Object tag,
                                        OnResponse<T> onResponse) {
         basePost(url, headers, params, tag, onResponse);
@@ -250,7 +252,7 @@ public final class OkHttpManager {
 
     private static <T> void post(String url,
                                  ArrayMap<String, String> headers,
-                                 JsonObject params,
+                                 JSONObject params,
                                  Object tag,
                                  OnResponse<T> onResponse) {
         if (headers == null) {
@@ -261,7 +263,7 @@ public final class OkHttpManager {
         basePost(url, headers, params, tag, onResponse);
     }
 
-    public static <T> void post(String url, JsonObject params, Object tag, OnResponse<T> onResponse) {
+    public static <T> void post(String url, JSONObject params, Object tag, OnResponse<T> onResponse) {
         post(url, null, params, tag, onResponse);
     }
 

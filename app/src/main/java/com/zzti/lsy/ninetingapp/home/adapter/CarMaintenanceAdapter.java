@@ -7,7 +7,7 @@ import android.widget.RadioButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.home.entity.CarMaintenanceEntity;
+import com.zzti.lsy.ninetingapp.entity.CarMaintenanceEntity;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 
 import java.util.List;

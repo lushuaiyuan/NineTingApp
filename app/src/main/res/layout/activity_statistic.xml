@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_6bcfd7"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44">
+
+
+        <ImageButton
+            android:id="@+id/iv_toolbarBack"
+            android:layout_width="@dimen/dp45"
+            android:layout_height="@dimen/dp48"
+            android:background="@null"
+            android:src="@mipmap/icon_backarrow_white" />
+
+
+        <TextView
+            android:id="@+id/tv_toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="标题"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/dp17" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_centerInParent="true"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/color_white"
+        app:tabMode="fixed"
+        app:tabPaddingEnd="@dimen/dp20"
+        app:tabPaddingStart="@dimen/dp20"
+        app:tabSelectedTextColor="@color/color_white"
+        app:tabTextAppearance="@style/TabLayoutTitleTextAppearance2" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

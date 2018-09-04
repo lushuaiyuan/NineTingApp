@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.home.adapter.BXAdapter;
-import com.zzti.lsy.ninetingapp.home.entity.NsBxEntity;
+import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
 
 import java.util.ArrayList;
 import java.util.List;

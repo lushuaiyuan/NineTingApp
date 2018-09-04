@@ -14,7 +14,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.ProAdapter;
-import com.zzti.lsy.ninetingapp.home.entity.ProEntity;
+import com.zzti.lsy.ninetingapp.entity.ProEntity;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 
 import java.util.ArrayList;

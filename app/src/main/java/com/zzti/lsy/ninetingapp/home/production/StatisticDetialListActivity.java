@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.home.production;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.StatisticAdapter;
-import com.zzti.lsy.ninetingapp.home.entity.StatisticEntity;
+import com.zzti.lsy.ninetingapp.entity.StatisticEntity;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -88,6 +89,8 @@ public class StatisticDetialListActivity extends BaseActivity implements View.On
 
     @Override
     public void onClick(View view) {
-
+        Intent intent = new Intent(this, StatisticDetailActivity.class);
+        intent.putExtra("TYPE", type);
+        startActivity(intent);
     }
 }

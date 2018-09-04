@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.home.entity.ConditionEntity;
+import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 
 import java.util.List;
 

@@ -22,7 +22,7 @@ import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAddressAdapter;
-import com.zzti.lsy.ninetingapp.home.entity.ProjectAddressEntitiy;
+import com.zzti.lsy.ninetingapp.entity.ProjectAddressEntitiy;
 import com.zzti.lsy.ninetingapp.network.Constant;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;

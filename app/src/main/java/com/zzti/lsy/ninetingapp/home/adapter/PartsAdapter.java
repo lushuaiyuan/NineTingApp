@@ -5,7 +5,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.home.entity.PartsEntity;
+import com.zzti.lsy.ninetingapp.entity.PartsEntity;
 
 import java.util.List;
 

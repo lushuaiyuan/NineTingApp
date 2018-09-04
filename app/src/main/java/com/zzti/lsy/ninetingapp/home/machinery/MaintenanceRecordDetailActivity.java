@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
-import com.zzti.lsy.ninetingapp.home.adapter.CarMaintenanceAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.CarMaintenanceDetailAdapter;
-import com.zzti.lsy.ninetingapp.home.entity.CarMaintenanceEntity;
+import com.zzti.lsy.ninetingapp.entity.CarMaintenanceEntity;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 

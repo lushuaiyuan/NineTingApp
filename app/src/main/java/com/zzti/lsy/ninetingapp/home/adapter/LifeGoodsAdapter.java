@@ -3,7 +3,7 @@ package com.zzti.lsy.ninetingapp.home.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.home.entity.LifeGoodsEntity;
+import com.zzti.lsy.ninetingapp.entity.LifeGoodsEntity;
 
 import java.util.List;
 

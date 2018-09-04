@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.home.entity.DeviceEntity;
+import com.zzti.lsy.ninetingapp.entity.DeviceEntity;
 
 import java.util.List;
 

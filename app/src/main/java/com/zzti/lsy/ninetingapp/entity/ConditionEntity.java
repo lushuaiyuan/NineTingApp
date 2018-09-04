@@ -1,4 +1,4 @@
-package com.zzti.lsy.ninetingapp.home.entity;
+package com.zzti.lsy.ninetingapp.entity;
 
 /**
  * 条件的实体类

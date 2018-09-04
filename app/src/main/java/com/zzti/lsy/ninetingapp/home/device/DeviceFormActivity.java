@@ -13,7 +13,7 @@ import com.bin.david.form.data.style.LineStyle;
 import com.bin.david.form.data.table.TableData;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
-import com.zzti.lsy.ninetingapp.home.entity.DeviceEntity;
+import com.zzti.lsy.ninetingapp.entity.DeviceEntity;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 
 import java.util.ArrayList;

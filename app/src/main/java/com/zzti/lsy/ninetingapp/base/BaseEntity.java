@@ -1,22 +1,31 @@
 package com.zzti.lsy.ninetingapp.base;
 
-public class BaseEntity {
-    private int code;
-    private int message;
+public class BaseEntity<T> {
+    private int Code;
+    private String Msg;
+    private T Data;
 
     public int getCode() {
-        return code;
+        return Code;
     }
 
     public void setCode(int code) {
-        this.code = code;
+        Code = code;
     }
 
-    public int getMessage() {
-        return message;
+    public String getMsg() {
+        return Msg;
     }
 
-    public void setMessage(int message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        Msg = msg;
+    }
+
+    public T getData() {
+        return Data;
+    }
+
+    public void setData(T data) {
+        Data = data;
     }
 }

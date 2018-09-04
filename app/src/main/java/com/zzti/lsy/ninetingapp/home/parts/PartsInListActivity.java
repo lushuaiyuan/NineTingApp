@@ -13,7 +13,7 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.PartsAdapter;
-import com.zzti.lsy.ninetingapp.home.entity.PartsEntity;
+import com.zzti.lsy.ninetingapp.entity.PartsEntity;
 
 import java.util.ArrayList;
 import java.util.List;

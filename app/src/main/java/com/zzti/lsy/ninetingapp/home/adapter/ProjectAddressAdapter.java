@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.home.entity.ProjectAddressEntitiy;
+import com.zzti.lsy.ninetingapp.entity.ProjectAddressEntitiy;
 
 import java.util.List;
 

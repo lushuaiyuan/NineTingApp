@@ -11,7 +11,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.LifeGoodsAdapter;
-import com.zzti.lsy.ninetingapp.home.entity.LifeGoodsEntity;
+import com.zzti.lsy.ninetingapp.entity.LifeGoodsEntity;
 
 import java.util.ArrayList;
 import java.util.List;

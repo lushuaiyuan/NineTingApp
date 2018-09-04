@@ -1,4 +1,4 @@
-package com.zzti.lsy.ninetingapp.home.entity;
+package com.zzti.lsy.ninetingapp.entity;
 
 import com.zzti.lsy.ninetingapp.base.BaseEntity;
 

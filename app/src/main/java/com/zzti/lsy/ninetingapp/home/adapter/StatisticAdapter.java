@@ -1,11 +1,9 @@
 package com.zzti.lsy.ninetingapp.home.adapter;
 
-import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.home.entity.StatisticEntity;
+import com.zzti.lsy.ninetingapp.entity.StatisticEntity;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 
 import java.util.List;

@@ -163,4 +163,9 @@
         <item name="android:textColor">@color/color_666666</item>
     </style>
 
+    <style name="TabLayoutTitleTextAppearance2">
+        <item name="android:textSize">@dimen/dp14</item>
+        <item name="android:textColor">@color/color_white</item>
+    </style>
+
 </resources>

@@ -14,7 +14,7 @@ import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
-import com.zzti.lsy.ninetingapp.home.entity.NsBxEntity;
+import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
 import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceRecordActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
 
