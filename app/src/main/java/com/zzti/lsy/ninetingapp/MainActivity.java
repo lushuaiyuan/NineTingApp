@@ -7,9 +7,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ActivityStack;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 
@@ -39,7 +43,7 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radio_button_home://
-                        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) { //生产员
+                        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) { //生产员
                             mFragment = mFragments[0];
                         } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//配件管理员
                             mFragment = mFragments[1];

@@ -1,6 +1,7 @@
 package com.zzti.lsy.ninetingapp.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 
 import com.jaeger.library.StatusBarUtil;
+import com.zzti.lsy.ninetingapp.LoginActivity;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
@@ -23,6 +25,7 @@ import com.zzti.lsy.ninetingapp.utils.ActivityStack;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.CustomDialog;
+import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -178,5 +181,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = alpha;
         getWindow().setAttributes(lp);
+    }
+
+    /**
+     * 登出
+     */
+    protected void logOut() {
+        MAlertDialog.show(this, "提示", "登录失效，请重新登录", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+            @Override
+            public void onConfirmClick(String msg) {
+                SpUtils.getInstance().put(SpUtils.LOGINSTATE, false);
+                SpUtils.getInstance().put(SpUtils.OPTYPE, -1);
+                Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                ActivityStack.get().exit();
+
+            }
+
+            @Override
+            public void onCancelClick() {
+
+            }
+        }, true);
     }
 }

@@ -1,12 +1,10 @@
 package com.zzti.lsy.ninetingapp.entity;
 
-import com.zzti.lsy.ninetingapp.base.BaseEntity;
-
 /**
  * author：anxin on 2018/8/7 14:55
  * 项目部的名称
  */
-public class ProjectAddressEntitiy extends BaseEntity {
+public class ProjectAddressEntitiy {
     private String name;
     private String id;
 

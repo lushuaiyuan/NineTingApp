@@ -1,11 +1,9 @@
 package com.zzti.lsy.ninetingapp.entity;
 
-import com.zzti.lsy.ninetingapp.base.BaseEntity;
-
 /**
  * 维休设备的实体类
  */
-public class CarMaintenanceEntity extends BaseEntity {
+public class CarMaintenanceEntity {
     private String reason;//维修原因
     private String partsName;//配件名称
     private String money;//金额

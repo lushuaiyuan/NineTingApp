@@ -73,14 +73,12 @@ public class MineFragment extends BaseFragment {
                 MAlertDialog.show(mActivity, "提示", "确定退出？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
                     @Override
                     public void onConfirmClick(String msg) {
-                        SpUtils.getInstance().put(SpUtils.USERNAME, "");
                         SpUtils.getInstance().put(SpUtils.LOGINSTATE, false);
                         SpUtils.getInstance().put(SpUtils.OPTYPE, -1);
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         ActivityStack.get().exit();
-
                     }
 
                     @Override

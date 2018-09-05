@@ -1,11 +1,9 @@
 package com.zzti.lsy.ninetingapp.entity;
 
-import com.zzti.lsy.ninetingapp.base.BaseEntity;
-
 /**
  * 日用品
  */
-public class LifeGoodsEntity extends BaseEntity {
+public class LifeGoodsEntity {
     private String outTime;
     private String goodsName;
     private String operatorName;

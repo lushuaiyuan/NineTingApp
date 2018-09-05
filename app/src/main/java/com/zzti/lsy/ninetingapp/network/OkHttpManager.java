@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.support.v4.util.ArrayMap;
 
 import com.google.gson.JsonObject;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import org.json.JSONObject;
@@ -27,6 +28,7 @@ import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -166,12 +168,44 @@ public final class OkHttpManager {
         executeCall(request, onResponse);
     }
 
+    public static <T> void postFormBody(String url,
+                                        HashMap<String, String> params,
+                                        Object tag,
+                                        OnResponse<T> onResponse) {
+        FormBody.Builder formBuild = new FormBody.Builder();
+        // params是存放参数的ArrayMap
+        Set<Map.Entry<String, String>> entrySet = params.entrySet();
+        if (!url.equals(Urls.POST_LOGIN_URL)) {
+            formBuild.add("sessionId", SpUtils.getInstance().getString(SpUtils.SESSIONID, ""));
+        }
+        // 遍历参数集合，添加到请求体
+        for (Map.Entry<String, String> entry : entrySet) {
+            // addFormDataPart方法三个参数的方法，分别对应要提交的key，value
+            formBuild.add(entry.getKey(), entry.getValue());
+        }
+        // 构造Request对象，方法为POST
+        Request.Builder reqBuilder = new Request.Builder().url(url)
+                .post(formBuild.build());
+        // 根据需要添加的header信息
+        //        reqBuilder.addHeader("Authorization", "token"/*这里可以添加授权的头信息*/);
+        // 设置tag
+        if (tag != null) {
+            reqBuilder.tag(tag.getClass()
+                    .getName());
+        }
+        Request request = reqBuilder.build();
+        executeCall(request, onResponse);
+
+    }
+
     public static <T> void postForm(String url,
                                     HashMap<String, String> params,
                                     Object tag,
                                     OnResponse<T> onResponse) {
+
         // 构造Multipart请求体，并设置类型为Form
         MultipartBody.Builder multiBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+//        MultipartBody.Builder multiBuilder = new MultipartBody.Builder().setType(MultipartBody.);
         // params是存放参数的ArrayMap
         Set<Map.Entry<String, String>> entrySet = params.entrySet();
         // 遍历参数集合，添加到请求体
@@ -259,7 +293,7 @@ public final class OkHttpManager {
             headers = new ArrayMap<>();
         }
         //TODO 添加headers
-        //        headers.put("Authorization", ConstantValues.TOKEN_STRING + GlobalParams.token);
+//                headers.put("Authorization", ConstantValues.TOKEN_STRING + GlobalParams.token);
         basePost(url, headers, params, tag, onResponse);
     }
 
@@ -510,16 +544,16 @@ public final class OkHttpManager {
                     UIUtils.showT("连接超时，请稍候重试");
                     break;
 
-                case HttpURLConnection.HTTP_INTERNAL_ERROR:
-                    UIUtils.showT("服务器忙，请稍候重试");
-                    break;
+//                case HttpURLConnection.HTTP_INTERNAL_ERROR:
+//                    UIUtils.showT("服务器忙，请稍候重试");
+//                    break;
 
                 case HttpURLConnection.HTTP_BAD_REQUEST:
                     UIUtils.showT("网络错误，请稍候重试");
                     break;
 
                 default:
-                    UIUtils.showT("请求失败，请稍候重试");
+                    UIUtils.showT(msg);
                     break;
             }
         }

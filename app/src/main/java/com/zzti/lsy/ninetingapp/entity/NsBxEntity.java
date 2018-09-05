@@ -1,11 +1,9 @@
 package com.zzti.lsy.ninetingapp.entity;
 
-import com.zzti.lsy.ninetingapp.base.BaseEntity;
-
 /**
  * 首页提醒的实体类
  */
-public class NsBxEntity extends BaseEntity {
+public class NsBxEntity {
     private String carNumber;
     private String endDay;
     private String endDate;

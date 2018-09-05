@@ -1,12 +1,10 @@
 package com.zzti.lsy.ninetingapp.entity;
 
-import com.zzti.lsy.ninetingapp.base.BaseEntity;
-
 /**
  * author：anxin on 2018/8/7 16:14
  * 生产统计
  */
-public class ProEntity extends BaseEntity {
+public class ProEntity {
     private String carNumber;
     private String projectAddress;
     private String proAmount;

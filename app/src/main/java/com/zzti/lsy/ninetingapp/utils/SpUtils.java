@@ -19,6 +19,8 @@ public class SpUtils {
      * 操作员类型  1生产管理员  2配件管理员 3设备管理员 4项目经理 5总经理 6机械师
      */
     public static final String OPTYPE = "opType";
+    public static final String SESSIONID = "sessionId";//身份验证
+
 
     private static SpUtils instance = new SpUtils();
     private static SharedPreferences sp;//单例

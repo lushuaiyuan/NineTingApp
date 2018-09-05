@@ -1,9 +1,7 @@
 package com.zzti.lsy.ninetingapp.entity;
 
 
-import com.zzti.lsy.ninetingapp.base.BaseEntity;
-
-public class DeviceEntity extends BaseEntity {
+public class DeviceEntity  {
     private String carNumber;//车牌号
     private String carType;//车辆类型
     private String carVin;//识别码

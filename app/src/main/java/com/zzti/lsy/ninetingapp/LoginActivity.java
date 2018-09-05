@@ -2,15 +2,14 @@ package com.zzti.lsy.ninetingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.google.gson.JsonObject;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.LoginBack;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
@@ -18,10 +17,8 @@ import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -101,10 +98,10 @@ public class LoginActivity extends BaseActivity {
 
     private void login() {
         cancelDia();
-        ArrayMap<String, String> params = new ArrayMap<>();
+        HashMap<String, String> params = new HashMap<>();
         params.put("username", etUserName.getText().toString());
         params.put("password", etPwd.getText().toString());
-        OkHttpManager.get(Urls.POST_LOGIN_URL, params, etPwd, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_LOGIN_URL, params, etPwd, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -112,15 +109,22 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String s) {
-                LoginBack loginBack = ParseUtils.parseJson(s, LoginBack.class);
-//                SpUtils.getInstance().put(SpUtils.USERNAME, etUserName.getText().toString());
-//                SpUtils.getInstance().put(SpUtils.LOGINSTATE, true);
-//                SpUtils.getInstance().put(SpUtils.OPTYPE, Integer.parseInt(etType.getText().toString()));//操作员类型
-//                startActivity(new Intent(this, MainActivity.class));
-//                finish();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    if (!StringUtil.isNullOrEmpty(msgInfo.getData())) {
+                        LoginBack loginBack = ParseUtils.parseJson(msgInfo.getData(), LoginBack.class);
+                        SpUtils.getInstance().put(SpUtils.USERNAME, etUserName.getText().toString());
+                        SpUtils.getInstance().put(SpUtils.LOGINSTATE, true);
+                        SpUtils.getInstance().put(SpUtils.OPTYPE, loginBack.getRoleID());//操作员类型
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    }
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
             }
-
         });
+
 
     }
 }

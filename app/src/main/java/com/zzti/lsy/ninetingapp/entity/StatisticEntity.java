@@ -1,11 +1,9 @@
 package com.zzti.lsy.ninetingapp.entity;
 
-import com.zzti.lsy.ninetingapp.base.BaseEntity;
-
 /**
  * 统计的实体类
  */
-public class StatisticEntity extends BaseEntity {
+public class StatisticEntity{
     private String date;
     private String value;
 
