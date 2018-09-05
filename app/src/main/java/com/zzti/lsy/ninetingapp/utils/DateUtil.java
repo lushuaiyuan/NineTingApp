@@ -416,6 +416,16 @@ public class DateUtil {
         return dateNowStr;
     }
 
+    /**
+     * 获取当天是当月的第几天
+     *
+     * @return
+     */
+    public static int getCurrentDay() {
+        String currentDate = getCurrentDate();
+        int dayIndex = Integer.parseInt(currentDate.split("-")[2]);
+        return dayIndex;
+    }
 
     /**
      * 时间戳转换成字符串
@@ -438,6 +448,7 @@ public class DateUtil {
             return sdf.format(new Date(Long.valueOf(seconds)));
         }
     }
+
 
     public static boolean IsToday(String day) {
 

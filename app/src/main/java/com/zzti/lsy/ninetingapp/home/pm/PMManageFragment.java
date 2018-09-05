@@ -17,6 +17,7 @@ import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
 import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceRecordActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,23 +82,26 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         return fragment;
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
-    public void viewClick(View view) {
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
+    public void viewClick(View view) {//设备列表
         switch (view.getId()) {
             case R.id.rl_menu1:
                 startActivity(new Intent(mActivity, DeviceListActivity.class));
                 break;
-            case R.id.rl_menu2:
+            case R.id.rl_menu2://配件列表
                 startActivity(new Intent(mActivity, PartsListActivity.class));
                 break;
-            case R.id.rl_menu3:
-
+            case R.id.rl_menu3://采购审批
+                UIUtils.showT("采购审批");
                 break;
-            case R.id.rl_menu4:
+            case R.id.rl_menu4://维修审批
                 startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
                 break;
-            case R.id.rl_menu5:
-
+            case R.id.rl_menu5://生产统计
+                UIUtils.showT("生产统计");
+                break;
+            case R.id.rl_menu6://维修统计
+                startActivity(new Intent(mActivity,MaintenanceStatistic.class));
                 break;
             case R.id.tv_lookMore_ns:
                 Intent intent1 = new Intent(mActivity, BxNsActivity.class);

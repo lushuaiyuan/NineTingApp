@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
-        cancelDia();
+
         HashMap<String, String> params = new HashMap<>();
         params.put("username", etUserName.getText().toString());
         params.put("password", etPwd.getText().toString());
@@ -109,13 +109,17 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String s) {
+                cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     if (!StringUtil.isNullOrEmpty(msgInfo.getData())) {
                         LoginBack loginBack = ParseUtils.parseJson(msgInfo.getData(), LoginBack.class);
+                        SpUtils.getInstance().put(SpUtils.SESSIONID,msgInfo.getMsg());
                         SpUtils.getInstance().put(SpUtils.USERNAME, etUserName.getText().toString());
                         SpUtils.getInstance().put(SpUtils.LOGINSTATE, true);
-                        SpUtils.getInstance().put(SpUtils.OPTYPE, loginBack.getRoleID());//操作员类型
+                        //TODO
+//                        SpUtils.getInstance().put(SpUtils.OPTYPE, loginBack.getRoleID());//操作员类型
+                        SpUtils.getInstance().put(SpUtils.OPTYPE, Integer.parseInt(etType.getText().toString()));//操作员类型
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     }
@@ -124,7 +128,5 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         });
-
-
     }
 }

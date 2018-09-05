@@ -7,9 +7,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ActivityStack;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -33,6 +35,26 @@ public class MainActivity extends BaseActivity {
     protected void initAllMembersView(Bundle savedInstanceState) {
         mFragments = DataGenerator.getFragments();
         initView();
+        initData();
+    }
+
+    private void initData() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("jobName", "test");
+        OkHttpManager.postFormBody("http://111.230.139.65:8086/Admin/Admin.asmx/AddJob", params, tvToolbarMenu, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 500) {
+                    logOut();
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -43,7 +65,7 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radio_button_home://
-                        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) { //生产员
+                        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) { //生产员
                             mFragment = mFragments[0];
                         } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//配件管理员
                             mFragment = mFragments[1];

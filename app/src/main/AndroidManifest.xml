@@ -182,6 +182,9 @@
             android:name=".home.machinery.MaintenanceRecordDetailActivity"
             android:hardwareAccelerated="false" />
 
+        <!--维修统计-->
+        <activity android:name=".home.pm.MaintenanceStatistic" />
+
 
         <!--个人信息-->
         <activity android:name=".mine.MyMessageActivity" />
