@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.LoginBack;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.entity.StaffEntity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
@@ -97,7 +98,6 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
-
         HashMap<String, String> params = new HashMap<>();
         params.put("username", etUserName.getText().toString());
         params.put("password", etPwd.getText().toString());
@@ -114,13 +114,13 @@ public class LoginActivity extends BaseActivity {
                 if (msgInfo.getCode() == 200) {
                     if (!StringUtil.isNullOrEmpty(msgInfo.getData())) {
                         LoginBack loginBack = ParseUtils.parseJson(msgInfo.getData(), LoginBack.class);
-                        SpUtils.getInstance().put(SpUtils.SESSIONID,msgInfo.getMsg());
+                        SpUtils.getInstance().put(SpUtils.OPTYPE, loginBack.getRoleID());//操作员类型
+                        SpUtils.getInstance().put(SpUtils.USERID, loginBack.getUserID());
+                        SpUtils.getInstance().put(SpUtils.SESSIONID, msgInfo.getMsg());
                         SpUtils.getInstance().put(SpUtils.USERNAME, etUserName.getText().toString());
                         SpUtils.getInstance().put(SpUtils.LOGINSTATE, true);
-                        //TODO
-//                        SpUtils.getInstance().put(SpUtils.OPTYPE, loginBack.getRoleID());//操作员类型
-                        SpUtils.getInstance().put(SpUtils.OPTYPE, Integer.parseInt(etType.getText().toString()));//操作员类型
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
                         finish();
                     }
                 } else {

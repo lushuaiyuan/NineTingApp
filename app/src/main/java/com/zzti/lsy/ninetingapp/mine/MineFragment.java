@@ -1,21 +1,19 @@
 package com.zzti.lsy.ninetingapp.mine;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.LoginActivity;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
-import com.zzti.lsy.ninetingapp.photo.CustomHelper;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ActivityStack;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -73,12 +71,7 @@ public class MineFragment extends BaseFragment {
                 MAlertDialog.show(mActivity, "提示", "确定退出？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
                     @Override
                     public void onConfirmClick(String msg) {
-                        SpUtils.getInstance().put(SpUtils.LOGINSTATE, false);
-                        SpUtils.getInstance().put(SpUtils.OPTYPE, -1);
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        ActivityStack.get().exit();
+                        LoginOut();
                     }
 
                     @Override
@@ -88,6 +81,29 @@ public class MineFragment extends BaseFragment {
                 }, true);
                 break;
         }
+    }
+
+    /**
+     * 登出
+     */
+    private void LoginOut() {
+        HashMap<String, String> params = new HashMap<>();
+        OkHttpManager.postFormBody(Urls.POST_LOGIN_OUT, params, tvName, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                SpUtils.getInstance().put(SpUtils.LOGINSTATE, false);
+                SpUtils.getInstance().put(SpUtils.OPTYPE, -1);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                ActivityStack.get().exit();
+            }
+        });
     }
 
 }

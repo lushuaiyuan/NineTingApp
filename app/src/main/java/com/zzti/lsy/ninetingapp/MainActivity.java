@@ -35,27 +35,8 @@ public class MainActivity extends BaseActivity {
     protected void initAllMembersView(Bundle savedInstanceState) {
         mFragments = DataGenerator.getFragments();
         initView();
-        initData();
     }
 
-    private void initData() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("jobName", "test");
-        OkHttpManager.postFormBody("http://111.230.139.65:8086/Admin/Admin.asmx/AddJob", params, tvToolbarMenu, new OkHttpManager.OnResponse<String>() {
-            @Override
-            public String analyseResult(String result) {
-                return result;
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                if (msgInfo.getCode() == 500) {
-                    logOut();
-                }
-            }
-        });
-    }
 
     private void initView() {
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -64,18 +45,19 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.radio_button_home://
-                        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) { //生产员
+                    //1机械师理  2项目经理 3配件管理员 4设备管理员 5统计员 6机械师理
+                    case R.id.radio_button_home:
+                        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 5) { //统计员
                             mFragment = mFragments[0];
-                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//配件管理员
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
                             mFragment = mFragments[1];
-                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 3) {//设备管理员
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 4) {//设备管理员
                             mFragment = mFragments[2];
-                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 4) {//项目经理
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
                             mFragment = mFragments[3];
-                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 5) {//总经理
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
                             mFragment = mFragments[4];
-                        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 6) {//机械师
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
                             mFragment = mFragments[5];
                         }
                         break;

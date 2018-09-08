@@ -16,10 +16,11 @@ public class SpUtils {
     public static final String USERNAME = "userName";//用户名
     public static final String LOGINSTATE = "loginState";//登录状态
     /**
-     * 操作员类型  1生产管理员  2配件管理员 3设备管理员 4项目经理 5总经理 6机械师
+     * 操作员类型  1机械师理  2项目经理 3配件管理员 4设备管理员 5统计员 6机械师理
      */
     public static final String OPTYPE = "opType";
     public static final String SESSIONID = "sessionId";//身份验证
+    public static final String USERID = "userId";//员工id
 
 
     private static SpUtils instance = new SpUtils();

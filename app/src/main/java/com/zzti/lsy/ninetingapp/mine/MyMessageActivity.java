@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.mine;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,13 +18,21 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.zzti.lsy.ninetingapp.App;
+import com.zzti.lsy.ninetingapp.LoginActivity;
+import com.zzti.lsy.ninetingapp.MainActivity;
 import com.zzti.lsy.ninetingapp.R;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.entity.StaffEntity;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.photo.CustomHelper;
 import com.zzti.lsy.ninetingapp.photo.TakePhotoActivity;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,8 +46,14 @@ public class MyMessageActivity extends TakePhotoActivity implements View.OnClick
     ImageView ivHead;
     @BindView(R.id.tv_name)
     TextView tvName;
+    @BindView(R.id.tv_staffName)
+    TextView tvStaffName;
+    @BindView(R.id.tv_age)
+    TextView tvAge;
     @BindView(R.id.tv_type)
     TextView tvType;
+    @BindView(R.id.tv_resume)
+    TextView tvResume;
     private CustomHelper customHelper;
     View view;
     private PopupWindow popupWindow;
@@ -55,18 +70,68 @@ public class MyMessageActivity extends TakePhotoActivity implements View.OnClick
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         tvName.setText(SpUtils.getInstance().getString(SpUtils.USERNAME, ""));
-        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, 0) == 1) {
-            tvType.setText("生产员");
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, 0) == 2) {
-            tvType.setText("配件管理员");
-        }
-        customHelper = CustomHelper.of(view);
         initView();
+        initData();
+    }
+
+    private void initData() {
+        if (UIUtils.isNetworkConnected()) {
+            showDia();
+            getStaff();
+        }
+    }
+
+    /**
+     * 获取员工角色
+     */
+    private void getStaff() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("userId", spUtils.getString(SpUtils.USERID, ""));
+        OkHttpManager.postFormBody(Urls.POST_GETSTAFF, params, tvToolbarMenu, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    StaffEntity staffEntity = ParseUtils.parseJson(msgInfo.getData(), StaffEntity.class);
+                    tvStaffName.setText(staffEntity.getStaffName());
+                    tvAge.setText(String.valueOf(staffEntity.getStaffAge()));
+                    if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {
+                        tvType.setText("总经理");
+                    } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 1) {
+                        tvType.setText("机械师");
+                    } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {
+                        tvType.setText("项目经理");
+                    } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {
+                        tvType.setText("配件管理员");
+                    } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 4) {
+                        tvType.setText("设备管理员");
+                    } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 5) {
+                        tvType.setText("统计员");
+                    }
+                    tvResume.setText(staffEntity.getResume());
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
     }
 
 
     private void initView() {
         setTitle("个人信息");
+        customHelper = CustomHelper.of(view);
         initPop();
     }
 
