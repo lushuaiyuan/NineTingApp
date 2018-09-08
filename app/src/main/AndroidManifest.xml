@@ -189,6 +189,8 @@
         <activity
             android:name=".home.pm.OneCarMaintenanceStatisticActivity"
             android:hardwareAccelerated="false" />
+        <!--维修统计对比-->
+        <activity android:name=".home.pm.ContrastActivity" />
 
 
         <!--个人信息-->

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_6bcfd7"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44">
+
+
+        <ImageButton
+            android:id="@+id/iv_toolbarBack"
+            android:layout_width="@dimen/dp45"
+            android:layout_height="@dimen/dp48"
+            android:background="@null"
+            android:src="@mipmap/icon_backarrow_white" />
+
+
+        <TextView
+            android:id="@+id/tv_toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="标题"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/dp17" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_carNumber1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp16"
+                android:text="车牌号1"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp16" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp150"
+                android:layout_margin="@dimen/dp16" />
+
+            <TextView
+                android:id="@+id/tv_carNumber2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp16"
+                android:text="车牌号1"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp16" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp150"
+                android:layout_margin="@dimen/dp16" />
+
+            <TextView
+                android:id="@+id/tv_carNumber3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp16"
+                android:text="车牌号1"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp16" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp150"
+                android:layout_margin="@dimen/dp16" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

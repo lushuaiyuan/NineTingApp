@@ -17,6 +17,7 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.DeviceListAdapter;
 import com.zzti.lsy.ninetingapp.entity.DeviceEntity;
+import com.zzti.lsy.ninetingapp.home.pm.ContrastActivity;
 import com.zzti.lsy.ninetingapp.home.pm.OneCarMaintenanceStatisticActivity;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
@@ -120,7 +121,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         }
     }
 
-    private List<String> carSelect = new ArrayList<>();
+    private ArrayList<String> carSelect = new ArrayList<>();
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -152,7 +153,6 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                         UIUtils.showT("每次最多只能对比三个");
                     }
                 }
-
             }
         }
     }
@@ -179,7 +179,13 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                 startActivity(new Intent(this, DeviceFormActivity.class));
                 break;
             case R.id.btn_contrast:
-                UIUtils.showT("去对比");
+                if (carSelect.size() == 1) {
+                    UIUtils.showT("最少选择两条数据进行对比");
+                } else {
+                    Intent intent = new Intent(this, ContrastActivity.class);
+                    intent.putStringArrayListExtra("carSelect", carSelect);
+                    startActivity(intent);
+                }
                 break;
         }
     }
