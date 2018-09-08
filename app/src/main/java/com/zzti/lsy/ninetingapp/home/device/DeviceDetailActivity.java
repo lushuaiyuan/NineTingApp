@@ -46,7 +46,7 @@ public class DeviceDetailActivity extends BaseActivity {
         initData();
     }
 
-    private int tag;
+    private int tag; //0代表进入车辆详情选中的是详情 1代表保险年审
 
     private void initData() {
     }

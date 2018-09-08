@@ -181,14 +181,20 @@
         <activity
             android:name=".home.machinery.MaintenanceRecordDetailActivity"
             android:hardwareAccelerated="false" />
-
         <!--维修统计-->
         <activity android:name=".home.pm.MaintenanceStatistic" />
+        <!--维修报表-->
+        <activity android:name=".home.pm.MaintenanceReportActivity" />
+        <!--单车维修统计-->
+        <activity
+            android:name=".home.pm.OneCarMaintenanceStatisticActivity"
+            android:hardwareAccelerated="false" />
 
 
         <!--个人信息-->
         <activity android:name=".mine.MyMessageActivity" />
         <activity android:name=".home.production.StatisticDetailActivity" />
+
 
     </application>
 

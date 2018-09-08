@@ -146,7 +146,7 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp150"
+        android:layout_height="@dimen/dp180"
         android:layout_margin="@dimen/dp16" />
 
 

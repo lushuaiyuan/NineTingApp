@@ -52,11 +52,11 @@ public class ChartUtils {
         // 设置x轴数据的位置
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setTextSize(12);
+        xAxis.setTextSize(10f);
         // 不从x轴发出纵向直线
         xAxis.setDrawGridLines(false);
         // 设置x轴数据偏移量
-        xAxis.setYOffset(12);
+        xAxis.setYOffset(5);
 
         YAxis yAxis = chart.getAxisLeft();
         // 不显示y轴
@@ -70,7 +70,7 @@ public class ChartUtils {
         yAxis.setTextColor(Color.WHITE);
         yAxis.setTextSize(12);
         // 设置y轴数据偏移量
-        yAxis.setXOffset(30);
+        yAxis.setXOffset(20);
         yAxis.setYOffset(-3);
         yAxis.setAxisMinimum(0);
 

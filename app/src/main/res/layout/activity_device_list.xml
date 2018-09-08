@@ -8,6 +8,7 @@
     <include layout="@layout/view_toolbar" />
 
     <RelativeLayout
+        android:id="@+id/rl_searchCarNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp10"
@@ -43,6 +44,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/ll_condition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp16"
@@ -148,5 +150,16 @@
 
         </android.support.v7.widget.RecyclerView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <Button
+        android:id="@+id/btn_contrast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp16"
+        android:background="@drawable/btn_solid_shape"
+        android:text="对比"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/dp16"
+        android:visibility="gone" />
 
 </LinearLayout>

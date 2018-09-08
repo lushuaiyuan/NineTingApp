@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_carNumber_Title"
                     android:layout_marginTop="@dimen/dp15"
-                    android:text="项目"
+                    android:text="项目部"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp14" />
 

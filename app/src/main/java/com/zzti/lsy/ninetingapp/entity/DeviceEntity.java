@@ -1,7 +1,7 @@
 package com.zzti.lsy.ninetingapp.entity;
 
 
-public class DeviceEntity  {
+public class DeviceEntity {
     private String carNumber;//车牌号
     private String carType;//车辆类型
     private String carVin;//识别码
@@ -19,6 +19,42 @@ public class DeviceEntity  {
     private String outReason;//出库原因
     private String inNum;//入库数量
     private String outNum;//出库数量
+    private String reason;//维修原因
+    private String parts;//维修配件
+    private boolean isDefault;//是否是对比的基准
+    private boolean isCheck;//是否是选中的要对比的对象
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(boolean isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    public String getParts() {
+        return parts;
+    }
+
+    public void setParts(String parts) {
+        this.parts = parts;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public String getInNum() {
         return inNum;

@@ -21,37 +21,39 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 维修统计
+ * 单车维修统计
  */
-public class MaintenanceStatistic extends BaseActivity {
+public class OneCarMaintenanceStatisticActivity extends BaseActivity {
     @BindView(R.id.tv_toolbarTitle)
     TextView tvTitle;
-    @BindView(R.id.tv_monthMaintenance_RecordAmount)
-    TextView tvMonthMaintenanceRecordAmount;
-    @BindView(R.id.tv_monthState)
-    TextView tvMonthState;
-    @BindView(R.id.tv_quarterMaintenance_RecordAmount)
-    TextView tvQuarterMaintenanceRecordAmount;
-    @BindView(R.id.tv_quarterState)
-    TextView tvQuarterState;
+    @BindView(R.id.tv_carNumber)
+    TextView tvCarNumber;
+    @BindView(R.id.tv_state)
+    TextView tvState;
+    @BindView(R.id.tv_projectAddress)
+    TextView tvProjectAddress;
+    @BindView(R.id.tv_constructionAddress)
+    TextView tvConstructionAddress;
+    @BindView(R.id.tv_serviceType)
+    TextView tvServiceType;
     @BindView(R.id.chart)
-    LineChart chart;
+    LineChart mChart;
+    private String carNumber;
 
     @Override
     public int getContentViewId() {
-        return R.layout.activity_maintenance_statistic;
+        return R.layout.activity_onecar_maintenancestatistic;
     }
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         initView();
-        intData();
-
+        intiData();
     }
 
-    private void intData() {
-        ChartUtils.initChart(chart);
-        ChartUtils.notifyDataSetChanged(chart, getData(), ChartUtils.monthValue);
+    private void intiData() {
+        ChartUtils.initChart(mChart);
+        ChartUtils.notifyDataSetChanged(mChart, getData(), ChartUtils.monthValue);
     }
 
     private List<Entry> getData() {
@@ -66,32 +68,24 @@ public class MaintenanceStatistic extends BaseActivity {
     }
 
     private void initView() {
-        tvTitle.setText("维修统计");
+        tvTitle.setText("统计");
+        carNumber = UIUtils.getStr4Intent(this, "carNumber");
+        tvCarNumber.setText(carNumber);
     }
 
-
-    @OnClick({R.id.iv_toolbarBack, R.id.tv_lookOneCar_maintenanceRecord, R.id.tv_toolbarMenu, R.id.ll_monthMaintenance_Record, R.id.ll_quarterMaintenance_Record})
+    @OnClick({R.id.iv_toolbarBack, R.id.tv_toolbarMenu})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.iv_toolbarBack:
                 finish();
                 break;
-            case R.id.tv_lookOneCar_maintenanceRecord://查看单车维修统计
+            case R.id.tv_toolbarMenu:
                 Intent intent = new Intent(this, DeviceListActivity.class);
+                intent.putExtra("carNumber", carNumber);
                 intent.putExtra("TAG", 1);
-                intent.putExtra("FLAG", 2);
+                intent.putExtra("FLAG", 3);
                 startActivity(intent);
                 break;
-            case R.id.tv_toolbarMenu://查看报表
-                startActivity(new Intent(this, MaintenanceReportActivity.class));
-                break;
-            case R.id.ll_monthMaintenance_Record://查看本月维修记录
-                UIUtils.showT("查看本月维修记录");
-                break;
-            case R.id.ll_quarterMaintenance_Record://查看本季度维修记录
-                UIUtils.showT("查看本季度维修记录");
-                break;
-
         }
     }
 }
