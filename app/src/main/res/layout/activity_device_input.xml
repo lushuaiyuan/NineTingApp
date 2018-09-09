@@ -55,7 +55,7 @@
                 android:text="车辆状态" />
 
             <TextView
-                android:id="@+id/tv_carState"
+                android:id="@+id/tv_carStatus"
                 style="@style/MyEditText"
                 android:hint="点击选择" />
 
@@ -64,7 +64,16 @@
                 android:text="生产厂家" />
 
             <TextView
-                android:id="@+id/tv_manufacturer"
+                android:id="@+id/tv_factory"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="项目部" />
+
+            <TextView
+                android:id="@+id/tv_project"
                 style="@style/MyEditText"
                 android:hint="点击选择" />
 
@@ -155,9 +164,38 @@
                 style="@style/MyEditTextTitle"
                 android:text="行驶证有效期" />
 
-            <EditText
-                android:id="@+id/et_drivingNumber_validityTime"
-                style="@style/MyEditText" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_drivingNumber_validityTime"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/dp8"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="年"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/btn_inputYearInsurance"

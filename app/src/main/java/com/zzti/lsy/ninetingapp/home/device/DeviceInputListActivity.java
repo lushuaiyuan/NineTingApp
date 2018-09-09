@@ -13,7 +13,7 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.DeviceInputAdapter;
-import com.zzti.lsy.ninetingapp.entity.DeviceEntity;
+import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class DeviceInputListActivity extends BaseActivity implements BaseQuickAd
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
 
-    private List<DeviceEntity> deviceEntities;
+    private List<CarInfoEntity> deviceEntities;
     private DeviceInputAdapter deviceInputAdapter;
 
     @Override
@@ -57,12 +57,12 @@ public class DeviceInputListActivity extends BaseActivity implements BaseQuickAd
 
         //TODO
         for (int i = 0; i < 6; i++) {
-            DeviceEntity deviceEntity = new DeviceEntity();
-            deviceEntity.setCarNumber("豫A5555" + i);
-            deviceEntity.setProjectAddress("项目部" + i);
-            deviceEntity.setInReason("啊时代发生的啊时代发生地方了放假啦地方啊速度发了卡手机到付款爱的色放啦速度快爱的色放借口啦是的爱的浪费空间啦是的啊上看到了卡迪夫" + i);
-            deviceEntity.setInDestination("滁州" + i);
-            deviceEntities.add(deviceEntity);
+            CarInfoEntity carInfoEntity = new CarInfoEntity();
+            carInfoEntity.setPlateNumber("豫A5555" + i);
+//            carInfoEntity.setProjectAddress("项目部" + i);
+//            carInfoEntity.setInReason("啊时代发生的啊时代发生地方了放假啦地方啊速度发了卡手机到付款爱的色放啦速度快爱的色放借口啦是的爱的浪费空间啦是的啊上看到了卡迪夫" + i);
+//            carInfoEntity.setInDestination("滁州" + i);
+            deviceEntities.add(carInfoEntity);
         }
         deviceInputAdapter.notifyDataSetChanged();
 

@@ -186,7 +186,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 登出
      */
-    protected void logOut() {
+    protected void loginOut() {
         MAlertDialog.show(this, "提示", "登录失效，请重新登录", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
             @Override
             public void onConfirmClick(String msg) {

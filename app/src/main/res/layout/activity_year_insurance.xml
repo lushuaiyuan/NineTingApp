@@ -21,7 +21,7 @@
             android:text="年审到期时间" />
 
         <TextView
-            android:id="@+id/tv_endTime"
+            android:id="@+id/tv_ns_endTime"
             style="@style/MyEditText"
             android:hint="点击选择" />
 
@@ -30,26 +30,27 @@
             android:text="保险购买日期" />
 
         <TextView
-            android:id="@+id/tv_buyTime"
+            android:id="@+id/tv_bx_buyTime"
             style="@style/MyEditText"
             android:hint="点击选择" />
 
         <TextView
             style="@style/MyEditTextTitle"
-            android:text="保险有效期" />
+            android:text="保险到期时间" />
 
         <TextView
-            android:id="@+id/tv_valid"
-            style="@style/MyEditText" />
+            android:id="@+id/tv_bx_endTime"
+            style="@style/MyEditText"
+            android:hint="点击选择" />
 
         <TextView
             style="@style/MyEditTextTitle"
-            android:text="保险内容" />
+            android:text="保险类型" />
 
-        <EditText
-            android:id="@+id/et_content"
+        <TextView
+            android:id="@+id/tv_bx_type"
             style="@style/MyEditText"
-            android:minHeight="@dimen/dp100" />
+            android:hint="点击选择" />
 
         <Button
             android:id="@+id/btn_inputYearInsurance"

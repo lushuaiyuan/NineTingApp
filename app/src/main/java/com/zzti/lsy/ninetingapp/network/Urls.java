@@ -14,6 +14,7 @@ public class Urls {
     public final static String POST_GETCHARGETYPE = BASE_URL + "/Car/Car.asmx/GetChargeType";//获取车辆排放类型
     public final static String POST_GETPROJECT = BASE_URL + "/Car/Car.asmx/GetProject";//获取项目部
     public final static String POST_GETFACTORY = BASE_URL + "/Car/Car.asmx/GetFactory";//获取生产厂家
+    public final static String POST_GETINSURANCETYPE = BASE_URL + "/Car/Car.asmx/GetInsuranceType";//获取保险类型
 
 
 }

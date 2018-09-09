@@ -136,23 +136,7 @@ public class DateUtil {
         return format.format(time);
     }
 
-    /**
-     * 获取日期字符串。
-     */
-    public static String getTime_1(long date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Long time = new Long(date + "000");
-        return format.format(time);
-    }
 
-    /**
-     * 日期字符串（获取场馆成立的时间）
-     */
-    public static String getVenueTime(long date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
-        Long time = new Long(date + "000");
-        return format.format(time);
-    }
 
     /**
      * 获取日期字符串。
@@ -164,24 +148,6 @@ public class DateUtil {
         return formatter.format(date);
     }
 
-    /**
-     * 获取日期字符串。
-     */
-    public static String getCurrentDateTimeString(Date date) {
-        if (date == null)
-            return "";
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");// 设置日期格式
-        return formatter.format(date);
-    }
-
-    /**
-     * 获取一天的最后时间。
-     */
-    public static String getCurrentLastDateTime(Date date) {
-        String mCurTime_EndDay = DateUtil.spliteString(getDateTime(date), " ",
-                "Last", "front");// 本天最后一秒钟
-        return mCurTime_EndDay + " 23:59:59";
-    }
 
     /**
      * 获取当前日期是星期几<br>
@@ -485,5 +451,25 @@ public class DateUtil {
 
     private static ThreadLocal<SimpleDateFormat> DateLocal = new ThreadLocal<>();
 
+    /**
+     * 指定日期N个月后的日期
+     * @param inputDate
+     * @param number
+     * @return
+     */
+    public static String  getAfterMonth(String inputDate,int number) {
+        Calendar c = Calendar.getInstance();//获得一个日历的实例
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try{
+            date = sdf.parse(inputDate);//初始日期
+        }catch(Exception e){
+
+        }
+        c.setTime(date);//设置日历时间
+        c.add(Calendar.MONTH,number);//在日历的月份上增加6个月
+        String strDate = sdf.format(c.getTime());//的到你想要得6个月后的日期
+        return strDate;
+    }
 
 }

@@ -23,6 +23,7 @@ import com.zzti.lsy.ninetingapp.MainActivity;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.StaffEntity;
+import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.photo.CustomHelper;
@@ -31,6 +32,7 @@ import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -115,7 +117,9 @@ public class MyMessageActivity extends TakePhotoActivity implements View.OnClick
                         tvType.setText("统计员");
                     }
                     tvResume.setText(staffEntity.getResume());
-                } else {
+                } else if(msgInfo.getCode()== C.Constant.HTTP_UNAUTHORIZED){
+                    loginOut();
+                }else{
                     UIUtils.showT(msgInfo.getMsg());
                 }
             }

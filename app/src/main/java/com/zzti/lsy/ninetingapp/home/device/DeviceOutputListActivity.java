@@ -13,7 +13,7 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.DeviceOutputAdapter;
-import com.zzti.lsy.ninetingapp.entity.DeviceEntity;
+import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class DeviceOutputListActivity extends BaseActivity implements BaseQuickA
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
 
-    private List<DeviceEntity> deviceEntities;
+    private List<CarInfoEntity> deviceEntities;
     private DeviceOutputAdapter deviceOutputAdapter;
 
     @Override
@@ -57,12 +57,12 @@ public class DeviceOutputListActivity extends BaseActivity implements BaseQuickA
 
         //TODO
         for (int i = 0; i < 6; i++) {
-            DeviceEntity deviceEntity = new DeviceEntity();
-            deviceEntity.setCarNumber("豫A5555" + i);
-            deviceEntity.setProjectAddress("项目部" + i);
-            deviceEntity.setAddress("滁州" + i);
-            deviceEntity.setCarType("罐车" + i);
-            deviceEntities.add(deviceEntity);
+            CarInfoEntity carInfoEntity = new CarInfoEntity();
+            carInfoEntity.setPlateNumber("豫A5555" + i);
+//            carInfoEntity.setProjectAddress("项目部" + i);
+//            carInfoEntity.setAddress("滁州" + i);
+//            carInfoEntity.setCarType("罐车" + i);
+            deviceEntities.add(carInfoEntity);
         }
         deviceOutputAdapter.notifyDataSetChanged();
 

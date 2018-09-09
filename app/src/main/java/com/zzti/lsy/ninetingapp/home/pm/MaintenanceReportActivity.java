@@ -19,9 +19,7 @@ import com.bin.david.form.data.style.LineStyle;
 import com.bin.david.form.data.table.TableData;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
-import com.zzti.lsy.ninetingapp.entity.DeviceEntity;
-import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceRecordActivity;
-import com.zzti.lsy.ninetingapp.home.production.FormListActivity;
+import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
@@ -59,15 +57,15 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
     }
 
     private void initData() {
-        List<DeviceEntity> deviceEntities = new ArrayList<>();
+        List<CarInfoEntity> deviceEntities = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
-            DeviceEntity deviceEntity = new DeviceEntity();
-            deviceEntity.setCarNumber("豫A5555" + i);
-            deviceEntity.setAddress("存放地点" + i);
-            deviceEntity.setCarType("罐车" + i);
-            deviceEntity.setReason("原因" + i);
-            deviceEntity.setParts("配件" + i);
-            deviceEntities.add(deviceEntity);
+            CarInfoEntity carInfoEntity = new CarInfoEntity();
+            carInfoEntity.setPlateNumber("豫A5555" + i);
+//            carInfoEntity.setAddress("存放地点" + i);
+//            carInfoEntity.setCarType("罐车" + i);
+//            carInfoEntity.setReason("原因" + i);
+//            carInfoEntity.setParts("配件" + i);
+            deviceEntities.add(carInfoEntity);
         }
 
         //普通列
@@ -78,7 +76,7 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
         Column<String> column4 = new Column<>("维修内容", "reason");
         Column<String> column5 = new Column<>("配件", "parts");
         //表格数据 datas是需要填充的数据
-        TableData<DeviceEntity> tableData = new TableData<>("设备", deviceEntities, column1, column2, column3, column4, column5);
+        TableData<CarInfoEntity> tableData = new TableData<>("设备", deviceEntities, column1, column2, column3, column4, column5);
         //table.setZoom(true,3);是否缩放
         mSmartTable.setTableData(tableData);
     }
