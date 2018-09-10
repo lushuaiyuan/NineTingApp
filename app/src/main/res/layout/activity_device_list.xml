@@ -53,14 +53,14 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/rl_projectAddress"
+            android:id="@+id/rl_project"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_projectAddress"
+                android:id="@+id/tv_project"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp5"
@@ -75,6 +75,7 @@
 
 
         <View
+            android:id="@+id/view1"
             android:layout_width="@dimen/dp1"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/dp10"
@@ -82,14 +83,14 @@
             android:background="@color/color_e5e5e5" />
 
         <RelativeLayout
-            android:id="@+id/rl_carState"
+            android:id="@+id/rl_carStatus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_carState"
+                android:id="@+id/tv_carStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp5"
@@ -123,7 +124,7 @@
                 android:drawableRight="@mipmap/icon_down_arrow"
                 android:gravity="center"
                 android:padding="@dimen/dp10"
-                android:text="类型"
+                android:text="车辆类型"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/dp14" />
         </RelativeLayout>

@@ -103,7 +103,7 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
     private ProjectAdapter projectAdapter;
     private List<ProjectEntity> projectEntities;
 
-    //项目部
+    //车辆状态
     private PopupWindow popupWindowCarStatus;
     private ListView mListViewCarStatus;
     private CarStatusAdapter carStatusAdapter;

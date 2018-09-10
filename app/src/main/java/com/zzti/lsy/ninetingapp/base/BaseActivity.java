@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 
 import com.jaeger.library.StatusBarUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zzti.lsy.ninetingapp.LoginActivity;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
@@ -34,6 +35,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
+
+import static com.scwang.smartrefresh.layout.constant.RefreshState.Refreshing;
 
 /**
  * @author ：on lsy on 2017/7/24 11:54
@@ -196,7 +199,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 ActivityStack.get().exit();
-
             }
 
             @Override
@@ -204,5 +206,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             }
         }, true);
+    }
+
+    protected void endRefresh(SmartRefreshLayout mSmartRefreshLayout) {
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.getState()==Refreshing ) {
+            mSmartRefreshLayout.finishRefresh();
+            mSmartRefreshLayout.finishLoadMore();
+        }
     }
 }

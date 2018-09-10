@@ -127,6 +127,12 @@ public class LoginActivity extends BaseActivity {
                     UIUtils.showT(msgInfo.getMsg());
                 }
             }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
         });
     }
 }

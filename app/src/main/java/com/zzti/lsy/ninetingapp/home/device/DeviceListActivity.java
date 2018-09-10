@@ -1,28 +1,53 @@
 package com.zzti.lsy.ninetingapp.home.device;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.CarStatusEntity;
+import com.zzti.lsy.ninetingapp.entity.CarTypeEntity;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
+import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.home.adapter.CarStatusAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.CarTypeAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.DeviceListAdapter;
 import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
+import com.zzti.lsy.ninetingapp.home.adapter.ProjectAdapter;
 import com.zzti.lsy.ninetingapp.home.pm.ContrastActivity;
 import com.zzti.lsy.ninetingapp.home.pm.OneCarMaintenanceStatisticActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.utils.DensityUtils;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,30 +56,56 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
+public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, AdapterView.OnItemClickListener {
     @BindView(R.id.rl_searchCarNumber)
     RelativeLayout rlSearchCarNumber;
     @BindView(R.id.ll_condition)
     LinearLayout llCondition;
+    @BindView(R.id.rl_project)
+    RelativeLayout rlProject;
+    @BindView(R.id.tv_project)
+    TextView tvProject;
+    @BindView(R.id.view1)
+    View view1;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
     @BindView(R.id.et_search)
     EditText etSearch;
-    @BindView(R.id.tv_projectAddress)
-    TextView tvProjectAddress;
-    @BindView(R.id.tv_carState)
-    TextView tvCarState;
+    @BindView(R.id.tv_carStatus)
+    TextView tvCarStatus;
     @BindView(R.id.tv_carType)
     TextView tvCarType;
     @BindView(R.id.btn_contrast)
     Button btnContrast;
 
+    //车辆状态
+    private PopupWindow popupWindowCarStatus;
+    private ListView mListViewCarStatus;
+    private CarStatusAdapter carStatusAdapter;
+    private List<CarStatusEntity> carStatusEntities;
+    //车辆类型pop
+    private PopupWindow popupWindowCarType;
+    private ListView mListViewCarType;
+    private CarTypeAdapter carTypeAdapter;
+    private List<CarTypeEntity> carTypeEntities;
+    //项目部
+    private PopupWindow popupWindowProject;
+    private ListView mListViewProject;
+    private ProjectAdapter projectAdapter;
+    private List<ProjectEntity> projectEntities;
+
     private DeviceListAdapter deviceListAdapter;
-    private List<CarInfoEntity> deviceListData;
+    private List<CarInfoEntity> carInfoEntities;
     private int flag = -1; //-1默认进入到详情界面 1代表获取车牌号 2代表进入单车统计界面 3代表选中
     private String carNumber;//对比的基准车牌号
+    private int tag;//条件中的item
+    private String wherestr = "";//查询条件
+    //    private String carStatus;//状态id
+//    private String vehicleTypeID;//类型id
+//    private String projectID;//项目部id
+    private int pageIndex = 1;//页码
 
     @Override
     public int getContentViewId() {
@@ -64,66 +115,182 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         initView();
+        initCarStatusPop();
+        initCarTypePop();
+        initProjectPop();
         initData();
+    }
+
+    private void initProjectPop() {
+        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+        contentview.setFocusable(true); // 这个很重要
+        contentview.setFocusableInTouchMode(true);
+        popupWindowProject = new PopupWindow(contentview, UIUtils.getWidth(this) - DensityUtils.dp2px(32), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowProject.setFocusable(true);
+        popupWindowProject.setOutsideTouchable(true);
+        popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        contentview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    popupWindowProject.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        mListViewProject = contentview.findViewById(R.id.pop_list);
+        projectEntities = new ArrayList<>();
+        projectAdapter = new ProjectAdapter(projectEntities);
+        mListViewProject.setAdapter(projectAdapter);
+        mListViewProject.setOnItemClickListener(this);
+        popupWindowProject.setAnimationStyle(R.style.anim_bottomPop);
+    }
+
+    private void initCarTypePop() {
+        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+        contentview.setFocusable(true); // 这个很重要
+        contentview.setFocusableInTouchMode(true);
+        popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(this) - DensityUtils.dp2px(32), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowCarType.setFocusable(true);
+        popupWindowCarType.setOutsideTouchable(true);
+        popupWindowCarType.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        contentview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    popupWindowCarType.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        mListViewCarType = contentview.findViewById(R.id.pop_list);
+        carTypeEntities = new ArrayList<>();
+        carTypeAdapter = new CarTypeAdapter(carTypeEntities);
+        mListViewCarType.setAdapter(carTypeAdapter);
+        mListViewCarType.setOnItemClickListener(this);
+        popupWindowCarType.setAnimationStyle(R.style.anim_upPop);
+    }
+
+    private void initCarStatusPop() {
+        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+        contentview.setFocusable(true); // 这个很重要
+        contentview.setFocusableInTouchMode(true);
+        popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(this) - DensityUtils.dp2px(32), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowCarStatus.setFocusable(true);
+        popupWindowCarStatus.setOutsideTouchable(true);
+        popupWindowCarStatus.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        contentview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    popupWindowCarStatus.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        mListViewCarStatus = contentview.findViewById(R.id.pop_list);
+        carStatusEntities = new ArrayList<>();
+        carStatusAdapter = new CarStatusAdapter(carStatusEntities);
+        mListViewCarStatus.setAdapter(carStatusAdapter);
+        mListViewCarStatus.setOnItemClickListener(this);
+        popupWindowCarStatus.setAnimationStyle(R.style.anim_upPop);
     }
 
     private void initData() {
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        deviceListData = new ArrayList<>();
-        deviceListAdapter = new DeviceListAdapter(deviceListData);
+        carInfoEntities = new ArrayList<>();
+        deviceListAdapter = new DeviceListAdapter(carInfoEntities);
         mRecycleView.setAdapter(deviceListAdapter);
         deviceListAdapter.setOnItemClickListener(this);
         deviceListAdapter.setFlag(flag);
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onRefresh(final RefreshLayout refreshlayout) {
+                wherestr = "";
+                pageIndex = 1;//                etSearch.setText("");
+                tvCarStatus.setText("车辆状态");
+                tvCarType.setText("车辆类型");
+                tvProject.setText("项目部");
+                carInfoEntities.clear();
+                getCarList();
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageIndex++;
+                getCarList();
+            }
+        });
         if (UIUtils.isNetworkConnected()) {
             getCarList();
         }
-        //TODO
-//        for (int i = 0; i < 6; i++) {
-//            CarInfoEntity carInfoEntity = new CarInfoEntity();
-//            if (i % 2 == 0) {
-//                carInfoEntity.setCarState("存放中");
-//            } else if (i % 2 == 1) {
-//                carInfoEntity.setCarState("维修中");
-//            } else if (i % 3 == 1) {
-//                carInfoEntity.setCarState("工作中");
-//            }
-//            carInfoEntity.setPlateNumber("豫A5555" + i);
-//            if (!StringUtil.isNullOrEmpty(carNumber) && carNumber.equals(carInfoEntity.getPlateNumber())) {
-//                carInfoEntity.setIsDefault(true);
-//            }
-//            carInfoEntity.setCarType("宇通00" + i);
-//            carInfoEntity.setProjectAddress("项目部" + i);
-//            carInfoEntity.setAddress("滁州");
-//            deviceListData.add(carInfoEntity);
-
-//        }
-        deviceListAdapter.notifyDataSetChanged();
     }
 
-    private String wherestr;//查询条件
 
     /**
      * 获取车辆列表
      */
     private void getCarList() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("wherestr", wherestr);
+        if (wherestr.length() > 0) {
+            params.put("wherestr", wherestr.substring(1, wherestr.length()));
+        } else {
+            params.put("wherestr", wherestr);
+        }
+        params.put("pageIndex", String.valueOf(pageIndex));
         OkHttpManager.postFormBody(Urls.POST_GETCARLIST, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
-                return null;
+                return result;
             }
 
             @Override
             public void onSuccess(String s) {
+                cancelDia();
+                endRefresh(smartRefreshLayout);
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            CarInfoEntity carInfoEntity = ParseUtils.parseJson(jsonArray.getString(i), CarInfoEntity.class);
+                            carInfoEntities.add(carInfoEntity);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
+                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+                deviceListAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+                endRefresh(smartRefreshLayout);
             }
         });
-
     }
 
     private void initView() {
         setTitle("设备列表");
+        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {
+            rlProject.setVisibility(View.VISIBLE);
+            view1.setVisibility(View.VISIBLE);
+        } else {
+            rlProject.setVisibility(View.GONE);
+            view1.setVisibility(View.GONE);
+        }
         smartRefreshLayout.setEnableLoadMore(true);
         smartRefreshLayout.setEnableRefresh(true);
         //使上拉加载具有弹性效果：
@@ -159,24 +326,24 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             startActivity(intent);
         } else if (flag == 1) {
             Intent intent = new Intent();
-            intent.putExtra("carNumber", deviceListData.get(position).getPlateNumber());
+            intent.putExtra("carNumber", carInfoEntities.get(position).getPlateNumber());
             setResult(2, intent);
             finish();
         } else if (flag == 2) {
             Intent intent = new Intent(this, OneCarMaintenanceStatisticActivity.class);
-            intent.putExtra("carNumber", deviceListData.get(position).getPlateNumber());
+            intent.putExtra("carNumber", carInfoEntities.get(position).getPlateNumber());
             startActivity(intent);
         } else if (flag == 3) {
-            if (!deviceListData.get(position).getPlateNumber().equals(carNumber)) {
-                if (deviceListData.get(position).isCheck()) {
-                    deviceListData.get(position).setCheck(false);
+            if (!carInfoEntities.get(position).getPlateNumber().equals(carNumber)) {
+                if (carInfoEntities.get(position).isCheck()) {
+                    carInfoEntities.get(position).setCheck(false);
                     deviceListAdapter.notifyDataSetChanged();
-                    carSelect.remove(deviceListData.get(position).getPlateNumber());
+                    carSelect.remove(carInfoEntities.get(position).getPlateNumber());
                 } else {
                     if (carSelect.size() < 3) {
-                        deviceListData.get(position).setCheck(true);
+                        carInfoEntities.get(position).setCheck(true);
                         deviceListAdapter.notifyDataSetChanged();
-                        carSelect.add(deviceListData.get(position).getPlateNumber());
+                        carSelect.add(carInfoEntities.get(position).getPlateNumber());
                     } else {
                         UIUtils.showT("每次最多只能对比三个");
                     }
@@ -185,23 +352,36 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         }
     }
 
-    @OnClick({R.id.iv_search, R.id.rl_projectAddress, R.id.rl_carState, R.id.tv_carType, R.id.tv_toolbarMenu, R.id.btn_contrast})
+    @OnClick({R.id.iv_search, R.id.rl_project, R.id.rl_carStatus, R.id.rl_carType, R.id.tv_toolbarMenu, R.id.btn_contrast})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.iv_search:
                 if (StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
                     UIUtils.showT("请输入车牌号");
+                    break;
                 }
-
+                if (!UIUtils.validateCarNum(etSearch.getText().toString())) {
+                    UIUtils.showT("车牌号格式不正确");
+                    break;
+                }
+                wherestr += "&plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
+                showDia();
+                carInfoEntities.clear();
+                getCarList();
                 break;
-            case R.id.rl_projectAddress:
-
+            case R.id.rl_project://选择项目部
+                tag = 3;
+                showDia();
+                getProject();
                 break;
-            case R.id.rl_carState:
-
+            case R.id.rl_carStatus:
+                tag = 1;
+                showCarStatus();
                 break;
-            case R.id.tv_carType:
-
+            case R.id.rl_carType:
+                tag = 2;
+                showDia();
+                getCarType();
                 break;
             case R.id.tv_toolbarMenu:
                 startActivity(new Intent(this, DeviceFormActivity.class));
@@ -218,5 +398,149 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         }
     }
 
+    /**
+     * 获取车辆类型
+     */
+    private void getCarType() {
+        HashMap<String, String> params = new HashMap<>();
+        OkHttpManager.postFormBody(Urls.POST_GETCARTYPE, params, tvCarType, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
 
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    carTypeEntities.clear();
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            CarTypeEntity carTypeEntity = ParseUtils.parseJson(jsonArray.getString(i), CarTypeEntity.class);
+                            carTypeEntities.add(carTypeEntity);
+                        }
+                        if (carTypeEntities.size() > 0) {
+                            if (carTypeEntities.size() >= 5) {
+                                //动态设置listView的高度
+                                View listItem = carTypeAdapter.getView(0, null, mListViewCarType);
+                                listItem.measure(0, 0);
+                                int totalHei = (listItem.getMeasuredHeight() + mListViewCarType.getDividerHeight()) * 5;
+                                mListViewCarType.getLayoutParams().height = totalHei;
+                                ViewGroup.LayoutParams params = mListViewCarType.getLayoutParams();
+                                params.height = totalHei;
+                                mListViewCarType.setLayoutParams(params);
+                            }
+                            popupWindowCarType.showAsDropDown(llCondition, 0, 0, Gravity.LEFT);
+                        } else {
+                            UIUtils.showT("暂无数据");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取项目部
+     */
+    private void getProject() {
+        HashMap<String, String> params = new HashMap<>();
+        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, params, tvProject, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    projectEntities.clear();
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
+                            projectEntities.add(projectEntity);
+                        }
+                        if (projectEntities.size() > 0) {
+                            if (projectEntities.size() >= 5) {
+                                //动态设置listView的高度
+                                View listItem = projectAdapter.getView(0, null, mListViewProject);
+                                listItem.measure(0, 0);
+                                int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
+                                mListViewProject.getLayoutParams().height = totalHei;
+                                ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
+                                params.height = totalHei;
+                                mListViewProject.setLayoutParams(params);
+                            }
+                            popupWindowProject.showAtLocation(tvProject, Gravity.BOTTOM, 0, 0);
+                        } else {
+                            UIUtils.showT("暂无数据");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+        });
+    }
+
+    //0存放中、1工作中、2维修中
+    private void showCarStatus() {
+        carStatusEntities.clear();
+        CarStatusEntity carStatusEntity1 = new CarStatusEntity("0", "存放中");
+        CarStatusEntity carStatusEntity2 = new CarStatusEntity("1", "工作中");
+        CarStatusEntity carStatusEntity3 = new CarStatusEntity("2", "维修中");
+        carStatusEntities.add(carStatusEntity1);
+        carStatusEntities.add(carStatusEntity2);
+        carStatusEntities.add(carStatusEntity3);
+        carStatusAdapter.notifyDataSetChanged();
+        popupWindowCarStatus.showAsDropDown(llCondition, 0, 0, Gravity.LEFT);
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (tag == 1) {
+            tvCarStatus.setText(carStatusEntities.get(i).getName());
+            wherestr += "&status=" + carStatusEntities.get(i).getId();
+            popupWindowCarStatus.dismiss();
+            showDia();
+            carInfoEntities.clear();
+            getCarList();
+        } else if (tag == 2) {
+            tvCarType.setText(carTypeEntities.get(i).getVehicleTypeName());
+            wherestr += "&vehicleTypeID=" + carTypeEntities.get(i).getVehicleTypeID();
+            popupWindowCarType.dismiss();
+            showDia();
+            carInfoEntities.clear();
+            getCarList();
+        } else if (tag == 3) {
+            tvProject.setText(projectEntities.get(i).getProjectName());
+            wherestr += "&projectID=" + projectEntities.get(i).getProjectID();
+            popupWindowProject.dismiss();
+            showDia();
+            carInfoEntities.clear();
+            getCarList();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        endRefresh(smartRefreshLayout);
+    }
 }
