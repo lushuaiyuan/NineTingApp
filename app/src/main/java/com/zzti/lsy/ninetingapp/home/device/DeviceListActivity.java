@@ -334,6 +334,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         if (flag == -1) {
             Intent intent = new Intent(this, DeviceDetailActivity.class);
             intent.putExtra("TAG", 0);
+            intent.putExtra("carInfoEntity",carInfoEntities.get(position));
             startActivity(intent);
         } else if (flag == 1) {
             Intent intent = new Intent();

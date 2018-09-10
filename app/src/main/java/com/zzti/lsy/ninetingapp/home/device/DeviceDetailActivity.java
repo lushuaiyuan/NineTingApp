@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zzti.lsy.ninetingapp.DataGenerator;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
@@ -25,6 +26,8 @@ public class DeviceDetailActivity extends BaseActivity {
     TextView tvCarNumber;
     @BindView(R.id.tv_projectAddress)
     TextView tvProjectAddress;
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
     @BindView(R.id.radio_group_carDetail)
     RadioGroup mRadioGroup;
     @BindView(R.id.radio_button_carDetail)
@@ -49,6 +52,16 @@ public class DeviceDetailActivity extends BaseActivity {
     private int tag; //0代表进入车辆详情选中的是详情 1代表保险年审
 
     private void initData() {
+        CarInfoEntity carInfoEntity = (CarInfoEntity) getIntent().getSerializableExtra("carInfoEntity");
+        tvCarNumber.setText(carInfoEntity.getPlateNumber());
+        if (carInfoEntity.getStatus().equals("0")) {
+            tvStatus.setText("存放中");
+        } else if (carInfoEntity.getStatus().equals("1")) {
+            tvStatus.setText("工作中");
+        } else if (carInfoEntity.getStatus().equals("2")) {
+            tvStatus.setText("维修中");
+        }
+        tvProjectAddress.setText(carInfoEntity.getProjectName());
     }
 
     private void initView() {
