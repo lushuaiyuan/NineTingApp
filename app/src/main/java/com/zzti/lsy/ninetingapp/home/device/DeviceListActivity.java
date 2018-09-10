@@ -73,8 +73,12 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     RecyclerView mRecycleView;
     @BindView(R.id.et_search)
     EditText etSearch;
+    @BindView(R.id.rl_carStatus)
+    RelativeLayout rlCarStatus;
     @BindView(R.id.tv_carStatus)
     TextView tvCarStatus;
+    @BindView(R.id.rl_carType)
+    RelativeLayout rlCarType;
     @BindView(R.id.tv_carType)
     TextView tvCarType;
     @BindView(R.id.btn_contrast)
@@ -102,9 +106,9 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     private String carNumber;//对比的基准车牌号
     private int tag;//条件中的item
     private String wherestr = "";//查询条件
-    //    private String carStatus;//状态id
-//    private String vehicleTypeID;//类型id
-//    private String projectID;//项目部id
+    private String status;//状态id
+    private String CarTypeID;//类型id
+    private String projectID;//项目部id
     private int pageIndex = 1;//页码
 
     @Override
@@ -151,7 +155,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(this) - DensityUtils.dp2px(32), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowCarType.setFocusable(true);
         popupWindowCarType.setOutsideTouchable(true);
         popupWindowCarType.setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -168,6 +172,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         mListViewCarType = contentview.findViewById(R.id.pop_list);
         carTypeEntities = new ArrayList<>();
         carTypeAdapter = new CarTypeAdapter(carTypeEntities);
+        carTypeAdapter.setTag(1);
         mListViewCarType.setAdapter(carTypeAdapter);
         mListViewCarType.setOnItemClickListener(this);
         popupWindowCarType.setAnimationStyle(R.style.anim_upPop);
@@ -177,7 +182,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(this) - DensityUtils.dp2px(32), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowCarStatus.setFocusable(true);
         popupWindowCarStatus.setOutsideTouchable(true);
         popupWindowCarStatus.setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -195,6 +200,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         carStatusEntities = new ArrayList<>();
         carStatusAdapter = new CarStatusAdapter(carStatusEntities);
         mListViewCarStatus.setAdapter(carStatusAdapter);
+        carStatusAdapter.setTag(1);
         mListViewCarStatus.setOnItemClickListener(this);
         popupWindowCarStatus.setAnimationStyle(R.style.anim_upPop);
     }
@@ -210,10 +216,14 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
                 wherestr = "";
-                pageIndex = 1;//                etSearch.setText("");
+                pageIndex = 1;
+                etSearch.setText("");
                 tvCarStatus.setText("车辆状态");
+                status = "";
                 tvCarType.setText("车辆类型");
+                CarTypeID = "";
                 tvProject.setText("项目部");
+                projectID = "";
                 carInfoEntities.clear();
                 getCarList();
             }
@@ -225,6 +235,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             }
         });
         if (UIUtils.isNetworkConnected()) {
+            showDia();
             getCarList();
         }
     }
@@ -354,6 +365,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
 
     @OnClick({R.id.iv_search, R.id.rl_project, R.id.rl_carStatus, R.id.rl_carType, R.id.tv_toolbarMenu, R.id.btn_contrast})
     public void viewClick(View view) {
+        hideSoftInput(etSearch);
         switch (view.getId()) {
             case R.id.iv_search:
                 if (StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
@@ -432,7 +444,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                                 params.height = totalHei;
                                 mListViewCarType.setLayoutParams(params);
                             }
-                            popupWindowCarType.showAsDropDown(llCondition, 0, 0, Gravity.LEFT);
+                            popupWindowCarType.showAsDropDown(rlCarType, 0, 0, Gravity.LEFT);
                         } else {
                             UIUtils.showT("暂无数据");
                         }
@@ -482,7 +494,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                                 params.height = totalHei;
                                 mListViewProject.setLayoutParams(params);
                             }
-                            popupWindowProject.showAtLocation(tvProject, Gravity.BOTTOM, 0, 0);
+                            popupWindowProject.showAtLocation(rlProject, Gravity.BOTTOM, 0, 0);
                         } else {
                             UIUtils.showT("暂无数据");
                         }
@@ -508,32 +520,54 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         carStatusEntities.add(carStatusEntity2);
         carStatusEntities.add(carStatusEntity3);
         carStatusAdapter.notifyDataSetChanged();
-        popupWindowCarStatus.showAsDropDown(llCondition, 0, 0, Gravity.LEFT);
+        popupWindowCarStatus.showAsDropDown(rlCarStatus, 0, 0, Gravity.LEFT);
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        wherestr = "";
         if (tag == 1) {
             tvCarStatus.setText(carStatusEntities.get(i).getName());
-            wherestr += "&status=" + carStatusEntities.get(i).getId();
+            status = carStatusEntities.get(i).getId();
+            wherestr += "&status=" + status;
             popupWindowCarStatus.dismiss();
             showDia();
             carInfoEntities.clear();
+            if (!StringUtil.isNullOrEmpty(CarTypeID)) {
+                wherestr += "&CarTypeID=" + CarTypeID;
+            }
+            if (!StringUtil.isNullOrEmpty(projectID)) {
+                wherestr += "&projectID=" + projectID;
+            }
             getCarList();
         } else if (tag == 2) {
             tvCarType.setText(carTypeEntities.get(i).getVehicleTypeName());
-            wherestr += "&vehicleTypeID=" + carTypeEntities.get(i).getVehicleTypeID();
+            CarTypeID = carTypeEntities.get(i).getVehicleTypeID();
+            wherestr += "&CarTypeID=" + carTypeEntities.get(i).getVehicleTypeID();
             popupWindowCarType.dismiss();
             showDia();
             carInfoEntities.clear();
+            if (!StringUtil.isNullOrEmpty(status)) {
+                wherestr += "&status=" + status;
+            }
+            if (!StringUtil.isNullOrEmpty(projectID)) {
+                wherestr += "&projectID=" + projectID;
+            }
             getCarList();
         } else if (tag == 3) {
             tvProject.setText(projectEntities.get(i).getProjectName());
+            projectID = projectEntities.get(i).getProjectID();
             wherestr += "&projectID=" + projectEntities.get(i).getProjectID();
             popupWindowProject.dismiss();
             showDia();
             carInfoEntities.clear();
+            if (!StringUtil.isNullOrEmpty(status)) {
+                wherestr += "&status=" + status;
+            }
+            if (!StringUtil.isNullOrEmpty(CarTypeID)) {
+                wherestr += "&CarTypeID=" + CarTypeID;
+            }
             getCarList();
         }
     }

@@ -14,9 +14,19 @@ import com.bin.david.form.data.table.TableData;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,6 +37,7 @@ import butterknife.BindView;
 public class DeviceFormActivity extends BaseActivity {
     @BindView(R.id.table)
     SmartTable smartTable;
+    private List<CarInfoEntity> carInfoEntities;
 
     @Override
     public int getContentViewId() {
@@ -40,31 +51,9 @@ public class DeviceFormActivity extends BaseActivity {
     }
 
     private void initData() {
-        List<CarInfoEntity> deviceEntities = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            CarInfoEntity carInfoEntity = new CarInfoEntity();
-            carInfoEntity.setPlateNumber("豫A5555" + i);
-//            carInfoEntity.setAddress("存放地点" + i);
-//            carInfoEntity.setCarType("罐车" + i);
-            carInfoEntity.setIPDate("2017-01-0" + (i + 1));
-            carInfoEntity.setVIN("ADDWD1345643S" + i);
-            carInfoEntity.setEngineNumber("000" + i);
-            deviceEntities.add(carInfoEntity);
-        }
-
-        //普通列
-        Column<String> column1 = new Column<>("车牌号", "carNumber");
-        column1.setFixed(true);
-        Column<Integer> column2 = new Column<>("存放地点", "address");
-        Column<Long> column3 = new Column<>("车辆类型", "carType");
-        Column<String> column4 = new Column<>("年检日期", "timeNs");
-        Column<String> column5 = new Column<>("保险购买日期", "timeBx");
-        Column<String> column6 = new Column<>("识别码", "carVin");
-        Column<String> column7 = new Column<>("发动机号", "engineNumber");
-        //表格数据 datas是需要填充的数据
-        TableData<CarInfoEntity> tableData = new TableData<>("设备", deviceEntities, column1, column2, column3, column4, column5, column6, column7);
-        //table.setZoom(true,3);是否缩放
-        smartTable.setTableData(tableData);
+        carInfoEntities = new ArrayList<>();
+        showDia();
+        getCarList();
     }
 
 
@@ -88,5 +77,65 @@ public class DeviceFormActivity extends BaseActivity {
         tableConfig.setColumnTitleVerticalPadding(DensityUtils.dp2px(8));   //设置标题的间距  列标题上下
         tableConfig.setColumnTitleHorizontalPadding(DensityUtils.dp2px(10));   //设置标题的间距  列标题左右
 
+    }
+
+    private void getCarList() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("wherestr", "");
+        params.put("pageIndex", "0");
+        OkHttpManager.postFormBody(Urls.POST_GETCARLIST, params, smartTable, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            CarInfoEntity carInfoEntity = ParseUtils.parseJson(jsonArray.getString(i), CarInfoEntity.class);
+                            String AVEDate = carInfoEntity.getAVEDate().replace("T", " ");
+                            carInfoEntity.setAVEDate(AVEDate);
+                            String IPDate = carInfoEntity.getIPDate().replace("T", " ");
+                            carInfoEntity.setIPDate(IPDate);
+                            carInfoEntities.add(carInfoEntity);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+                setTable();
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
+    }
+
+    private void setTable() {
+        //普通列
+        Column<String> column1 = new Column<>("车牌号", "plateNumber");
+        column1.setFixed(true);
+        Column<Integer> column2 = new Column<>("存放地点", "projectName");
+        Column<Long> column3 = new Column<>("车辆类型", "vehicleTypeName");
+        Column<String> column4 = new Column<>("年检日期", "AVEDate");
+        Column<String> column5 = new Column<>("保险购买日期", "IPDate");
+        Column<String> column6 = new Column<>("识别码", "VIN");
+        Column<String> column7 = new Column<>("发动机号", "engineNumber");
+        //表格数据 datas是需要填充的数据
+        TableData<CarInfoEntity> tableData = new TableData<>("设备", carInfoEntities, column1, column2, column3, column4, column5, column6, column7);
+        //table.setZoom(true,3);是否缩放
+        smartTable.setTableData(tableData);
     }
 }

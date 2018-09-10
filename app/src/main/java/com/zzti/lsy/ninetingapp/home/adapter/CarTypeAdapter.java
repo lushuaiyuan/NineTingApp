@@ -51,8 +51,21 @@ public class CarTypeAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        if (tag == 1) {
+            convertView.setBackgroundResource(R.drawable.black_selector);
+            viewHolder.tvName.setTextColor(App.get().getResources().getColor(R.color.color_white));
+        } else {
+            convertView.setBackgroundResource(R.drawable.white_gray_selector);
+            viewHolder.tvName.setTextColor(App.get().getResources().getColor(R.color.color_666666));
+        }
         viewHolder.tvName.setText(getItem(i).getVehicleTypeName());
         return convertView;
+    }
+
+    private int tag;
+
+    public void setTag(int tag) {
+        this.tag = tag;
     }
 
     static class ViewHolder {
