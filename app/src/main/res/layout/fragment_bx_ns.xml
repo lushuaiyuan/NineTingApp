@@ -70,7 +70,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_ns"
+                            android:id="@+id/tv_nsDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="507"
@@ -150,7 +150,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_bx"
+                            android:id="@+id/tv_bxDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="507"
@@ -220,12 +220,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="保险购买日期"
+                        android:text="保险到期日期"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_bx_buyTime"
+                        android:id="@+id/tv_bx_EndTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -244,12 +244,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="保险有效期"
+                        android:text="保险类型"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_bx_validityTime"
+                        android:id="@+id/tv_bxType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -273,7 +273,7 @@
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_map"
+                        android:id="@+id/tv_bxContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp10"
@@ -285,14 +285,33 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_alert"
-                style="@style/MyButton"
-                android:layout_marginBottom="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp30"
-                android:layout_marginRight="@dimen/dp30"
-                android:layout_marginTop="@dimen/dp20"
-                android:text="修改保险年审" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_alertBx"
+                    style="@style/MyButton"
+                    android:layout_width="0dp"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_marginRight="@dimen/dp30"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_weight="1"
+                    android:text="保险更改" />
+
+                <Button
+                    android:id="@+id/btn_alertNs"
+                    style="@style/MyButton"
+                    android:layout_width="0dp"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_marginRight="@dimen/dp30"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_weight="1"
+                    android:text="年审更改" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

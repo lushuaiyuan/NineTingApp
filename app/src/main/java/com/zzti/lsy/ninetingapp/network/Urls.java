@@ -16,6 +16,6 @@ public class Urls {
     public final static String POST_GETPROJECT = BASE_URL + "/Car/Car.asmx/GetProject";//获取项目部
     public final static String POST_GETFACTORY = BASE_URL + "/Car/Car.asmx/GetFactory";//获取生产厂家
     public final static String POST_GETINSURANCETYPE = BASE_URL + "/Car/Car.asmx/GetInsuranceType";//获取保险类型
-    public final static String POST_UPDATCARINFO = BASE_URL + "/Car/Car.asmx/GetInsuranceType";//更新车辆信息
+    public final static String POST_UPDATCARINFO = BASE_URL + "/Car/Car.asmx/UpdateCar";//更新车辆信息
 
 }

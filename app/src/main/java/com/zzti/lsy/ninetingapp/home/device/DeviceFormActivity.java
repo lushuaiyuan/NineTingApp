@@ -98,9 +98,9 @@ public class DeviceFormActivity extends BaseActivity {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             CarInfoEntity carInfoEntity = ParseUtils.parseJson(jsonArray.getString(i), CarInfoEntity.class);
-                            String AVEDate = carInfoEntity.getAVEDate().replace("T", " ");
+                            String AVEDate = carInfoEntity.getAVEDate().split("T")[0];
                             carInfoEntity.setAVEDate(AVEDate);
-                            String IPDate = carInfoEntity.getIPDate().replace("T", " ");
+                            String IPDate = carInfoEntity.getIPDate().split("T")[0];
                             carInfoEntity.setIPDate(IPDate);
                             carInfoEntities.add(carInfoEntity);
                         }

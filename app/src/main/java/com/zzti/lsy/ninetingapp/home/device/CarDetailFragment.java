@@ -25,6 +25,7 @@ import com.zzti.lsy.ninetingapp.home.adapter.ProjectAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
@@ -75,7 +76,8 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
     private List<ProjectEntity> projectEntities;
 
     private CarInfoEntity carInfoEntity;
-
+    private String beforeProjectID;
+    private String beforeProjectName;
 
     public static CarDetailFragment newInstance() {
         CarDetailFragment fragment = new CarDetailFragment();
@@ -105,11 +107,13 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
         tvManufacturer.setText(carInfoEntity.getFactoryName());
         tvVin.setText(carInfoEntity.getVIN());
         tvEngineNumber.setText(carInfoEntity.getEngineNumber());
-        tvBuyTime.setText(carInfoEntity.getPurchaseDate().replace("T", " "));
+        tvBuyTime.setText(carInfoEntity.getPurchaseDate().split("T")[0]);
         tvBuyMoney.setText(carInfoEntity.getPrice());
         tvDrivingNumber.setText(carInfoEntity.getDrivingLicenseNumber());
-        tvDrivingNumberGiveTime.setText(carInfoEntity.getDLDate().replace("T", " "));
-        tvDrivingNumberValidityTime.setText(carInfoEntity.getDLValidDate().replace("T", " "));
+        tvDrivingNumberGiveTime.setText(carInfoEntity.getDLDate().split("T")[0]);
+        tvDrivingNumberValidityTime.setText(carInfoEntity.getDLValidDate().split("T")[0]);
+        beforeProjectID = carInfoEntity.getProjectID();
+        beforeProjectName = carInfoEntity.getProjectName();
     }
 
     private void initPop() {
@@ -207,6 +211,10 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
                 }
                 break;
             case R.id.btn_save:
+                if (StringUtil.isNullOrEmpty(projectID)) {
+                    UIUtils.showT("请选择不同的项目部");
+                    break;
+                }
                 MAlertDialog.show(mActivity, "提示", "是否保存数据？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
                     @Override
                     public void onConfirmClick(String msg) {
@@ -224,6 +232,8 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
 
     private void saveData() {
         showDia();
+        carInfoEntity.setProjectID(projectID);
+        carInfoEntity.setProjectName(tvAddress.getText().toString());
         HashMap<String, String> params = new HashMap<>();
         params.put("carJson", new Gson().toJson(carInfoEntity));
         OkHttpManager.postFormBody(Urls.POST_UPDATCARINFO, params, tvAddress, new OkHttpManager.OnResponse<String>() {
@@ -237,12 +247,22 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-
+                    UIUtils.showT("修改成功");
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
+                    carInfoEntity.setProjectName(beforeProjectName);
+                    carInfoEntity.setProjectID(beforeProjectID);
                     UIUtils.showT(msgInfo.getMsg());
                 }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+                carInfoEntity.setProjectName(beforeProjectName);
+                carInfoEntity.setProjectID(beforeProjectID);
             }
         });
     }
@@ -252,11 +272,12 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
         setBackgroundAlpha(1);
     }
 
+    private String projectID;
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         tvAddress.setText(projectEntities.get(i).getProjectName());
-        carInfoEntity.setProjectID(projectEntities.get(i).getProjectID());
-        carInfoEntity.setProjectName(projectEntities.get(i).getProjectName());
+        projectID = projectEntities.get(i).getProjectID();
         popupWindowProject.dismiss();
     }
 }

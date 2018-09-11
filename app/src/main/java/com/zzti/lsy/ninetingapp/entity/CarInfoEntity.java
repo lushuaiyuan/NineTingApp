@@ -33,18 +33,6 @@ public class CarInfoEntity implements Serializable {
     private boolean isDefault;//是否是对比的基准
     private boolean isCheck;//是否是选中的要对比的对象
 
-//    private String carType;//车辆类型
-//    private String carState;//车辆状态
-//    private String projectAddress;//项目部
-//    private String address;//存放地
-//    private String inDestination;//出库目的地
-//    private String inReason;//入库原因
-//    private String outDestination;//出库目的地
-//    private String outReason;//出库原因
-//    private String inNum;//入库数量
-//    private String outNum;//出库数量
-//    private String reason;//维修原因
-//    private String parts;//维修配件
 
 
     public String getVehicleTypeName() {
@@ -103,70 +91,6 @@ public class CarInfoEntity implements Serializable {
         this.isDefault = isDefault;
     }
 
-//    public String getParts() {
-//        return parts;
-//    }
-//
-//    public void setParts(String parts) {
-//        this.parts = parts;
-//    }
-//
-//    public String getReason() {
-//        return reason;
-//    }
-//
-//    public void setReason(String reason) {
-//        this.reason = reason;
-//    }
-//
-//    public String getInNum() {
-//        return inNum;
-//    }
-//
-//    public void setInNum(String inNum) {
-//        this.inNum = inNum;
-//    }
-//
-//    public String getOutNum() {
-//        return outNum;
-//    }
-//
-//    public void setOutNum(String outNum) {
-//        this.outNum = outNum;
-//    }
-//
-//    public String getInDestination() {
-//        return inDestination;
-//    }
-//
-//    public void setInDestination(String inDestination) {
-//        this.inDestination = inDestination;
-//    }
-//
-//    public String getInReason() {
-//        return inReason;
-//    }
-//
-//    public void setInReason(String inReason) {
-//        this.inReason = inReason;
-//    }
-//
-//    public String getOutDestination() {
-//        return outDestination;
-//    }
-//
-//    public void setOutDestination(String outDestination) {
-//        this.outDestination = outDestination;
-//    }
-//
-//    public String getOutReason() {
-//        return outReason;
-//    }
-//
-//    public void setOutReason(String outReason) {
-//        this.outReason = outReason;
-//    }
-
     public String getIPDate() {
         return IPDate;
     }
@@ -183,29 +107,6 @@ public class CarInfoEntity implements Serializable {
         this.engineNumber = engineNumber;
     }
 
-//    public String getCarState() {
-//        return carState;
-//    }
-//
-//    public void setCarState(String carState) {
-//        this.carState = carState;
-//    }
-//
-//    public String getProjectAddress() {
-//        return projectAddress;
-//    }
-//
-//    public void setProjectAddress(String projectAddress) {
-//        this.projectAddress = projectAddress;
-//    }
-//
-//    public String getAddress() {
-//        return address;
-//    }
-//
-//    public void setAddress(String address) {
-//        this.address = address;
-//    }
 
     public String getPlateNumber() {
         return plateNumber;
@@ -215,13 +116,6 @@ public class CarInfoEntity implements Serializable {
         this.plateNumber = plateNumber;
     }
 
-//    public String getCarType() {
-//        return carType;
-//    }
-//
-//    public void setCarType(String carType) {
-//        this.carType = carType;
-//    }
 
     public String getVIN() {
         return VIN;
