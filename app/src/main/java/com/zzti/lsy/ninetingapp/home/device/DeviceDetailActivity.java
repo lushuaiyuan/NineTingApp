@@ -35,7 +35,7 @@ public class DeviceDetailActivity extends BaseActivity {
     @BindView(R.id.radio_button_bxns)
     RadioButton radioButtonBxNs;
 
-    private Fragment[] mFragments;
+    private Fragment[] mFragments = new Fragment[2];
 
     @Override
     public int getContentViewId() {
@@ -44,7 +44,6 @@ public class DeviceDetailActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        mFragments = DataGenerator.getFragmentCarDetails();
         initView();
         initData();
     }
@@ -53,6 +52,14 @@ public class DeviceDetailActivity extends BaseActivity {
 
     private void initData() {
         CarInfoEntity carInfoEntity = (CarInfoEntity) getIntent().getSerializableExtra("carInfoEntity");
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("carInfoEntity", carInfoEntity);
+        CarDetailFragment carDetailFragment = CarDetailFragment.newInstance();
+        BXNSFragment bxnsFragment = BXNSFragment.newInstance();
+        carDetailFragment.setArguments(bundle);
+        bxnsFragment.setArguments(bundle);
+        mFragments[0] = carDetailFragment;
+        mFragments[1] = bxnsFragment;
         tvCarNumber.setText(carInfoEntity.getPlateNumber());
         if (carInfoEntity.getStatus().equals("0")) {
             tvStatus.setText("存放中");
@@ -62,10 +69,6 @@ public class DeviceDetailActivity extends BaseActivity {
             tvStatus.setText("维修中");
         }
         tvProjectAddress.setText(carInfoEntity.getProjectName());
-    }
-
-    private void initView() {
-        setTitle("车辆详情");
         tag = UIUtils.getInt4Intent(this, "TAG");
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             Fragment mFragment = null;
@@ -95,5 +98,9 @@ public class DeviceDetailActivity extends BaseActivity {
         } else if (tag == 1) {
             radioButtonBxNs.setChecked(true);
         }
+    }
+
+    private void initView() {
+        setTitle("车辆详情");
     }
 }

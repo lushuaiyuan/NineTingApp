@@ -2,6 +2,7 @@ package com.zzti.lsy.ninetingapp.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,16 +11,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.zzti.lsy.ninetingapp.LoginActivity;
 import com.zzti.lsy.ninetingapp.R;
+import com.zzti.lsy.ninetingapp.utils.ActivityStack;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.view.CustomDialog;
+import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
+
+import static com.scwang.smartrefresh.layout.constant.RefreshState.Loading;
+import static com.scwang.smartrefresh.layout.constant.RefreshState.Refreshing;
 
 /**
  * @author ：on lsy on 2017/7/24 14:22
@@ -154,4 +164,40 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    /**
+     * 登出
+     */
+    protected void loginOut() {
+        MAlertDialog.show(mActivity, "提示", "登录失效，请重新登录", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+            @Override
+            public void onConfirmClick(String msg) {
+                SpUtils.getInstance().put(SpUtils.LOGINSTATE, false);
+                SpUtils.getInstance().put(SpUtils.OPTYPE, -1);
+                Intent intent = new Intent(mActivity, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                ActivityStack.get().exit();
+            }
+
+            @Override
+            public void onCancelClick() {
+
+            }
+        }, true);
+    }
+    protected void endRefresh(SmartRefreshLayout mSmartRefreshLayout) {
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.getState() == Refreshing) {
+            mSmartRefreshLayout.finishRefresh();
+        }
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.getState() == Loading) {
+            mSmartRefreshLayout.finishLoadMore();
+        }
+    }
+
+    //设置屏幕背景透明效果
+    protected void setBackgroundAlpha(float alpha) {
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = alpha;
+        mActivity.getWindow().setAttributes(lp);
+    }
 }

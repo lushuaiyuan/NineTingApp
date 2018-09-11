@@ -237,6 +237,8 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         if (UIUtils.isNetworkConnected()) {
             showDia();
             getCarList();
+            getCarType();
+            getProject();
         }
     }
 
@@ -247,7 +249,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     private void getCarList() {
         HashMap<String, String> params = new HashMap<>();
         if (wherestr.length() > 0) {
-            params.put("wherestr", wherestr.substring(1, wherestr.length()));
+            params.put("wherestr", wherestr.substring(5, wherestr.length()));
         } else {
             params.put("wherestr", wherestr);
         }
@@ -334,7 +336,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         if (flag == -1) {
             Intent intent = new Intent(this, DeviceDetailActivity.class);
             intent.putExtra("TAG", 0);
-            intent.putExtra("carInfoEntity",carInfoEntities.get(position));
+            intent.putExtra("carInfoEntity", carInfoEntities.get(position));
             startActivity(intent);
         } else if (flag == 1) {
             Intent intent = new Intent();
@@ -377,15 +379,28 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                     UIUtils.showT("车牌号格式不正确");
                     break;
                 }
-                wherestr += "&plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
+                wherestr += " and plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
                 showDia();
                 carInfoEntities.clear();
                 getCarList();
                 break;
             case R.id.rl_project://选择项目部
                 tag = 3;
-                showDia();
-                getProject();
+                if (projectEntities.size() > 0) {
+                    if (projectEntities.size() >= 5) {
+                        //动态设置listView的高度
+                        View listItem = projectAdapter.getView(0, null, mListViewProject);
+                        listItem.measure(0, 0);
+                        int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
+                        mListViewProject.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
+                        params.height = totalHei;
+                        mListViewProject.setLayoutParams(params);
+                    }
+                    popupWindowProject.showAtLocation(rlProject, Gravity.BOTTOM, 0, 0);
+                } else {
+                    UIUtils.showT("暂无数据");
+                }
                 break;
             case R.id.rl_carStatus:
                 tag = 1;
@@ -393,8 +408,21 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                 break;
             case R.id.rl_carType:
                 tag = 2;
-                showDia();
-                getCarType();
+                if (carTypeEntities.size() > 0) {
+                    if (carTypeEntities.size() >= 5) {
+                        //动态设置listView的高度
+                        View listItem = carTypeAdapter.getView(0, null, mListViewCarType);
+                        listItem.measure(0, 0);
+                        int totalHei = (listItem.getMeasuredHeight() + mListViewCarType.getDividerHeight()) * 5;
+                        mListViewCarType.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = mListViewCarType.getLayoutParams();
+                        params.height = totalHei;
+                        mListViewCarType.setLayoutParams(params);
+                    }
+                    popupWindowCarType.showAsDropDown(rlCarType, 0, 0, Gravity.LEFT);
+                } else {
+                    UIUtils.showT("暂无数据");
+                }
                 break;
             case R.id.tv_toolbarMenu:
                 startActivity(new Intent(this, DeviceFormActivity.class));
@@ -434,21 +462,6 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                             CarTypeEntity carTypeEntity = ParseUtils.parseJson(jsonArray.getString(i), CarTypeEntity.class);
                             carTypeEntities.add(carTypeEntity);
                         }
-                        if (carTypeEntities.size() > 0) {
-                            if (carTypeEntities.size() >= 5) {
-                                //动态设置listView的高度
-                                View listItem = carTypeAdapter.getView(0, null, mListViewCarType);
-                                listItem.measure(0, 0);
-                                int totalHei = (listItem.getMeasuredHeight() + mListViewCarType.getDividerHeight()) * 5;
-                                mListViewCarType.getLayoutParams().height = totalHei;
-                                ViewGroup.LayoutParams params = mListViewCarType.getLayoutParams();
-                                params.height = totalHei;
-                                mListViewCarType.setLayoutParams(params);
-                            }
-                            popupWindowCarType.showAsDropDown(rlCarType, 0, 0, Gravity.LEFT);
-                        } else {
-                            UIUtils.showT("暂无数据");
-                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -484,21 +497,6 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                             ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
                             projectEntities.add(projectEntity);
                         }
-                        if (projectEntities.size() > 0) {
-                            if (projectEntities.size() >= 5) {
-                                //动态设置listView的高度
-                                View listItem = projectAdapter.getView(0, null, mListViewProject);
-                                listItem.measure(0, 0);
-                                int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
-                                mListViewProject.getLayoutParams().height = totalHei;
-                                ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
-                                params.height = totalHei;
-                                mListViewProject.setLayoutParams(params);
-                            }
-                            popupWindowProject.showAtLocation(rlProject, Gravity.BOTTOM, 0, 0);
-                        } else {
-                            UIUtils.showT("暂无数据");
-                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -531,43 +529,43 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         if (tag == 1) {
             tvCarStatus.setText(carStatusEntities.get(i).getName());
             status = carStatusEntities.get(i).getId();
-            wherestr += "&status=" + status;
+            wherestr += " and status=" + status;
             popupWindowCarStatus.dismiss();
             showDia();
             carInfoEntities.clear();
             if (!StringUtil.isNullOrEmpty(CarTypeID)) {
-                wherestr += "&CarTypeID=" + CarTypeID;
+                wherestr += " and CarTypeID=" + CarTypeID;
             }
             if (!StringUtil.isNullOrEmpty(projectID)) {
-                wherestr += "&projectID=" + projectID;
+                wherestr += " and projectID=" + projectID;
             }
             getCarList();
         } else if (tag == 2) {
             tvCarType.setText(carTypeEntities.get(i).getVehicleTypeName());
             CarTypeID = carTypeEntities.get(i).getVehicleTypeID();
-            wherestr += "&CarTypeID=" + carTypeEntities.get(i).getVehicleTypeID();
+            wherestr += " and CarTypeID=" + carTypeEntities.get(i).getVehicleTypeID();
             popupWindowCarType.dismiss();
             showDia();
             carInfoEntities.clear();
             if (!StringUtil.isNullOrEmpty(status)) {
-                wherestr += "&status=" + status;
+                wherestr += " and status=" + status;
             }
             if (!StringUtil.isNullOrEmpty(projectID)) {
-                wherestr += "&projectID=" + projectID;
+                wherestr += " and projectID=" + projectID;
             }
             getCarList();
         } else if (tag == 3) {
             tvProject.setText(projectEntities.get(i).getProjectName());
             projectID = projectEntities.get(i).getProjectID();
-            wherestr += "&projectID=" + projectEntities.get(i).getProjectID();
+            wherestr += " and projectID=" + projectEntities.get(i).getProjectID();
             popupWindowProject.dismiss();
             showDia();
             carInfoEntities.clear();
             if (!StringUtil.isNullOrEmpty(status)) {
-                wherestr += "&status=" + status;
+                wherestr += " and status=" + status;
             }
             if (!StringUtil.isNullOrEmpty(CarTypeID)) {
-                wherestr += "&CarTypeID=" + CarTypeID;
+                wherestr += " and CarTypeID=" + CarTypeID;
             }
             getCarList();
         }

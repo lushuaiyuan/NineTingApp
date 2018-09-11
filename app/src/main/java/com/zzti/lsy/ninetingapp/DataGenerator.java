@@ -31,12 +31,12 @@ public class DataGenerator {
         return fragments;
     }
 
-    public static Fragment[] getFragmentCarDetails() {
-        Fragment fragments[] = new Fragment[2];
-        fragments[0] = CarDetailFragment.newInstance();
-        fragments[1] = BXNSFragment.newInstance();
-        return fragments;
-    }
+//    public static Fragment[] getFragmentCarDetails() {
+//        Fragment fragments[] = new Fragment[2];
+//        fragments[0] = CarDetailFragment.newInstance();
+//        fragments[1] = BXNSFragment.newInstance();
+//        return fragments;
+//    }
 
 
 }

@@ -36,6 +36,7 @@ import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
 
+import static com.scwang.smartrefresh.layout.constant.RefreshState.Loading;
 import static com.scwang.smartrefresh.layout.constant.RefreshState.Refreshing;
 
 /**
@@ -209,8 +210,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void endRefresh(SmartRefreshLayout mSmartRefreshLayout) {
-        if (mSmartRefreshLayout != null && mSmartRefreshLayout.getState()==Refreshing ) {
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.getState() == Refreshing) {
             mSmartRefreshLayout.finishRefresh();
+        }
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.getState() == Loading) {
             mSmartRefreshLayout.finishLoadMore();
         }
     }

@@ -34,6 +34,7 @@ import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
+import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -131,8 +132,18 @@ public class YearInsuranceActivity extends BaseActivity implements AdapterView.O
                 showCustomTime(3);
                 break;
             case R.id.btn_inputYearInsurance:
-                showDia();
-                submitData();
+
+                MAlertDialog.show(this, "提示", "是否录入数据？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirmClick(String msg) {
+                        submitData();
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
+                    }
+                },true);
                 break;
         }
     }
@@ -161,7 +172,7 @@ public class YearInsuranceActivity extends BaseActivity implements AdapterView.O
         carInfoEntity.setIPDate(tvBxBuyTime.getText().toString());
         carInfoEntity.setIEDate(tvBxEndTime.getText().toString());
         carInfoEntity.setInsuranceID(insuranceID);
-
+        showDia();
         HashMap<String, String> params = new HashMap<>();
         params.put("carJson", new Gson().toJson(carInfoEntity));
         OkHttpManager.postFormBody(Urls.POST_ADDCAR, params, tvBxType, new OkHttpManager.OnResponse<String>() {
