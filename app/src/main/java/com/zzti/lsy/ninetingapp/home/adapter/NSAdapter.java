@@ -9,11 +9,11 @@ import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import java.util.List;
 
 /**
- * 保险适配器
+ * 年审适配器
  */
-public class BXAdapter extends BaseQuickAdapter<NsBxEntity, BaseViewHolder> {
-    public BXAdapter(List<NsBxEntity> homeHintEntities) {
-        super(R.layout.item_bx_list, homeHintEntities);
+public class NSAdapter extends BaseQuickAdapter<NsBxEntity, BaseViewHolder> {
+    public NSAdapter(List<NsBxEntity> homeHintEntities) {
+        super(R.layout.item_ns_list, homeHintEntities);
     }
 
     @Override
@@ -21,8 +21,7 @@ public class BXAdapter extends BaseQuickAdapter<NsBxEntity, BaseViewHolder> {
         helper.setText(R.id.tv_carNumber, item.getPlateNumber())
                 .setText(R.id.tv_endDate, item.getExpireDate().split("T")[0])
                 .setText(R.id.tv_projectAddress, item.getProjectName())
-                .setText(R.id.tv_buyDate, item.getBuyTime().split("T")[0])
-                .setText(R.id.tv_bxName, item.getInsuranceName())
+                .setText(R.id.tv_carType, item.getVehicleTypeName())
                 .setText(R.id.tv_bx_validityDay, String.valueOf(DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), item.getExpireDate().split("T")[0])));
     }
 }

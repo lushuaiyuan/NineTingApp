@@ -19,6 +19,7 @@ import butterknife.BindView;
 
 /**
  * author：anxin on 2018/8/7 14:28
+ * 当前类需要根据车牌号获取值
  * 车辆详情
  */
 public class DeviceDetailActivity extends BaseActivity {

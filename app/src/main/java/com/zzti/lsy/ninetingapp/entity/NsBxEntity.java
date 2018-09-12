@@ -4,58 +4,76 @@ package com.zzti.lsy.ninetingapp.entity;
  * 首页提醒的实体类
  */
 public class NsBxEntity {
-    private String carNumber;
-    private String endDay;
-    private String endDate;
-    private String buyDate;
-    private String validityTime;
-    private String projectAddress;
+    private String plateNumber;//车牌号
+    private String expireDate;//到期时间
+    private String typeName;//保险、年审
+    private String projectID;//项目地点
+    public String projectName;//项目部名称
+    public String insuranceName;//保险名称
+    public String buyTime;//保险购买时间
+    private String vehicleTypeName;//车辆类型
 
-    public String getBuyDate() {
-        return buyDate;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setBuyDate(String buyDate) {
-        this.buyDate = buyDate;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public String getValidityTime() {
-        return validityTime;
+    public String getInsuranceName() {
+        return insuranceName;
     }
 
-    public void setValidityTime(String validityTime) {
-        this.validityTime = validityTime;
+    public void setInsuranceName(String insuranceName) {
+        this.insuranceName = insuranceName;
     }
 
-    public String getProjectAddress() {
-        return projectAddress;
+    public String getBuyTime() {
+        return buyTime;
     }
 
-    public void setProjectAddress(String projectAddress) {
-        this.projectAddress = projectAddress;
+    public void setBuyTime(String buyTime) {
+        this.buyTime = buyTime;
     }
 
-    public String getCarNumber() {
-        return carNumber;
+    public String getVehicleTypeName() {
+        return vehicleTypeName;
     }
 
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
+    public void setVehicleTypeName(String vehicleTypeName) {
+        this.vehicleTypeName = vehicleTypeName;
     }
 
-    public String getEndDay() {
-        return endDay;
+    public String getPlateNumber() {
+        return plateNumber;
     }
 
-    public void setEndDay(String endDay) {
-        this.endDay = endDay;
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getExpireDate() {
+        return expireDate;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setExpireDate(String expireDate) {
+        this.expireDate = expireDate;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
     }
 }

@@ -52,14 +52,6 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     protected void initData() {
         homeHintEntitiesBx = new ArrayList<>();
         homeHintEntitiesNs = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            NsBxEntity nsBxEntity = new NsBxEntity();
-            nsBxEntity.setCarNumber("豫A5555" + i);
-            nsBxEntity.setEndDate("2018.09.01");
-            nsBxEntity.setEndDay("12");
-            homeHintEntitiesNs.add(nsBxEntity);
-            homeHintEntitiesBx.add(nsBxEntity);
-        }
 
         LinearLayoutManager linearLayoutManagerNs = new LinearLayoutManager(getContext());
         linearLayoutManagerNs.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -72,9 +64,14 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         LinearLayoutManager linearLayoutManagerBx = new LinearLayoutManager(getContext());
         linearLayoutManagerBx.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecycleViewBx.setLayoutManager(linearLayoutManagerBx);
-        homeBxAdapter = new HomeBxAdapter(homeHintEntitiesNs);
+        homeBxAdapter = new HomeBxAdapter(homeHintEntitiesBx);
         mRecycleViewBx.setAdapter(homeBxAdapter);
         homeBxAdapter.setOnItemClickListener(this);
+
+        if (UIUtils.isNetworkConnected()) {
+            showDia();
+//            getCarExpire();
+        }
     }
 
     public static Fragment newInstance() {

@@ -4,6 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
+import com.zzti.lsy.ninetingapp.utils.DateUtil;
 
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class HomeBxAdapter extends BaseQuickAdapter<NsBxEntity, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, NsBxEntity item) {
-        helper.setText(R.id.tv_carNumber, item.getCarNumber())
-                .setText(R.id.tv_endDay, item.getEndDay())
-                .setText(R.id.tv_endDate, item.getEndDate());
+        helper.setText(R.id.tv_carNumber, item.getPlateNumber())
+                .setText(R.id.tv_endDay, String.valueOf(DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), item.getExpireDate().split("T")[0])))
+                .setText(R.id.tv_endDate, item.getExpireDate().split("T")[0]);
     }
 }
