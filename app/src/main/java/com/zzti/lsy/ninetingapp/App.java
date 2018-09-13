@@ -54,7 +54,6 @@ public class App extends TinkerApplication {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
-        Bugly.init(getApplicationContext(), "6bf38193c5", false);
 
         //在使用SDK各组件之前初始化context信息，传入ApplicationContext
         SDKInitializer.initialize(this);

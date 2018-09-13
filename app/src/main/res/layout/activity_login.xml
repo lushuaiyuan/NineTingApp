@@ -10,10 +10,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp100"
         android:layout_marginTop="@dimen/dp20"
-        android:src="@drawable/ic_launcher_background" />
+        android:background="@mipmap/icon_logo" />
 
     <View
         style="@style/MyView"
