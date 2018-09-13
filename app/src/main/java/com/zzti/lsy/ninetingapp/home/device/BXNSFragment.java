@@ -15,6 +15,7 @@ import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
 import com.zzti.lsy.ninetingapp.entity.InsuranceEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
@@ -23,6 +24,7 @@ import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -194,6 +196,7 @@ public class BXNSFragment extends BaseFragment {
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     UIUtils.showT("修改成功");
+                    EventBus.getDefault().post(new EventMessage<>(C.EventCode.B, true));
                     if (type == 1) {
                         String ieDate = DateUtil.getAfterMonth(beforeIEDate, 12);
                         int dayBetweenTwo = DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), ieDate);

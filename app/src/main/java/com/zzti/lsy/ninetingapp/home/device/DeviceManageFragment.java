@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.home.device;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +31,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 设备管理员 operator 3
+ * 设备管理员
  */
 public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.recycleView_ns)
@@ -196,9 +197,15 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
         }
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(mActivity, DeviceDetailActivity.class);
+        if (adapter == homeBxAdapter) {
+            intent.putExtra("carNumber", homeHintEntitiesBx.get(position).getPlateNumber());
+        } else if (adapter == homeNsAdapter) {
+            intent.putExtra("carNumber", homeHintEntitiesNs.get(position).getPlateNumber());
+        }
         intent.putExtra("TAG", 1);
         startActivity(intent);
     }

@@ -21,6 +21,7 @@ import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -29,6 +30,7 @@ import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -248,6 +250,7 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     UIUtils.showT("修改成功");
+                    EventBus.getDefault().post(new EventMessage<>(C.EventCode.B, true));
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {

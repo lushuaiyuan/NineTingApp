@@ -31,6 +31,7 @@ import com.zzti.lsy.ninetingapp.entity.CarTypeEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.CarStatusAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.CarTypeAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.DeviceListAdapter;
@@ -123,6 +124,11 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         initCarTypePop();
         initProjectPop();
         initData();
+    }
+
+    @Override
+    protected boolean openEventBus() {
+        return true;
     }
 
     private void initProjectPop() {
@@ -336,7 +342,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         if (flag == -1) {
             Intent intent = new Intent(this, DeviceDetailActivity.class);
             intent.putExtra("TAG", 0);
-            intent.putExtra("carInfoEntity", carInfoEntities.get(position));
+            intent.putExtra("carNumber", carInfoEntities.get(position).getPlateNumber());
             startActivity(intent);
         } else if (flag == 1) {
             Intent intent = new Intent();
@@ -575,5 +581,24 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     protected void onDestroy() {
         super.onDestroy();
         endRefresh(smartRefreshLayout);
+    }
+
+    @Override
+    protected void onEventComing(EventMessage paramEventCenter) {
+        super.onEventComing(paramEventCenter);
+        if (paramEventCenter.getEventCode() == C.EventCode.B) {
+            wherestr = "";
+            pageIndex = 1;
+            etSearch.setText("");
+            tvCarStatus.setText("车辆状态");
+            status = "";
+            tvCarType.setText("车辆类型");
+            CarTypeID = "";
+            tvProject.setText("项目部");
+            projectID = "";
+            carInfoEntities.clear();
+            showDia();
+            getCarList();
+        }
     }
 }
