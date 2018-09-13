@@ -2,12 +2,16 @@ package com.zzti.lsy.ninetingapp.home.device;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
@@ -34,6 +38,8 @@ import butterknife.OnClick;
  * 设备管理员
  */
 public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.recycleView_ns)
     RecyclerView mRecycleViewNs;
     @BindView(R.id.tv_lookMore_ns)
@@ -60,6 +66,8 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
     @Override
     protected void initView() {
         tvToolbarTitle.setText("首页");
+        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setEnableRefresh(true);
     }
 
     @Override
@@ -82,6 +90,12 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
         mRecycleViewBx.setAdapter(homeBxAdapter);
         homeBxAdapter.setOnItemClickListener(this);
 
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getCarExpire();
+            }
+        });
         if (UIUtils.isNetworkConnected()) {
             showDia();
             getCarExpire();
@@ -94,7 +108,6 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
     private void getCarExpire() {
         homeHintEntitiesBx.clear();
         homeHintEntitiesNs.clear();
-
         HashMap<String, String> params = new HashMap<>();
         OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, params, mRecycleViewBx, new OkHttpManager.OnResponse<String>() {
             @Override
@@ -105,6 +118,7 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
             @Override
             public void onSuccess(String s) {
                 cancelDia();
+                endRefresh(smartRefreshLayout);
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     try {
@@ -159,6 +173,7 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
             public void onFailed(int code, String msg, String url) {
                 super.onFailed(code, msg, url);
                 cancelDia();
+                endRefresh(smartRefreshLayout);
             }
         });
     }
@@ -197,7 +212,6 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
         }
     }
 
-    @SuppressLint("ResourceType")
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(mActivity, DeviceDetailActivity.class);

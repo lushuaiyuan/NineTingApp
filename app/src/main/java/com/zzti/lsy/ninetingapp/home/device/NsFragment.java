@@ -128,6 +128,7 @@ public class NsFragment extends BaseFragment implements BaseQuickAdapter.OnItemC
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(mActivity, DeviceDetailActivity.class);
+        intent.putExtra("carNumber", homeHintEntities.get(position).getPlateNumber());
         intent.putExtra("TAG", 1);
         startActivity(intent);
     }
