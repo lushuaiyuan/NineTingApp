@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.home.machinery;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,22 +25,38 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.zzti.lsy.ninetingapp.R;
+import com.zzti.lsy.ninetingapp.entity.CarTypeEntity;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.entity.RepairCauseEntity;
+import com.zzti.lsy.ninetingapp.entity.RepairTypeEntity;
+import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
+import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.CarMaintenanceAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAddressAdapter;
 import com.zzti.lsy.ninetingapp.entity.CarMaintenanceEntity;
 import com.zzti.lsy.ninetingapp.entity.ProjectAddressEntitiy;
+import com.zzti.lsy.ninetingapp.home.adapter.RepairCauseAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.RepairTypeAdapter;
+import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.network.Constant;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.photo.CustomHelper;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.photo.TakePhotoActivity;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,17 +74,19 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     EditText etConstructionAddress;
     @BindView(R.id.tv_maintenanceType)
     TextView tvMaintenanceType;
+    @BindView(R.id.tv_maintenanceReason)
+    TextView tvMaintenanceReason;
     @BindView(R.id.recycleView_detail)
     RecyclerView recycleViewDetail;
-    @BindView(R.id.et_servicePersonnel)
-    EditText etServicePersonnel;//保修人
-    @BindView(R.id.et_servicePersonnelTel)
-    EditText etServicePersonnelTel;//保修人电话
+    //    @BindView(R.id.et_servicePersonnel)
+//    EditText etServicePersonnel;//保修人
+//    @BindView(R.id.et_servicePersonnelTel)
+//    EditText etServicePersonnelTel;//保修人电话
     @BindView(R.id.tv_maintenanceTime)
     TextView tvMaintenanceTime;//计划维修时间
-    @BindView(R.id.et_inputReason)
-    EditText etInputReason;//维修原因
-    @BindView(R.id.et_inputContent)
+    //    @BindView(R.id.et_inputReason)
+//    EditText etInputReason;//维修原因
+//    @BindView(R.id.et_inputContent)
     EditText etInputContent;//维修内容
     @BindView(R.id.recycleView_photo)
     RecyclerView recyclerViewPhoto;
@@ -77,17 +96,23 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     //照片
     private CustomHelper customHelper;
     private View view;
-    private PopupWindow popupWindow;
+    private PopupWindow popupWindowPic;
     private TextView tvPhoto;
     private TextView tvSelectPhoto;
     private TextView tvCancel;
     private PhotoAdapter photoAdapter;
     private List<String> pics;
-    //项目部
-    private PopupWindow popupWindowProject;
-    private ListView mListView;
-    private ProjectAddressAdapter projectAddressAdapter;
-    private List<ProjectAddressEntitiy> projectAddressEntitiys;
+    //维修类型
+    private PopupWindow popupWindowType;
+    private ListView mListViewType;
+    private RepairTypeAdapter repairTypeAdapter;
+    private List<RepairTypeEntity> repairTypeEntities;
+
+    //维修原因
+    private PopupWindow popupWindowCause;
+    private ListView mListViewCause;
+    private RepairCauseAdapter repairCauseAdapter;
+    private List<RepairCauseEntity> repairCauseEntities;
 
     //维修明细
     private CarMaintenanceAdapter carMaintenanceAdapter;
@@ -111,7 +136,6 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         carMaintenanceEntity.setReason("1");
         carMaintenanceEntity.setPartsAmount("1");
 
-        //TODO 明细的
         recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
         carMaintenanceEntities = new ArrayList<>();
         carMaintenanceEntities.add(carMaintenanceEntity);
@@ -119,7 +143,6 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         recycleViewDetail.setAdapter(carMaintenanceAdapter);
         carMaintenanceAdapter.setOnItemChildClickListener(this);
 
-        //TODO 照片的
         pics = new ArrayList<>();
         pics.add("");
         recyclerViewPhoto.setLayoutManager(new GridLayoutManager(this, 4));
@@ -128,14 +151,92 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         photoAdapter.setOnItemClickListener(this);
         photoAdapter.setOnItemLongClickListener(this);
 
-        //TODO
-        for (int i = 0; i < 6; i++) {
-            ProjectAddressEntitiy projectAddressEntitiy = new ProjectAddressEntitiy();
-            projectAddressEntitiy.setId("5555" + i);
-            projectAddressEntitiy.setName("项目部" + i);
-            projectAddressEntitiys.add(projectAddressEntitiy);
-        }
-        projectAddressAdapter.notifyDataSetChanged();
+
+        getRepairType();
+        getRepairCause();
+    }
+
+    /**
+     * 获取维修原因
+     */
+    private void getRepairCause() {
+        showDia();
+        // TODO
+//        HashMap<String, String> params = new HashMap<>();
+        OkHttpManager.postFormBody(Urls.POST_GETREPAIRTYPE, null, tvAddress, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            RepairCauseEntity repairCauseEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairCauseEntity.class);
+                            repairCauseEntities.add(repairCauseEntity);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
+    }
+
+    /**
+     * 获取维修类型
+     */
+    private void getRepairType() {
+        showDia();
+        HashMap<String, String> params = new HashMap<>();
+        OkHttpManager.postFormBody(Urls.POST_GETREPAIRCAUSE, params, tvAddress, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            RepairTypeEntity repairTypeEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairTypeEntity.class);
+                            repairTypeEntities.add(repairTypeEntity);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
     }
 
     private void initView() {
@@ -147,53 +248,83 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         recyclerViewPhoto.setHasFixedSize(true);
         recyclerViewPhoto.setNestedScrollingEnabled(false);
 
-        initPop();
-        initPop_project();
+        initPopPic();
+        initRepairTypePop();
+        initRepairCausePop();
+
     }
 
-    private void initPop_project() {
+    private void initRepairCausePop() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowProject = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindowProject.setFocusable(true);
-        popupWindowProject.setOutsideTouchable(true);
+        popupWindowCause = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowCause.setFocusable(true);
+        popupWindowCause.setOutsideTouchable(true);
         //设置消失监听
-        popupWindowProject.setOnDismissListener(this);
-        popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        popupWindowCause.setOnDismissListener(this);
+        popupWindowCause.setBackgroundDrawable(new ColorDrawable(0x00000000));
         contentview.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindowProject.dismiss();
+                    popupWindowCause.dismiss();
                     return true;
                 }
                 return false;
             }
         });
-        mListView = contentview.findViewById(R.id.pop_list);
-        projectAddressEntitiys = new ArrayList<>();
-        projectAddressAdapter = new ProjectAddressAdapter(projectAddressEntitiys);
-        mListView.setAdapter(projectAddressAdapter);
-        mListView.setOnItemClickListener(this);
-        popupWindowProject.setAnimationStyle(R.style.anim_bottomPop);
+        mListViewCause = contentview.findViewById(R.id.pop_list);
+        repairCauseEntities = new ArrayList<>();
+        repairCauseAdapter = new RepairCauseAdapter(repairCauseEntities);
+        mListViewCause.setAdapter(repairCauseAdapter);
+        mListViewCause.setOnItemClickListener(this);
+        popupWindowCause.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-    private void initPop() {
-        View contentview = getLayoutInflater().inflate(R.layout.popup_photo, null);
+    private void initRepairTypePop() {
+        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindow = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
+        popupWindowType = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowType.setFocusable(true);
+        popupWindowType.setOutsideTouchable(true);
         //设置消失监听
-        popupWindow.setOnDismissListener(this);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        popupWindowType.setOnDismissListener(this);
+        popupWindowType.setBackgroundDrawable(new ColorDrawable(0x00000000));
         contentview.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindow.dismiss();
+                    popupWindowType.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        mListViewType = contentview.findViewById(R.id.pop_list);
+        repairTypeEntities = new ArrayList<>();
+        repairTypeAdapter = new RepairTypeAdapter(repairTypeEntities);
+        mListViewType.setAdapter(repairTypeAdapter);
+        mListViewType.setOnItemClickListener(this);
+        popupWindowType.setAnimationStyle(R.style.anim_bottomPop);
+    }
+
+    private void initPopPic() {
+        View contentview = getLayoutInflater().inflate(R.layout.popup_photo, null);
+        contentview.setFocusable(true); // 这个很重要
+        contentview.setFocusableInTouchMode(true);
+        popupWindowPic = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowPic.setFocusable(true);
+        popupWindowPic.setOutsideTouchable(true);
+        //设置消失监听
+        popupWindowPic.setOnDismissListener(this);
+        popupWindowPic.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        contentview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    popupWindowPic.dismiss();
                     return true;
                 }
                 return false;
@@ -205,37 +336,56 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         tvPhoto.setOnClickListener(this);
         tvSelectPhoto.setOnClickListener(this);
         tvCancel.setOnClickListener(this);
-        popupWindow.setAnimationStyle(R.style.anim_bottomPop);
+        popupWindowPic.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-    @OnClick({R.id.ll_carNumber, R.id.ll_address, R.id.ll_maintenanceType, R.id.tv_addDetail, R.id.ll_maintenanceTime, R.id.btn_submit})
+    @OnClick({R.id.ll_carNumber, R.id.ll_maintenanceType, R.id.ll_maintenanceReason, R.id.tv_addDetail, R.id.ll_maintenanceTime, R.id.btn_submit})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.ll_carNumber://选择车辆
-
+                Intent intent = new Intent(this, DeviceListActivity.class);
+                intent.putExtra("FLAG", 1);
+                startActivityForResult(intent, 1);
                 break;
-            case R.id.ll_address://项目地址
-                if (projectAddressEntitiys.size() > 0) {
+            case R.id.ll_maintenanceType://维修类型
+                if (repairTypeEntities.size() > 0) {
                     hideSoftInput(tvAddress);
                     //设置背景色
                     setBackgroundAlpha(0.5f);
-                    if (projectAddressEntitiys.size() >= 5) {
+                    if (repairTypeEntities.size() >= 5) {
                         //动态设置listView的高度
-                        View listItem = projectAddressAdapter.getView(0, null, mListView);
+                        View listItem = repairTypeAdapter.getView(0, null, mListViewType);
                         listItem.measure(0, 0);
-                        int totalHei = (listItem.getMeasuredHeight() + mListView.getDividerHeight()) * 5;
-                        mListView.getLayoutParams().height = totalHei;
-                        ViewGroup.LayoutParams params = mListView.getLayoutParams();
+                        int totalHei = (listItem.getMeasuredHeight() + mListViewType.getDividerHeight()) * 5;
+                        mListViewType.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = mListViewType.getLayoutParams();
                         params.height = totalHei;
-                        mListView.setLayoutParams(params);
+                        mListViewType.setLayoutParams(params);
                     }
-                    popupWindowProject.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
+                    popupWindowType.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
                 } else {
                     UIUtils.showT(Constant.NONDATA);
                 }
                 break;
-            case R.id.ll_maintenanceType://维修类型
-
+            case R.id.ll_maintenanceReason://维修原因
+                if (repairCauseEntities.size() > 0) {
+                    hideSoftInput(tvAddress);
+                    //设置背景色
+                    setBackgroundAlpha(0.5f);
+                    if (repairCauseEntities.size() >= 5) {
+                        //动态设置listView的高度
+                        View listItem = repairCauseAdapter.getView(0, null, mListViewCause);
+                        listItem.measure(0, 0);
+                        int totalHei = (listItem.getMeasuredHeight() + mListViewCause.getDividerHeight()) * 5;
+                        mListViewCause.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = mListViewCause.getLayoutParams();
+                        params.height = totalHei;
+                        mListViewCause.setLayoutParams(params);
+                    }
+                    popupWindowCause.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
+                } else {
+                    UIUtils.showT(Constant.NONDATA);
+                }
                 break;
             case R.id.tv_addDetail://增加明细
                 if (carMaintenanceEntities.size() >= 5) {
@@ -267,12 +417,11 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         TimePickerView pvTime = new TimePickerBuilder(MaintenanceRequestActivity.this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                tvMaintenanceTime.setText(DateUtil.getDateString(date));
-                //TODO  查询数据
+                tvMaintenanceTime.setText(DateUtil.getDate(date));
 
             }
-        }).setDate(instance).setType(new boolean[]{true, true, true, true, true, false})
-                .setLabel(" 年", " 月", " 日", "时", "分", "")
+        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel(" 年", " 月", " 日", "", "", "")
                 .isCenterLabel(false).build();
         pvTime.show();
 
@@ -289,10 +438,10 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
             case R.id.tv_photo:
             case R.id.tv_selectPhoto:
                 customHelper.onClick(1, false, view, getTakePhoto());
-                popupWindow.dismiss();
+                popupWindowPic.dismiss();
                 break;
             case R.id.tv_cancel:
-                popupWindow.dismiss();
+                popupWindowPic.dismiss();
                 break;
         }
     }
@@ -336,7 +485,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         if (StringUtil.isNullOrEmpty(pics.get(position))) {
             setBackgroundAlpha(0.5f);
-            popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+            popupWindowPic.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         }
     }
 
@@ -392,9 +541,27 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         }
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            if (data != null)
+                tvCarNumber.setText(data.getStringExtra("carNumber"));
+        }
+    }
+
+    private int tag;
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        tvAddress.setText(projectAddressEntitiys.get(i).getName());
-        popupWindowProject.dismiss();
+        if (tag == 1) {
+            tvMaintenanceType.setText(repairTypeEntities.get(i).getTypeName());
+            //TODO
+
+        } else if (tag == 2) {
+            tvMaintenanceReason.setText(repairCauseEntities.get(i).getCauseName());
+            popupWindowCause.dismiss();
+        }
     }
 }

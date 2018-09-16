@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.entity.ProjectAddressEntitiy;
+import com.zzti.lsy.ninetingapp.entity.RepairTypeEntity;
 
 import java.util.List;
 
@@ -17,23 +18,23 @@ import butterknife.ButterKnife;
 
 /**
  * author：anxin on 2018/8/7 14:54
- * 项目部适配器
+ * 维修类型适配器
  */
-public class ProjectAddressAdapter extends BaseAdapter {
-    private List<ProjectAddressEntitiy> projectAddressEntitiys;
+public class RepairTypeAdapter extends BaseAdapter {
+    private List<RepairTypeEntity> repairTypeEntities;
 
-    public ProjectAddressAdapter(List<ProjectAddressEntitiy> projectAddressEntitiys) {
-        this.projectAddressEntitiys = projectAddressEntitiys;
+    public RepairTypeAdapter(List<RepairTypeEntity> repairTypeEntities) {
+        this.repairTypeEntities = repairTypeEntities;
     }
 
     @Override
     public int getCount() {
-        return projectAddressEntitiys == null ? 0 : projectAddressEntitiys.size();
+        return repairTypeEntities == null ? 0 : repairTypeEntities.size();
     }
 
     @Override
-    public ProjectAddressEntitiy getItem(int i) {
-        return projectAddressEntitiys.get(i);
+    public RepairTypeEntity getItem(int i) {
+        return repairTypeEntities.get(i);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class ProjectAddressAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.tvName.setText(getItem(i).getName());
+        viewHolder.tvName.setText(getItem(i).getTypeName());
         return convertView;
     }
 

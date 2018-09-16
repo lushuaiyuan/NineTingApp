@@ -173,16 +173,20 @@ public final class OkHttpManager {
                                         Object tag,
                                         OnResponse<T> onResponse) {
         FormBody.Builder formBuild = new FormBody.Builder();
-        // params是存放参数的ArrayMap
-        Set<Map.Entry<String, String>> entrySet = params.entrySet();
+
         if (!url.equals(Urls.POST_LOGIN_URL)) {
             formBuild.add("sessionId", SpUtils.getInstance().getString(SpUtils.SESSIONID, ""));
         }
-        // 遍历参数集合，添加到请求体
-        for (Map.Entry<String, String> entry : entrySet) {
-            // addFormDataPart方法三个参数的方法，分别对应要提交的key，value
-            formBuild.add(entry.getKey(), entry.getValue());
+        if (params != null) {
+            // params是存放参数的ArrayMap
+            Set<Map.Entry<String, String>> entrySet = params.entrySet();
+            // 遍历参数集合，添加到请求体
+            for (Map.Entry<String, String> entry : entrySet) {
+                // addFormDataPart方法三个参数的方法，分别对应要提交的key，value
+                formBuild.add(entry.getKey(), entry.getValue());
+            }
         }
+
         // 构造Request对象，方法为POST
         Request.Builder reqBuilder = new Request.Builder().url(url)
                 .post(formBuild.build());
