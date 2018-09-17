@@ -20,10 +20,10 @@ public class PartsListAdapter extends BaseQuickAdapter<PartsInfoEntity, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, PartsInfoEntity item) {
-        helper.setText(R.id.tv_partsName, item.getName());
+        helper.setText(R.id.tv_partsName, item.getPartsName());
         helper.setText(R.id.tv_state, item.getState());
-        helper.setText(R.id.tv_model, item.getModel());
-        helper.setText(R.id.tv_num, item.getNum());
+        helper.setText(R.id.tv_model, item.getPartsModel());
+        helper.setText(R.id.tv_num, item.getPartsNumber());
         helper.setText(R.id.tv_price, item.getPrice());
         if (tag == 1) {//配件出库列表
             helper.getView(R.id.tv_operator).setVisibility(View.VISIBLE);

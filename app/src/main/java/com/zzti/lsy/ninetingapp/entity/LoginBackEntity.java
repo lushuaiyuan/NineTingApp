@@ -3,7 +3,7 @@ package com.zzti.lsy.ninetingapp.entity;
 /**
  * 登录成功返回的数据
  */
-public class LoginBack {
+public class LoginBackEntity {
     private String userID;
     private String userName;
     private int roleID;

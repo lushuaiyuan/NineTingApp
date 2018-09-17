@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:text="配件明细（1）"
             android:textColor="@color/color_6bcfd6"
-            android:textSize="@dimen/dp15" />
+            android:textSize="@dimen/dp13" />
 
         <TextView
             android:id="@+id/tv_delete"
@@ -126,59 +126,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View style="@style/MyView" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingTop="@dimen/dp10"
-                android:text="金额"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/dp15" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp5"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp5"
-                android:background="@drawable/select_shape">
-
-
-                <EditText
-                    android:id="@+id/et_money"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:padding="@dimen/dp8"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp15" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:text="元"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp13" />
-
-
-            </RelativeLayout>
-
-
-        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

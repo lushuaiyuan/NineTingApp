@@ -8,17 +8,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
-import com.zzti.lsy.ninetingapp.entity.LoginBack;
+import com.zzti.lsy.ninetingapp.entity.LoginBackEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.StaffEntity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -113,12 +110,13 @@ public class LoginActivity extends BaseActivity {
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     if (!StringUtil.isNullOrEmpty(msgInfo.getData())) {
-                        LoginBack loginBack = ParseUtils.parseJson(msgInfo.getData(), LoginBack.class);
-                        SpUtils.getInstance().put(SpUtils.OPTYPE, loginBack.getRoleID());//操作员类型
-                        SpUtils.getInstance().put(SpUtils.USERID, loginBack.getUserID());
+                        LoginBackEntity loginBackEntity = ParseUtils.parseJson(msgInfo.getData(), LoginBackEntity.class);
+                        SpUtils.getInstance().put(SpUtils.OPTYPE, loginBackEntity.getRoleID());//操作员类型
+                        SpUtils.getInstance().put(SpUtils.USERID, loginBackEntity.getUserID());
                         SpUtils.getInstance().put(SpUtils.SESSIONID, msgInfo.getMsg());
                         SpUtils.getInstance().put(SpUtils.USERNAME, etUserName.getText().toString());
-                        SpUtils.getInstance().put(SpUtils.PROJECT, loginBack.getProjectName());
+                        SpUtils.getInstance().put(SpUtils.PROJECT, loginBackEntity.getProjectName());
+                        SpUtils.getInstance().put(SpUtils.PROJECTID, loginBackEntity.getProjectID());
                         SpUtils.getInstance().put(SpUtils.LOGINSTATE, true);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);

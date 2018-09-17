@@ -29,11 +29,7 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
         if (!StringUtil.isNullOrEmpty(item.getPartsAmount())) {
             helper.setText(R.id.tv_partsAmount, item.getPartsAmount());
         }
-        if (!StringUtil.isNullOrEmpty(item.getMoney())) {
-            helper.setText(R.id.et_money, item.getMoney());
-        }
         if (type == 1) {//录入的时候部分按钮可以操作
-            helper.getView(R.id.et_money).setEnabled(true);
             if (helper.getAdapterPosition() >= 1) {
                 helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
             } else {
@@ -43,7 +39,6 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
             helper.getView(R.id.ib_add).setVisibility(View.VISIBLE);
             helper.addOnClickListener(R.id.ib_sub).addOnClickListener(R.id.ib_add).addOnClickListener(R.id.tv_delete).addOnClickListener(R.id.ll_partsName);
         } else {
-            helper.getView(R.id.et_money).setEnabled(false);
             helper.getView(R.id.tv_delete).setVisibility(View.GONE);
             helper.getView(R.id.ib_sub).setVisibility(View.GONE);
             helper.getView(R.id.ib_add).setVisibility(View.GONE);

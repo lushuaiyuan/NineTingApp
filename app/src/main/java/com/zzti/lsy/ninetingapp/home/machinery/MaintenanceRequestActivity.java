@@ -28,12 +28,14 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RepairCauseEntity;
 import com.zzti.lsy.ninetingapp.entity.RepairTypeEntity;
+import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.entity.RequiredParts;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairCauseAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairTypeAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
+import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
 import com.zzti.lsy.ninetingapp.network.Constant;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -75,20 +77,17 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     TextView tvMaintenanceReason;
     @BindView(R.id.recycleView_detail)
     RecyclerView recycleViewDetail;
-    //    @BindView(R.id.et_servicePersonnel)
-//    EditText etServicePersonnel;//保修人
-//    @BindView(R.id.et_servicePersonnelTel)
-//    EditText etServicePersonnelTel;//保修人电话
     @BindView(R.id.tv_maintenanceTime)
     TextView tvMaintenanceTime;//计划维修时间
-    //    @BindView(R.id.et_inputReason)
-//    EditText etInputReason;//维修原因
-//    @BindView(R.id.et_inputContent)
+    @BindView(R.id.et_inputContent)
     EditText etInputContent;//维修内容
     @BindView(R.id.recycleView_photo)
     RecyclerView recyclerViewPhoto;
     @BindView(R.id.et_inputRemark)
     EditText etInputRemark;//维修原因
+    @BindView(R.id.et_money)
+    EditText etMoney;//维修金额
+
 
     //照片
     private CustomHelper customHelper;
@@ -114,6 +113,28 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     //维修明细
     private RequiredPartsAdapter requiredPartsAdapter; //不能修改
     private List<RequiredParts> requiredPartsList;
+
+    //维修申请的实体类
+    private RepairinfoEntity repairinfoEntity;
+    //参数
+    private String plateNumber; //车牌号 用户选择
+    private String repairContent;//维修内容 用户填写
+    private String repairMoney;//维修金额 用户填写
+    private String repairCauseID;//维修原因ID 下拉选择
+    private String repairTypeID;//维修类型ID 下拉选择
+    private String projectID;//项目部ID 下拉选择
+    private String jobLocation;//暂无用 考虑去掉
+    private String repairBeginTime;//计划开始维修时间 用户填写
+    private String repairOverTime;//计划维修结束时间 用户填写
+    private String userID;//申请人ID 获取当前登录用户的UserID
+    private String remark;//备注 用户填写
+    private String devPicture;//以base64字符加密传过来，最多三张以|字符分割
+    private String status;//维修单状态（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过）不用填写 默认为2
+    private String opinion;//审批意见 默认为空
+    private String causeName;//维修原因
+    private String typeName;//维修类型
+    private String staffName;//申请人姓名
+
 
     @Override
     public int getContentViewId() {
@@ -151,6 +172,8 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
 
         getRepairType();
         getRepairCause();
+
+        repairinfoEntity = new RepairinfoEntity();
     }
 
     /**
@@ -399,9 +422,68 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 showCustomTime();
                 break;
             case R.id.btn_submit://提交
-                finish();
+                submitData();
                 break;
         }
+    }
+
+    /**
+     * 提交数据
+     */
+    private void submitData() {
+        if (StringUtil.isNullOrEmpty(tvCarNumber.getText().toString())) {
+            UIUtils.showT("请选择车牌号");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(etConstructionAddress.getText().toString())) {
+            UIUtils.showT("请输入施工地点");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(tvMaintenanceType.getText().toString())) {
+            UIUtils.showT("请选择维修类型");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(tvMaintenanceReason.getText().toString())) {
+            UIUtils.showT("请选择维修原因");
+            return;
+        }
+        for (int i = 0; i < requiredPartsList.size(); i++) {
+            if (StringUtil.isNullOrEmpty(requiredPartsList.get(i).getPartsName())) {
+                UIUtils.showT("请选择所需配件");
+                return;
+            }
+            if (StringUtil.isNullOrEmpty(requiredPartsList.get(i).getMoney())) {
+                UIUtils.showT("请输入配件金额");
+                return;
+            }
+        }
+
+        if (StringUtil.isNullOrEmpty(tvCarNumber.getText().toString())) {
+            UIUtils.showT("请选择车牌号");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(tvMaintenanceTime.getText().toString())) {
+            UIUtils.showT("请选择计划维修时间");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(etInputContent.getText().toString())) {
+            UIUtils.showT("请输入维修内容");
+            return;
+        }
+        repairinfoEntity.setPlateNumber(tvCarNumber.getText().toString());//车牌号
+        repairinfoEntity.setRepairContent(etInputContent.getText().toString());//维修内容
+        repairinfoEntity.setRepairMoney(etMoney.getText().toString());//维修金额
+        repairinfoEntity.setRepairCauseID(repairCauseID);//维修原因ID
+        repairinfoEntity.setRepairTypeID(repairTypeID);//维修类型
+        repairinfoEntity.setProjectID(spUtils.getString(SpUtils.PROJECTID, ""));//项目部ID
+        repairinfoEntity.setJobLocation(etConstructionAddress.getText().toString());//地址
+        repairinfoEntity.setRepairBeginTime(tvMaintenanceTime.getText().toString());//计划维修时间
+        repairinfoEntity.setUserID(spUtils.getString(SpUtils.USERID, ""));//申请人ID
+        repairinfoEntity.setRemark(etInputRemark.getText().toString());//备注
+        repairinfoEntity.setCauseName(tvMaintenanceReason.getText().toString());
+        repairinfoEntity.setTypeName(tvMaintenanceType.getText().toString());
+        repairinfoEntity.setStaffName(spUtils.getString(SpUtils.USERNAME, ""));
+
     }
 
     /**
@@ -508,6 +590,8 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         return false;
     }
 
+    private int selectPosition;
+
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
@@ -532,7 +616,10 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 requiredPartsAdapter.notifyDataSetChanged();
                 break;
             case R.id.ll_partsName:
-
+                selectPosition = position;
+                Intent intent = new Intent(this, PartsListActivity.class);
+                intent.putExtra("TAG", 1);
+                startActivityForResult(intent, 2);
                 break;
 
         }
@@ -546,6 +633,11 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
             if (data != null)
                 tvCarNumber.setText(data.getStringExtra("carNumber"));
         }
+        if (requestCode == 2 && requestCode == 2) {
+            if (data != null) {
+                requiredPartsList.get(selectPosition).setPartsName(data.getStringExtra("partsName"));
+            }
+        }
     }
 
     private int tag;
@@ -554,9 +646,11 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (tag == 1) {
             tvMaintenanceType.setText(repairTypeEntities.get(i).getTypeName());
+            repairTypeID = repairTypeEntities.get(i).getTypeID();
             popupWindowType.dismiss();
         } else if (tag == 2) {
             tvMaintenanceReason.setText(repairCauseEntities.get(i).getCauseName());
+            repairCauseID = repairCauseEntities.get(i).getCauseID();
             popupWindowCause.dismiss();
         }
     }
