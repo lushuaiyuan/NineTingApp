@@ -21,6 +21,7 @@ public class SpUtils {
     public static final String OPTYPE = "opType";
     public static final String SESSIONID = "sessionId";//身份验证
     public static final String USERID = "userId";//员工id
+    public static final String PROJECT = "project";//所属项目部
 
 
     private static SpUtils instance = new SpUtils();

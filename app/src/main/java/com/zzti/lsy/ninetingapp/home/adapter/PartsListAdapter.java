@@ -5,20 +5,21 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.entity.PartsEntity;
+import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
 
 import java.util.List;
 
 /**
  * author：anxin on 2018/8/9 10:29
+ * 维修配件的适配器
  */
-public class PartsAdapter extends BaseQuickAdapter<PartsEntity, BaseViewHolder> {
-    public PartsAdapter(List<PartsEntity> partsEntities) {
+public class PartsListAdapter extends BaseQuickAdapter<PartsInfoEntity, BaseViewHolder> {
+    public PartsListAdapter(List<PartsInfoEntity> partsEntities) {
         super(R.layout.item_parts, partsEntities);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, PartsEntity item) {
+    protected void convert(BaseViewHolder helper, PartsInfoEntity item) {
         helper.setText(R.id.tv_partsName, item.getName());
         helper.setText(R.id.tv_state, item.getState());
         helper.setText(R.id.tv_model, item.getModel());

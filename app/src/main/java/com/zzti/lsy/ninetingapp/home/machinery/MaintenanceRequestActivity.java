@@ -25,18 +25,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.entity.CarTypeEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RepairCauseEntity;
 import com.zzti.lsy.ninetingapp.entity.RepairTypeEntity;
-import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
-import com.zzti.lsy.ninetingapp.home.adapter.CarMaintenanceAdapter;
-import com.zzti.lsy.ninetingapp.home.adapter.ProjectAddressAdapter;
-import com.zzti.lsy.ninetingapp.entity.CarMaintenanceEntity;
-import com.zzti.lsy.ninetingapp.entity.ProjectAddressEntitiy;
+import com.zzti.lsy.ninetingapp.entity.RequiredParts;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairCauseAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairTypeAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.network.Constant;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
@@ -46,6 +42,7 @@ import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.photo.TakePhotoActivity;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
@@ -115,8 +112,8 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     private List<RepairCauseEntity> repairCauseEntities;
 
     //维修明细
-    private CarMaintenanceAdapter carMaintenanceAdapter;
-    private List<CarMaintenanceEntity> carMaintenanceEntities;
+    private RequiredPartsAdapter requiredPartsAdapter; //不能修改
+    private List<RequiredParts> requiredPartsList;
 
     @Override
     public int getContentViewId() {
@@ -132,16 +129,16 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     }
 
     private void initData() {
-        CarMaintenanceEntity carMaintenanceEntity = new CarMaintenanceEntity();
-        carMaintenanceEntity.setReason("1");
-        carMaintenanceEntity.setPartsAmount("1");
+        RequiredParts requiredParts = new RequiredParts();
+        requiredParts.setPartsAmount("1");
 
         recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
-        carMaintenanceEntities = new ArrayList<>();
-        carMaintenanceEntities.add(carMaintenanceEntity);
-        carMaintenanceAdapter = new CarMaintenanceAdapter(carMaintenanceEntities);
-        recycleViewDetail.setAdapter(carMaintenanceAdapter);
-        carMaintenanceAdapter.setOnItemChildClickListener(this);
+        requiredPartsList = new ArrayList<>();
+        requiredPartsList.add(requiredParts);
+        requiredPartsAdapter = new RequiredPartsAdapter(requiredPartsList);
+        requiredPartsAdapter.setType(1);
+        recycleViewDetail.setAdapter(requiredPartsAdapter);
+        requiredPartsAdapter.setOnItemChildClickListener(this);
 
         pics = new ArrayList<>();
         pics.add("");
@@ -161,8 +158,6 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
      */
     private void getRepairCause() {
         showDia();
-        // TODO
-//        HashMap<String, String> params = new HashMap<>();
         OkHttpManager.postFormBody(Urls.POST_GETREPAIRTYPE, null, tvAddress, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
@@ -177,8 +172,8 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                     try {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            RepairCauseEntity repairCauseEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairCauseEntity.class);
-                            repairCauseEntities.add(repairCauseEntity);
+                            RepairTypeEntity repairTypeEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairTypeEntity.class);
+                            repairTypeEntities.add(repairTypeEntity);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -218,8 +213,8 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                     try {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            RepairTypeEntity repairTypeEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairTypeEntity.class);
-                            repairTypeEntities.add(repairTypeEntity);
+                            RepairCauseEntity repairCauseEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairCauseEntity.class);
+                            repairCauseEntities.add(repairCauseEntity);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -241,6 +236,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
 
     private void initView() {
         setTitle("维修申请");
+        tvAddress.setText(spUtils.getString(SpUtils.PROJECT, ""));
         customHelper = CustomHelper.of(view);
         //解决卡顿问题
         recycleViewDetail.setHasFixedSize(true);
@@ -348,6 +344,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 startActivityForResult(intent, 1);
                 break;
             case R.id.ll_maintenanceType://维修类型
+                tag = 1;
                 if (repairTypeEntities.size() > 0) {
                     hideSoftInput(tvAddress);
                     //设置背景色
@@ -368,6 +365,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 }
                 break;
             case R.id.ll_maintenanceReason://维修原因
+                tag = 2;
                 if (repairCauseEntities.size() > 0) {
                     hideSoftInput(tvAddress);
                     //设置背景色
@@ -388,15 +386,14 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 }
                 break;
             case R.id.tv_addDetail://增加明细
-                if (carMaintenanceEntities.size() >= 5) {
+                if (requiredPartsList.size() >= 5) {
                     UIUtils.showT("最多添加5条明细");
                     break;
                 }
-                CarMaintenanceEntity carMaintenanceEntity = new CarMaintenanceEntity();
-                carMaintenanceEntity.setReason("1");
-                carMaintenanceEntity.setPartsAmount("1");
-                carMaintenanceEntities.add(carMaintenanceEntity);
-                carMaintenanceAdapter.notifyDataSetChanged();
+                RequiredParts requiredParts = new RequiredParts();
+                requiredParts.setPartsAmount("1");
+                requiredPartsList.add(requiredParts);
+                requiredPartsAdapter.notifyDataSetChanged();
                 break;
             case R.id.ll_maintenanceTime://计划维修时间
                 showCustomTime();
@@ -492,9 +489,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     @Override
     public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
         if (!StringUtil.isNullOrEmpty(pics.get(position))) {
-
             MAlertDialog.show(this, "提示", "是否删除？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
-
                 @Override
                 public void onConfirmClick(String msg) {
                     pics.remove(position);
@@ -517,22 +512,22 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.tv_delete:
-                carMaintenanceEntities.remove(position);
-                carMaintenanceAdapter.notifyDataSetChanged();
+                requiredPartsList.remove(position);
+                requiredPartsAdapter.notifyDataSetChanged();
                 break;
             case R.id.ib_sub:
-                CarMaintenanceEntity carMaintenanceEntity1 = carMaintenanceEntities.get(position);
-                int amount1 = Integer.parseInt(carMaintenanceEntity1.getPartsAmount());
+                RequiredParts requiredParts1 = requiredPartsList.get(position);
+                int amount1 = Integer.parseInt(requiredParts1.getPartsAmount());
                 amount1--;
-                carMaintenanceEntity1.setPartsAmount(String.valueOf(amount1));
-                carMaintenanceAdapter.notifyDataSetChanged();
+                requiredParts1.setPartsAmount(String.valueOf(amount1));
+                requiredPartsAdapter.notifyDataSetChanged();
                 break;
             case R.id.ib_add:
-                CarMaintenanceEntity carMaintenanceEntity2 = carMaintenanceEntities.get(position);
-                int amount2 = Integer.parseInt(carMaintenanceEntity2.getPartsAmount());
+                RequiredParts requiredParts2 = requiredPartsList.get(position);
+                int amount2 = Integer.parseInt(requiredParts2.getPartsAmount());
                 amount2++;
-                carMaintenanceEntity2.setPartsAmount(String.valueOf(amount2));
-                carMaintenanceAdapter.notifyDataSetChanged();
+                requiredParts2.setPartsAmount(String.valueOf(amount2));
+                requiredPartsAdapter.notifyDataSetChanged();
                 break;
             case R.id.ll_partsName:
 
@@ -557,8 +552,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (tag == 1) {
             tvMaintenanceType.setText(repairTypeEntities.get(i).getTypeName());
-            //TODO
-
+            popupWindowType.dismiss();
         } else if (tag == 2) {
             tvMaintenanceReason.setText(repairCauseEntities.get(i).getCauseName());
             popupWindowCause.dismiss();

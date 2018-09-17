@@ -78,8 +78,7 @@ public class BxFragment extends BaseFragment implements BaseQuickAdapter.OnItemC
      */
     private void getCarExpire() {
         homeHintEntities.clear();
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, null, mRecycleView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

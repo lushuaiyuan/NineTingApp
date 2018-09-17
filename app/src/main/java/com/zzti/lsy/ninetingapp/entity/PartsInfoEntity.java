@@ -4,7 +4,7 @@ package com.zzti.lsy.ninetingapp.entity;
  * author：anxin on 2018/8/9 10:27
  * 配件的实体类
  */
-public class PartsEntity {
+public class PartsInfoEntity {
     private String name;
     private String state;
     private String model;

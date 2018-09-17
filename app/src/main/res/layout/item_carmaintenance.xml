@@ -39,52 +39,6 @@
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingTop="@dimen/dp10"
-                android:text="维修原因"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/dp15" />
-
-            <RadioGroup
-                android:id="@+id/radio_group_reason"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp16"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_button_normal"
-                    style="@style/RadioGroupButtonReason"
-                    android:text="正常损坏" />
-
-                <RadioButton
-                    android:id="@+id/radio_button_personnel"
-                    style="@style/RadioGroupButtonReason"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="人为损坏" />
-
-
-                <RadioButton
-                    android:id="@+id/radio_button_accident"
-                    style="@style/RadioGroupButtonReason"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="事故损坏" />
-
-            </RadioGroup>
-        </LinearLayout>
-
-        <View style="@style/MyView" />
 
         <LinearLayout
             android:id="@+id/ll_partsName"
@@ -190,15 +144,38 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dp15" />
 
-            <TextView
-                android:id="@+id/tv_totalMoney"
-                android:layout_width="0dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dp10"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/dp15" />
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp5"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_money"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:padding="@dimen/dp8"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="元"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+
+            </RelativeLayout>
 
 
         </LinearLayout>

@@ -87,8 +87,7 @@ public class MineFragment extends BaseFragment {
      * 登出
      */
     private void LoginOut() {
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_LOGIN_OUT, params, tvName, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_LOGIN_OUT, null, tvName, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

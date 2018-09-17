@@ -20,10 +20,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
-import com.zzti.lsy.ninetingapp.home.adapter.CarMaintenanceRecordAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
-import com.zzti.lsy.ninetingapp.entity.CarMaintenanceEntity;
+import com.zzti.lsy.ninetingapp.entity.RequiredParts;
 import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
+import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
@@ -50,8 +50,8 @@ public class MaintenanceRecordActivity extends BaseActivity implements AdapterVi
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
-    private List<CarMaintenanceEntity> carMaintenanceEntities;
-    private CarMaintenanceRecordAdapter carMaintenanceRecordAdapter;
+    private List<RequiredParts> requiredPartsList;
+    private RequiredPartsAdapter requiredPartsAdapter;
 
     private PopupWindow popupWindowCondition;
     private ListView lvCondition;
@@ -71,25 +71,11 @@ public class MaintenanceRecordActivity extends BaseActivity implements AdapterVi
 
     private void initData() {
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        carMaintenanceEntities = new ArrayList<>();
-        carMaintenanceRecordAdapter = new CarMaintenanceRecordAdapter(carMaintenanceEntities);
-        mRecycleView.setAdapter(carMaintenanceRecordAdapter);
-        carMaintenanceRecordAdapter.setOnItemClickListener(this);
-
-        //TODO
-        for (int i = 0; i < 5; i++) {
-            CarMaintenanceEntity carMaintenanceEntity = new CarMaintenanceEntity();
-            if (i % 2 == 0) {
-                carMaintenanceEntity.setState("待处理");
-            } else {
-                carMaintenanceEntity.setState("已处理");
-            }
-            carMaintenanceEntity.setPartsName("配件名称" + i);
-            carMaintenanceEntity.setCarNumber("车牌号" + i);
-            carMaintenanceEntity.setReason("嘻嘻嘻嘻嘻嘻下" + i);
-            carMaintenanceEntities.add(carMaintenanceEntity);
-        }
-        carMaintenanceRecordAdapter.notifyDataSetChanged();
+        requiredPartsList = new ArrayList<>();
+        requiredPartsAdapter = new RequiredPartsAdapter(requiredPartsList);
+        mRecycleView.setAdapter(requiredPartsAdapter);
+        requiredPartsAdapter.setType(2);//记录
+        requiredPartsAdapter.setOnItemClickListener(this);
     }
 
 
@@ -100,11 +86,11 @@ public class MaintenanceRecordActivity extends BaseActivity implements AdapterVi
         //使上拉加载具有弹性效果：
         smartRefreshLayout.setEnableAutoLoadMore(false);
         initPop_condition();
-        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 4) {//项目经理
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
 
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 5) {//总经理
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
 
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 6) {//机械师
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
 
         }
     }

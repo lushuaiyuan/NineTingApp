@@ -27,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -107,8 +106,7 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
     private void getCarExpire() {
         homeHintEntitiesBx.clear();
         homeHintEntitiesNs.clear();
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, params, mRecycleViewBx, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, null, mRecycleViewBx, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

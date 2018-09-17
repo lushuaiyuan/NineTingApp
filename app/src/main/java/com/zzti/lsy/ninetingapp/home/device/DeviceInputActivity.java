@@ -524,8 +524,7 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
      * 获取排放标准
      */
     private void getChargeType() {
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETCHARGETYPE, params, tvEmissionStandard, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETCHARGETYPE, null, tvEmissionStandard, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -575,8 +574,7 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
      * 获取车辆类型
      */
     private void getCarType() {
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETCARTYPE, params, tvCarType, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETCARTYPE, null, tvCarType, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

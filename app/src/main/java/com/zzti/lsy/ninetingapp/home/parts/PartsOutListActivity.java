@@ -14,8 +14,8 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
-import com.zzti.lsy.ninetingapp.home.adapter.PartsAdapter;
-import com.zzti.lsy.ninetingapp.entity.PartsEntity;
+import com.zzti.lsy.ninetingapp.home.adapter.PartsListAdapter;
+import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -38,8 +38,8 @@ public class PartsOutListActivity extends BaseActivity implements BaseQuickAdapt
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
-    private List<PartsEntity> partsEntities;
-    private PartsAdapter partsAdapter;
+    private List<PartsInfoEntity> partsEntities;
+    private PartsListAdapter partsListAdapter;
 
     @Override
     public int getContentViewId() {
@@ -60,21 +60,21 @@ public class PartsOutListActivity extends BaseActivity implements BaseQuickAdapt
     private void initData() {
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         partsEntities = new ArrayList<>();
-        partsAdapter = new PartsAdapter(partsEntities);
-        mRecycleView.setAdapter(partsAdapter);
-        partsAdapter.setTag(1);
-        partsAdapter.setOnItemClickListener(this);
+        partsListAdapter = new PartsListAdapter(partsEntities);
+        mRecycleView.setAdapter(partsListAdapter);
+        partsListAdapter.setTag(1);
+        partsListAdapter.setOnItemClickListener(this);
         //TODO
         for (int i = 0; i < 5; i++) {
-            PartsEntity partsEntity = new PartsEntity();
-            partsEntity.setName("米其林");
-            partsEntity.setState("在库");
-            partsEntity.setModel("配件的型号");
-            partsEntity.setNum("1000");
-            partsEntity.setPrice("100.00元");
-            partsEntities.add(partsEntity);
+            PartsInfoEntity partsInfoEntity = new PartsInfoEntity();
+            partsInfoEntity.setName("米其林");
+            partsInfoEntity.setState("在库");
+            partsInfoEntity.setModel("配件的型号");
+            partsInfoEntity.setNum("1000");
+            partsInfoEntity.setPrice("100.00元");
+            partsEntities.add(partsInfoEntity);
         }
-        partsAdapter.notifyDataSetChanged();
+        partsListAdapter.notifyDataSetChanged();
     }
 
     private void initView() {

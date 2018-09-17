@@ -111,8 +111,7 @@ public class BXNSFragment extends BaseFragment {
      * 获取保险类型
      */
     private void getBxType() {
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETINSURANCETYPE, params, tvBxType, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETINSURANCETYPE, null, tvBxType, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

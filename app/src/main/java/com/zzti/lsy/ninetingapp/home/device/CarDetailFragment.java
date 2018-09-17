@@ -156,8 +156,7 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
      * 获取项目部
      */
     private void getProject() {
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, params, tvAddress, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, null, tvAddress, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

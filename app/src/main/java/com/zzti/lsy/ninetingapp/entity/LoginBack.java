@@ -9,6 +9,24 @@ public class LoginBack {
     private int roleID;
     private String password;
     private String status;
+    private String projectID;
+    private String projectName;
+
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 
     public String getUserID() {
         return userID;

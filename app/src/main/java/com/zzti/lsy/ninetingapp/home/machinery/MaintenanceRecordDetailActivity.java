@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
-import com.zzti.lsy.ninetingapp.home.adapter.CarMaintenanceDetailAdapter;
-import com.zzti.lsy.ninetingapp.entity.CarMaintenanceEntity;
+import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
+import com.zzti.lsy.ninetingapp.entity.RequiredParts;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -54,8 +54,8 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
     private List<String> pics;
 
     //维修明细
-    private CarMaintenanceDetailAdapter carMaintenanceDetailAdapter;
-    private List<CarMaintenanceEntity> carMaintenanceEntities;
+    private RequiredPartsAdapter requiredPartsAdapter;
+    private List<RequiredParts> carMaintenanceEntities;
 
     @Override
     public int getContentViewId() {
@@ -76,17 +76,17 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
         carMaintenanceEntities = new ArrayList<>();
         //TODO 明细的
         for (int i = 0; i < 4; i++) {
-            CarMaintenanceEntity carMaintenanceEntity = new CarMaintenanceEntity();
-            carMaintenanceEntity.setReason(String.valueOf(i + 1));
-            carMaintenanceEntity.setPartsAmount(String.valueOf(i + 1));
-            carMaintenanceEntity.setPartsName("配件" + i);
-            carMaintenanceEntity.setMoney(String.valueOf(500 + i));
-            carMaintenanceEntities.add(carMaintenanceEntity);
+            RequiredParts requiredParts = new RequiredParts();
+            requiredParts.setReason(String.valueOf(i + 1));
+            requiredParts.setPartsAmount(String.valueOf(i + 1));
+            requiredParts.setPartsName("配件" + i);
+            requiredParts.setMoney(String.valueOf(500 + i));
+            carMaintenanceEntities.add(requiredParts);
         }
         recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
 
-        carMaintenanceDetailAdapter = new CarMaintenanceDetailAdapter(carMaintenanceEntities);
-        recycleViewDetail.setAdapter(carMaintenanceDetailAdapter);
+        requiredPartsAdapter = new RequiredPartsAdapter(carMaintenanceEntities);
+        recycleViewDetail.setAdapter(requiredPartsAdapter);
 
         if (UIUtils.isNetworkConnected()) {
             showDia();

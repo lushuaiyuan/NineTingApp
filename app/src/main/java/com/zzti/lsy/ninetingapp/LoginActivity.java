@@ -118,6 +118,7 @@ public class LoginActivity extends BaseActivity {
                         SpUtils.getInstance().put(SpUtils.USERID, loginBack.getUserID());
                         SpUtils.getInstance().put(SpUtils.SESSIONID, msgInfo.getMsg());
                         SpUtils.getInstance().put(SpUtils.USERNAME, etUserName.getText().toString());
+                        SpUtils.getInstance().put(SpUtils.PROJECT, loginBack.getProjectName());
                         SpUtils.getInstance().put(SpUtils.LOGINSTATE, true);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);

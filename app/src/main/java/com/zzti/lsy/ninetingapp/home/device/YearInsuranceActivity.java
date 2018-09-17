@@ -204,8 +204,7 @@ public class YearInsuranceActivity extends BaseActivity implements AdapterView.O
      * 获取保险类型数据
      */
     private void getBxType() {
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETINSURANCETYPE, params, tvBxType, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETINSURANCETYPE, null, tvBxType, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
