@@ -518,6 +518,8 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
             case R.id.ib_sub:
                 RequiredParts requiredParts1 = requiredPartsList.get(position);
                 int amount1 = Integer.parseInt(requiredParts1.getPartsAmount());
+                if (amount1 == 0)
+                    break;
                 amount1--;
                 requiredParts1.setPartsAmount(String.valueOf(amount1));
                 requiredPartsAdapter.notifyDataSetChanged();

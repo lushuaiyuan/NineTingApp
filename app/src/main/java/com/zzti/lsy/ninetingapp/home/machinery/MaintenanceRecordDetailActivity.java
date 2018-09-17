@@ -30,20 +30,20 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
     TextView tvConstructionAddress;
     @BindView(R.id.tv_serviceType)
     TextView tvServiceType;
+    @BindView(R.id.tv_reason)
+    TextView tvReason;
     @BindView(R.id.tv_state)
     TextView tvState;
     @BindView(R.id.recycleView_detail)
     RecyclerView recycleViewDetail;
-    @BindView(R.id.tv_servicePersonnel)
-    TextView tvServicePersonnel;//保修人
-    @BindView(R.id.tv_servicePersonnelTel)
-    TextView tvServicePersonnelTel;//保修人电话
+//    @BindView(R.id.tv_servicePersonnel)
+//    TextView tvServicePersonnel;//保修人
+//    @BindView(R.id.tv_servicePersonnelTel)
+//    TextView tvServicePersonnelTel;//保修人电话
     @BindView(R.id.tv_maintenanceTime)
     TextView tvMaintenanceTime;//计划维修时间
     @BindView(R.id.recycleView_photo)
     RecyclerView recyclerViewPhoto;
-    @BindView(R.id.tv_reason)
-    TextView tvReason;//维修原因
     @BindView(R.id.tv_content)
     TextView tvContent;//维修内容
     @BindView(R.id.tv_remark)
@@ -55,7 +55,7 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
 
     //维修明细
     private RequiredPartsAdapter requiredPartsAdapter;
-    private List<RequiredParts> carMaintenanceEntities;
+    private List<RequiredParts> requiredPartsList;
 
     @Override
     public int getContentViewId() {
@@ -73,19 +73,11 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
         pics = new ArrayList<>();
         photoAdapter = new PhotoAdapter(pics);
         recyclerViewPhoto.setAdapter(photoAdapter);
-        carMaintenanceEntities = new ArrayList<>();
-        //TODO 明细的
-        for (int i = 0; i < 4; i++) {
-            RequiredParts requiredParts = new RequiredParts();
-            requiredParts.setReason(String.valueOf(i + 1));
-            requiredParts.setPartsAmount(String.valueOf(i + 1));
-            requiredParts.setPartsName("配件" + i);
-            requiredParts.setMoney(String.valueOf(500 + i));
-            carMaintenanceEntities.add(requiredParts);
-        }
+        requiredPartsList = new ArrayList<>();
         recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
 
-        requiredPartsAdapter = new RequiredPartsAdapter(carMaintenanceEntities);
+        requiredPartsAdapter = new RequiredPartsAdapter(requiredPartsList);
+        requiredPartsAdapter.setType(2);
         recycleViewDetail.setAdapter(requiredPartsAdapter);
 
         if (UIUtils.isNetworkConnected()) {
@@ -101,8 +93,6 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
         tvConstructionAddress.setText("adfa");
         tvServiceType.setText("adfa");
         tvState.setText("维修中");
-        tvServicePersonnel.setText("adfa");
-        tvServicePersonnelTel.setText("18337113754");
         tvMaintenanceTime.setText("2018-08-18 09:20");
         tvReason.setText("啊是发了两份啊大家发了健康啊都放假了看见对方啊速度发捡垃圾爱的附加费啦圣诞节啊速度发了空间");
         tvContent.setText("啊是发了两份啊大家发了健康啊都放假了看见对方啊速度发捡垃圾爱的附加费啦圣诞节啊速度发了空间");
