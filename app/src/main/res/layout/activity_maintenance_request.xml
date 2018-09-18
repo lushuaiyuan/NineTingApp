@@ -43,7 +43,7 @@
                     android:id="@+id/tv_carNumber"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp12"
+                    android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:hint="请选择"
@@ -80,7 +80,7 @@
                     android:id="@+id/tv_address"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp12"
+                    android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/color_333333"
@@ -89,8 +89,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_right_arrow"
-                    android:visibility="gone" />
+                    android:src="@mipmap/icon_right_arrow" />
             </LinearLayout>
 
             <LinearLayout
@@ -116,6 +115,7 @@
                     android:id="@+id/et_constructionAddress"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
@@ -126,6 +126,11 @@
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <LinearLayout
@@ -152,7 +157,7 @@
                     android:id="@+id/tv_maintenanceType"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp12"
+                    android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
@@ -190,7 +195,7 @@
                     android:id="@+id/tv_maintenanceReason"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp12"
+                    android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
@@ -282,6 +287,7 @@
                     android:id="@+id/et_money"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
@@ -292,10 +298,54 @@
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_maintenanceTime"
+                android:id="@+id/ll_maintenanceStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp1"
+                android:background="@drawable/white_gray_selector"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingTop="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="计划开始维修时间"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/tv_maintenanceStartTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:hint="请选择"
+                    android:padding="@dimen/dp5"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/dp15" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_maintenanceEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp21"
@@ -316,10 +366,10 @@
                     android:textSize="@dimen/dp15" />
 
                 <TextView
-                    android:id="@+id/tv_maintenanceTime"
+                    android:id="@+id/tv_maintenanceEndTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp12"
+                    android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"

@@ -22,6 +22,7 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.zzti.lsy.ninetingapp.R;
@@ -29,8 +30,8 @@ import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RepairCauseEntity;
 import com.zzti.lsy.ninetingapp.entity.RepairTypeEntity;
 import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
-import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.entity.RequiredParts;
+import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairCauseAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairTypeAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
@@ -43,6 +44,7 @@ import com.zzti.lsy.ninetingapp.photo.CustomHelper;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.photo.TakePhotoActivity;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
+import com.zzti.lsy.ninetingapp.utils.ImageUtils;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
@@ -77,8 +79,10 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     TextView tvMaintenanceReason;
     @BindView(R.id.recycleView_detail)
     RecyclerView recycleViewDetail;
-    @BindView(R.id.tv_maintenanceTime)
-    TextView tvMaintenanceTime;//计划维修时间
+    @BindView(R.id.tv_maintenanceStartTime)
+    TextView tvMaintenanceStartTime;//计划开始维修时间
+    @BindView(R.id.tv_maintenanceEndTime)
+    TextView tvMaintenanceEndTime;//计划结束维修时间
     @BindView(R.id.et_inputContent)
     EditText etInputContent;//维修内容
     @BindView(R.id.recycleView_photo)
@@ -117,23 +121,8 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
     //维修申请的实体类
     private RepairinfoEntity repairinfoEntity;
     //参数
-    private String plateNumber; //车牌号 用户选择
-    private String repairContent;//维修内容 用户填写
-    private String repairMoney;//维修金额 用户填写
     private String repairCauseID;//维修原因ID 下拉选择
     private String repairTypeID;//维修类型ID 下拉选择
-    private String projectID;//项目部ID 下拉选择
-    private String jobLocation;//暂无用 考虑去掉
-    private String repairBeginTime;//计划开始维修时间 用户填写
-    private String repairOverTime;//计划维修结束时间 用户填写
-    private String userID;//申请人ID 获取当前登录用户的UserID
-    private String remark;//备注 用户填写
-    private String devPicture;//以base64字符加密传过来，最多三张以|字符分割
-    private String status;//维修单状态（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过）不用填写 默认为2
-    private String opinion;//审批意见 默认为空
-    private String causeName;//维修原因
-    private String typeName;//维修类型
-    private String staffName;//申请人姓名
 
 
     @Override
@@ -151,7 +140,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
 
     private void initData() {
         RequiredParts requiredParts = new RequiredParts();
-        requiredParts.setPartsAmount("1");
+        requiredParts.setRpNumber("1");
 
         recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
         requiredPartsList = new ArrayList<>();
@@ -266,7 +255,8 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         recycleViewDetail.setNestedScrollingEnabled(false);
         recyclerViewPhoto.setHasFixedSize(true);
         recyclerViewPhoto.setNestedScrollingEnabled(false);
-
+        //TODO
+        tvCarNumber.setText("京A454B2");
         initPopPic();
         initRepairTypePop();
         initRepairCausePop();
@@ -358,8 +348,9 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         popupWindowPic.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-    @OnClick({R.id.ll_carNumber, R.id.ll_maintenanceType, R.id.ll_maintenanceReason, R.id.tv_addDetail, R.id.ll_maintenanceTime, R.id.btn_submit})
+    @OnClick({R.id.ll_carNumber, R.id.ll_maintenanceType, R.id.ll_maintenanceReason, R.id.tv_addDetail, R.id.ll_maintenanceStartTime, R.id.ll_maintenanceEndTime, R.id.btn_submit})
     public void viewClick(View view) {
+        hideSoftInput(etInputContent);
         switch (view.getId()) {
             case R.id.ll_carNumber://选择车辆
                 Intent intent = new Intent(this, DeviceListActivity.class);
@@ -414,12 +405,15 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                     break;
                 }
                 RequiredParts requiredParts = new RequiredParts();
-                requiredParts.setPartsAmount("1");
+                requiredParts.setRpNumber("1");
                 requiredPartsList.add(requiredParts);
                 requiredPartsAdapter.notifyDataSetChanged();
                 break;
-            case R.id.ll_maintenanceTime://计划维修时间
-                showCustomTime();
+            case R.id.ll_maintenanceStartTime://计划开始维修时间
+                showCustomTime(1);
+                break;
+            case R.id.ll_maintenanceEndTime://计划结束维修时间
+                showCustomTime(2);
                 break;
             case R.id.btn_submit://提交
                 submitData();
@@ -452,18 +446,18 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 UIUtils.showT("请选择所需配件");
                 return;
             }
-            if (StringUtil.isNullOrEmpty(requiredPartsList.get(i).getMoney())) {
-                UIUtils.showT("请输入配件金额");
-                return;
-            }
         }
 
-        if (StringUtil.isNullOrEmpty(tvCarNumber.getText().toString())) {
-            UIUtils.showT("请选择车牌号");
+        if (StringUtil.isNullOrEmpty(etMoney.getText().toString())) {
+            UIUtils.showT("请输入维修金额");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvMaintenanceTime.getText().toString())) {
-            UIUtils.showT("请选择计划维修时间");
+        if (StringUtil.isNullOrEmpty(tvMaintenanceStartTime.getText().toString())) {
+            UIUtils.showT("请选择计划开始维修时间");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(tvMaintenanceEndTime.getText().toString())) {
+            UIUtils.showT("请选择计划结束维修时间");
             return;
         }
         if (StringUtil.isNullOrEmpty(etInputContent.getText().toString())) {
@@ -477,26 +471,81 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         repairinfoEntity.setRepairTypeID(repairTypeID);//维修类型
         repairinfoEntity.setProjectID(spUtils.getString(SpUtils.PROJECTID, ""));//项目部ID
         repairinfoEntity.setJobLocation(etConstructionAddress.getText().toString());//地址
-        repairinfoEntity.setRepairBeginTime(tvMaintenanceTime.getText().toString());//计划维修时间
+        repairinfoEntity.setRepairBeginTime(tvMaintenanceStartTime.getText().toString());//计划开始维修时间
+        repairinfoEntity.setRepairOverTime(tvMaintenanceEndTime.getText().toString());//计划结束维修时间
         repairinfoEntity.setUserID(spUtils.getString(SpUtils.USERID, ""));//申请人ID
-        repairinfoEntity.setRemark(etInputRemark.getText().toString());//备注
+        if (StringUtil.isNullOrEmpty(etInputRemark.getText().toString())) {
+            repairinfoEntity.setRemark("");//备注
+        } else {
+            repairinfoEntity.setRemark(etInputRemark.getText().toString());
+        }
         repairinfoEntity.setCauseName(tvMaintenanceReason.getText().toString());
         repairinfoEntity.setTypeName(tvMaintenanceType.getText().toString());
         repairinfoEntity.setStaffName(spUtils.getString(SpUtils.USERNAME, ""));
+        if (pics.size() > 2) {//有图片
+            String devPicture = "";
+            for (int i = 0; i < pics.size(); i++) {
+                if (!StringUtil.isNullOrEmpty(pics.get(i))) {
+                    devPicture += ImageUtils.bitmapToString(pics.get(i)) + "|";
+                }
+            }
+            devPicture.substring(0, devPicture.length() - 1);
+            repairinfoEntity.setDevPicture(devPicture);
+        }
+        submitNet();
+    }
 
+    /**
+     * 提交网络
+     */
+    private void submitNet() {
+        showDia();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("repairJson", new Gson().toJson(repairinfoEntity));
+        params.put("partsJson", new Gson().toJson(requiredPartsList));
+
+        OkHttpManager.postFormBody(Urls.POST_ADDREPAIR, params, tvAddress, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    finish();
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
     }
 
     /**
      * 显示时间选择器
      */
-    private void showCustomTime() {
+    private void showCustomTime(final int tag) {
         Calendar instance = Calendar.getInstance();
         instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
         //时间选择器
         TimePickerView pvTime = new TimePickerBuilder(MaintenanceRequestActivity.this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                tvMaintenanceTime.setText(DateUtil.getDate(date));
+                if (tag == 1) {
+                    tvMaintenanceStartTime.setText(DateUtil.getDate(date));
+                } else if (tag == 2) {
+                    tvMaintenanceEndTime.setText(DateUtil.getDate(date));
+                }
 
             }
         }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
@@ -601,18 +650,22 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 break;
             case R.id.ib_sub:
                 RequiredParts requiredParts1 = requiredPartsList.get(position);
-                int amount1 = Integer.parseInt(requiredParts1.getPartsAmount());
-                if (amount1 == 0)
+                int amount1 = Integer.parseInt(requiredParts1.getRpNumber());
+                if (amount1 == 1)
                     break;
                 amount1--;
-                requiredParts1.setPartsAmount(String.valueOf(amount1));
+                requiredParts1.setRpNumber(String.valueOf(amount1));
                 requiredPartsAdapter.notifyDataSetChanged();
                 break;
             case R.id.ib_add:
                 RequiredParts requiredParts2 = requiredPartsList.get(position);
-                int amount2 = Integer.parseInt(requiredParts2.getPartsAmount());
+                if (StringUtil.isNullOrEmpty(requiredParts2.getPartsName())) {
+                    UIUtils.showT("请先选择配件");
+                    break;
+                }
+                int amount2 = Integer.parseInt(requiredParts2.getRpNumber());
                 amount2++;
-                requiredParts2.setPartsAmount(String.valueOf(amount2));
+                requiredParts2.setRpNumber(String.valueOf(amount2));
                 requiredPartsAdapter.notifyDataSetChanged();
                 break;
             case R.id.ll_partsName:
@@ -635,7 +688,17 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         }
         if (requestCode == 2 && requestCode == 2) {
             if (data != null) {
+                for (int i = 0; i < requiredPartsList.size(); i++) {
+                    if (!StringUtil.isNullOrEmpty(requiredPartsList.get(i).getPartsName())) {
+                        if (requiredPartsList.get(i).getPartsName().equals(data.getStringExtra("partsName"))) {
+                            UIUtils.showT("您已选择过" + data.getStringExtra("partsName"));
+                            return;
+                        }
+                    }
+                }
+                requiredPartsList.get(selectPosition).setPartsID(data.getStringExtra("partsID"));
                 requiredPartsList.get(selectPosition).setPartsName(data.getStringExtra("partsName"));
+                requiredPartsAdapter.notifyItemChanged(selectPosition);
             }
         }
     }

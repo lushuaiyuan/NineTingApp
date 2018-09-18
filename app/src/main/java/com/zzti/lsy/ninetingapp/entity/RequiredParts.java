@@ -6,11 +6,8 @@ package com.zzti.lsy.ninetingapp.entity;
 public class RequiredParts {
     private String repairID;//维修id
     private String partsID;//配件id
-    private String rpNumber;
+    private String rpNumber;//配件数量
     private String partsName;//配件名称
-    private String partsAmount;//配件数量
-    private String money;//维修金额
-
 
 
     public String getPartsName() {
@@ -21,19 +18,27 @@ public class RequiredParts {
         this.partsName = partsName;
     }
 
-    public String getMoney() {
-        return money;
+    public String getRepairID() {
+        return repairID;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setRepairID(String repairID) {
+        this.repairID = repairID;
     }
 
-    public String getPartsAmount() {
-        return partsAmount;
+    public String getPartsID() {
+        return partsID;
     }
 
-    public void setPartsAmount(String partsAmount) {
-        this.partsAmount = partsAmount;
+    public void setPartsID(String partsID) {
+        this.partsID = partsID;
+    }
+
+    public String getRpNumber() {
+        return rpNumber;
+    }
+
+    public void setRpNumber(String rpNumber) {
+        this.rpNumber = rpNumber;
     }
 }
