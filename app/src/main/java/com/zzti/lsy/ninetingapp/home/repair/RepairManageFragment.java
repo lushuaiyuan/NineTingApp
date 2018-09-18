@@ -1,4 +1,4 @@
-package com.zzti.lsy.ninetingapp.home.machinery;
+package com.zzti.lsy.ninetingapp.home.repair;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -13,7 +13,7 @@ import butterknife.OnClick;
 /**
  * 机械师  operator 6
  */
-public class MaintenanceManageFragment extends BaseFragment {
+public class RepairManageFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_maintenance_manage;
@@ -35,10 +35,10 @@ public class MaintenanceManageFragment extends BaseFragment {
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1: //维修申请
-                startActivity(new Intent(mActivity, MaintenanceRequestActivity.class));
+                startActivity(new Intent(mActivity, RepairRequestActivity.class));
                 break;
             case R.id.rl_menu2://维修记录
-                startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
+                startActivity(new Intent(mActivity, RepairRecordActivity.class));
                 break;
             case R.id.rl_menu3://维修统计
                 //TODO
@@ -48,7 +48,7 @@ public class MaintenanceManageFragment extends BaseFragment {
     }
 
     public static Fragment newInstance() {
-        MaintenanceManageFragment fragment = new MaintenanceManageFragment();
+        RepairManageFragment fragment = new RepairManageFragment();
         return fragment;
     }
 }

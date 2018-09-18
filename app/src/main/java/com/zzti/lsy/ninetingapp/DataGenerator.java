@@ -2,11 +2,9 @@ package com.zzti.lsy.ninetingapp;
 
 import android.support.v4.app.Fragment;
 
-import com.zzti.lsy.ninetingapp.home.device.BXNSFragment;
-import com.zzti.lsy.ninetingapp.home.device.CarDetailFragment;
 import com.zzti.lsy.ninetingapp.home.device.DeviceManageFragment;
 import com.zzti.lsy.ninetingapp.home.generalmanager.GeneralManagerFragment;
-import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceManageFragment;
+import com.zzti.lsy.ninetingapp.home.repair.RepairManageFragment;
 import com.zzti.lsy.ninetingapp.home.pm.PMManageFragment;
 import com.zzti.lsy.ninetingapp.home.production.ProductManageFragment;
 import com.zzti.lsy.ninetingapp.home.parts.PartsManagerFragment;
@@ -25,7 +23,7 @@ public class DataGenerator {
         fragments[2] = DeviceManageFragment.newInstance();
         fragments[3] = PMManageFragment.newInstance();
         fragments[4] = GeneralManagerFragment.newInstance();
-        fragments[5] = MaintenanceManageFragment.newInstance();
+        fragments[5] = RepairManageFragment.newInstance();
         fragments[6] = TaskFragment.newInstance();
         fragments[7] = MineFragment.newInstance();
         return fragments;

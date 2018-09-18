@@ -171,15 +171,15 @@
         <activity android:name=".home.parts.LifeGoodsOutActivity" />
         <!--机械维修申请-->
         <activity
-            android:name=".home.machinery.MaintenanceRequestActivity"
+            android:name=".home.repair.RepairRequestActivity"
             android:windowSoftInputMode="adjustResize" />
         <!--机械维修记录-->
         <activity
-            android:name=".home.machinery.MaintenanceRecordActivity"
+            android:name=".home.repair.RepairRecordActivity"
             android:hardwareAccelerated="false" />
         <!--机械维修记录详情-->
         <activity
-            android:name=".home.machinery.MaintenanceRecordDetailActivity"
+            android:name=".home.repair.RepairRecordDetailActivity"
             android:hardwareAccelerated="false" />
         <!--维修统计-->
         <activity android:name=".home.pm.MaintenanceStatistic" />

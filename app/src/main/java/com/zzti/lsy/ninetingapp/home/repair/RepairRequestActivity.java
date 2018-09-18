@@ -1,4 +1,4 @@
-package com.zzti.lsy.ninetingapp.home.machinery;
+package com.zzti.lsy.ninetingapp.home.repair;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -66,7 +66,7 @@ import butterknife.OnClick;
 /**
  * 维修申请
  */
-public class MaintenanceRequestActivity extends TakePhotoActivity implements PopupWindow.OnDismissListener, View.OnClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener, AdapterView.OnItemClickListener {
+public class RepairRequestActivity extends TakePhotoActivity implements PopupWindow.OnDismissListener, View.OnClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener, AdapterView.OnItemClickListener {
     @BindView(R.id.tv_carNumber)
     TextView tvCarNumber;
     @BindView(R.id.tv_address)
@@ -255,8 +255,6 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         recycleViewDetail.setNestedScrollingEnabled(false);
         recyclerViewPhoto.setHasFixedSize(true);
         recyclerViewPhoto.setNestedScrollingEnabled(false);
-        //TODO
-        tvCarNumber.setText("京A454B2");
         initPopPic();
         initRepairTypePop();
         initRepairCausePop();
@@ -314,6 +312,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         mListViewType = contentview.findViewById(R.id.pop_list);
         repairTypeEntities = new ArrayList<>();
         repairTypeAdapter = new RepairTypeAdapter(repairTypeEntities);
+        repairTypeAdapter.setTag(1);//背景色为白色
         mListViewType.setAdapter(repairTypeAdapter);
         mListViewType.setOnItemClickListener(this);
         popupWindowType.setAnimationStyle(R.style.anim_bottomPop);
@@ -515,6 +514,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
+                    UIUtils.showT("提交成功");
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
@@ -538,7 +538,7 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
         Calendar instance = Calendar.getInstance();
         instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
         //时间选择器
-        TimePickerView pvTime = new TimePickerBuilder(MaintenanceRequestActivity.this, new OnTimeSelectListener() {
+        TimePickerView pvTime = new TimePickerBuilder(RepairRequestActivity.this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
                 if (tag == 1) {
@@ -589,9 +589,9 @@ public class MaintenanceRequestActivity extends TakePhotoActivity implements Pop
                 pics.add(images.get(i).getCompressPath());
             }
         }
-        if (pics.size() < 5) {
+        if (pics.size() < 4) {
             if (!pics.contains("")) {
-                if (pics.size() == 4) {
+                if (pics.size() == 3) {
                     photoAdapter.notifyDataSetChanged();
                     return;
                 } else {

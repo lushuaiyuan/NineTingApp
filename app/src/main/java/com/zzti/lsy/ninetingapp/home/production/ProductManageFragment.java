@@ -5,9 +5,6 @@ import android.view.View;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
-import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceRecordActivity;
-import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceRequestActivity;
-import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import butterknife.OnClick;
 
@@ -48,10 +45,10 @@ public class ProductManageFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, FormListActivity.class));
                 break;
 //            case R.id.rl_menu3:
-//                startActivity(new Intent(mActivity, MaintenanceRequestActivity.class));
+//                startActivity(new Intent(mActivity, RepairRequestActivity.class));
 //                break;
 //            case R.id.rl_menu4:
-//                startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
+//                startActivity(new Intent(mActivity, RepairRecordActivity.class));
 //                break;
 //            case R.id.rl_menu5:
 //                UIUtils.showT("菜单5");

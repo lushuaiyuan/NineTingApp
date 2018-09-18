@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 
 /**
  * author：anxin on 2018/8/7 14:54
- * 车辆类型适配器
+ * 车辆状态适配器
  */
 public class CarStatusAdapter extends BaseAdapter {
     private List<CarStatusEntity> carStatusEntities;

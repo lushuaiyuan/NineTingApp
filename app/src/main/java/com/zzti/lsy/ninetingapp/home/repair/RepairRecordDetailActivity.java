@@ -1,19 +1,23 @@
-package com.zzti.lsy.ninetingapp.home.machinery;
+package com.zzti.lsy.ninetingapp.home.repair;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
 import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.entity.RequiredParts;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,7 +25,7 @@ import butterknife.BindView;
 /**
  * 维修记录详情
  */
-public class MaintenanceRecordDetailActivity extends BaseActivity {
+public class RepairRecordDetailActivity extends BaseActivity {
     @BindView(R.id.tv_carNumber)
     TextView tvCarNumber;
     @BindView(R.id.tv_projectAddress)
@@ -36,10 +40,6 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
     TextView tvState;
     @BindView(R.id.recycleView_detail)
     RecyclerView recycleViewDetail;
-//    @BindView(R.id.tv_servicePersonnel)
-//    TextView tvServicePersonnel;//保修人
-//    @BindView(R.id.tv_servicePersonnelTel)
-//    TextView tvServicePersonnelTel;//保修人电话
     @BindView(R.id.tv_maintenanceTime)
     TextView tvMaintenanceTime;//计划维修时间
     @BindView(R.id.recycleView_photo)
@@ -48,6 +48,8 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
     TextView tvContent;//维修内容
     @BindView(R.id.tv_remark)
     TextView tvRemark;//维修原因
+    @BindView(R.id.btn_operator)
+    Button btnOperator;//操作按钮
 
     //照片
     private PhotoAdapter photoAdapter;
@@ -56,6 +58,7 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
     //维修明细
     private RequiredPartsAdapter requiredPartsAdapter;
     private List<RequiredParts> requiredPartsList;
+
 
     @Override
     public int getContentViewId() {
@@ -69,17 +72,11 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
     }
 
     private void initData() {
-        recyclerViewPhoto.setLayoutManager(new GridLayoutManager(this, 4));
-        pics = new ArrayList<>();
-        photoAdapter = new PhotoAdapter(pics);
-        recyclerViewPhoto.setAdapter(photoAdapter);
         requiredPartsList = new ArrayList<>();
         recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
-
         requiredPartsAdapter = new RequiredPartsAdapter(requiredPartsList);
         requiredPartsAdapter.setType(2);
         recycleViewDetail.setAdapter(requiredPartsAdapter);
-
         if (UIUtils.isNetworkConnected()) {
             showDia();
             getData();
@@ -88,16 +85,6 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
 
     private void getData() {
         cancelDia();
-        tvCarNumber.setText("adfa");
-        tvProjectAddress.setText("adfa");
-        tvConstructionAddress.setText("adfa");
-        tvServiceType.setText("adfa");
-        tvState.setText("维修中");
-        tvMaintenanceTime.setText("2018-08-18 09:20");
-        tvReason.setText("啊是发了两份啊大家发了健康啊都放假了看见对方啊速度发捡垃圾爱的附加费啦圣诞节啊速度发了空间");
-        tvContent.setText("啊是发了两份啊大家发了健康啊都放假了看见对方啊速度发捡垃圾爱的附加费啦圣诞节啊速度发了空间");
-        tvRemark.setText("啊是发了两份啊大家发了健康啊都放假了看见对方啊速度发捡垃圾爱的附加费啦圣诞节啊速度发了空间");
-
 
     }
 
@@ -107,6 +94,40 @@ public class MaintenanceRecordDetailActivity extends BaseActivity {
         //解决卡顿问题
         recycleViewDetail.setHasFixedSize(true);
         recycleViewDetail.setNestedScrollingEnabled(false);
+        RepairinfoEntity repairinfoEntity = (RepairinfoEntity) getIntent().getSerializableExtra("repairinfoEntity");
+
+        recyclerViewPhoto.setLayoutManager(new GridLayoutManager(this, 4));
+        String[] devicePics = repairinfoEntity.getDevPicture().split("|");
+        pics= Arrays.asList(devicePics);
+        if (pics.size() == 4) {
+            pics.remove(3);
+        }
+        photoAdapter = new PhotoAdapter(pics);
+        recyclerViewPhoto.setAdapter(photoAdapter);
+        setData(repairinfoEntity);
+
+
+    }
+
+    private void setData(RepairinfoEntity repairinfoEntity) {
+        tvCarNumber.setText(repairinfoEntity.getPlateNumber());
+        tvProjectAddress.setText("暂无数据");
+        tvConstructionAddress.setText("adfa");
+        tvServiceType.setText(repairinfoEntity.getTypeName());
+        if (repairinfoEntity.getStatus().equals("0")) {
+            tvState.setText("总经理已审批");
+        } else if (repairinfoEntity.getStatus().equals("1")) {
+            tvState.setText("项目经理已审批");
+        } else if (repairinfoEntity.getStatus().equals("2")) {
+            tvState.setText("待审批");
+        } else if (repairinfoEntity.getStatus().equals("3")) {
+            tvState.setText("已撤销");
+            btnOperator.setVisibility(View.GONE);
+        }
+        tvMaintenanceTime.setText(repairinfoEntity.getRepairBeginTime().split("T")[0]);
+        tvReason.setText(repairinfoEntity.getCauseName());
+        tvContent.setText(repairinfoEntity.getRepairContent());
+        tvRemark.setText(repairinfoEntity.getRemark());
     }
 }
 

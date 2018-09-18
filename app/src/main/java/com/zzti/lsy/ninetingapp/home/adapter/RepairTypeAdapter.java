@@ -52,8 +52,22 @@ public class RepairTypeAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        if (tag == 1) {
+            convertView.setBackgroundResource(R.drawable.white_gray_selector);
+            viewHolder.tvName.setTextColor(App.get().getResources().getColor(R.color.color_666666));
+        } else {
+            convertView.setBackgroundResource(R.drawable.black_selector);
+            viewHolder.tvName.setTextColor(App.get().getResources().getColor(R.color.color_white));
+        }
+
         viewHolder.tvName.setText(getItem(i).getTypeName());
         return convertView;
+    }
+
+    private int tag;
+
+    public void setTag(int tag) {
+        this.tag = tag;
     }
 
     static class ViewHolder {

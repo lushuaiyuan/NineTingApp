@@ -15,7 +15,7 @@ import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
-import com.zzti.lsy.ninetingapp.home.machinery.MaintenanceRecordActivity;
+import com.zzti.lsy.ninetingapp.home.repair.RepairRecordActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -92,7 +92,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                 UIUtils.showT("采购审批");
                 break;
             case R.id.rl_menu4://维修审批
-                startActivity(new Intent(mActivity, MaintenanceRecordActivity.class));
+                startActivity(new Intent(mActivity, RepairRecordActivity.class));
                 break;
             case R.id.rl_menu5://生产统计
                 UIUtils.showT("生产统计");

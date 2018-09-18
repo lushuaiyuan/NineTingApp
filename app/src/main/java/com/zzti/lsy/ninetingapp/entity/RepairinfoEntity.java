@@ -1,9 +1,11 @@
 package com.zzti.lsy.ninetingapp.entity;
 
+import java.io.Serializable;
+
 /**
  * 维修申请实体类
  */
-public class RepairinfoEntity {
+public class RepairinfoEntity implements Serializable{
     private String repairID;//维修编号 实体中不用传 后台生成
     private String repairApplyTime;//维修单申请时间 后台填 以服务器时间为准
     private String plateNumber; //车牌号 用户选择

@@ -122,7 +122,9 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         initView();
         initCarStatusPop();
         initCarTypePop();
-        initProjectPop();
+        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理角色
+            initProjectPop();
+        }
         initData();
     }
 
@@ -244,7 +246,9 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             showDia();
             getCarList();
             getCarType();
-            getProject();
+            if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理角色
+                getProject();
+            }
         }
     }
 
