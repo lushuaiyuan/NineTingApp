@@ -97,7 +97,7 @@ public class RepairRecordDetailActivity extends BaseActivity {
         RepairinfoEntity repairinfoEntity = (RepairinfoEntity) getIntent().getSerializableExtra("RepairinfoEntity");
 
         recyclerViewPhoto.setLayoutManager(new GridLayoutManager(this, 4));
-        String[] devicePics = repairinfoEntity.getDevPicture().split("|");
+        String[] devicePics = repairinfoEntity.getDevPicture().split("\\|");
         pics= Arrays.asList(devicePics);
         if (pics.size() == 4) {
             pics.remove(3);
