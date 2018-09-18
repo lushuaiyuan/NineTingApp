@@ -401,7 +401,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(this, RepairRecordDetailActivity.class);
-        intent.putExtra("Repairinfo", repairinfoEntities.get(position));
+        intent.putExtra("RepairinfoEntity", repairinfoEntities.get(position));
         startActivity(intent);
     }
 }

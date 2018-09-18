@@ -94,7 +94,7 @@ public class RepairRecordDetailActivity extends BaseActivity {
         //解决卡顿问题
         recycleViewDetail.setHasFixedSize(true);
         recycleViewDetail.setNestedScrollingEnabled(false);
-        RepairinfoEntity repairinfoEntity = (RepairinfoEntity) getIntent().getSerializableExtra("repairinfoEntity");
+        RepairinfoEntity repairinfoEntity = (RepairinfoEntity) getIntent().getSerializableExtra("RepairinfoEntity");
 
         recyclerViewPhoto.setLayoutManager(new GridLayoutManager(this, 4));
         String[] devicePics = repairinfoEntity.getDevPicture().split("|");
