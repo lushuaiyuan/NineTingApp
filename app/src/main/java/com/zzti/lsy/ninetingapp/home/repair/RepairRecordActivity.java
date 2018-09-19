@@ -154,10 +154,6 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
                             RepairTypeEntity repairTypeEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairTypeEntity.class);
                             repairTypeEntities.add(repairTypeEntity);
                         }
-                        //TODO
-//                        if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
-//                            smartRefreshLayout.finishLoadMoreWithNoMoreData();
-//                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -205,6 +201,9 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
                             RepairinfoEntity repairinfoEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairinfoEntity.class);
                             repairinfoEntities.add(repairinfoEntity);
                         }
+                        if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
+                            smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -229,8 +228,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     private void initView() {
         setTitle("维修记录");
         smartRefreshLayout.setEnableRefresh(true);
-        //TODO
-        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setEnableLoadMore(true);
         //使上拉加载具有弹性效果：
         smartRefreshLayout.setEnableAutoLoadMore(false);
         initPopStatus();
@@ -349,7 +347,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         conditionEntity1.setName("项目经理已审批");
         conditionEntity1.setId("1");
         ConditionEntity conditionEntity2 = new ConditionEntity();
-        conditionEntity2.setName("待处理");
+        conditionEntity2.setName("待审批");
         conditionEntity2.setId("2");
         ConditionEntity conditionEntity3 = new ConditionEntity();
         conditionEntity3.setName("已撤销");
@@ -397,11 +395,21 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
             getRecord();
         }
     }
-
+    private int selectPosition;
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(this, RepairRecordDetailActivity.class);
         intent.putExtra("RepairinfoEntity", repairinfoEntities.get(position));
-        startActivity(intent);
+        selectPosition = position;
+        startActivityForResult(intent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            repairinfoEntities.remove(selectPosition);
+            repairRecordAdapter.notifyDataSetChanged();
+        }
     }
 }

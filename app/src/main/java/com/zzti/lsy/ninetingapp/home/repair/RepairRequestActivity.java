@@ -115,7 +115,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
     private List<RepairCauseEntity> repairCauseEntities;
 
     //维修明细
-    private RequiredPartsAdapter requiredPartsAdapter; //不能修改
+    private RequiredPartsAdapter requiredPartsAdapter;
     private List<RequiredParts> requiredPartsList;
 
     //维修申请的实体类

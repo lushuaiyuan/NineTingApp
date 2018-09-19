@@ -10,17 +10,29 @@ import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
+import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.entity.RequiredParts;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
+import com.zzti.lsy.ninetingapp.view.MAlertDialog;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 维修记录详情
@@ -75,8 +87,9 @@ public class RepairRecordDetailActivity extends BaseActivity {
         requiredPartsList = new ArrayList<>();
         recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
         requiredPartsAdapter = new RequiredPartsAdapter(requiredPartsList);
-        requiredPartsAdapter.setType(2);
+        requiredPartsAdapter.setType(2);//不能修改信息
         recycleViewDetail.setAdapter(requiredPartsAdapter);
+
         if (UIUtils.isNetworkConnected()) {
             showDia();
             getData();
@@ -85,9 +98,39 @@ public class RepairRecordDetailActivity extends BaseActivity {
 
     private void getData() {
         cancelDia();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("repairId", repairID);
+        OkHttpManager.postFormBody(Urls.POST_GETREPAIRPARTS, params, recycleViewDetail, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
 
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            RequiredParts requiredParts = ParseUtils.parseJson(jsonArray.getString(i), RequiredParts.class);
+                            requiredPartsList.add(requiredParts);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+                requiredPartsAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
+    private String repairID;
 
     private void initView() {
         setTitle("维修申请");
@@ -95,10 +138,10 @@ public class RepairRecordDetailActivity extends BaseActivity {
         recycleViewDetail.setHasFixedSize(true);
         recycleViewDetail.setNestedScrollingEnabled(false);
         RepairinfoEntity repairinfoEntity = (RepairinfoEntity) getIntent().getSerializableExtra("RepairinfoEntity");
-
+        repairID = repairinfoEntity.getRepairID();
         recyclerViewPhoto.setLayoutManager(new GridLayoutManager(this, 4));
         String[] devicePics = repairinfoEntity.getDevPicture().split("\\|");
-        pics= Arrays.asList(devicePics);
+        pics = Arrays.asList(devicePics);
         if (pics.size() == 4) {
             pics.remove(3);
         }
@@ -106,12 +149,20 @@ public class RepairRecordDetailActivity extends BaseActivity {
         recyclerViewPhoto.setAdapter(photoAdapter);
         setData(repairinfoEntity);
 
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
 
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
+            if (tvState.getText().toString().equals("待审批")) {
+                btnOperator.setText("撤销");
+            }
+        }
     }
 
     private void setData(RepairinfoEntity repairinfoEntity) {
         tvCarNumber.setText(repairinfoEntity.getPlateNumber());
-        tvProjectAddress.setText("暂无数据");
+        tvProjectAddress.setText(repairinfoEntity.getProjectName());
         tvConstructionAddress.setText("adfa");
         tvServiceType.setText(repairinfoEntity.getTypeName());
         if (repairinfoEntity.getStatus().equals("0")) {
@@ -128,6 +179,57 @@ public class RepairRecordDetailActivity extends BaseActivity {
         tvReason.setText(repairinfoEntity.getCauseName());
         tvContent.setText(repairinfoEntity.getRepairContent());
         tvRemark.setText(repairinfoEntity.getRemark());
+    }
+
+    @OnClick(R.id.btn_operator)
+    public void viewClick(View view) {
+        MAlertDialog.show(this, "提示", "是否撤销维修申请", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+            @Override
+            public void onConfirmClick(String msg) {
+                showDia();
+                revocationData();
+            }
+
+            @Override
+            public void onCancelClick() {
+
+            }
+        }, true);
+    }
+
+    /**
+     * 撤销数据
+     */
+    private void revocationData() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("repairID", repairID);
+        OkHttpManager.postFormBody(Urls.POST_CANCELREPAIR, params, recycleViewDetail, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    setResult(2);
+                    UIUtils.showT("撤销成功");
+                    finish();
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
     }
 }
 

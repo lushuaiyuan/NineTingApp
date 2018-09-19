@@ -28,7 +28,10 @@
                 android:layout_marginRight="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp16"
                 android:background="@drawable/circular_white_shape"
-                android:padding="@dimen/dp15">
+                android:paddingBottom="@dimen/dp15"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
+                android:paddingTop="@dimen/dp15">
 
                 <TextView
                     android:id="@+id/tv_carNumber_Title"
@@ -142,20 +145,19 @@
 
             </RelativeLayout>
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:fillViewport="true"
-                android:scrollbars="none">
+            <!--<ScrollView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:fillViewport="true"-->
+                <!--android:scrollbars="none">-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycleView_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent" />
 
-                </android.support.v7.widget.RecyclerView>
-            </ScrollView>
+            <!--</ScrollView>-->
 
             <LinearLayout
                 android:layout_width="match_parent"

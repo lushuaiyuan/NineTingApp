@@ -37,8 +37,10 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
             }
             helper.getView(R.id.ib_sub).setVisibility(View.VISIBLE);
             helper.getView(R.id.ib_add).setVisibility(View.VISIBLE);
+            helper.getView(R.id.imageView).setVisibility(View.VISIBLE);
             helper.addOnClickListener(R.id.ib_sub).addOnClickListener(R.id.ib_add).addOnClickListener(R.id.tv_delete).addOnClickListener(R.id.ll_partsName);
         } else {
+            helper.getView(R.id.imageView).setVisibility(View.GONE);
             helper.getView(R.id.tv_delete).setVisibility(View.GONE);
             helper.getView(R.id.ib_sub).setVisibility(View.GONE);
             helper.getView(R.id.ib_add).setVisibility(View.GONE);
