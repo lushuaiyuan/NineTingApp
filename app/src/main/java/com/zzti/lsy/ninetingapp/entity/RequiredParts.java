@@ -8,7 +8,15 @@ public class RequiredParts {
     private String partsID;//配件id
     private String rpNumber;//配件数量
     private String partsName;//配件名称
+    private String partsModel;//配件类型
 
+    public String getPartsModel() {
+        return partsModel;
+    }
+
+    public void setPartsModel(String partsModel) {
+        this.partsModel = partsModel;
+    }
 
     public String getPartsName() {
         return partsName;

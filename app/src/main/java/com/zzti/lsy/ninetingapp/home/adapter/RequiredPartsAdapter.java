@@ -24,7 +24,11 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
         if (StringUtil.isNullOrEmpty(item.getPartsName())) {
             helper.setText(R.id.tv_partsName, "");
         } else {
-            helper.setText(R.id.tv_partsName, item.getPartsName());
+            if (type == 1) {//录入
+                helper.setText(R.id.tv_partsName, item.getPartsName());
+            } else {
+                helper.setText(R.id.tv_partsName, item.getPartsModel() + "——" + item.getPartsName());
+            }
         }
         if (!StringUtil.isNullOrEmpty(item.getRpNumber())) {
             helper.setText(R.id.tv_partsAmount, item.getRpNumber());
