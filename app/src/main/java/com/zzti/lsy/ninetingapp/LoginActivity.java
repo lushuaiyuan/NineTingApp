@@ -31,8 +31,6 @@ public class LoginActivity extends BaseActivity {
     EditText etUserName;
     @BindView(R.id.et_pwd)
     EditText etPwd;
-    @BindView(R.id.et_type)
-    EditText etType;
 
     @BindView(R.id.iv_showPwd)
     ImageView ivShowPwd;

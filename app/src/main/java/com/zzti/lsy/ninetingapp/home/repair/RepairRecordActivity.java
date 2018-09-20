@@ -395,20 +395,22 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
             getRecord();
         }
     }
+
     private int selectPosition;
+
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(this, RepairRecordDetailActivity.class);
         intent.putExtra("RepairinfoEntity", repairinfoEntities.get(position));
         selectPosition = position;
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 2) {
-            repairinfoEntities.remove(selectPosition);
+            repairinfoEntities.get(selectPosition).setStatus("3");//设置状态为已撤销
             repairRecordAdapter.notifyDataSetChanged();
         }
     }
