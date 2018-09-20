@@ -52,8 +52,10 @@ public class RepairRecordDetailActivity extends BaseActivity {
     TextView tvState;
     @BindView(R.id.recycleView_detail)
     RecyclerView recycleViewDetail;
-    @BindView(R.id.tv_maintenanceTime)
-    TextView tvMaintenanceTime;//计划维修时间
+    @BindView(R.id.tv_maintenanceStartTime)
+    TextView tvMaintenanceStartTime;//计划维修开始时间
+    @BindView(R.id.tv_maintenanceEndTime)
+    TextView tvMaintenanceEndTime;//计划维修结束时间
     @BindView(R.id.recycleView_photo)
     RecyclerView recyclerViewPhoto;
     @BindView(R.id.tv_content)
@@ -175,7 +177,8 @@ public class RepairRecordDetailActivity extends BaseActivity {
             tvState.setText("已撤销");
             btnOperator.setVisibility(View.GONE);
         }
-        tvMaintenanceTime.setText(repairinfoEntity.getRepairBeginTime().split("T")[0]);
+        tvMaintenanceStartTime.setText(repairinfoEntity.getRepairBeginTime().split("T")[0]);
+        tvMaintenanceEndTime.setText(repairinfoEntity.getRepairOverTime().split("T")[0]);
         tvReason.setText(repairinfoEntity.getCauseName());
         tvContent.setText(repairinfoEntity.getRepairContent());
         tvRemark.setText(repairinfoEntity.getRemark());
