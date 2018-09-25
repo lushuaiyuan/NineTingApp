@@ -665,6 +665,10 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 }
                 int amount2 = Integer.parseInt(requiredParts2.getRpNumber());
                 amount2++;
+                if (amount2 > Integer.parseInt(requiredParts2.getPartsNumber())) {
+                    UIUtils.showT("配件所需数量不能大于库存数量");
+                    break;
+                }
                 requiredParts2.setRpNumber(String.valueOf(amount2));
                 requiredPartsAdapter.notifyDataSetChanged();
                 break;
@@ -698,6 +702,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 }
                 requiredPartsList.get(selectPosition).setPartsID(data.getStringExtra("partsID"));
                 requiredPartsList.get(selectPosition).setPartsName(data.getStringExtra("partsName"));
+                requiredPartsList.get(selectPosition).setPartsNumber(data.getStringExtra("partsNumber"));
                 requiredPartsAdapter.notifyItemChanged(selectPosition);
             }
         }

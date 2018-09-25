@@ -155,9 +155,11 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
             String partsID = partsInfoEntities.get(position).getPartsID();
             String partsName = partsInfoEntities.get(position).getPartsName();
             String partsModel = partsInfoEntities.get(position).getPartsModel();
+            String partsNumber = partsInfoEntities.get(position).getPartsNumber();
             Intent intent = new Intent();
             intent.putExtra("partsID", partsID);
             intent.putExtra("partsName", partsModel + "——" + partsName);
+            intent.putExtra("partsNumber", partsNumber);
             setResult(2, intent);
             finish();
         } else if (tag == 2) {//配件列表菜单进入

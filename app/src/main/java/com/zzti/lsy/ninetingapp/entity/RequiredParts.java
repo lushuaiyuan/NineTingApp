@@ -7,8 +7,17 @@ public class RequiredParts {
     private String repairID;//维修id
     private String partsID;//配件id
     private String rpNumber;//配件数量
+    private String partsNumber;//配件库存
     private String partsName;//配件名称
     private String partsModel;//配件类型
+
+    public String getPartsNumber() {
+        return partsNumber;
+    }
+
+    public void setPartsNumber(String partsNumber) {
+        this.partsNumber = partsNumber;
+    }
 
     public String getPartsModel() {
         return partsModel;

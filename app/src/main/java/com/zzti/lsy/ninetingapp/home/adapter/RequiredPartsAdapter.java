@@ -30,8 +30,11 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
                 helper.setText(R.id.tv_partsName, item.getPartsModel() + "——" + item.getPartsName());
             }
         }
-        if (!StringUtil.isNullOrEmpty(item.getRpNumber())) {
+        if (!StringUtil.isNullOrEmpty(item.getRpNumber())) { //所需配件数量
             helper.setText(R.id.tv_partsAmount, item.getRpNumber());
+        }
+        if (!StringUtil.isNullOrEmpty(item.getPartsNumber())) {//配件库存
+            helper.setText(R.id.tv_amount, "库存" + item.getPartsNumber());
         }
         if (type == 1) {//录入的时候部分按钮可以操作
             if (helper.getAdapterPosition() >= 1) {
@@ -42,12 +45,14 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
             helper.getView(R.id.ib_sub).setVisibility(View.VISIBLE);
             helper.getView(R.id.ib_add).setVisibility(View.VISIBLE);
             helper.getView(R.id.imageView).setVisibility(View.VISIBLE);
+            helper.getView(R.id.tv_amount).setVisibility(View.VISIBLE);
             helper.addOnClickListener(R.id.ib_sub).addOnClickListener(R.id.ib_add).addOnClickListener(R.id.tv_delete).addOnClickListener(R.id.ll_partsName);
         } else {
             helper.getView(R.id.imageView).setVisibility(View.GONE);
             helper.getView(R.id.tv_delete).setVisibility(View.GONE);
             helper.getView(R.id.ib_sub).setVisibility(View.GONE);
             helper.getView(R.id.ib_add).setVisibility(View.GONE);
+            helper.getView(R.id.tv_amount).setVisibility(View.GONE);
         }
 
 
