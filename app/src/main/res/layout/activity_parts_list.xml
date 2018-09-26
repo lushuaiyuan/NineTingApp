@@ -12,46 +12,42 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RadioGroup
-            android:id="@+id/radio_group_condition"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp32"
-            android:layout_margin="@dimen/dp16"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radio_button_all"
-                style="@style/RadioGroupButtonStyle"
-                android:background="@drawable/conditions_selector"
-                android:text="全部"
-                android:textColor="@drawable/text_black_white"
-                android:textSize="@dimen/dp14" />
-
-            <RadioButton
-                android:id="@+id/radio_button_inWareHouse"
-                style="@style/RadioGroupButtonStyle"
-                android:background="@drawable/conditions_selector"
-                android:text="库存"
-                android:textColor="@drawable/text_black_white"
-                android:textSize="@dimen/dp14" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@drawable/input_shape"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
 
-            <RadioButton
-                android:id="@+id/radio_button_maintain"
-                style="@style/RadioGroupButtonStyle"
-                android:background="@drawable/conditions_selector"
-                android:text="维修"
-                android:textColor="@drawable/text_black_white"
-                android:textSize="@dimen/dp14" />
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp10"
+                android:background="@mipmap/iv_search" />
 
-            <RadioButton
-                android:id="@+id/radio_button_onRoad"
-                style="@style/RadioGroupButtonStyle"
-                android:background="@drawable/conditions_selector"
-                android:text="在途"
-                android:textColor="@drawable/text_black_white"
-                android:textSize="@dimen/dp14" />
-        </RadioGroup>
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp40"
+                android:layout_marginRight="@dimen/dp40"
+                android:background="@null"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:hint="请输入配件名称或者型号"
+                android:padding="@dimen/dp8"
+                android:textSize="@dimen/dp13" />
+
+        </RelativeLayout>
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
@@ -63,7 +59,7 @@
                 android:id="@+id/mRecycleView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"/>
+                android:clipToPadding="false" />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
 </LinearLayout>

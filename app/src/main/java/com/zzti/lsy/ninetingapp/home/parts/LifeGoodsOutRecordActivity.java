@@ -46,9 +46,9 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
         for (int i = 0; i < 5; i++) {
             LifeGoodsEntity lifeGoodsEntity = new LifeGoodsEntity();
             lifeGoodsEntity.setOutTime("2018-08-14");
-            lifeGoodsEntity.setGoodsName("易损牌手套");
+            lifeGoodsEntity.setLbName("易损牌手套");
             lifeGoodsEntity.setOperatorName("lsy");
-            lifeGoodsEntity.setAmount("105");
+            lifeGoodsEntity.setLaobaoNumber("105");
             lifeGoodsEntity.setRecipient("卜辽捷");
             lifeGoodEntities.add(lifeGoodsEntity);
         }

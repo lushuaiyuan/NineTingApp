@@ -49,9 +49,9 @@ public class LifeGoodsOutFragment extends BaseFragment implements BaseQuickAdapt
         //TODO
         for (int i = 0; i < 5; i++) {
             LifeGoodsEntity lifeGoodsEntity = new LifeGoodsEntity();
-            lifeGoodsEntity.setGoodsName("易损牌手套");
+            lifeGoodsEntity.setLbName("易损牌手套");
             lifeGoodsEntity.setOperatorName("lsy");
-            lifeGoodsEntity.setAmount("105");
+            lifeGoodsEntity.setLaobaoNumber("105");
             lifeGoodsEntity.setPrice("100.00元");
             lifeGoodEntities.add(lifeGoodsEntity);
         }

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -13,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
@@ -22,31 +24,35 @@ import com.zzti.lsy.ninetingapp.home.adapter.PartsListAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * author：anxin on 2018/8/8 16:18
  * 配件列表
  */
 public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
+    @BindView(R.id.et_search)
+    EditText etSearch;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-    @BindView(R.id.radio_group_condition)
-    RadioGroup mRadioGroup;
-    @BindView(R.id.radio_button_all)
-    RadioButton mRadioButtonAll;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
     private List<PartsInfoEntity> partsInfoEntities;
     private PartsListAdapter partsListAdapter;
+    private int pageIndex = 1;//页码
+    private String wherestr;//查询条件
+    private int tag;//1代表维修申请进来（获取配件名称）  2代表点击配件列表菜单进来
 
     @Override
     public int getContentViewId() {
@@ -59,34 +65,14 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
         initData();
     }
 
-    private int tag;//1代表维修申请进来（获取配件名称）  2代表点击配件列表菜单进来
 
     private void initView() {
         setTitle("配件列表");
-        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setEnableLoadMore(true);
         smartRefreshLayout.setEnableRefresh(true);
+        //使上拉加载具有弹性效果：
+        smartRefreshLayout.setEnableAutoLoadMore(false);
         tag = UIUtils.getInt4Intent(this, "TAG");
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radio_button_all: //全部
-
-                        break;
-                    case R.id.radio_button_inWareHouse://在库
-
-                        break;
-                    case R.id.radio_button_maintain://维修
-
-                        break;
-                    case R.id.radio_button_onRoad://在途
-
-                        break;
-                }
-            }
-        });
-        // 保证第一次会回调OnCheckedChangeListener
-        mRadioButtonAll.setChecked(true);
     }
 
     private void initData() {
@@ -95,20 +81,35 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
         partsListAdapter = new PartsListAdapter(partsInfoEntities);
         mRecycleView.setAdapter(partsListAdapter);
         partsListAdapter.setOnItemClickListener(this);
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageIndex++;
+                getPartsList();
+            }
+
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageIndex = 1;
+                etSearch.setText("");
+                wherestr = "";
+                partsInfoEntities.clear();
                 getPartsList();
             }
         });
-
         showDia();
         getPartsList();
     }
 
     private void getPartsList() {
-        partsInfoEntities.clear();
-        OkHttpManager.postFormBody(Urls.POST_GETPARTS, null, mRecycleView, new OkHttpManager.OnResponse<String>() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("pageIndex", String.valueOf(pageIndex));
+        if (StringUtil.isNullOrEmpty(wherestr)) {
+            params.put("wherestr", "");
+        } else {
+            params.put("wherestr", wherestr);
+        }
+        OkHttpManager.postFormBody(Urls.POST_GETPARTS, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -117,6 +118,7 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
             @Override
             public void onSuccess(String s) {
                 cancelDia();
+                endRefresh(smartRefreshLayout);
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     try {
@@ -132,6 +134,9 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
+                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                    }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
@@ -144,6 +149,7 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
             public void onFailed(int code, String msg, String url) {
                 super.onFailed(code, msg, url);
                 cancelDia();
+                endRefresh(smartRefreshLayout);
             }
         });
     }
@@ -166,4 +172,19 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
 
         }
     }
+
+    @OnClick({R.id.iv_search})
+    public void viewClick() {
+        hideSoftInput(etSearch);
+        if (StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
+            UIUtils.showT("请输入搜索内容");
+            return;
+        }
+        wherestr = "partsName like \'%" + etSearch.getText().toString() + "%\' or partsModel like \'%" + etSearch.getText().toString() + "%\'";
+        pageIndex = 1;
+        partsInfoEntities.clear();
+        showDia();
+        getPartsList();
+    }
+
 }

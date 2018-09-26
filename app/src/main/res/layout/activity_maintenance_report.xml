@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <include layout="@layout/view_toolbar" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,12 +34,15 @@
             android:layout_marginLeft="@dimen/dp40"
             android:layout_marginRight="@dimen/dp40"
             android:background="@null"
+            android:ellipsize="end"
             android:gravity="center"
-            android:hint="车牌号"
+            android:hint="请输入车牌号"
+            android:maxLines="1"
             android:padding="@dimen/dp8"
             android:textSize="@dimen/dp13" />
 
     </RelativeLayout>
+
     <com.bin.david.form.core.SmartTable
         android:id="@+id/table"
         android:layout_width="match_parent"

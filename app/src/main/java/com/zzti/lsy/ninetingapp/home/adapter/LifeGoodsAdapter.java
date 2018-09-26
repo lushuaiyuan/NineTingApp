@@ -17,9 +17,9 @@ public class LifeGoodsAdapter extends BaseQuickAdapter<LifeGoodsEntity, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, LifeGoodsEntity item) {
-        helper.setText(R.id.tv_goodsName, item.getGoodsName())
+        helper.setText(R.id.tv_goodsName, item.getLbName())
                 .setText(R.id.tv_operator, item.getOperatorName())
-                .setText(R.id.tv_amount, item.getAmount())
+                .setText(R.id.tv_amount, item.getLaobaoNumber())
                 .setText(R.id.tv_price, item.getPrice());
     }
 

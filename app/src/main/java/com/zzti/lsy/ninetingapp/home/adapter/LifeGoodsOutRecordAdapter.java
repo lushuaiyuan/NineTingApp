@@ -19,7 +19,7 @@ public class LifeGoodsOutRecordAdapter extends BaseQuickAdapter<LifeGoodsEntity,
     protected void convert(BaseViewHolder helper, LifeGoodsEntity item) {
         helper.setText(R.id.tv_outTime, item.getOutTime())
                 .setText(R.id.tv_operator, item.getOperatorName())
-                .setText(R.id.tv_amount, item.getAmount())
+                .setText(R.id.tv_amount, item.getLaobaoNumber())
                 .setText(R.id.tv_recipient, item.getRecipient());
     }
 }

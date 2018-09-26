@@ -5,17 +5,17 @@ package com.zzti.lsy.ninetingapp.network;
  */
 public class Urls {
     private final static String BASE_URL = "http://111.230.139.65:8086";
-//        private final static String BASE_URL = "http://192.168.0.110:8086";
+    //        private final static String BASE_URL = "http://192.168.0.110:8086";
     public final static String POST_LOGIN_URL = BASE_URL + "/Login/Login.asmx/LoginCheck";//登录
     public final static String POST_LOGIN_OUT = BASE_URL + "/Login/Login.asmx/LoginOut";//登出
     public final static String POST_GETSTAFF = BASE_URL + "/Login/Login.asmx/GetStaff";//获取用户对应员工信息
+    public final static String POST_GETPROJECT = BASE_URL + "/Login/Login.asmx/GetProject";//获取项目部
 
     //设备管理员
     public final static String POST_ADDCAR = BASE_URL + "/Car/Car.asmx/AddCar";//录入车辆
     public final static String POST_GETCARLIST = BASE_URL + "/Car/Car.asmx/GetCarList";//获取车辆信息列表
     public final static String POST_GETCARTYPE = BASE_URL + "/Car/Car.asmx/GetCarType";//获取车辆类型信息
     public final static String POST_GETCHARGETYPE = BASE_URL + "/Car/Car.asmx/GetChargeType";//获取车辆排放类型
-    public final static String POST_GETPROJECT = BASE_URL + "/Car/Car.asmx/GetProject";//获取项目部
     public final static String POST_GETFACTORY = BASE_URL + "/Car/Car.asmx/GetFactory";//获取生产厂家
     public final static String POST_GETINSURANCETYPE = BASE_URL + "/Car/Car.asmx/GetInsuranceType";//获取保险类型
     public final static String POST_UPDATCARINFO = BASE_URL + "/Car/Car.asmx/UpdateCar";//更新车辆信息
@@ -28,5 +28,12 @@ public class Urls {
     public final static String POST_GETREPAIRPARTS = BASE_URL + "/Repair/Repair.asmx/GetRepairParts";//获取维修工单所需配件列表
     public final static String POST_GETREPAIRTYPE = BASE_URL + "/Repair/Repair.asmx/GetRepairType";//获取维修类型
     public final static String POST_GETREPAIRCAUSE = BASE_URL + "/Repair/Repair.asmx/GetRepairCause";//获取维修原因
-    public final static String POST_GETPARTS = BASE_URL + "/Repair/Repair.asmx/GetParts";//获取配件列表
+
+    //配件管理员
+    public final static String POST_GETPARTS = BASE_URL + "/Parts/Parts.asmx/GetParts";//获取配件列表
+    public final static String POST_PARTSSTORAGE = BASE_URL + "/Parts/Parts.asmx/PartsStorage";//配件入库
+    public final static String POST_PARTSOUT = BASE_URL + "/Parts/Parts.asmx/PartsOut";//配件出库
+    public final static String POST_GETLAOBAO = BASE_URL + "/Parts/Parts.asmx/GetLaoBao";//获取劳保品详情列表
+    public final static String POST_LAOSTORAGE = BASE_URL + "/Parts/Parts.asmx/LaoStorage";//劳保品入库
+    public final static String POST_LAOBAOOUT = BASE_URL + "/Parts/Parts.asmx/LaoBaoOut";//劳保品出库
 }

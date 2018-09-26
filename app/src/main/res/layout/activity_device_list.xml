@@ -35,6 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp40"
             android:layout_marginRight="@dimen/dp40"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:background="@null"
             android:gravity="center"
             android:hint="车牌号"

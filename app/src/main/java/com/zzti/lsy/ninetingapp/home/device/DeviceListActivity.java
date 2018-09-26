@@ -539,45 +539,37 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             tvCarStatus.setText(carStatusEntities.get(i).getName());
             status = carStatusEntities.get(i).getId();
             wherestr += " and status=" + status;
-            popupWindowCarStatus.dismiss();
-            showDia();
-            carInfoEntities.clear();
             if (!StringUtil.isNullOrEmpty(CarTypeID)) {
                 wherestr += " and CarTypeID=" + CarTypeID;
             }
             if (!StringUtil.isNullOrEmpty(projectID)) {
                 wherestr += " and projectID=" + projectID;
             }
-            getCarList();
         } else if (tag == 2) {
             tvCarType.setText(carTypeEntities.get(i).getVehicleTypeName());
             CarTypeID = carTypeEntities.get(i).getVehicleTypeID();
             wherestr += " and CarTypeID=" + carTypeEntities.get(i).getVehicleTypeID();
-            popupWindowCarType.dismiss();
-            showDia();
-            carInfoEntities.clear();
             if (!StringUtil.isNullOrEmpty(status)) {
                 wherestr += " and status=" + status;
             }
             if (!StringUtil.isNullOrEmpty(projectID)) {
                 wherestr += " and projectID=" + projectID;
             }
-            getCarList();
         } else if (tag == 3) {
             tvProject.setText(projectEntities.get(i).getProjectName());
             projectID = projectEntities.get(i).getProjectID();
             wherestr += " and projectID=" + projectEntities.get(i).getProjectID();
-            popupWindowProject.dismiss();
-            showDia();
-            carInfoEntities.clear();
             if (!StringUtil.isNullOrEmpty(status)) {
                 wherestr += " and status=" + status;
             }
             if (!StringUtil.isNullOrEmpty(CarTypeID)) {
                 wherestr += " and CarTypeID=" + CarTypeID;
             }
-            getCarList();
         }
+        popupWindowProject.dismiss();
+        showDia();
+        carInfoEntities.clear();
+        getCarList();
     }
 
     @Override

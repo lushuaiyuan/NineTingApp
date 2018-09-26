@@ -55,17 +55,6 @@ public class PartsInListActivity extends BaseActivity implements BaseQuickAdapte
         partsListAdapter.setTag(2);
         mRecycleView.setAdapter(partsListAdapter);
         partsListAdapter.setOnItemClickListener(this);
-        //TODO
-        for (int i = 0; i < 5; i++) {
-            PartsInfoEntity partsInfoEntity = new PartsInfoEntity();
-            partsInfoEntity.setPartsName("米其林");
-            partsInfoEntity.setState("在库");
-            partsInfoEntity.setPartsModel("配件的型号");
-            partsInfoEntity.setPartsNumber("1000");
-            partsInfoEntity.setPrice("100.00元");
-            partsEntities.add(partsInfoEntity);
-        }
-        partsListAdapter.notifyDataSetChanged();
     }
 
     private void initView() {

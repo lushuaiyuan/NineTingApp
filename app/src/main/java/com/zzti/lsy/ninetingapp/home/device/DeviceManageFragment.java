@@ -136,7 +136,7 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
                                 tvLookMoreNs.setText("查看更多");
                                 tvLookMoreNs.setEnabled(true);
                                 if (homeHintEntitiesNs.size() > 5) {
-                                    homeHintEntitiesNs.subList(0, 4);
+                                    homeHintEntitiesNs = homeHintEntitiesNs.subList(0, 4);
                                 }
                             }
                             if (homeHintEntitiesBx.size() == 0) {
@@ -146,7 +146,7 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
                                 tvLookMoreBx.setText("查看更多");
                                 tvLookMoreBx.setEnabled(true);
                                 if (homeHintEntitiesBx.size() > 5) {
-                                    homeHintEntitiesBx.subList(0, 4);
+                                    homeHintEntitiesBx = homeHintEntitiesBx.subList(0, 4);
                                 }
                             }
                         } else {

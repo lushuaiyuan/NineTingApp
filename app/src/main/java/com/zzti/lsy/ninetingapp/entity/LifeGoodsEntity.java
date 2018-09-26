@@ -4,12 +4,30 @@ package com.zzti.lsy.ninetingapp.entity;
  * 日用品
  */
 public class LifeGoodsEntity {
-    private String outTime;
-    private String goodsName;
-    private String operatorName;
-    private String amount;
+    private String lbID;
+    private String lbName;
     private String price;
+    private String laobaoNumber;
+    private String projectName;
+    private String outTime;
+    private String operatorName;
     private String recipient;//领用人
+
+    public String getLbID() {
+        return lbID;
+    }
+
+    public void setLbID(String lbID) {
+        this.lbID = lbID;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 
     public String getOutTime() {
         return outTime;
@@ -27,12 +45,12 @@ public class LifeGoodsEntity {
         this.recipient = recipient;
     }
 
-    public String getGoodsName() {
-        return goodsName;
+    public String getLbName() {
+        return lbName;
     }
 
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
+    public void setLbName(String lbName) {
+        this.lbName = lbName;
     }
 
     public String getOperatorName() {
@@ -43,12 +61,12 @@ public class LifeGoodsEntity {
         this.operatorName = operatorName;
     }
 
-    public String getAmount() {
-        return amount;
+    public String getLaobaoNumber() {
+        return laobaoNumber;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setLaobaoNumber(String laobaoNumber) {
+        this.laobaoNumber = laobaoNumber;
     }
 
     public String getPrice() {
