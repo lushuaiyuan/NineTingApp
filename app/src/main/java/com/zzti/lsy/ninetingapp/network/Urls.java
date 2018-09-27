@@ -31,6 +31,7 @@ public class Urls {
 
     //配件管理员
     public final static String POST_GETPARTS = BASE_URL + "/Parts/Parts.asmx/GetParts";//获取配件列表
+    public final static String POST_GETPARTSFACTORY = BASE_URL + "/Parts/Parts.asmx/GetFactory";//获取配件生产厂间
     public final static String POST_PARTSSTORAGE = BASE_URL + "/Parts/Parts.asmx/PartsStorage";//配件入库
     public final static String POST_PARTSOUT = BASE_URL + "/Parts/Parts.asmx/PartsOut";//配件出库
     public final static String POST_GETLAOBAO = BASE_URL + "/Parts/Parts.asmx/GetLaoBao";//获取劳保品详情列表

@@ -18,8 +18,10 @@ public final class C {
         public static final int H = 0X888888;
         public static final int I = 0X999999;
     }
-    public static final class Constant{
+
+    public static final class Constant {
         public static final int HTTP_UNAUTHORIZED = 510;
+        public static final String NODATA = "暂无数据";
     }
 
 }

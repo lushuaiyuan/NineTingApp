@@ -52,7 +52,7 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
     private PartsListAdapter partsListAdapter;
     private int pageIndex = 1;//页码
     private String wherestr;//查询条件
-    private int tag;//1代表维修申请进来（获取配件名称）  2代表点击配件列表菜单进来
+    private int tag;//1代表维修申请进来（获取配件名称）  2代表点击配件列表菜单进来  3配件入库  4配件出库
 
     @Override
     public int getContentViewId() {
@@ -79,6 +79,7 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         partsInfoEntities = new ArrayList<>();
         partsListAdapter = new PartsListAdapter(partsInfoEntities);
+        partsListAdapter.setTag(tag);
         mRecycleView.setAdapter(partsListAdapter);
         partsListAdapter.setOnItemClickListener(this);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -168,9 +169,18 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
             intent.putExtra("partsNumber", partsNumber);
             setResult(2, intent);
             finish();
-        } else if (tag == 2) {//配件列表菜单进入
-
+        } else if (tag == 3) {//配件入库
+            Intent intent = new Intent(this, PartsInputActivity.class);
+            intent.putExtra("TAG", 2);
+            intent.putExtra("PartsInfo", partsInfoEntities.get(position));
+            startActivity(intent);
+        } else if (tag == 4) {//配件出库
+            //TODO
+            Intent intent = new Intent(this, PartsOutDetailActivity.class);
+            intent.putExtra("TAG", 2);
+            startActivity(intent);
         }
+
     }
 
     @OnClick({R.id.iv_search})

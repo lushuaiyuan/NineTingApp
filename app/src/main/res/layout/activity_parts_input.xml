@@ -45,8 +45,8 @@
                 style="@style/MyEditTextTitle"
                 android:text="生产厂家" />
 
-            <EditText
-                android:id="@+id/et_factory"
+            <TextView
+                android:id="@+id/tv_factory"
                 style="@style/MyEditText" />
 
             <TextView
@@ -66,10 +66,12 @@
                 style="@style/MyEditText" />
 
             <TextView
+                android:id="@+id/tv_priceTitle"
                 style="@style/MyEditTextTitle"
                 android:text="进货单价" />
 
             <RelativeLayout
+                android:id="@+id/rl_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp20"
@@ -114,6 +116,7 @@
                 style="@style/MyEditText" />
 
             <TextView
+                android:id="@+id/tv_moneyTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp15"
@@ -122,6 +125,7 @@
                 android:textSize="@dimen/dp15" />
 
             <RelativeLayout
+                android:id="@+id/rl_money"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp20"
@@ -133,7 +137,6 @@
                 <TextView
                     android:id="@+id/tv_totalMoney"
                     android:layout_width="@dimen/dp200"
-                    android:text="65"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:background="@null"

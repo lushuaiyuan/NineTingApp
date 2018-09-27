@@ -208,7 +208,7 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
                     setBackgroundAlpha(0.5f);
                     popupWindowProject.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
                 } else {
-                    UIUtils.showT("暂无数据");
+                    UIUtils.showT(C.Constant.NODATA);
                 }
                 break;
             case R.id.btn_save:

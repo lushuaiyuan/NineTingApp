@@ -1,37 +1,39 @@
 package com.zzti.lsy.ninetingapp.entity;
 
+import java.io.Serializable;
+
 /**
  * author：anxin on 2018/8/9 10:27
  * 配件的实体类
  */
-public class PartsInfoEntity {
+public class PartsInfoEntity implements Serializable {
     private String partsID;//配件ID
     private String partsName; //配件名称
     private String partsModel;//配件类型
     private String partsNumber;//配件库存
     private String FactoryID;//生产厂家ID
-    private String factoryName;//生产厂家名称
+    private String FactoryName;//生产厂家名称
     private String projectID;//项目部ID
-    private String ProjectName;//项目部名称
+    private String projectName;//项目部名称
 
 
-//    private String state;//状态
+    //    private String state;//状态
     private String purchasedPrice;//价格
 
     public String getFactoryName() {
-        return factoryName;
+        return FactoryName;
     }
 
-    public void setFactoryName(String factoryName) {
-        this.factoryName = factoryName;
+    public void setFactoryName(String FactoryName) {
+        this.FactoryName = FactoryName;
     }
 
     public String getProjectName() {
-        return ProjectName;
+        return projectName;
     }
 
     public void setProjectName(String projectName) {
-        ProjectName = projectName;
+        projectName = projectName;
     }
 
     public String getPartsID() {

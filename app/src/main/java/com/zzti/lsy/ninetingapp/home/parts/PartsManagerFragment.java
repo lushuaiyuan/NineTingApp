@@ -41,13 +41,19 @@ public class PartsManagerFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, PartsListActivity.class));
                 break;
             case R.id.rl_menu2://配件录入
-                startActivity(new Intent(mActivity, PartsInputActivity.class));
+                Intent intent1 = new Intent(mActivity, PartsInputActivity.class);
+                intent1.putExtra("TAG", 1);
+                startActivity(intent1);
                 break;
             case R.id.rl_menu3://配件入库
-                startActivity(new Intent(mActivity, PartsInListActivity.class));
+                Intent intent2 = new Intent(mActivity, PartsListActivity.class);
+                intent2.putExtra("TAG", 3);
+                startActivity(intent2);
                 break;
             case R.id.rl_menu4://配件出库
-                startActivity(new Intent(mActivity, PartsOutListActivity.class));
+                Intent intent3 = new Intent(mActivity, PartsListActivity.class);
+                intent3.putExtra("TAG", 4);
+                startActivity(intent3);
                 break;
             case R.id.rl_menu5://日用品列表
                 startActivity(new Intent(mActivity, LifeGoodsListActivity.class));
