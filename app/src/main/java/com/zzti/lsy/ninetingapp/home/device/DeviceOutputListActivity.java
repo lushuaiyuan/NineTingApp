@@ -55,17 +55,6 @@ public class DeviceOutputListActivity extends BaseActivity implements BaseQuickA
         mRecycleView.setAdapter(deviceOutputAdapter);
         deviceOutputAdapter.setOnItemClickListener(this);
 
-        //TODO
-        for (int i = 0; i < 6; i++) {
-            CarInfoEntity carInfoEntity = new CarInfoEntity();
-            carInfoEntity.setPlateNumber("豫A5555" + i);
-//            carInfoEntity.setProjectAddress("项目部" + i);
-//            carInfoEntity.setAddress("滁州" + i);
-//            carInfoEntity.setCarType("罐车" + i);
-            deviceEntities.add(carInfoEntity);
-        }
-        deviceOutputAdapter.notifyDataSetChanged();
-
     }
 
     private void initView() {

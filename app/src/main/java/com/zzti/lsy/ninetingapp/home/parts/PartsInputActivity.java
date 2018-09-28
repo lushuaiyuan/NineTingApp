@@ -140,7 +140,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    if (!StringUtil.isNullOrEmpty(etAmount.getText().toString())) {
+                    if (!StringUtil.isNullOrEmpty(etAmount.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
                         int amount = Integer.parseInt(etAmount.getText().toString());
                         double price = Double.parseDouble(editable.toString());
                         tvTotalMoney.setText(String.valueOf(amount * price));
@@ -160,7 +160,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    if (!StringUtil.isNullOrEmpty(etPrice.getText().toString())) {
+                    if (!StringUtil.isNullOrEmpty(etPrice.getText().toString()) && !StringUtil.isNullOrEmpty(etAmount.getText().toString())) {
                         double price = Double.parseDouble(etPrice.getText().toString());
                         int amount = Integer.parseInt(editable.toString());
                         tvTotalMoney.setText(String.valueOf(amount * price));
@@ -335,7 +335,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
             public void onSuccess(String s) {
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                if (msgInfo.getCode() == 1) {
+                if (msgInfo.getCode() == 200) {
                     if (tag == 1) {//录入
                         etPartsName.getText().clear();
                         etModel.getText().clear();
@@ -345,11 +345,14 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                     } else {//入库
                         finish();
                     }
+                    UIUtils.showT("提交成功");
                     Intent intent = new Intent(PartsInputActivity.this, SuccessActivity.class);
                     intent.putExtra("TAG", 2);
                     startActivity(intent);
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
                 }
-                UIUtils.showT(msgInfo.getMsg());
+
             }
 
             @Override

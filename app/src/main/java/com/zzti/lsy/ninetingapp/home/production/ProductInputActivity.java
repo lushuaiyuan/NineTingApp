@@ -17,8 +17,10 @@ import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
+import com.zzti.lsy.ninetingapp.home.adapter.ProjectAdapter;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAddressAdapter;
@@ -49,10 +51,10 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
     @BindView(R.id.et_oilMass)
     EditText etOilMass;
 
-    private PopupWindow popupWindow;
-    private ListView mListView;
-    private ProjectAddressAdapter projectAddressAdapter;
-    private List<ProjectAddressEntitiy> projectAddressEntitiys;
+    private PopupWindow popupWindowProject;
+    private ListView mListViewProject;
+    private ProjectAdapter projectAdapter;
+    private List<ProjectEntity> projectEntities;
 
     @Override
     public int getContentViewId() {
@@ -72,14 +74,6 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
 
     private void initData() {
         tvTime.setText(DateUtil.getCurrentDate());
-        //TODO
-        for (int i = 0; i < 6; i++) {
-            ProjectAddressEntitiy projectAddressEntitiy = new ProjectAddressEntitiy();
-            projectAddressEntitiy.setId("5555" + i);
-            projectAddressEntitiy.setName("项目部" + i);
-            projectAddressEntitiys.add(projectAddressEntitiy);
-        }
-        projectAddressAdapter.notifyDataSetChanged();
     }
 
     private void initView() {
@@ -93,22 +87,23 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_address:
-                if (projectAddressEntitiys.size() > 0) {
+                if (projectEntities.size() > 0) {
                     //设置背景色
                     setBackgroundAlpha(0.5f);
-                    if (projectAddressEntitiys.size() >= 5) {
+                    if (projectEntities.size() >= 5) {
                         //动态设置listView的高度
-                        View listItem = projectAddressAdapter.getView(0, null, mListView);
+                        View listItem = projectAdapter.getView(0, null, mListViewProject);
                         listItem.measure(0, 0);
-                        int totalHei = (listItem.getMeasuredHeight() + mListView.getDividerHeight()) * 5;
-                        mListView.getLayoutParams().height = totalHei;
-                        ViewGroup.LayoutParams params = mListView.getLayoutParams();
+                        int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
+                        mListViewProject.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
                         params.height = totalHei;
-                        mListView.setLayoutParams(params);
+                        mListViewProject.setLayoutParams(params);
                     }
-                    popupWindow.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
+                    setBackgroundAlpha(0.5f);
+                    popupWindowProject.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
                 } else {
-                    UIUtils.showT(Constant.NONDATA);
+                    UIUtils.showT(C.Constant.NODATA);
                 }
                 break;
             case R.id.tv_carNumber:
@@ -150,28 +145,28 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindow = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
+        popupWindowProject = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowProject.setFocusable(true);
+        popupWindowProject.setOutsideTouchable(true);
         //设置消失监听
-        popupWindow.setOnDismissListener(this);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        popupWindowProject.setOnDismissListener(this);
+        popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
         contentview.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindow.dismiss();
+                    popupWindowProject.dismiss();
                     return true;
                 }
                 return false;
             }
         });
-        mListView = contentview.findViewById(R.id.pop_list);
-        projectAddressEntitiys = new ArrayList<>();
-        projectAddressAdapter = new ProjectAddressAdapter(projectAddressEntitiys);
-        mListView.setAdapter(projectAddressAdapter);
-        mListView.setOnItemClickListener(this);
-        popupWindow.setAnimationStyle(R.style.anim_bottomPop);
+        mListViewProject = contentview.findViewById(R.id.pop_list);
+        projectEntities = new ArrayList<>();
+        projectAdapter = new ProjectAdapter(projectEntities);
+        mListViewProject.setAdapter(projectAdapter);
+        mListViewProject.setOnItemClickListener(this);
+        popupWindowProject.setAnimationStyle(R.style.anim_bottomPop);
     }
 
     @Override
@@ -200,8 +195,8 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        tvAddress.setText(projectAddressEntitiys.get(i).getName());
-        popupWindow.dismiss();
+        tvAddress.setText(projectEntities.get(i).getProjectName());
+        popupWindowProject.dismiss();
     }
 
     @Override
