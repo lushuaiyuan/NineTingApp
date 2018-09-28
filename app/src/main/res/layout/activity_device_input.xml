@@ -181,6 +181,7 @@
                     android:background="@null"
                     android:gravity="center"
                     android:padding="@dimen/dp8"
+                    android:inputType="number"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp15" />
 

@@ -20,6 +20,7 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.PartsListAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -200,4 +201,17 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
         getPartsList();
     }
 
+
+    @Override
+    protected boolean openEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void onEventComing(EventMessage paramEventCenter) {
+        super.onEventComing(paramEventCenter);
+        if (paramEventCenter.getEventCode() == C.EventCode.A && (Boolean) paramEventCenter.getData()) {
+            finish();
+        }
+    }
 }

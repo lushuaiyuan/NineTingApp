@@ -126,7 +126,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
             factoryID = partsInfoEntity.getFactoryID();
             partsPurchased.setPartsID(partsInfoEntity.getPartsID());
             partsPurchased.setPurchasedPrice(partsInfoEntity.getPurchasedPrice());
-        } else {
+        } else {//录入
             etPrice.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -144,6 +144,8 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                         int amount = Integer.parseInt(etAmount.getText().toString());
                         double price = Double.parseDouble(editable.toString());
                         tvTotalMoney.setText(String.valueOf(amount * price));
+                    }else{
+                        tvTotalMoney.setText("");
                     }
                 }
             });
@@ -164,13 +166,16 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                         double price = Double.parseDouble(etPrice.getText().toString());
                         int amount = Integer.parseInt(editable.toString());
                         tvTotalMoney.setText(String.valueOf(amount * price));
+                    }else{
+                        tvTotalMoney.setText("");
                     }
                 }
             });
             showDia();
             getPartsFactory();
+            partsInfoEntity = new PartsInfoEntity();
         }
-        partsInfoEntity = new PartsInfoEntity();
+
     }
 
     /**
@@ -323,7 +328,11 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
 
     private void submitInputData() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("partsJosn", new Gson().toJson(partsInfoEntity));
+        if (tag == 2) {//入库
+            params.put("partsJosn", "");
+        } else {
+            params.put("partsJosn", new Gson().toJson(partsInfoEntity));
+        }
         params.put("StorageJson", new Gson().toJson(partsPurchased));
         OkHttpManager.postFormBody(Urls.POST_PARTSSTORAGE, params, tvFactory, new OkHttpManager.OnResponse<String>() {
             @Override
@@ -361,8 +370,6 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                 cancelDia();
             }
         });
-
-
     }
 
     @Override

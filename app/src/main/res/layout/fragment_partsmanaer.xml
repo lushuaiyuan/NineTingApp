@@ -116,7 +116,7 @@
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu9"
+                        android:drawableLeft="@mipmap/icon_menu6"
                         android:text="日用品列表" />
                 </RelativeLayout>
 
@@ -128,7 +128,7 @@
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu9"
+                        android:drawableLeft="@mipmap/icon_menu1"
                         android:text="日用品录入" />
                 </RelativeLayout>
 
@@ -151,20 +151,20 @@
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu9"
-                        android:text="日用品出库" />
+                        android:drawableLeft="@mipmap/icon_menu7"
+                        android:text="日用品入库" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_menu8"
                     style="@style/home_menubg"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:background="@drawable/home_menu8_selector"
-                    android:visibility="invisible">
+                    android:background="@drawable/home_menu9_selector">
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu9"
-                        android:text="日用品采购出库" />
+                        android:drawableLeft="@mipmap/icon_menu8"
+                        android:text="日用品出库" />
                 </RelativeLayout>
 
             </LinearLayout>

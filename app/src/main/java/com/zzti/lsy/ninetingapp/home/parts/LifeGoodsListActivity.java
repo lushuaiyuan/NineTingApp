@@ -14,11 +14,11 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.LaoBao;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.LifeGoodsAdapter;
-import com.zzti.lsy.ninetingapp.entity.LifeGoodsEntity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
@@ -45,10 +45,11 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
-    private List<LifeGoodsEntity> lifeGoodEntities;
+    private List<LaoBao> lifeGoodEntities;
     private LifeGoodsAdapter lifeGoodsAdapter;
     private int pageIndex = 1;//页码
     private String wherestr;//查询条件
+    private int tag;//1代表日用品列表  2代表入库进来  3代表出库进来
 
     @Override
     public int getContentViewId() {
@@ -67,7 +68,7 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
         lifeGoodsAdapter = new LifeGoodsAdapter(lifeGoodEntities);
         mRecycleView.setAdapter(lifeGoodsAdapter);
         lifeGoodsAdapter.setOnItemClickListener(this);
-
+        tag = UIUtils.getInt4Intent(this, "TAG");
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -116,8 +117,8 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         if (jsonArray.length() > 0) {
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                LifeGoodsEntity lifeGoodsEntity = ParseUtils.parseJson(jsonArray.getString(i), LifeGoodsEntity.class);
-                                lifeGoodEntities.add(lifeGoodsEntity);
+                                LaoBao laoBao = ParseUtils.parseJson(jsonArray.getString(i), LaoBao.class);
+                                lifeGoodEntities.add(laoBao);
                             }
                         } else {
                             UIUtils.showT("暂无数据");
@@ -164,7 +165,21 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        startActivity(new Intent(this, LifeGoodsDetailActivity.class));
+        if (tag == 1) {//日用品列表
+            startActivity(new Intent(this, LifeGoodsDetailActivity.class));
+        } else if (tag == 2) {//入库
+            Intent intent = new Intent(this, LifeGoodsInActivity.class);
+            intent.putExtra("LaoBao", lifeGoodEntities.get(position));
+            intent.putExtra("TAG", tag);
+            startActivity(intent);
+        } else if (tag == 3) {//出库
+            Intent intent = new Intent(this, LifeGoodsOutActivity.class);
+            intent.putExtra("TAG", tag);
+            intent.putExtra("lbID", lifeGoodEntities.get(position).getLbID());
+            intent.putExtra("lbName", lifeGoodEntities.get(position).getLbName());
+            intent.putExtra("lbNumber", lifeGoodEntities.get(position).getLaobaoNumber());
+            startActivity(intent);
+        }
     }
 
     @OnClick({R.id.iv_search})
@@ -179,5 +194,18 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
         lifeGoodEntities.clear();
         showDia();
         getLaoBaoList();
+    }
+
+    @Override
+    protected boolean openEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void onEventComing(EventMessage paramEventCenter) {
+        super.onEventComing(paramEventCenter);
+        if (paramEventCenter.getEventCode() == C.EventCode.A && (Boolean) paramEventCenter.getData()) {
+            finish();
+        }
     }
 }

@@ -1,17 +1,16 @@
 package com.zzti.lsy.ninetingapp.entity;
 
+import java.io.Serializable;
+
 /**
  * 日用品
  */
-public class LifeGoodsEntity {
-    private String lbID;
-    private String lbName;
-    private String price;
-    private String laobaoNumber;
-    private String projectName;
-    private String outTime;
-    private String operatorName;
-    private String recipient;//领用人
+public class LaoBao implements Serializable {
+    private String lbID;///劳保品编号 无需填写
+    private String lbName;///劳保品名称 用户填写
+    private String price; ///劳保品单价 用户填写
+    private String laobaoNumber;/// 劳保数量 返回值
+    private String projectName; /// 项目部名称 返回值
 
     public String getLbID() {
         return lbID;
@@ -29,21 +28,6 @@ public class LifeGoodsEntity {
         this.projectName = projectName;
     }
 
-    public String getOutTime() {
-        return outTime;
-    }
-
-    public void setOutTime(String outTime) {
-        this.outTime = outTime;
-    }
-
-    public String getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
-    }
 
     public String getLbName() {
         return lbName;
@@ -51,14 +35,6 @@ public class LifeGoodsEntity {
 
     public void setLbName(String lbName) {
         this.lbName = lbName;
-    }
-
-    public String getOperatorName() {
-        return operatorName;
-    }
-
-    public void setOperatorName(String operatorName) {
-        this.operatorName = operatorName;
     }
 
     public String getLaobaoNumber() {

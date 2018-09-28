@@ -4,26 +4,17 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.TitleFragmentPagerAdapter;
-import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsInFragment;
-import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutFragment;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.zzti.lsy.ninetingapp.utils.UIUtils.dip2px;
 
 /**
  * 保险年审
@@ -36,7 +27,7 @@ public class BxNsActivity extends BaseActivity {
 
     @Override
     public int getContentViewId() {
-        return R.layout.activity_lifegood_out_in;
+        return R.layout.activity_bx_ns;
     }
 
     @Override

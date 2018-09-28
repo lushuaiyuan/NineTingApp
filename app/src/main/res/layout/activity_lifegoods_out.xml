@@ -24,11 +24,20 @@
 
             <TextView
                 style="@style/MyEditTextTitle"
+                android:text="日用品名称" />
+
+            <TextView
+                android:id="@+id/tv_lbName"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
                 android:text="出库时间" />
 
             <TextView
                 android:id="@+id/tv_outTime"
-                style="@style/MyEditText" />
+                style="@style/MyEditText"
+                android:hint="请选择出库时间" />
 
             <TextView
                 style="@style/MyEditTextTitle"

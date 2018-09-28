@@ -273,8 +273,10 @@ public class PartsOutDetailActivity extends BaseActivity implements PopupWindow.
                     Intent intent = new Intent(PartsOutDetailActivity.this, SuccessActivity.class);
                     intent.putExtra("TAG", 4);
                     startActivity(intent);
+                    UIUtils.showT("出库成功");
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
                 }
-                UIUtils.showT(msgInfo.getMsg());
             }
 
             @Override
@@ -283,8 +285,6 @@ public class PartsOutDetailActivity extends BaseActivity implements PopupWindow.
                 cancelDia();
             }
         });
-
-
     }
 
     @Override
