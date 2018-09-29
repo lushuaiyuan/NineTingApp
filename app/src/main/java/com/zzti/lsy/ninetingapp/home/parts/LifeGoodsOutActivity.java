@@ -60,12 +60,6 @@ public class LifeGoodsOutActivity extends BaseActivity {
         initView();
         initData();
     }
-
-    @Override
-    protected boolean openEventBus() {
-        return true;
-    }
-
     private void initData() {
         lbID = UIUtils.getStr4Intent(this, "lbID");
         String lbName = UIUtils.getStr4Intent(this, "lbName");
@@ -186,13 +180,5 @@ public class LifeGoodsOutActivity extends BaseActivity {
                 cancelDia();
             }
         });
-    }
-
-    @Override
-    protected void onEventComing(EventMessage paramEventCenter) {
-        super.onEventComing(paramEventCenter);
-        if (paramEventCenter.getEventCode() == C.EventCode.A && (Boolean) paramEventCenter.getData()) {
-            finish();
-        }
     }
 }

@@ -29,7 +29,7 @@
         android:textSize="@dimen/dp16" />
 
     <Button
-        android:id="@+id/btn_form"
+        android:id="@+id/btn_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -43,9 +43,9 @@
         android:textSize="@dimen/dp15" />
 
     <Button
-        android:id="@+id/btn_input"
+        android:id="@+id/btn_solid"
         style="@style/MyButton"
-        android:layout_above="@id/btn_form"
+        android:layout_above="@id/btn_empty"
         android:layout_marginBottom="@dimen/dp20"
         android:layout_marginLeft="@dimen/dp38"
         android:layout_marginRight="@dimen/dp38"

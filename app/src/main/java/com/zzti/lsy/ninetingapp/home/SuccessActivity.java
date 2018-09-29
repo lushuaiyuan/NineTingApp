@@ -19,7 +19,6 @@ import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutDetailActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsInWayDetailActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
-import com.zzti.lsy.ninetingapp.home.parts.PartsOutListActivity;
 import com.zzti.lsy.ninetingapp.home.production.FormListActivity;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -32,10 +31,10 @@ import butterknife.OnClick;
  * 成功
  */
 public class SuccessActivity extends BaseActivity {
-    @BindView(R.id.btn_input)
-    Button btnInput;
-    @BindView(R.id.btn_form)
-    Button btnForm;
+    @BindView(R.id.btn_solid)
+    Button btnSolid;
+    @BindView(R.id.btn_empty)
+    Button btnEmpty;
     @BindView(R.id.tv_message)
     TextView tvMessage;
 
@@ -50,52 +49,54 @@ public class SuccessActivity extends BaseActivity {
         initData();
     }
 
-    int tag = 0; //1代表生产员的生产录入成功 2代表配件管理员的配件录入成功 3代表配件管理员的日用品录入成功  4配件管理员配件出库成功
+    int tag = 0; //1代表生产员的生产录入成功 2代表配件管理员的配件入库成功 3代表配件管理员的日用品录入成功  4配件管理员配件出库成功
     // 5配件管理员对日用品出库成功 6设备管理员录入成功 7设备管理员入库成功 8设备管理员出库成功
+    int type;//1代表录入  2代表入库
 
     private void initData() {
         tag = UIUtils.getInt4Intent(this, "TAG");
+        type = UIUtils.getInt4Intent(this, "TYPE");
         if (tag == 1) {
             setTitle("录入结果");
             tvMessage.setText("录入成功");
-            btnInput.setText("继续录入");
-            btnForm.setText("生成表格");
+            btnSolid.setText("继续录入");
+            btnEmpty.setText("生成表格");
         } else if (tag == 2) {
             setTitle("录入结果");
             tvMessage.setText("录入结果");
-            btnInput.setText("继续录入");
-            btnForm.setText("查看列表");
+            btnSolid.setText("继续录入");
+            btnEmpty.setText("查看列表");
         } else if (tag == 3) {
             setTitle("录入结果");
             tvMessage.setText("录入结果");
-            btnInput.setText("继续录入");
-            btnForm.setText("查看列表");
+            btnSolid.setText("继续录入");
+            btnEmpty.setText("查看列表");
         } else if (tag == 4) {
             setTitle("出库结果");
             tvMessage.setText("出库成功");
-            btnInput.setText("查看出库详情");
-            btnForm.setText("查看出库列表");
+            btnSolid.setText("查看出库详情");
+            btnEmpty.setText("查看出库列表");
         } else if (tag == 5) {
             setTitle("出库结果");
             tvMessage.setText("出库成功");
-            btnInput.setText("查看出库详情");
-            btnForm.setText("查看出库列表");
+            btnSolid.setText("查看出库详情");
+            btnEmpty.setText("查看出库列表");
         } else if (tag == 6) {
             setTitle("录入结果");
             tvMessage.setText("录入成功");
-            btnInput.setText("继续录入");
-            btnForm.setText("查看列表");
+            btnSolid.setText("继续录入");
+            btnEmpty.setText("查看列表");
         } else if (tag == 7) {
             setTitle("入库结果");
             tvMessage.setText("入库成功");
-            btnInput.setText("查看入库列表");
-            btnForm.setVisibility(View.INVISIBLE);
-            btnForm.setEnabled(false);
+            btnSolid.setText("查看入库列表");
+            btnEmpty.setVisibility(View.INVISIBLE);
+            btnEmpty.setEnabled(false);
         } else if (tag == 8) {
             setTitle("出库结果");
             tvMessage.setText("出库成功");
-            btnInput.setText("查看出库详情");
-            btnForm.setText("查看出库列表");
+            btnSolid.setText("查看出库详情");
+            btnEmpty.setText("查看出库列表");
         }
 
     }
@@ -104,16 +105,20 @@ public class SuccessActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_input, R.id.btn_form})
+    @OnClick({R.id.btn_solid, R.id.btn_empty})
     public void viewClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_input:
+            case R.id.btn_solid:
                 if (tag == 2) { //配件管理员继续录入配件
-                    startActivity(new Intent(this, PartsListActivity.class));
-                    EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
+                    if (type == 2) {//入库
+                        startActivity(new Intent(this, PartsListActivity.class));
+                        EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
+                    }
                 } else if (tag == 3) { //配件管理员继续录入日用品
-                    startActivity(new Intent(this, LifeGoodsListActivity.class));
-                    EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
+                    if (type == 2) {//入库
+                        startActivity(new Intent(this, LifeGoodsListActivity.class));
+                        EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
+                    }
                 } else if (tag == 4) { //查看配件在途详情
                     startActivity(new Intent(this, PartsInWayDetailActivity.class));
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
@@ -131,7 +136,7 @@ public class SuccessActivity extends BaseActivity {
                 }
                 finish();
                 break;
-            case R.id.btn_form:
+            case R.id.btn_empty:
                 finish();
                 if (tag == 1) {//生产员查看统计
                     startActivity(new Intent(this, FormListActivity.class));

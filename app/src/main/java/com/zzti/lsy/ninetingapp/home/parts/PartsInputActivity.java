@@ -144,7 +144,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                         int amount = Integer.parseInt(etAmount.getText().toString());
                         double price = Double.parseDouble(editable.toString());
                         tvTotalMoney.setText(String.valueOf(amount * price));
-                    }else{
+                    } else {
                         tvTotalMoney.setText("");
                     }
                 }
@@ -166,7 +166,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                         double price = Double.parseDouble(etPrice.getText().toString());
                         int amount = Integer.parseInt(editable.toString());
                         tvTotalMoney.setText(String.valueOf(amount * price));
-                    }else{
+                    } else {
                         tvTotalMoney.setText("");
                     }
                 }
@@ -357,6 +357,11 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                     UIUtils.showT("提交成功");
                     Intent intent = new Intent(PartsInputActivity.this, SuccessActivity.class);
                     intent.putExtra("TAG", 2);
+                    if (tag == 1) {//录入
+                        intent.putExtra("TYPE", 1);
+                    } else if (tag == 2) {//入库
+                        intent.putExtra("TYPE", 2);
+                    }
                     startActivity(intent);
                 } else {
                     UIUtils.showT(msgInfo.getMsg());

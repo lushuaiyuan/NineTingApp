@@ -199,6 +199,11 @@ public class LifeGoodsInActivity extends BaseActivity {
                     UIUtils.showT("提交成功");
                     Intent intent = new Intent(LifeGoodsInActivity.this, SuccessActivity.class);
                     intent.putExtra("TAG", 3);
+                    if (tag == 1) {//录入
+                        intent.putExtra("TYPE", 1);
+                    } else if (tag == 2) {//入库
+                        intent.putExtra("TYPE", 2);
+                    }
                     startActivity(intent);
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
