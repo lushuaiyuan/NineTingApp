@@ -149,9 +149,9 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
     private void initView() {
         setTitle("日用品");
         etSearch.setHint("请输入日用品名称");
-//        tvToolbarMenu.setVisibility(View.VISIBLE);
-//        tvToolbarMenu.setText("记录");
-//        tvToolbarMenu.setOnClickListener(this);
+        tvToolbarMenu.setVisibility(View.VISIBLE);
+        tvToolbarMenu.setText("新增");
+        tvToolbarMenu.setOnClickListener(this);
         smartRefreshLayout.setEnableLoadMore(true);
         smartRefreshLayout.setEnableRefresh(true);
         //使上拉加载具有弹性效果：
@@ -160,7 +160,10 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, LifeGoodsOutRecordActivity.class));
+//        startActivity(new Intent(this, LifeGoodsOutRecordActivity.class));
+        Intent intent = new Intent(this, LifeGoodsInActivity.class);
+        intent.putExtra("TAG", 1);
+        startActivity(intent);
     }
 
     @Override

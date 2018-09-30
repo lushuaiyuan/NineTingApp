@@ -34,13 +34,13 @@ public class PartsManagerFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.rl_menu7, R.id.rl_menu8})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.rl_menu7})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1: //配件列表
                 startActivity(new Intent(mActivity, PartsListActivity.class));
                 break;
-            case R.id.rl_menu2://配件录入
+            case R.id.rl_menu2://配件采购
                 Intent intent1 = new Intent(mActivity, PartsInputActivity.class);
                 intent1.putExtra("TAG", 1);
                 startActivity(intent1);
@@ -60,17 +60,16 @@ public class PartsManagerFragment extends BaseFragment {
                 intent7.putExtra("TAG", 1);
                 startActivity(intent7);
                 break;
-            case R.id.rl_menu6://日用品录入
-                Intent intent4 = new Intent(mActivity, LifeGoodsInActivity.class);
-                intent4.putExtra("TAG", 1);
+            case R.id.rl_menu6://日用品采购
+                Intent intent4 = new Intent(mActivity, LifeGoodsListActivity.class);
+                intent4.putExtra("TAG", 2);
                 startActivity(intent4);
                 break;
             case R.id.rl_menu7://日用品入库
-                Intent intent5 = new Intent(mActivity, LifeGoodsListActivity.class);
-                intent5.putExtra("TAG", 2);
-                startActivity(intent5);
-                break;
-            case R.id.rl_menu8://日用品出库
+//                Intent intent5 = new Intent(mActivity, LifeGoodsListActivity.class);
+//                intent5.putExtra("TAG", 2);
+//                startActivity(intent5);
+
                 Intent intent6 = new Intent(mActivity, LifeGoodsListActivity.class);
                 intent6.putExtra("TAG", 3);
                 startActivity(intent6);

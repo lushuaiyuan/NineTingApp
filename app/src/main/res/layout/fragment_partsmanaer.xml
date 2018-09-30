@@ -62,7 +62,7 @@
                     <TextView
                         style="@style/home_menu"
                         android:drawableLeft="@mipmap/icon_menu1"
-                        android:text="配件录入" />
+                        android:text="配件采购" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -129,7 +129,7 @@
                     <TextView
                         style="@style/home_menu"
                         android:drawableLeft="@mipmap/icon_menu1"
-                        android:text="日用品录入" />
+                        android:text="日用品采购" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -147,18 +147,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_menu7"
                     style="@style/home_menubg"
-                    android:background="@drawable/home_menu1_selector">
 
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu7"
-                        android:text="日用品入库" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu8"
-                    style="@style/home_menubg"
-                    android:layout_marginLeft="@dimen/dp10"
                     android:background="@drawable/home_menu9_selector">
 
                     <TextView
@@ -166,6 +155,20 @@
                         android:drawableLeft="@mipmap/icon_menu8"
                         android:text="日用品出库" />
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_menu8"
+                    style="@style/home_menubg"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:background="@drawable/home_menu1_selector"
+                    android:visibility="invisible">
+
+                    <TextView
+                        style="@style/home_menu"
+                        android:drawableLeft="@mipmap/icon_menu7"
+                        android:text="日用品入库" />
+                </RelativeLayout>
+
 
             </LinearLayout>
 
