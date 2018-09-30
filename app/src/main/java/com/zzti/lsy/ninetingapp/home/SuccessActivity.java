@@ -79,8 +79,9 @@ public class SuccessActivity extends BaseActivity {
         } else if (tag == 5) {
             setTitle("出库结果");
             tvMessage.setText("出库成功");
-            btnSolid.setText("查看出库详情");
-            btnEmpty.setText("查看出库列表");
+            btnSolid.setText("查看日用品列表");
+            btnEmpty.setVisibility(View.INVISIBLE);
+            btnEmpty.setEnabled(false);
         } else if (tag == 6) {
             setTitle("录入结果");
             tvMessage.setText("录入成功");
@@ -123,7 +124,7 @@ public class SuccessActivity extends BaseActivity {
                     startActivity(new Intent(this, PartsInWayDetailActivity.class));
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 } else if (tag == 5) { //查看日用品出库详情
-                    startActivity(new Intent(this, LifeGoodsOutDetailActivity.class));
+                    startActivity(new Intent(this, LifeGoodsListActivity.class));
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 } else if (tag == 6) {//设备继续录入
                     startActivity(new Intent(this, DeviceInputActivity.class));
@@ -146,9 +147,11 @@ public class SuccessActivity extends BaseActivity {
                     startActivity(new Intent(this, LifeGoodsListActivity.class));
                 } else if (tag == 4) {//配件管理员查看配件列表
                     startActivity(new Intent(this, PartsListActivity.class));
-                } else if (tag == 5) {//配件管理员对日用品出库成功 查看日用品列表
-                    startActivity(new Intent(this, LifeGoodsListActivity.class));
-                } else if (tag == 6) {//设备管理员录入成功
+                }
+//                else if (tag == 5) {//配件管理员对日用品出库成功 查看日用品列表
+//                    startActivity(new Intent(this, LifeGoodsListActivity.class));
+//                }
+                else if (tag == 6) {//设备管理员录入成功
                     startActivity(new Intent(this, DeviceListActivity.class));
                 } else if (tag == 8) {//设备管理员出库成功查看列表
                     startActivity(new Intent(this, DeviceOutputListActivity.class));
