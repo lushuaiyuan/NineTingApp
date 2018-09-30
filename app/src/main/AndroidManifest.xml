@@ -165,7 +165,14 @@
         <!--日用品出库详情-->
         <activity android:name=".home.parts.LifeGoodsOutDetailActivity" />
         <!--日用品出库-->
-        <activity android:name=".home.parts.LifeGoodsOutActivity" />
+        <activity
+            android:name=".home.parts.LifeGoodsOutActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <!--日用品领用人列表-->
+        <activity
+            android:name=".home.parts.PartsStaffListActivity"
+            android:hardwareAccelerated="false" />
+
         <!--机械维修申请-->
         <activity
             android:name=".home.repair.RepairRequestActivity"

@@ -37,4 +37,5 @@ public class Urls {
     public final static String POST_GETLAOBAO = BASE_URL + "/Parts/Parts.asmx/GetLaoBao";//获取劳保品详情列表
     public final static String POST_LAOSTORAGE = BASE_URL + "/Parts/Parts.asmx/LaoStorage";//劳保品入库
     public final static String POST_LAOBAOOUT = BASE_URL + "/Parts/Parts.asmx/LaoBaoOut";//劳保品出库
+    public final static String POST_GETSTAFFLIST = BASE_URL + "/Parts/Parts.asmx/GetStaff";//获取员工地址
 }

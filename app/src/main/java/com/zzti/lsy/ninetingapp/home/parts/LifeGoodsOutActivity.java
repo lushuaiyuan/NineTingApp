@@ -44,8 +44,8 @@ public class LifeGoodsOutActivity extends BaseActivity {
     TextView tvOutTime;
     @BindView(R.id.et_outAmount)
     EditText etOutAmount;
-    @BindView(R.id.et_recipient)
-    EditText etRecipient;
+    @BindView(R.id.tv_staffName)
+    TextView tvStaffName;
     private String lbID;
     private int lbNumber;
 
@@ -60,32 +60,30 @@ public class LifeGoodsOutActivity extends BaseActivity {
         initView();
         initData();
     }
+
     private void initData() {
         lbID = UIUtils.getStr4Intent(this, "lbID");
         String lbName = UIUtils.getStr4Intent(this, "lbName");
         lbNumber = Integer.parseInt(UIUtils.getStr4Intent(this, "lbNumber"));
         tvLbName.setText(lbName);
-        //TODO
-//        showDia();
-//        getStaff();
     }
 
-    /**
-     * 获取员工列表
-     */
-    private void getStaff() {
-
-    }
 
     private void initView() {
         setTitle("日用品出库");
     }
 
-    @OnClick({R.id.tv_outTime, R.id.btn_out})
+    @OnClick({R.id.tv_outTime, R.id.btn_out, R.id.tv_staffName})
     public void viewClick(View view) {
+        hideSoftInput(etOutAmount);
         switch (view.getId()) {
             case R.id.tv_outTime:
                 showCustomTime();
+                break;
+            case R.id.tv_staffName:
+                Intent intent = new Intent(this, PartsStaffListActivity.class);
+                intent.putExtra("TAG", 1);
+                startActivityForResult(intent, 1);
                 break;
             case R.id.btn_out:
                 if (StringUtil.isNullOrEmpty(tvLbName.getText().toString())) {
@@ -100,7 +98,7 @@ public class LifeGoodsOutActivity extends BaseActivity {
                     UIUtils.showT("出库数量不能为空");
                     return;
                 }
-                if (StringUtil.isNullOrEmpty(etRecipient.getText().toString())) {
+                if (StringUtil.isNullOrEmpty(tvStaffName.getText().toString())) {
                     UIUtils.showT("领用人不能为空");
                     return;
                 }
@@ -113,12 +111,11 @@ public class LifeGoodsOutActivity extends BaseActivity {
                     UIUtils.showT("出库数量不能大于库存数量");
                     return;
                 }
-                //TODO
                 LaobaoDelivery laobaoDelivery = new LaobaoDelivery();
                 laobaoDelivery.setLbID(lbID);
                 laobaoDelivery.setLdDate(tvOutTime.getText().toString());
                 laobaoDelivery.setLdNumber(etOutAmount.getText().toString());
-                laobaoDelivery.setStaffID(etRecipient.getText().toString());
+                laobaoDelivery.setStaffID(staffID);
                 laobaoDelivery.setFromProject(spUtils.getString(SpUtils.PROJECTID, ""));
                 laobaoDelivery.setUserID(spUtils.getString(SpUtils.USERID, ""));
                 goodsLifeOut(laobaoDelivery);
@@ -168,7 +165,9 @@ public class LifeGoodsOutActivity extends BaseActivity {
                     Intent intent = new Intent(LifeGoodsOutActivity.this, SuccessActivity.class);
                     intent.putExtra("TAG", 5);
                     startActivity(intent);
-                    UIUtils.showT("出库成功");
+                    UIUtils.showT("出库申请成功");
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
@@ -180,5 +179,18 @@ public class LifeGoodsOutActivity extends BaseActivity {
                 cancelDia();
             }
         });
+    }
+
+    private String staffID;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            if (data != null) {
+                tvStaffName.setText(data.getStringExtra("staffName"));
+                staffID = data.getStringExtra("staffID");
+            }
+        }
     }
 }

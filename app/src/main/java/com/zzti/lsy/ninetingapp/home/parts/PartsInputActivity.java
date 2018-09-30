@@ -208,6 +208,12 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                     UIUtils.showT(msgInfo.getMsg());
                 }
             }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
         });
     }
 
@@ -373,6 +379,9 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
             public void onFailed(int code, String msg, String url) {
                 super.onFailed(code, msg, url);
                 cancelDia();
+                if (code == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                }
             }
         });
     }

@@ -45,6 +45,15 @@ public class StaffEntity {
     private String IstartTime;
     private String IendTime;
     private int userID;
+    private String jobName;
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
 
     public int getStaffID() {
         return staffID;

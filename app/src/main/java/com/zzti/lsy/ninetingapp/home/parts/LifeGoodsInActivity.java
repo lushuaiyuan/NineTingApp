@@ -18,6 +18,7 @@ import com.zzti.lsy.ninetingapp.entity.LaobaoPurchased;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
 import com.zzti.lsy.ninetingapp.entity.PartsPurchased;
+import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -205,10 +206,11 @@ public class LifeGoodsInActivity extends BaseActivity {
                         intent.putExtra("TYPE", 2);
                     }
                     startActivity(intent);
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
-
             }
 
             @Override

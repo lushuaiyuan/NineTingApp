@@ -2,72 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp16"
+    android:layout_marginBottom="@dimen/dp15"
     android:layout_marginLeft="@dimen/dp16"
     android:layout_marginRight="@dimen/dp16"
     android:background="@drawable/circular_selector"
     android:orientation="vertical">
 
+
     <TextView
-        android:id="@+id/tv_goodsName"
+        android:id="@+id/tv_staffName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp15"
-        android:text="日用品名称"
+        android:layout_margin="@dimen/dp15"
+        android:text="名称"
         android:textColor="@color/color_333333"
         android:textSize="@dimen/dp16" />
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:background="@drawable/shape_dash_line" />
-
     <LinearLayout
+        android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp10"
-        android:layout_marginLeft="@dimen/dp15"
-        android:layout_marginRight="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp15"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="经手人"
-            android:textColor="@color/color_999999"
-            android:textSize="@dimen/dp12" />
-
-        <TextView
-            android:id="@+id/tv_operator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp15"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/dp15" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp10"
-        android:layout_marginLeft="@dimen/dp15"
-        android:layout_marginRight="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp10"
+        android:layout_margin="@dimen/dp15"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="数量"
+            android:text="手机号"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/dp12" />
 
         <TextView
-            android:id="@+id/tv_amount"
+            android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp15"
@@ -76,9 +48,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp10"
+        android:layout_below="@id/ll1"
+        android:layout_marginBottom="@dimen/dp15"
         android:layout_marginLeft="@dimen/dp15"
         android:layout_marginRight="@dimen/dp15"
         android:gravity="center_vertical"
@@ -87,17 +61,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="单价"
+            android:text="职位"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/dp12" />
 
         <TextView
-            android:id="@+id/tv_price"
+            android:id="@+id/tv_jobName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp15"
+            android:text="1000"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dp15" />
     </LinearLayout>
+
 
 </LinearLayout>

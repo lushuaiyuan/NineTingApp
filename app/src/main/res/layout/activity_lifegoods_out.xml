@@ -52,9 +52,10 @@
                 style="@style/MyEditTextTitle"
                 android:text="领用人" />
 
-            <EditText
-                android:id="@+id/et_recipient"
-                style="@style/MyEditText" />
+            <TextView
+                android:id="@+id/tv_staffName"
+                style="@style/MyEditText"
+                android:hint="请选择领用人" />
 
             <Button
                 android:id="@+id/btn_out"
