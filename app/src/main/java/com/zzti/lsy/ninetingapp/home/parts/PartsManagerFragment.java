@@ -57,22 +57,12 @@ public class PartsManagerFragment extends BaseFragment {
                 break;
             case R.id.rl_menu5://日用品列表
                 Intent intent7 = new Intent(mActivity, LifeGoodsListActivity.class);
-                intent7.putExtra("TAG", 1);
+//                intent7.putExtra("TAG", 1);
                 startActivity(intent7);
                 break;
             case R.id.rl_menu6://日用品采购
-                Intent intent4 = new Intent(mActivity, LifeGoodsListActivity.class);
-                intent4.putExtra("TAG", 2);
+                Intent intent4 = new Intent(mActivity, LifeGoodsPurchaseListActivity.class);
                 startActivity(intent4);
-                break;
-            case R.id.rl_menu7://日用品入库
-//                Intent intent5 = new Intent(mActivity, LifeGoodsListActivity.class);
-//                intent5.putExtra("TAG", 2);
-//                startActivity(intent5);
-
-                Intent intent6 = new Intent(mActivity, LifeGoodsListActivity.class);
-                intent6.putExtra("TAG", 3);
-                startActivity(intent6);
                 break;
         }
     }

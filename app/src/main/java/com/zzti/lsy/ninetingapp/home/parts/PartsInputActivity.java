@@ -124,6 +124,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
             tvFactory.setEnabled(false);
             tvFactory.setText(partsInfoEntity.getFactoryName());
             factoryID = partsInfoEntity.getFactoryID();
+            partsPurchased.setpType("1");//代表入库
             partsPurchased.setPartsID(partsInfoEntity.getPartsID());
             partsPurchased.setPurchasedPrice(partsInfoEntity.getPurchasedPrice());
         } else {//录入
@@ -171,6 +172,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                     }
                 }
             });
+            partsPurchased.setpType("0");//代表采购
             showDia();
             getPartsFactory();
             partsInfoEntity = new PartsInfoEntity();
@@ -336,7 +338,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
         HashMap<String, String> params = new HashMap<>();
         if (tag == 2) {//入库
             params.put("partsJosn", "");
-        } else {
+        } else { //采购
             params.put("partsJosn", new Gson().toJson(partsInfoEntity));
         }
         params.put("StorageJson", new Gson().toJson(partsPurchased));

@@ -10,10 +10,10 @@ import com.zzti.lsy.ninetingapp.entity.LaoBao;
 import java.util.List;
 
 /**
- * 日用品列表
+ * 日用品采购列表
  */
-public class LifeGoodsAdapter extends BaseQuickAdapter<LaoBao, BaseViewHolder> {
-    public LifeGoodsAdapter(List<LaoBao> lifeGoodEntities) {
+public class PurcheaseListAdapter extends BaseQuickAdapter<LaoBao, BaseViewHolder> {
+    public PurcheaseListAdapter(List<LaoBao> lifeGoodEntities) {
         super(R.layout.item_lifegoods, lifeGoodEntities);
     }
 

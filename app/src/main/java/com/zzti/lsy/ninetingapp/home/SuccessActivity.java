@@ -16,7 +16,9 @@ import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceOutputDetailActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceOutputListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsListActivity;
+import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutDetailActivity;
+import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutRecordActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsInWayDetailActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
 import com.zzti.lsy.ninetingapp.home.production.FormListActivity;
@@ -79,9 +81,8 @@ public class SuccessActivity extends BaseActivity {
         } else if (tag == 5) {
             setTitle("出库结果");
             tvMessage.setText("出库成功");
-            btnSolid.setText("查看日用品列表");
-            btnEmpty.setVisibility(View.INVISIBLE);
-            btnEmpty.setEnabled(false);
+            btnSolid.setText("查看出库详情");
+            btnEmpty.setText("查看出库列表");
         } else if (tag == 6) {
             setTitle("录入结果");
             tvMessage.setText("录入成功");
@@ -116,15 +117,17 @@ public class SuccessActivity extends BaseActivity {
                         EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                     }
                 } else if (tag == 3) { //配件管理员继续录入日用品
-                    if (type == 2) {//入库
-                        startActivity(new Intent(this, LifeGoodsListActivity.class));
-                        EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
-                    }
+                    EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 } else if (tag == 4) { //查看配件在途详情
                     startActivity(new Intent(this, PartsInWayDetailActivity.class));
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 } else if (tag == 5) { //查看日用品出库详情
-                    startActivity(new Intent(this, LifeGoodsListActivity.class));
+                    Intent intent = new Intent(this, LifeGoodsOutDetailActivity.class);
+                    intent.putExtra("outTime", UIUtils.getStr4Intent(this, "outTime"));
+                    intent.putExtra("outAmount", UIUtils.getStr4Intent(this, "outAmount"));
+                    intent.putExtra("goodsName", UIUtils.getStr4Intent(this, "goodsName"));
+                    intent.putExtra("staffName", UIUtils.getStr4Intent(this, "staffName"));
+                    startActivity(intent);
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 } else if (tag == 6) {//设备继续录入
                     startActivity(new Intent(this, DeviceInputActivity.class));
@@ -147,11 +150,9 @@ public class SuccessActivity extends BaseActivity {
                     startActivity(new Intent(this, LifeGoodsListActivity.class));
                 } else if (tag == 4) {//配件管理员查看配件列表
                     startActivity(new Intent(this, PartsListActivity.class));
-                }
-//                else if (tag == 5) {//配件管理员对日用品出库成功 查看日用品列表
-//                    startActivity(new Intent(this, LifeGoodsListActivity.class));
-//                }
-                else if (tag == 6) {//设备管理员录入成功
+                } else if (tag == 5) {//配件管理员对日用品出库成功 查看列表
+                    startActivity(new Intent(this, LifeGoodsListActivity.class));
+                } else if (tag == 6) {//设备管理员录入成功
                     startActivity(new Intent(this, DeviceListActivity.class));
                 } else if (tag == 8) {//设备管理员出库成功查看列表
                     startActivity(new Intent(this, DeviceOutputListActivity.class));

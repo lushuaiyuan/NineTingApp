@@ -33,7 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 日用品入库界面
+ * 日用品采购界面
  */
 public class LifeGoodsInActivity extends BaseActivity {
     @BindView(R.id.et_goodsName)
@@ -54,7 +54,6 @@ public class LifeGoodsInActivity extends BaseActivity {
     TextView tvTotalMoney;
     @BindView(R.id.tv_operator)
     TextView tvOperator;
-    private int tag;//1代表录入  2代表入库
     private LaoBao laoBao;
     private LaobaoPurchased laobaoPurchased;
 
@@ -73,61 +72,49 @@ public class LifeGoodsInActivity extends BaseActivity {
     private void initView() {
         setTitle("日用品录入");
         etPrice.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        tag = UIUtils.getInt4Intent(this, "TAG");
         laobaoPurchased = new LaobaoPurchased();
-        if (tag == 2) {//入库
-            tvMoneyTitle.setVisibility(View.GONE);
-            rlMoney.setVisibility(View.GONE);
-            tvPriceTitle.setVisibility(View.GONE);
-            rlPrice.setVisibility(View.GONE);
-            laoBao = (LaoBao) getIntent().getSerializableExtra("LaoBao");
-            laobaoPurchased.setLbID(laoBao.getLbID());
-            laobaoPurchased.setPurchasedMoney(laoBao.getPrice());
-            etGoodsName.setEnabled(false);
-            etGoodsName.setText(laoBao.getLbName());
-        } else {//录入
-            etPrice.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        laoBao = new LaoBao();
+        etPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!StringUtil.isNullOrEmpty(etAmount.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
+                    int amount = Integer.parseInt(etAmount.getText().toString());
+                    double price = Double.parseDouble(editable.toString());
+                    tvTotalMoney.setText(String.valueOf(amount * price));
                 }
+            }
+        });
+        etAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!StringUtil.isNullOrEmpty(etPrice.getText().toString()) && !StringUtil.isNullOrEmpty(etAmount.getText().toString())) {
+                    double price = Double.parseDouble(etPrice.getText().toString());
+                    int amount = Integer.parseInt(editable.toString());
+                    tvTotalMoney.setText(String.valueOf(amount * price));
                 }
+            }
+        });
 
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    if (!StringUtil.isNullOrEmpty(etAmount.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
-                        int amount = Integer.parseInt(etAmount.getText().toString());
-                        double price = Double.parseDouble(editable.toString());
-                        tvTotalMoney.setText(String.valueOf(amount * price));
-                    }
-                }
-            });
-            etAmount.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    if (!StringUtil.isNullOrEmpty(etPrice.getText().toString()) && !StringUtil.isNullOrEmpty(etAmount.getText().toString())) {
-                        double price = Double.parseDouble(etPrice.getText().toString());
-                        int amount = Integer.parseInt(editable.toString());
-                        tvTotalMoney.setText(String.valueOf(amount * price));
-                    }
-                }
-            });
-            laoBao = new LaoBao();
-        }
     }
 
     private void initData() {
@@ -148,18 +135,16 @@ public class LifeGoodsInActivity extends BaseActivity {
             UIUtils.showT("经手人不能为空");
             return;
         }
-        if (tag == 1) {//录入
-            if (StringUtil.isNullOrEmpty(etPrice.getText().toString())) {
-                UIUtils.showT("单价不能为空");
-                return;
-            }
-            if (StringUtil.isNullOrEmpty(tvTotalMoney.getText().toString())) {
-                UIUtils.showT("总金额不能为空");
-                return;
-            }
-            laoBao.setLbName(etGoodsName.getText().toString());
-            laoBao.setPrice(etPrice.getText().toString());
+        if (StringUtil.isNullOrEmpty(etPrice.getText().toString())) {
+            UIUtils.showT("单价不能为空");
+            return;
         }
+        if (StringUtil.isNullOrEmpty(tvTotalMoney.getText().toString())) {
+            UIUtils.showT("总金额不能为空");
+            return;
+        }
+        laoBao.setLbName(etGoodsName.getText().toString());
+        laoBao.setPrice(etPrice.getText().toString());
         laobaoPurchased.setNumber(etAmount.getText().toString());
         laobaoPurchased.setUserID(spUtils.getString(SpUtils.USERID, ""));
         hideSoftInput(etAmount);
@@ -172,11 +157,7 @@ public class LifeGoodsInActivity extends BaseActivity {
 
     private void submitInputData() {
         HashMap<String, String> params = new HashMap<>();
-        if (tag == 2) {//入库
-            params.put("LaoBaoJosn", "");
-        } else {
-            params.put("LaoBaoJosn", new Gson().toJson(laoBao));
-        }
+        params.put("LaoBaoJosn", new Gson().toJson(laoBao));
         params.put("StorageJson", new Gson().toJson(laobaoPurchased));
         OkHttpManager.postFormBody(Urls.POST_LAOSTORAGE, params, tvMoneyTitle, new OkHttpManager.OnResponse<String>() {
             @Override
@@ -189,22 +170,14 @@ public class LifeGoodsInActivity extends BaseActivity {
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    if (tag == 1) {//录入
-                        etGoodsName.getText().clear();
-                        etPrice.getText().clear();
-                        etAmount.getText().clear();
-                        tvTotalMoney.setText("");
-                    } else {//入库
-                        finish();
-                    }
+                    etGoodsName.getText().clear();
+                    etPrice.getText().clear();
+                    etAmount.getText().clear();
+                    tvTotalMoney.setText("");
                     UIUtils.showT("提交成功");
                     Intent intent = new Intent(LifeGoodsInActivity.this, SuccessActivity.class);
                     intent.putExtra("TAG", 3);
-                    if (tag == 1) {//录入
-                        intent.putExtra("TYPE", 1);
-                    } else if (tag == 2) {//入库
-                        intent.putExtra("TYPE", 2);
-                    }
+                    intent.putExtra("TYPE", 1);
                     startActivity(intent);
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();

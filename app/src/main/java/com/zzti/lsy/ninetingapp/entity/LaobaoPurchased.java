@@ -11,6 +11,24 @@ public class LaobaoPurchased {
     private String userID;///经手人ID 当前用户
     private String lbID;///劳保品编号
     private String toProject;///项目部编号 无需填写
+    private String status; //申请单状态（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过 -1为拒绝）
+    private String opinion;//审批意见
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getOpinion() {
+        return opinion;
+    }
+
+    public void setOpinion(String opinion) {
+        this.opinion = opinion;
+    }
 
     public String getLpID() {
         return lpID;

@@ -7,6 +7,10 @@ import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
+
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,7 +43,11 @@ public class LifeGoodsOutDetailActivity extends BaseActivity {
     }
 
     private void initData() {
-
+        tvOperator.setText(spUtils.getString(SpUtils.USERNAME, ""));
+        tvOutTime.setText(UIUtils.getStr4Intent(this, "outTime"));
+        tvOutAmount.setText(UIUtils.getStr4Intent(this, "outAmount"));
+        tvGoodsName.setText(UIUtils.getStr4Intent(this, "goodsName"));
+        tvRecipient.setText(UIUtils.getStr4Intent(this, "staffName"));
     }
 
     private void initView() {

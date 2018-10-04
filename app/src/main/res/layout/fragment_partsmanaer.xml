@@ -142,7 +142,8 @@
                 android:layout_marginTop="@dimen/dp10"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16">
+                android:paddingRight="@dimen/dp16"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/rl_menu7"

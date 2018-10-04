@@ -20,6 +20,10 @@ public class PartsInfoEntity implements Serializable {
     //    private String state;//状态
     private String purchasedPrice;//价格
 
+    public String getProjectName() {
+        return projectName;
+    }
+
     public String getFactoryName() {
         return FactoryName;
     }
@@ -28,9 +32,6 @@ public class PartsInfoEntity implements Serializable {
         this.FactoryName = FactoryName;
     }
 
-    public String getProjectName() {
-        return projectName;
-    }
 
     public void setProjectName(String projectName) {
         projectName = projectName;

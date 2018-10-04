@@ -49,7 +49,7 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
     private LifeGoodsAdapter lifeGoodsAdapter;
     private int pageIndex = 1;//页码
     private String wherestr;//查询条件
-    private int tag;//1代表日用品列表  2代表入库进来  3代表出库进来
+//    private int tag;//1代表日用品列表 2代表采购  2代表出库进来
 
     @Override
     public int getContentViewId() {
@@ -68,7 +68,8 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
         lifeGoodsAdapter = new LifeGoodsAdapter(lifeGoodEntities);
         mRecycleView.setAdapter(lifeGoodsAdapter);
         lifeGoodsAdapter.setOnItemClickListener(this);
-        tag = UIUtils.getInt4Intent(this, "TAG");
+//        tag = UIUtils.getInt4Intent(this, "TAG");
+//        lifeGoodsAdapter.setTag(tag);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -150,7 +151,7 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
         setTitle("日用品");
         etSearch.setHint("请输入日用品名称");
         tvToolbarMenu.setVisibility(View.VISIBLE);
-        tvToolbarMenu.setText("新增");
+        tvToolbarMenu.setText("记录");
         tvToolbarMenu.setOnClickListener(this);
         smartRefreshLayout.setEnableLoadMore(true);
         smartRefreshLayout.setEnableRefresh(true);
@@ -160,29 +161,28 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-//        startActivity(new Intent(this, LifeGoodsOutRecordActivity.class));
-        Intent intent = new Intent(this, LifeGoodsInActivity.class);
-        intent.putExtra("TAG", 1);
-        startActivity(intent);
+        startActivity(new Intent(this, LifeGoodsOutRecordActivity.class));
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        if (tag == 1) {//日用品列表
-            startActivity(new Intent(this, LifeGoodsDetailActivity.class));
-        } else if (tag == 2) {//入库
-            Intent intent = new Intent(this, LifeGoodsInActivity.class);
-            intent.putExtra("LaoBao", lifeGoodEntities.get(position));
-            intent.putExtra("TAG", tag);
-            startActivity(intent);
-        } else if (tag == 3) {//出库
-            Intent intent = new Intent(this, LifeGoodsOutActivity.class);
-            intent.putExtra("TAG", tag);
-            intent.putExtra("lbID", lifeGoodEntities.get(position).getLbID());
-            intent.putExtra("lbName", lifeGoodEntities.get(position).getLbName());
-            intent.putExtra("lbNumber", lifeGoodEntities.get(position).getLaobaoNumber());
-            startActivity(intent);
-        }
+//        Intent intent1 = new Intent(this, LifeGoodsDetailActivity.class);
+//        startActivity();
+
+        Intent intent = new Intent(this, LifeGoodsDetailActivity.class);
+        intent.putExtra("LaoBao", lifeGoodEntities.get(position));
+//        intent.putExtra("lbID", lifeGoodEntities.get(position).getLbID());
+//        intent.putExtra("lbName", lifeGoodEntities.get(position).getLbName());
+//        intent.putExtra("lbNumber", lifeGoodEntities.get(position).getLaobaoNumber());
+        startActivity(intent);
+
+//        if (tag == 1) {//日用品列表
+//
+//        } else if (tag == 2) {//采购
+//
+//        } else if (tag == 3) { //出库
+//
+//        }
     }
 
     @OnClick({R.id.iv_search})

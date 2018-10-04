@@ -163,9 +163,13 @@ public class LifeGoodsOutActivity extends BaseActivity {
                 if (msgInfo.getCode() == 200) {
                     finish();
                     Intent intent = new Intent(LifeGoodsOutActivity.this, SuccessActivity.class);
+                    intent.putExtra("outTime", tvOutTime.getText().toString());
+                    intent.putExtra("outAmount", etOutAmount.getText().toString());
+                    intent.putExtra("goodsName", tvLbName.getText().toString());
+                    intent.putExtra("staffName", tvStaffName.getText().toString());
                     intent.putExtra("TAG", 5);
                     startActivity(intent);
-                    UIUtils.showT("出库申请成功");
+                    UIUtils.showT("出库成功");
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
@@ -191,6 +195,19 @@ public class LifeGoodsOutActivity extends BaseActivity {
                 tvStaffName.setText(data.getStringExtra("staffName"));
                 staffID = data.getStringExtra("staffID");
             }
+        }
+    }
+
+    @Override
+    protected boolean openEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void onEventComing(EventMessage paramEventCenter) {
+        super.onEventComing(paramEventCenter);
+        if (paramEventCenter.getEventCode() == C.EventCode.A && (Boolean) paramEventCenter.getData()) {
+            finish();
         }
     }
 }

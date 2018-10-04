@@ -172,15 +172,28 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_in"
+                android:id="@+id/btn_out"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp40"
                 android:layout_marginRight="@dimen/dp40"
                 android:layout_marginTop="@dimen/dp30"
                 android:background="@drawable/btn_solid_shape"
-                android:text="入库"
+                android:text="出库"
                 android:textColor="@color/color_white"
+                android:textSize="@dimen/dp15" />
+
+            <Button
+                android:id="@+id/btn_outRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp40"
+                android:layout_marginRight="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp15"
+                android:background="@drawable/btn_empty_shape"
+                android:text="出库记录"
+                android:textColor="@color/color_6bcfd6"
                 android:textSize="@dimen/dp15" />
 
         </LinearLayout>

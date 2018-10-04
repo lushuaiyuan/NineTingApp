@@ -154,6 +154,9 @@
         <activity
             android:name=".home.parts.LifeGoodsInActivity"
             android:windowSoftInputMode="adjustResize" />
+        <!--日用品采购列表-->
+        <activity android:name=".home.parts.LifeGoodsPurchaseListActivity" />
+
         <!--日用品列表-->
         <activity
             android:name=".home.parts.LifeGoodsListActivity"

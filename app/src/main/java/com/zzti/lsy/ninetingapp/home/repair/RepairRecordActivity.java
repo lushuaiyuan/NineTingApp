@@ -245,7 +245,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     }
 
 
-    private int condition;
+    private int condition = 1;
 
     @OnClick({R.id.iv_search, R.id.rl_handleState, R.id.rl_repairType})
     public void viewClick(View view) {
@@ -266,7 +266,6 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
                 getRecord();
                 break;
             case R.id.rl_handleState://处理状态
-                condition = 1;
                 popupWindowStatus.showAsDropDown(rlHandleState, 0, 0, Gravity.LEFT);
                 break;
             case R.id.rl_repairType://维修类型

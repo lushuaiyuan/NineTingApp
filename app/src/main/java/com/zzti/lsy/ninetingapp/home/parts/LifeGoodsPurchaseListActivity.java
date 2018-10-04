@@ -1,0 +1,257 @@
+package com.zzti.lsy.ninetingapp.home.parts;
+
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.zzti.lsy.ninetingapp.R;
+import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
+import com.zzti.lsy.ninetingapp.entity.LaoBao;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.LifeGoodsAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.PurcheaseListAdapter;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.StringUtil;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+/**
+ * @author lsy
+ * @create 2018/10/3 21:33
+ * @Describe 日用品审批列表
+ */
+public class LifeGoodsPurchaseListActivity extends BaseActivity implements AdapterView.OnItemClickListener, PopupWindow.OnDismissListener, BaseQuickAdapter.OnItemClickListener {
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mSmartRefreshLayout;
+    @BindView(R.id.mRecycleView)
+    RecyclerView mRecyclerView;
+
+    private List<LaoBao> lifeGoodEntities;
+    private PurcheaseListAdapter purcheaseListAdapter;
+    private int pageIndex = 1;//页码
+    private String wherestr;//查询条件
+
+    private PopupWindow popupWindowStatus;
+    private ListView lvStatus;
+    private ConditionAdapter conditionAdapter;
+    private List<ConditionEntity> conditions;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_purchese_list;
+    }
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
+        initView();
+        initPop();
+        initData();
+    }
+
+    private void initPop() {
+        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+        contentview.setFocusable(true); // 这个很重要
+        contentview.setFocusableInTouchMode(true);
+        popupWindowStatus = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowStatus.setFocusable(true);
+        popupWindowStatus.setOutsideTouchable(true);
+        //设置消失监听
+        popupWindowStatus.setOnDismissListener(this);
+        popupWindowStatus.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        contentview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    popupWindowStatus.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        lvStatus = contentview.findViewById(R.id.pop_list);
+        conditions = new ArrayList<>();
+        ConditionEntity conditionEntity0 = new ConditionEntity();
+        conditionEntity0.setName("总经理已审批");
+        conditionEntity0.setId("0");
+        ConditionEntity conditionEntity1 = new ConditionEntity();
+        conditionEntity1.setName("项目经理已审批");
+        conditionEntity1.setId("1");
+        ConditionEntity conditionEntity2 = new ConditionEntity();
+        conditionEntity2.setName("待审批");
+        conditionEntity2.setId("2");
+        ConditionEntity conditionEntity3 = new ConditionEntity();
+        conditionEntity3.setName("已撤销");
+        conditionEntity3.setId("3");
+        ConditionEntity conditionEntity4 = new ConditionEntity();
+        conditionEntity4.setName("拒绝");
+        conditionEntity4.setId("-1");
+
+        conditions.add(conditionEntity0);
+        conditions.add(conditionEntity1);
+        conditions.add(conditionEntity2);
+        conditions.add(conditionEntity3);
+        conditions.add(conditionEntity4);
+        conditionAdapter = new ConditionAdapter(conditions);
+        lvStatus.setAdapter(conditionAdapter);
+        lvStatus.setOnItemClickListener(this);
+        popupWindowStatus.setAnimationStyle(R.style.anim_bottomPop);
+    }
+
+
+    private void initData() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        lifeGoodEntities = new ArrayList<>();
+        purcheaseListAdapter = new PurcheaseListAdapter(lifeGoodEntities);
+        mRecyclerView.setAdapter(purcheaseListAdapter);
+        purcheaseListAdapter.setOnItemClickListener(this);
+        mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageIndex++;
+                getPurchaseList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageIndex = 1;
+                lifeGoodEntities.clear();
+                etSearch.setText("");
+                wherestr = "";
+                getPurchaseList();
+            }
+        });
+        showDia();
+        getPurchaseList();
+    }
+
+    private void initView() {
+        tvToolbarMenu.setVisibility(View.VISIBLE);
+        tvToolbarMenu.setText("新增");
+        setTitle("审批列表");
+    }
+
+    @OnClick({R.id.iv_search, R.id.tv_status})
+    public void viewClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_search:
+                if (StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
+                    UIUtils.showT("内容");
+                    break;
+                }
+                showDia();
+                getPurchaseList();
+                break;
+            case R.id.tv_status:
+                popupWindowStatus.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+                break;
+        }
+    }
+
+    private String statusID;
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        tvStatus.setText(conditions.get(i).getName());
+        statusID = conditions.get(i).getId();
+        popupWindowStatus.dismiss();
+        showDia();
+        getPurchaseList();
+    }
+
+    public void getPurchaseList() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("pageIndex", String.valueOf(pageIndex));
+        if (StringUtil.isNullOrEmpty(wherestr)) {
+            params.put("wherestr", "");
+        } else {
+            params.put("wherestr", wherestr);
+        }
+        OkHttpManager.postFormBody(Urls.POST_GETLAOBAO, params, mRecyclerView, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                endRefresh(mSmartRefreshLayout);
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        if (jsonArray.length() > 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                LaoBao laoBao = ParseUtils.parseJson(jsonArray.getString(i), LaoBao.class);
+                                lifeGoodEntities.add(laoBao);
+                            }
+                        } else {
+                            UIUtils.showT("暂无数据");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
+                        mSmartRefreshLayout.finishLoadMoreWithNoMoreData();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+                purcheaseListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+                endRefresh(mSmartRefreshLayout);
+            }
+        });
+
+    }
+
+
+    @Override
+    public void onDismiss() {
+        setBackgroundAlpha(1);
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+    }
+}
