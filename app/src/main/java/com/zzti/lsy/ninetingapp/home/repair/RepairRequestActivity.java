@@ -480,7 +480,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         }
         repairinfoEntity.setCauseName(tvMaintenanceReason.getText().toString());
         repairinfoEntity.setTypeName(tvMaintenanceType.getText().toString());
-        repairinfoEntity.setStaffName(spUtils.getString(SpUtils.USERNAME, ""));
+        repairinfoEntity.setStaffName(spUtils.getString(SpUtils.StAFFNAME, ""));
         if (pics.size() > 2) {//有图片
             String devPicture = "";
             for (int i = 0; i < pics.size(); i++) {

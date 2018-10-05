@@ -14,6 +14,7 @@ import com.zzti.lsy.ninetingapp.App;
 public class SpUtils {
     private static final String NAME = "nineTing";
     public static final String USERNAME = "userName";//用户名
+    public static String StAFFNAME = "staffName";
     public static final String LOGINSTATE = "loginState";//登录状态
     /**
      * 操作员类型  1机械师理  2项目经理 3配件管理员 4设备管理员 5统计员 0总经理
@@ -27,6 +28,7 @@ public class SpUtils {
 
     private static SpUtils instance = new SpUtils();
     private static SharedPreferences sp;//单例
+
 
     private SpUtils() {
     }

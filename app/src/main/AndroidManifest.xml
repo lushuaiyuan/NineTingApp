@@ -122,6 +122,8 @@
 
         <activity android:name=".home.production.StatisticDetialListActivity" />
 
+        <!--配件入库工单列表-->
+        <activity android:name=".home.parts.PartsPurchaseListActivity" />
         <!--配件录入-->
         <activity
             android:name=".home.parts.PartsInputActivity"
@@ -130,13 +132,10 @@
         <activity
             android:name=".home.parts.PartsListActivity"
             android:hardwareAccelerated="false" />
-
         <!--配件详情-->
         <activity android:name=".home.parts.PartsDetailActivity" />
-
         <!--配件在库详情-->
         <activity android:name=".home.parts.PartsInWayDetailActivity" />
-
 
         <!--配件出库列表-->
         <activity android:name=".home.parts.PartsOutListActivity" />
@@ -145,17 +144,16 @@
         <activity
             android:name=".home.parts.PartsOutDetailActivity"
             android:windowSoftInputMode="adjustResize" />
-
-        <!--配件-->
-
-        <!--配件入库详情-->
-
         <!--日用品录入-->
         <activity
             android:name=".home.parts.LifeGoodsInActivity"
             android:windowSoftInputMode="adjustResize" />
-        <!--日用品采购列表-->
+
+        <!--日用品入库工单列表-->
         <activity android:name=".home.parts.LifeGoodsPurchaseListActivity" />
+        <!--日用品入库工单详情-->
+        <activity android:name=".home.parts.LifeGoodsPurchaseDetailActivity" />
+
 
         <!--日用品列表-->
         <activity

@@ -359,6 +359,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         conditions.add(conditionEntity3);
 
         conditionAdapter = new ConditionAdapter(conditions);
+        conditionAdapter.setTag(0);
         lvStatus.setAdapter(conditionAdapter);
         lvStatus.setOnItemClickListener(this);
         popupWindowStatus.setAnimationStyle(R.style.anim_upPop);

@@ -11,6 +11,8 @@ public class LaoBao implements Serializable {
     private String price; ///劳保品单价 用户填写
     private String laobaoNumber;/// 劳保数量 返回值
     private String projectName; /// 项目部名称 返回值
+    //入库工单字段
+    private int lpID;
 
     public String getLbID() {
         return lbID;

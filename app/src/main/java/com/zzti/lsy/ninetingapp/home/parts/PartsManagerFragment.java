@@ -41,9 +41,9 @@ public class PartsManagerFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, PartsListActivity.class));
                 break;
             case R.id.rl_menu2://配件采购
-                Intent intent1 = new Intent(mActivity, PartsInputActivity.class);
-                intent1.putExtra("TAG", 1);
-                startActivity(intent1);
+                startActivity(new Intent(mActivity, PartsPurchaseListActivity.class));
+
+
                 break;
             case R.id.rl_menu3://配件入库
                 Intent intent2 = new Intent(mActivity, PartsListActivity.class);

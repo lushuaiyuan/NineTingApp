@@ -15,6 +15,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 固定条件的适配器
+ */
 public class ConditionAdapter extends BaseAdapter {
     private List<ConditionEntity> conditions;
 
@@ -48,6 +51,15 @@ public class ConditionAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        if (tag == 0) {
+            convertView.setBackgroundResource(R.drawable.black_selector);
+            viewHolder.tvConditionName.setTextColor(App.get().getResources().getColor(R.color.color_white));
+            viewHolder.myView.setBackgroundResource(R.color.color_111111);
+        } else {
+            convertView.setBackgroundResource(R.drawable.white_gray_selector);
+            viewHolder.tvConditionName.setTextColor(App.get().getResources().getColor(R.color.color_666666));
+            viewHolder.myView.setBackgroundResource(R.color.color_e5e5e5);
+        }
         viewHolder.tvConditionName.setText(getItem(i).getName());
         return convertView;
     }
@@ -55,9 +67,17 @@ public class ConditionAdapter extends BaseAdapter {
     static class ViewHolder {
         @BindView(R.id.tv_conditionName)
         TextView tvConditionName;
+        @BindView(R.id.myView)
+        View myView;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
+    }
+
+    private int tag;
+
+    public void setTag(int tag) {
+        this.tag = tag;
     }
 }

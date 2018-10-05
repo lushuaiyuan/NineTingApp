@@ -213,10 +213,10 @@ public class MyMessageActivity extends TakePhotoActivity implements View.OnClick
     }
 
 
-    @OnClick(R.id.iv_head)
-    public void viewClick() {
-        //  设置背景色
-        setBackgroundAlpha(0.5f);
-        popupWindow.showAtLocation(tvName, Gravity.BOTTOM, 0, 0);
-    }
+//    @OnClick(R.id.iv_head)
+//    public void viewClick() {
+//        //  设置背景色
+//        setBackgroundAlpha(0.5f);
+//        popupWindow.showAtLocation(tvName, Gravity.BOTTOM, 0, 0);
+//    }
 }

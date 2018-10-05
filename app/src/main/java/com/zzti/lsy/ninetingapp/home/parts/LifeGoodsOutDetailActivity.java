@@ -43,7 +43,7 @@ public class LifeGoodsOutDetailActivity extends BaseActivity {
     }
 
     private void initData() {
-        tvOperator.setText(spUtils.getString(SpUtils.USERNAME, ""));
+        tvOperator.setText(spUtils.getString(SpUtils.StAFFNAME, ""));
         tvOutTime.setText(UIUtils.getStr4Intent(this, "outTime"));
         tvOutAmount.setText(UIUtils.getStr4Intent(this, "outAmount"));
         tvGoodsName.setText(UIUtils.getStr4Intent(this, "goodsName"));

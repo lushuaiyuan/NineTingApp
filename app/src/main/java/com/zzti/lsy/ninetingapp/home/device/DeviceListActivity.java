@@ -389,6 +389,16 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                     UIUtils.showT("车牌号格式不正确");
                     break;
                 }
+                wherestr = "";
+                if (!StringUtil.isNullOrEmpty(CarTypeID)) {
+                    wherestr += " and CarTypeID=" + CarTypeID;
+                }
+                if (!StringUtil.isNullOrEmpty(projectID)) {
+                    wherestr += " and projectID=" + projectID;
+                }
+                if (!StringUtil.isNullOrEmpty(status)) {
+                    wherestr += " and status=" + status;
+                }
                 wherestr += " and plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
                 showDia();
                 carInfoEntities.clear();
@@ -545,6 +555,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             if (!StringUtil.isNullOrEmpty(projectID)) {
                 wherestr += " and projectID=" + projectID;
             }
+            popupWindowCarStatus.dismiss();
         } else if (tag == 2) {
             tvCarType.setText(carTypeEntities.get(i).getVehicleTypeName());
             CarTypeID = carTypeEntities.get(i).getVehicleTypeID();
@@ -555,6 +566,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             if (!StringUtil.isNullOrEmpty(projectID)) {
                 wherestr += " and projectID=" + projectID;
             }
+            popupWindowCarType.dismiss();
         } else if (tag == 3) {
             tvProject.setText(projectEntities.get(i).getProjectName());
             projectID = projectEntities.get(i).getProjectID();
@@ -565,8 +577,11 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             if (!StringUtil.isNullOrEmpty(CarTypeID)) {
                 wherestr += " and CarTypeID=" + CarTypeID;
             }
+            popupWindowProject.dismiss();
         }
-        popupWindowProject.dismiss();
+        if (!StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
+            wherestr += " and plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
+        }
         showDia();
         carInfoEntities.clear();
         getCarList();

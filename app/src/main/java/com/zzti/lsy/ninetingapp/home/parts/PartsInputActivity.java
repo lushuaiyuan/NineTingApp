@@ -107,7 +107,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
     }
 
     private void initData() {
-        tvOperator.setText(SpUtils.getInstance().getString(SpUtils.USERNAME, ""));
+        tvOperator.setText(SpUtils.getInstance().getString(SpUtils.StAFFNAME, ""));
         tvTime.setText(DateUtil.getCurrentDate());
         tag = UIUtils.getInt4Intent(this, "TAG");
         partsPurchased = new PartsPurchased();

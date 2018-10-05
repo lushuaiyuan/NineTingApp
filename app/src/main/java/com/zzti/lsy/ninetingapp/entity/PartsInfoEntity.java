@@ -15,14 +15,10 @@ public class PartsInfoEntity implements Serializable {
     private String FactoryName;//生产厂家名称
     private String projectID;//项目部ID
     private String projectName;//项目部名称
-
-
-    //    private String state;//状态
     private String purchasedPrice;//价格
 
-    public String getProjectName() {
-        return projectName;
-    }
+
+
 
     public String getFactoryName() {
         return FactoryName;
@@ -32,6 +28,9 @@ public class PartsInfoEntity implements Serializable {
         this.FactoryName = FactoryName;
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
 
     public void setProjectName(String projectName) {
         projectName = projectName;

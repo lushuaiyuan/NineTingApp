@@ -44,7 +44,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        tvName.setText(SpUtils.getInstance().getString(SpUtils.USERNAME, ""));
+        tvName.setText(SpUtils.getInstance().getString(SpUtils.StAFFNAME, ""));
         if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 5) {
             tvType.setText("生产员");
         } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 3) {

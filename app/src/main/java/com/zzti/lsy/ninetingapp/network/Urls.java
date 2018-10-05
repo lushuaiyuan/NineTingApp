@@ -35,7 +35,22 @@ public class Urls {
     public final static String POST_PARTSSTORAGE = BASE_URL + "/Parts/Parts.asmx/PartsStorage";//配件入库
     public final static String POST_PARTSOUT = BASE_URL + "/Parts/Parts.asmx/PartsOut";//配件出库
     public final static String POST_GETLAOBAO = BASE_URL + "/Parts/Parts.asmx/GetLaoBao";//获取劳保品详情列表
-    public final static String POST_LAOSTORAGE = BASE_URL + "/Parts/Parts.asmx/LaoStorage";//劳保品入库
+    public final static String POST_LAOSTORAGE = BASE_URL + "/Parts/Parts.asmx/LaoStorage";//劳保品采购
     public final static String POST_LAOBAOOUT = BASE_URL + "/Parts/Parts.asmx/LaoBaoOut";//劳保品出库
     public final static String POST_GETSTAFFLIST = BASE_URL + "/Parts/Parts.asmx/GetStaff";//获取员工地址
+    public final static String PARTS_GETPARTSOUT =BASE_URL +  "/Parts/Parts.asmx/GetPartsOut";//获取配件出库工单列表
+    public final static String PARTS_CANCELPARTS =BASE_URL +  "/Parts/Parts.asmx/CancelParts";//撤销配件入库工单
+    public final static String PARTS_GETLAOBAOOUT =BASE_URL +  "/Parts/Parts.asmx/GetLaoBaoOut";//获取劳保品出库工单列表
+    public final static String PARTS_CANCELLAOBAO =BASE_URL +  "/Parts/Parts.asmx/CancelLaobao";//撤销劳保品入库工单
+
+
+    //项目经理
+    public final static String APPROVE_GETPARTSIN = BASE_URL + "/Approve/Approve.asmx/GetPartsIn";//获取配件入库工单列表
+
+    public final static String APPROVE_GETLAOBAO = BASE_URL + "/Approve/Approve.asmx/GetLaoBao";//获取劳保品入库工单列表
+    public final static String APPROVE_REPAIR = BASE_URL + "/Approve/Approve.asmx/ApproveRepair";//维修工单的审批
+    public final static String APPROVE_PARTS = BASE_URL + "/Approve/Approve.asmx/ApproveParts";//配件入库工单的审批
+    public final static String APPROVE_DAYUSE = BASE_URL + "/Approve/Approve.asmx/ApproveDayUse";//日用品入库工单的审批
+
+
 }

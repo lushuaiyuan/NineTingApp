@@ -109,13 +109,15 @@ public class LoginActivity extends BaseActivity {
                 if (msgInfo.getCode() == 200) {
                     if (!StringUtil.isNullOrEmpty(msgInfo.getData())) {
                         LoginBackEntity loginBackEntity = ParseUtils.parseJson(msgInfo.getData(), LoginBackEntity.class);
-                        SpUtils.getInstance().put(SpUtils.OPTYPE, loginBackEntity.getRoleID());//操作员类型
-                        SpUtils.getInstance().put(SpUtils.USERID, loginBackEntity.getUserID());
-                        SpUtils.getInstance().put(SpUtils.SESSIONID, msgInfo.getMsg());
-                        SpUtils.getInstance().put(SpUtils.USERNAME, etUserName.getText().toString());
-                        SpUtils.getInstance().put(SpUtils.PROJECT, loginBackEntity.getProjectName());
-                        SpUtils.getInstance().put(SpUtils.PROJECTID, loginBackEntity.getProjectID());
-                        SpUtils.getInstance().put(SpUtils.LOGINSTATE, true);
+                        spUtils.put(SpUtils.OPTYPE, loginBackEntity.getRoleID());//操作员类型
+                        spUtils.put(SpUtils.USERID, loginBackEntity.getUserID());
+                        spUtils.put(SpUtils.SESSIONID, msgInfo.getMsg());
+                        spUtils.put(SpUtils.USERNAME, etUserName.getText().toString());
+                        spUtils.put(SpUtils.StAFFNAME, loginBackEntity.getStaffName()
+                        );
+                        spUtils.put(SpUtils.PROJECT, loginBackEntity.getProjectName());
+                        spUtils.put(SpUtils.PROJECTID, loginBackEntity.getProjectID());
+                        spUtils.put(SpUtils.LOGINSTATE, true);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

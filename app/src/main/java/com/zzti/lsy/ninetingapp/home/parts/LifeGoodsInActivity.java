@@ -118,7 +118,7 @@ public class LifeGoodsInActivity extends BaseActivity {
     }
 
     private void initData() {
-        tvOperator.setText(SpUtils.getInstance().getString(SpUtils.USERNAME, ""));
+        tvOperator.setText(SpUtils.getInstance().getString(SpUtils.StAFFNAME, ""));
     }
 
     @OnClick(R.id.btn_submit)

@@ -21,8 +21,6 @@ import butterknife.OnClick;
 public class LifeGoodsDetailActivity extends BaseActivity {
     @BindView(R.id.tv_goodsName)
     TextView tvGoodsName;
-    @BindView(R.id.tv_operator)
-    TextView tvOperator;
     @BindView(R.id.tv_amount)
     TextView tvAmount;
     @BindView(R.id.tv_price)
@@ -50,7 +48,6 @@ public class LifeGoodsDetailActivity extends BaseActivity {
         tvPrice.setText(laoBao.getPrice());
         tvAmount.setText(laoBao.getLaobaoNumber());
         tvMoney.setText(Integer.parseInt(laoBao.getLaobaoNumber()) * Double.parseDouble(laoBao.getPrice()) + "");
-        tvOperator.setText(spUtils.getString(SpUtils.USERNAME, ""));
     }
 
     private void initView() {

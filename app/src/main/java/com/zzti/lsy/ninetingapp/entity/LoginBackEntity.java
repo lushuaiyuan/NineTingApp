@@ -11,6 +11,15 @@ public class LoginBackEntity {
     private String status;
     private String projectID;
     private String projectName;
+    private String staffName;
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
 
     public String getProjectID() {
         return projectID;

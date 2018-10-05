@@ -23,16 +23,15 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
-import com.zzti.lsy.ninetingapp.entity.LaoBao;
-import com.zzti.lsy.ninetingapp.entity.LaobaoPurchased;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
+import com.zzti.lsy.ninetingapp.entity.PartsPurchased;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
-import com.zzti.lsy.ninetingapp.home.adapter.LifeGoodsPurcheaseListAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.PartsPurcheaseListAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
-import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -48,10 +47,10 @@ import butterknife.OnClick;
 
 /**
  * @author lsy
- * @create 2018/10/3 21:33
- * @Describe 日用品入库工单列表
+ * @create 2018/10/4 13:17
+ * @Describe 配件入库工单列表
  */
-public class LifeGoodsPurchaseListActivity extends BaseActivity implements AdapterView.OnItemClickListener, PopupWindow.OnDismissListener, BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
+public class PartsPurchaseListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, PopupWindow.OnDismissListener, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.et_search)
     EditText etSearch;
     @BindView(R.id.tv_status)
@@ -61,15 +60,16 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
     @BindView(R.id.mRecycleView)
     RecyclerView mRecyclerView;
 
-    private List<LaobaoPurchased> laobaoPurchaseds;
-    private LifeGoodsPurcheaseListAdapter lifeGoodsPurcheaseListAdapter;
-    private int pageIndex = 1;//页码
-    private String wherestr = "";//查询条件
-    private String status = "";
+    private List<PartsPurchased> partsPurchaseds;
+    private PartsPurcheaseListAdapter partsPurcheaseListAdapter;
+
     private PopupWindow popupWindowStatus;
     private ListView lvStatus;
     private ConditionAdapter conditionAdapter;
     private List<ConditionEntity> conditions;
+
+    private int pageIndex = 1;//页码
+    private String wherestr = "";//查询条件
 
     @Override
     public int getContentViewId() {
@@ -133,13 +133,12 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
         popupWindowStatus.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-
     private void initData() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        laobaoPurchaseds = new ArrayList<>();
-        lifeGoodsPurcheaseListAdapter = new LifeGoodsPurcheaseListAdapter(laobaoPurchaseds);
-        mRecyclerView.setAdapter(lifeGoodsPurcheaseListAdapter);
-        lifeGoodsPurcheaseListAdapter.setOnItemClickListener(this);
+        partsPurchaseds = new ArrayList<>();
+        partsPurcheaseListAdapter = new PartsPurcheaseListAdapter(partsPurchaseds);
+        mRecyclerView.setAdapter(partsPurcheaseListAdapter);
+        partsPurcheaseListAdapter.setOnItemClickListener(this);
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -149,8 +148,9 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                hideSoftInput(etSearch);
                 pageIndex = 1;
-                laobaoPurchaseds.clear();
+                partsPurchaseds.clear();
                 etSearch.setText("");
                 wherestr = "";
                 status = "";
@@ -163,10 +163,10 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
     }
 
     private void initView() {
+        setTitle("配件入库工单");
         tvToolbarMenu.setVisibility(View.VISIBLE);
         tvToolbarMenu.setText("采购");
         tvToolbarMenu.setOnClickListener(this);
-        setTitle("日用品入库工单");
     }
 
     @OnClick({R.id.iv_search, R.id.tv_status})
@@ -182,9 +182,9 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
                 if (!StringUtil.isNullOrEmpty(status)) {
                     wherestr += " and status=" + status;
                 }
-                wherestr += " and lbName like \'%" + etSearch.getText().toString() + "%\'";
+                wherestr += " and partsName like \'%" + etSearch.getText().toString() + "%\' or partsModel like \'%" + etSearch.getText().toString() + "%\'";
                 showDia();
-                laobaoPurchaseds.clear();
+                partsPurchaseds.clear();
                 getPurchaseList();
                 break;
             case R.id.tv_status:
@@ -194,6 +194,14 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        Intent intent1 = new Intent(this, PartsInputActivity.class);
+        intent1.putExtra("TAG", 1);
+        startActivity(intent1);
+    }
+
+    private String status;
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -201,11 +209,11 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
         status = conditions.get(i).getId();
         wherestr += " and status=" + status;
         if (!StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
-            wherestr += " and lbName like \'%" + etSearch.getText().toString() + "%\'";
+            wherestr += " and partsName like \'%" + etSearch.getText().toString() + "%\' or partsModel like \'%" + etSearch.getText().toString() + "%\'";
         }
         popupWindowStatus.dismiss();
         showDia();
-        laobaoPurchaseds.clear();
+        partsPurchaseds.clear();
         getPurchaseList();
     }
 
@@ -217,7 +225,7 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
         } else {
             params.put("wherestr", wherestr);
         }
-        OkHttpManager.postFormBody(Urls.APPROVE_GETLAOBAO, params, mRecyclerView, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.APPROVE_GETPARTSIN, params, mRecyclerView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -233,8 +241,8 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         if (jsonArray.length() > 0) {
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                LaobaoPurchased laobaoPurchased = ParseUtils.parseJson(jsonArray.getString(i), LaobaoPurchased.class);
-                                laobaoPurchaseds.add(laobaoPurchased);
+                                PartsPurchased partsPurchased = ParseUtils.parseJson(jsonArray.getString(i), PartsPurchased.class);
+                                partsPurchaseds.add(partsPurchased);
                             }
                         } else {
                             UIUtils.showT("暂无数据");
@@ -250,7 +258,7 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
-                lifeGoodsPurcheaseListAdapter.notifyDataSetChanged();
+                partsPurcheaseListAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -263,25 +271,17 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
 
     }
 
-
     @Override
     public void onDismiss() {
         setBackgroundAlpha(1);
     }
 
-
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        Intent intent = new Intent(this, LifeGoodsPurchaseDetailActivity.class);
-        intent.putExtra("laobaoPurchased", laobaoPurchaseds.get(position));
+        Intent intent = new Intent(this, PartsDetailActivity.class);
+        intent.putExtra("partsPurchased", partsPurchaseds.get(position));
         startActivityForResult(intent, 1);
     }
-
-    @Override
-    public void onClick(View view) {
-        startActivity(new Intent(this, LifeGoodsInActivity.class));
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

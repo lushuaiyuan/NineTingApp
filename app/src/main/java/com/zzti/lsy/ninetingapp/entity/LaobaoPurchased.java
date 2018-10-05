@@ -1,9 +1,11 @@
 package com.zzti.lsy.ninetingapp.entity;
 
+import java.io.Serializable;
+
 /**
  * 劳保品传的参数
  */
-public class LaobaoPurchased {
+public class LaobaoPurchased implements Serializable {
     private String lpID;///劳保品入库工单编号 无需填写
     private String purchasedDate; ///入库时间 无需填写
     private String purchasedMoney;///劳保品单价 用户填写
@@ -13,6 +15,43 @@ public class LaobaoPurchased {
     private String toProject;///项目部编号 无需填写
     private String status; //申请单状态（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过 -1为拒绝）
     private String opinion;//审批意见
+    private String applyTime;//申请时间
+    private String staffName;//经手人名称
+    private String projectName;//项目部
+    private String lbName;//名称
+
+
+    public String getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(String applyTime) {
+        this.applyTime = applyTime;
+    }
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getLbName() {
+        return lbName;
+    }
+
+    public void setLbName(String lbName) {
+        this.lbName = lbName;
+    }
 
     public String getStatus() {
         return status;

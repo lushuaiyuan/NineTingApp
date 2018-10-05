@@ -1,9 +1,11 @@
 package com.zzti.lsy.ninetingapp.entity;
 
+import java.io.Serializable;
+
 /**
  * 配件入库传的参数
  */
-public class PartsPurchased {
+public class PartsPurchased implements Serializable {
     private String ppID;//入库编号 无需填写
     private String purchasedChanel;///进货渠道 需要填写
     private String purchasedDate;///入库时间 无需填写
@@ -12,15 +14,23 @@ public class PartsPurchased {
     private String userID;///经手人ID
     private String partsID;///配件ID
     private String projectID;///项目部ID  无需填写
+    private String status;//状态
     private String opinion;// 拒绝时的 拒绝意见
     private String applyTime;/// 申请时间
     private String pType;  /// \入库单类型（0为采购1为入库）
-    private String staffName;
+    private String staffName;//经手人
     private String partsName;//配件名称
     private String partsModel;//配件类型
     private String projectName;//项目部名称
     private String FactoryName;//生产厂家名称
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getOpinion() {
         return opinion;

@@ -18,6 +18,7 @@
         android:textSize="@dimen/dp14" />
 
     <View
+        android:id="@+id/myView"
         style="@style/MyView"
         android:layout_below="@id/tv_name"
         android:background="@color/color_111111" />
