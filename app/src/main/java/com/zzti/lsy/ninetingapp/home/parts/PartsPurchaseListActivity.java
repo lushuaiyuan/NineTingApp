@@ -276,8 +276,11 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         setBackgroundAlpha(1);
     }
 
+    private int selectPosition;
+
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        selectPosition = position;
         Intent intent = new Intent(this, PartsDetailActivity.class);
         intent.putExtra("partsPurchased", partsPurchaseds.get(position));
         startActivityForResult(intent, 1);
@@ -287,8 +290,11 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 2) {
-            showDia();
-            getPurchaseList();
+            if (data != null) {
+                int status = data.getIntExtra("status", -2);
+                partsPurchaseds.get(selectPosition).setStatus(String.valueOf(status));
+                partsPurcheaseListAdapter.notifyItemChanged(selectPosition);
+            }
         }
     }
 }

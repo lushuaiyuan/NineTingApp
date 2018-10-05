@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.home.parts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -86,7 +87,7 @@ public class PartsDetailActivity extends BaseActivity {
             if (partsPurchased.getStatus().equals("2")) {
                 tvStatus.setText("待审批");
                 tvOperatorTitle.setText("申请时间");
-                tvOperatorTime.setText(partsPurchased.getApplyTime());
+                tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
                 btnOperator1.setText("撤销");
                 btnOperator2.setVisibility(View.GONE);
             } else {
@@ -95,18 +96,18 @@ public class PartsDetailActivity extends BaseActivity {
                 if (partsPurchased.getStatus().equals("1")) {
                     tvStatus.setText("项目经理已审批");
                     tvOperatorTitle.setText("项目经理审批时间");
-                    tvOperatorTime.setText(partsPurchased.getPurchasedDate());
+                    tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 } else if (partsPurchased.getStatus().equals("0")) {
                     tvStatus.setText("总经理已审批");
                     tvOperatorTitle.setText("总经理审批时间");
-                    tvOperatorTime.setText(partsPurchased.getPurchasedDate());
+                    tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 }
             }
         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//2项目经理
             if (partsPurchased.getStatus().equals(2)) {//待项目经理审批
                 tvStatus.setText("待审批");
                 tvOperatorTitle.setText("申请时间");
-                tvOperatorTime.setText(partsPurchased.getApplyTime());
+                tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
                 tvReason.setVisibility(View.VISIBLE);
                 etReason.setVisibility(View.VISIBLE);
                 btnOperator1.setText("同意");
@@ -117,18 +118,18 @@ public class PartsDetailActivity extends BaseActivity {
                 if (partsPurchased.getStatus().equals("1")) {
                     tvStatus.setText("项目经理已审批");
                     tvOperatorTitle.setText("项目经理审批时间");
-                    tvOperatorTime.setText(partsPurchased.getPurchasedDate());
+                    tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 } else if (partsPurchased.getStatus().equals("0")) {
                     tvStatus.setText("总经理已审批");
                     tvOperatorTitle.setText("总经理审批时间");
-                    tvOperatorTime.setText(partsPurchased.getPurchasedDate());
+                    tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 }
             }
         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//0总经理
             if (partsPurchased.getStatus().equals("1")) {//待总经理审批
                 tvStatus.setText("项目经理已审批");
                 tvOperatorTitle.setText("项目经理审批时间");
-                tvOperatorTime.setText(partsPurchased.getPurchasedDate());
+                tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 tvReason.setVisibility(View.VISIBLE);
                 etReason.setVisibility(View.VISIBLE);
                 btnOperator1.setText("同意");
@@ -139,11 +140,11 @@ public class PartsDetailActivity extends BaseActivity {
                 if (partsPurchased.getStatus().equals("2")) {//待项目经理审批
                     tvStatus.setText("待审批");
                     tvOperatorTitle.setText("申请时间");
-                    tvOperatorTime.setText(partsPurchased.getApplyTime());
+                    tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
                 } else if (partsPurchased.getStatus().equals("0")) {
                     tvStatus.setText("总经理已审批");
                     tvOperatorTitle.setText("总经理审批时间");
-                    tvOperatorTime.setText(partsPurchased.getPurchasedDate());
+                    tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 }
             }
         }
@@ -151,7 +152,7 @@ public class PartsDetailActivity extends BaseActivity {
         if (partsPurchased.getStatus().equals("-1")) {
             tvStatus.setText("已拒绝");
             tvOperatorTitle.setText("拒绝时间");
-            tvOperatorTime.setText(partsPurchased.getPurchasedDate());
+            tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
             tvReason.setVisibility(View.VISIBLE);
             etReason.setVisibility(View.VISIBLE);
             etReason.setText(partsPurchased.getOpinion());
@@ -161,7 +162,7 @@ public class PartsDetailActivity extends BaseActivity {
         } else if (partsPurchased.getStatus().equals("3")) {
             tvStatus.setText("已撤销");
             tvOperatorTitle.setText("撤销时间");
-            tvOperatorTime.setText(partsPurchased.getPurchasedDate());
+            tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
             btnOperator1.setVisibility(View.GONE);
             btnOperator2.setVisibility(View.GONE);
         }
@@ -237,8 +238,9 @@ public class PartsDetailActivity extends BaseActivity {
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    //TODO
-                    setResult(2);
+                    Intent intent = new Intent();
+                    intent.putExtra("status", 3);
+                    setResult(2, intent);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
@@ -275,7 +277,9 @@ public class PartsDetailActivity extends BaseActivity {
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    setResult(2);
+                    Intent intent = new Intent();
+                    intent.putExtra("status", 3);
+                    setResult(2, intent);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
