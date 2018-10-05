@@ -24,7 +24,6 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
 import com.zzti.lsy.ninetingapp.entity.PartsPurchased;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
@@ -197,7 +196,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         Intent intent1 = new Intent(this, PartsInputActivity.class);
-        intent1.putExtra("TAG", 1);
+        intent1.putExtra("TAG", 1);//代表采购
         startActivity(intent1);
     }
 
@@ -281,7 +280,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         selectPosition = position;
-        Intent intent = new Intent(this, PartsDetailActivity.class);
+        Intent intent = new Intent(this, PartsPurchaseDetailActivity.class);
         intent.putExtra("partsPurchased", partsPurchaseds.get(position));
         startActivityForResult(intent, 1);
     }

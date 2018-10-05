@@ -134,6 +134,8 @@
             android:hardwareAccelerated="false" />
         <!--配件详情-->
         <activity android:name=".home.parts.PartsDetailActivity" />
+        <!--配件采购工单详情-->
+        <activity android:name=".home.parts.PartsPurchaseDetailActivity" />
         <!--配件在库详情-->
         <activity android:name=".home.parts.PartsInWayDetailActivity" />
 

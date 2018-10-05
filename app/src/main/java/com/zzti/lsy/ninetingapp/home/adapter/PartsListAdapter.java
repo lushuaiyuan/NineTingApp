@@ -29,16 +29,10 @@ public class PartsListAdapter extends BaseQuickAdapter<PartsInfoEntity, BaseView
             helper.getView(R.id.tv_operator).setVisibility(View.GONE);
         } else if (tag == 2) { //代表点击配件列表菜单进来
             helper.getView(R.id.tv_operator).setVisibility(View.GONE);
-        } else if (tag == 3) {//3配件入库
-            helper.getView(R.id.tv_operator).setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_operator, "入库");
-        } else if (tag == 4) {//4配件出库
-            helper.getView(R.id.tv_operator).setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_operator, "出库");
         }
     }
 
-    private int tag;//1代表维修申请进来（获取配件名称）  2代表点击配件列表菜单进来  3配件入库  4配件出库
+    private int tag;//1代表维修申请进来（获取配件名称）  2代表点击配件列表菜单进来
 
     public void setTag(int tag) {
         this.tag = tag;

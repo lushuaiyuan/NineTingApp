@@ -113,7 +113,9 @@ public class SuccessActivity extends BaseActivity {
             case R.id.btn_solid:
                 if (tag == 2) { //配件管理员继续录入配件
                     if (type == 2) {//入库
-                        startActivity(new Intent(this, PartsListActivity.class));
+                        Intent intent2 = new Intent(this, PartsListActivity.class);
+                        intent2.putExtra("TAG", 3);
+                        startActivity(intent2);
                         EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                     }
                 } else if (tag == 3) { //配件管理员继续录入日用品
@@ -124,6 +126,7 @@ public class SuccessActivity extends BaseActivity {
                 } else if (tag == 5) { //查看日用品出库详情
                     Intent intent = new Intent(this, LifeGoodsOutDetailActivity.class);
                     intent.putExtra("outTime", UIUtils.getStr4Intent(this, "outTime"));
+                    intent.putExtra("lbID", UIUtils.getStr4Intent(this, "lbID"));
                     intent.putExtra("outAmount", UIUtils.getStr4Intent(this, "outAmount"));
                     intent.putExtra("goodsName", UIUtils.getStr4Intent(this, "goodsName"));
                     intent.putExtra("staffName", UIUtils.getStr4Intent(this, "staffName"));

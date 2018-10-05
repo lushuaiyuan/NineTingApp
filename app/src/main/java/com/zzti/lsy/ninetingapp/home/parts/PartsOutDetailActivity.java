@@ -3,8 +3,6 @@ package com.zzti.lsy.ninetingapp.home.parts;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,17 +25,13 @@ import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.PartsDelivery;
 import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
 import com.zzti.lsy.ninetingapp.event.C;
-import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAdapter;
-import com.zzti.lsy.ninetingapp.home.adapter.ProjectAddressAdapter;
-import com.zzti.lsy.ninetingapp.entity.ProjectAddressEntitiy;
-import com.zzti.lsy.ninetingapp.home.device.DeviceInputActivity;
-import com.zzti.lsy.ninetingapp.network.Constant;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -52,8 +46,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.bumptech.glide.request.transition.NoTransition.getFactory;
 
 /**
  * 出库详情
@@ -226,6 +218,7 @@ public class PartsOutDetailActivity extends BaseActivity implements PopupWindow.
                 }
                 PartsDelivery partsDelivery = new PartsDelivery();
                 partsDelivery.setPartsID(partsID);
+                partsDelivery.setUserID(spUtils.getString(SpUtils.USERID, ""));
                 partsDelivery.setPdCause(etReason.getText().toString());
                 partsDelivery.setPdDate(tvOutTime.getText().toString());
                 partsDelivery.setPdNumber(etAmount.getText().toString());

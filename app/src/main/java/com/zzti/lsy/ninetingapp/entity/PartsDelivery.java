@@ -13,6 +13,69 @@ public class PartsDelivery {
     private String psID;///配件状态 1库存 2途中 3维修 比如他要出库去别的项目部就是2 用来维修就是3 默认为1
     private String PartsID; ///配件编号 用户选择
     private String formProject;///当前项目部编号 无需填写
+    private String userID;
+    private String projectName;
+    private String outProject;
+    private String psName;
+    private String partsName;
+    private String partsModel;
+    private String FactoryName;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getOutProject() {
+        return outProject;
+    }
+
+    public void setOutProject(String outProject) {
+        this.outProject = outProject;
+    }
+
+    public String getPsName() {
+        return psName;
+    }
+
+    public void setPsName(String psName) {
+        this.psName = psName;
+    }
+
+    public String getPartsName() {
+        return partsName;
+    }
+
+    public void setPartsName(String partsName) {
+        this.partsName = partsName;
+    }
+
+    public String getPartsModel() {
+        return partsModel;
+    }
+
+    public void setPartsModel(String partsModel) {
+        this.partsModel = partsModel;
+    }
+
+    public String getFactoryName() {
+        return FactoryName;
+    }
+
+    public void setFactoryName(String factoryName) {
+        FactoryName = factoryName;
+    }
 
     public String getPoutID() {
         return poutID;

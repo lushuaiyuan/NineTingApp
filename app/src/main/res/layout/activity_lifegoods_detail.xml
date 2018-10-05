@@ -40,9 +40,10 @@
 
                     <TextView
                         android:id="@+id/tv_goodsName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp15"
+                        android:gravity="right"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp16" />
                 </LinearLayout>

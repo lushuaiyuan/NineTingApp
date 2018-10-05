@@ -151,7 +151,7 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
         setTitle("日用品");
         etSearch.setHint("请输入日用品名称");
         tvToolbarMenu.setVisibility(View.VISIBLE);
-        tvToolbarMenu.setText("记录");
+        tvToolbarMenu.setText("出库记录");
         tvToolbarMenu.setOnClickListener(this);
         smartRefreshLayout.setEnableLoadMore(true);
         smartRefreshLayout.setEnableRefresh(true);
@@ -161,28 +161,16 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, LifeGoodsOutRecordActivity.class));
+        Intent intent = new Intent(this, LifeGoodsOutRecordActivity.class);
+        intent.putExtra("lbID", "");
+        startActivity(intent);
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//        Intent intent1 = new Intent(this, LifeGoodsDetailActivity.class);
-//        startActivity();
-
         Intent intent = new Intent(this, LifeGoodsDetailActivity.class);
         intent.putExtra("LaoBao", lifeGoodEntities.get(position));
-//        intent.putExtra("lbID", lifeGoodEntities.get(position).getLbID());
-//        intent.putExtra("lbName", lifeGoodEntities.get(position).getLbName());
-//        intent.putExtra("lbNumber", lifeGoodEntities.get(position).getLaobaoNumber());
         startActivity(intent);
-
-//        if (tag == 1) {//日用品列表
-//
-//        } else if (tag == 2) {//采购
-//
-//        } else if (tag == 3) { //出库
-//
-//        }
     }
 
     @OnClick({R.id.iv_search})

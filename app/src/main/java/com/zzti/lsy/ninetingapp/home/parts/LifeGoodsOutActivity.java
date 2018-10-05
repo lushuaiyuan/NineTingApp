@@ -116,6 +116,7 @@ public class LifeGoodsOutActivity extends BaseActivity {
                 laobaoDelivery.setLdDate(tvOutTime.getText().toString());
                 laobaoDelivery.setLdNumber(etOutAmount.getText().toString());
                 laobaoDelivery.setStaffID(staffID);
+                laobaoDelivery.setStaffName(tvStaffName.getText().toString());
                 laobaoDelivery.setFromProject(spUtils.getString(SpUtils.PROJECTID, ""));
                 laobaoDelivery.setUserID(spUtils.getString(SpUtils.USERID, ""));
                 goodsLifeOut(laobaoDelivery);
@@ -164,6 +165,7 @@ public class LifeGoodsOutActivity extends BaseActivity {
                     finish();
                     Intent intent = new Intent(LifeGoodsOutActivity.this, SuccessActivity.class);
                     intent.putExtra("outTime", tvOutTime.getText().toString());
+                    intent.putExtra("lbID", lbID);
                     intent.putExtra("outAmount", etOutAmount.getText().toString());
                     intent.putExtra("goodsName", tvLbName.getText().toString());
                     intent.putExtra("staffName", tvStaffName.getText().toString());

@@ -42,7 +42,7 @@ import butterknife.OnClick;
  * author：anxin on 2018/8/8 16:18
  * 配件列表
  */
-public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
+public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
     @BindView(R.id.et_search)
     EditText etSearch;
     @BindView(R.id.refreshLayout)
@@ -53,7 +53,7 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
     private PartsListAdapter partsListAdapter;
     private int pageIndex = 1;//页码
     private String wherestr;//查询条件
-    private int tag;//1代表维修申请进来（获取配件名称）  2代表点击配件列表菜单进来  3配件入库  4配件出库
+    private int tag;//1代表维修申请进来（获取配件名称）  2代表点击配件列表菜单进来
 
     @Override
     public int getContentViewId() {
@@ -69,6 +69,9 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
 
     private void initView() {
         setTitle("配件列表");
+        tvToolbarMenu.setVisibility(View.VISIBLE);
+        tvToolbarMenu.setText("出库记录");
+        tvToolbarMenu.setOnClickListener(this);
         smartRefreshLayout.setEnableLoadMore(true);
         smartRefreshLayout.setEnableRefresh(true);
         //使上拉加载具有弹性效果：
@@ -170,20 +173,26 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
             intent.putExtra("partsNumber", partsNumber);
             setResult(2, intent);
             finish();
-        } else if (tag == 3) {//配件入库
-            Intent intent = new Intent(this, PartsInputActivity.class);
-            intent.putExtra("TAG", 2);
+        } else if (tag == 2) {//配件列表
+            Intent intent = new Intent(this, PartsDetailActivity.class);
             intent.putExtra("PartsInfo", partsInfoEntities.get(position));
             startActivity(intent);
-        } else if (tag == 4) {//配件出库
-            Intent intent = new Intent(this, PartsOutDetailActivity.class);
-            intent.putExtra("TAG", 2);
-            intent.putExtra("partsID", partsInfoEntities.get(position).getPartsID());
-            intent.putExtra("partsName", partsInfoEntities.get(position).getPartsName());
-            intent.putExtra("partsModel", partsInfoEntities.get(position).getPartsModel());
-            intent.putExtra("partsNumber", partsInfoEntities.get(position).getPartsNumber());
-            startActivity(intent);
         }
+//        else if (tag == 3) {//配件入库
+//            Intent intent = new Intent(this, PartsInputActivity.class);
+//            intent.putExtra("TAG", 2);
+//            intent.putExtra("PartsInfo", partsInfoEntities.get(position));
+//            startActivity(intent);
+//        }
+//        else if (tag == 4) {//配件出库
+//            Intent intent = new Intent(this, PartsOutDetailActivity.class);
+//            intent.putExtra("TAG", 2);
+//            intent.putExtra("partsID", partsInfoEntities.get(position).getPartsID());
+//            intent.putExtra("partsName", partsInfoEntities.get(position).getPartsName());
+//            intent.putExtra("partsModel", partsInfoEntities.get(position).getPartsModel());
+//            intent.putExtra("partsNumber", partsInfoEntities.get(position).getPartsNumber());
+//            startActivity(intent);
+//        }
 
     }
 
@@ -213,5 +222,11 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
         if (paramEventCenter.getEventCode() == C.EventCode.A && (Boolean) paramEventCenter.getData()) {
             finish();
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        //TODO 配件出库记录
+//        startActivity();
     }
 }

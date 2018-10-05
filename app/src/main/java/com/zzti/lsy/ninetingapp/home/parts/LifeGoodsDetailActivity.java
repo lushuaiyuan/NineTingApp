@@ -65,7 +65,9 @@ public class LifeGoodsDetailActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_outRecord:
-                startActivity(new Intent(this, LifeGoodsOutRecordActivity.class));
+                Intent intent2 = new Intent(this, LifeGoodsOutRecordActivity.class);
+                intent2.putExtra("lbID", laoBao.getLbID());
+                startActivity(intent2);
                 break;
         }
     }

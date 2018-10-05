@@ -27,9 +27,9 @@ public class StaffEntity {
      * userID : 5
      */
 
-    private int staffID;
+    private String staffID;
     private String staffName;
-    private int staffAge;
+    private String staffAge;
     private String staffPhoneNumber;
     private String staffCard;
     private String bankCardNumber;
@@ -37,14 +37,14 @@ public class StaffEntity {
     private String entryTime;
     private String departureTime;
     private String resume;
-    private int projectID;
-    private int jobID;
+    private String projectID;
+    private String jobID;
     private String licenseNumber;
     private String remark;
-    private int insuranceID;
+    private String insuranceID;
     private String IstartTime;
     private String IendTime;
-    private int userID;
+    private String userID;
     private String jobName;
 
     public String getJobName() {
@@ -55,11 +55,11 @@ public class StaffEntity {
         this.jobName = jobName;
     }
 
-    public int getStaffID() {
+    public String getStaffID() {
         return staffID;
     }
 
-    public void setStaffID(int staffID) {
+    public void setStaffID(String staffID) {
         this.staffID = staffID;
     }
 
@@ -71,11 +71,11 @@ public class StaffEntity {
         this.staffName = staffName;
     }
 
-    public int getStaffAge() {
+    public String getStaffAge() {
         return staffAge;
     }
 
-    public void setStaffAge(int staffAge) {
+    public void setStaffAge(String staffAge) {
         this.staffAge = staffAge;
     }
 
@@ -135,19 +135,19 @@ public class StaffEntity {
         this.resume = resume;
     }
 
-    public int getProjectID() {
+    public String getProjectID() {
         return projectID;
     }
 
-    public void setProjectID(int projectID) {
+    public void setProjectID(String projectID) {
         this.projectID = projectID;
     }
 
-    public int getJobID() {
+    public String getJobID() {
         return jobID;
     }
 
-    public void setJobID(int jobID) {
+    public void setJobID(String jobID) {
         this.jobID = jobID;
     }
 
@@ -167,11 +167,11 @@ public class StaffEntity {
         this.remark = remark;
     }
 
-    public int getInsuranceID() {
+    public String getInsuranceID() {
         return insuranceID;
     }
 
-    public void setInsuranceID(int insuranceID) {
+    public void setInsuranceID(String insuranceID) {
         this.insuranceID = insuranceID;
     }
 
@@ -191,11 +191,11 @@ public class StaffEntity {
         this.IendTime = IendTime;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 }

@@ -58,7 +58,9 @@ public class LifeGoodsOutDetailActivity extends BaseActivity {
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.btn_outRecord:
-                startActivity(new Intent(this, LifeGoodsOutRecordActivity.class));
+                Intent intent = new Intent(this, LifeGoodsOutRecordActivity.class);
+                intent.putExtra("lbID", UIUtils.getStr4Intent(this, "lbID"));
+                startActivity(intent);
                 break;
         }
     }
