@@ -163,10 +163,13 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
     }
 
     private void initView() {
-        tvToolbarMenu.setVisibility(View.VISIBLE);
-        tvToolbarMenu.setText("采购");
-        tvToolbarMenu.setOnClickListener(this);
         setTitle("日用品入库工单");
+        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {
+            tvToolbarMenu.setVisibility(View.VISIBLE);
+            tvToolbarMenu.setText("采购");
+            tvToolbarMenu.setOnClickListener(this);
+        }
+
     }
 
     @OnClick({R.id.iv_search, R.id.tv_status})

@@ -100,7 +100,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
                 }
             }
         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//2项目经理
-            if (laobaoPurchased.getStatus().equals(2)) {//待项目经理审批
+            if (laobaoPurchased.getStatus().equals("2")) {//待项目经理审批
                 tvStatus.setText("待审批");
                 tvOperatorTitle.setText("申请时间");
                 tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));

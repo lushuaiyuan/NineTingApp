@@ -31,6 +31,7 @@ import com.zzti.lsy.ninetingapp.home.adapter.PartsPurcheaseListAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -163,9 +164,11 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
 
     private void initView() {
         setTitle("配件入库工单");
-        tvToolbarMenu.setVisibility(View.VISIBLE);
-        tvToolbarMenu.setText("采购");
-        tvToolbarMenu.setOnClickListener(this);
+        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {
+            tvToolbarMenu.setVisibility(View.VISIBLE);
+            tvToolbarMenu.setText("采购");
+            tvToolbarMenu.setOnClickListener(this);
+        }
     }
 
     @OnClick({R.id.iv_search, R.id.tv_status})
