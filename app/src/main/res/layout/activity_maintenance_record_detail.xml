@@ -146,16 +146,16 @@
             </RelativeLayout>
 
             <!--<ScrollView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:fillViewport="true"-->
-                <!--android:scrollbars="none">-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:fillViewport="true"-->
+            <!--android:scrollbars="none">-->
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycleView_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleView_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <!--</ScrollView>-->
 
@@ -369,16 +369,33 @@
                     android:textSize="@dimen/dp15" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_operator"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp30"
-                android:background="@drawable/btn_solid_shape"
-                android:padding="@dimen/dp10"
-                android:text="撤销"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/dp15" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_operator1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp30"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_solid_shape"
+                    android:padding="@dimen/dp10"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/dp15" />
+
+                <Button
+                    android:id="@+id/btn_operator2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp30"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_empty_shape"
+                    android:padding="@dimen/dp10"
+                    android:textColor="@color/color_6bcfd7"
+                    android:textSize="@dimen/dp15" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

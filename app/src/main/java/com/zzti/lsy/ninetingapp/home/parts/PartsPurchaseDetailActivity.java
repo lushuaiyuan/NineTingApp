@@ -190,7 +190,6 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
                             approvalOrder(1);
                         }
-
                     }
 
                     @Override
@@ -222,7 +221,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
      *
      * @param status 0 总经理审批  1项目经理审批
      */
-    private void approvalOrder(int status) {
+    private void approvalOrder(final int status) {
         showDia();
         partsPurchased.setStatus(String.valueOf(status));
         HashMap<String, String> params = new HashMap<>();
@@ -239,7 +238,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     Intent intent = new Intent();
-                    intent.putExtra("status", 3);
+                    intent.putExtra("status", status);
                     setResult(2, intent);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {

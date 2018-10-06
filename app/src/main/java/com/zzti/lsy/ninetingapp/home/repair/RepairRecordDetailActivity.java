@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.home.repair;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
@@ -62,9 +64,10 @@ public class RepairRecordDetailActivity extends BaseActivity {
     TextView tvContent;//维修内容
     @BindView(R.id.tv_remark)
     TextView tvRemark;//维修原因
-    @BindView(R.id.btn_operator)
-    Button btnOperator;//操作按钮
-
+    @BindView(R.id.btn_operator1)
+    Button btnOperator1;//操作按钮
+    @BindView(R.id.btn_operator2)
+    Button btnOperator2;//操作按钮
     //照片
     private PhotoAdapter photoAdapter;
     private List<String> pics;
@@ -101,7 +104,7 @@ public class RepairRecordDetailActivity extends BaseActivity {
     private void getData() {
         cancelDia();
         HashMap<String, String> params = new HashMap<>();
-        params.put("repairId", repairID);
+        params.put("repairId", repairinfoEntity.getRepairID());
         OkHttpManager.postFormBody(Urls.POST_GETREPAIRPARTS, params, recycleViewDetail, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
@@ -132,15 +135,14 @@ public class RepairRecordDetailActivity extends BaseActivity {
         });
     }
 
-    private String repairID;
+    private RepairinfoEntity repairinfoEntity;
 
     private void initView() {
         setTitle("维修申请");
         //解决卡顿问题
         recycleViewDetail.setHasFixedSize(true);
         recycleViewDetail.setNestedScrollingEnabled(false);
-        RepairinfoEntity repairinfoEntity = (RepairinfoEntity) getIntent().getSerializableExtra("RepairinfoEntity");
-        repairID = repairinfoEntity.getRepairID();
+        repairinfoEntity = (RepairinfoEntity) getIntent().getSerializableExtra("RepairinfoEntity");
         recyclerViewPhoto.setLayoutManager(new GridLayoutManager(this, 4));
         String[] devicePics = repairinfoEntity.getDevPicture().split("\\|");
         pics = Arrays.asList(devicePics);
@@ -151,14 +153,62 @@ public class RepairRecordDetailActivity extends BaseActivity {
         recyclerViewPhoto.setAdapter(photoAdapter);
         setData(repairinfoEntity);
 
+        //（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过 -1拒绝）
         if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
-            if (tvState.getText().toString().equals("待审批")) {
-                btnOperator.setText("撤销");
+            if (repairinfoEntity.getStatus().equals("2")) {
+                tvState.setText("待审批");
+                btnOperator1.setVisibility(View.VISIBLE);
+                btnOperator2.setVisibility(View.VISIBLE);
+                btnOperator1.setText("通过");
+                btnOperator2.setText("拒绝");
+            } else {
+                btnOperator1.setVisibility(View.GONE);
+                btnOperator2.setVisibility(View.GONE);
+                if (repairinfoEntity.getStatus().equals("1")) {
+                    tvState.setText("项目经理已审批");
+                }
             }
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+            if (repairinfoEntity.getStatus().equals("1")) {
+                tvState.setText("项目经理已审批");
+                btnOperator2.setVisibility(View.VISIBLE);
+                btnOperator1.setVisibility(View.VISIBLE);
+                btnOperator1.setText("通过");
+                btnOperator2.setText("拒绝");
+            } else {
+                btnOperator2.setVisibility(View.GONE);
+                btnOperator1.setVisibility(View.GONE);
+                if (repairinfoEntity.getStatus().equals("2")) {
+                    tvState.setText("待审批");
+                }
+            }
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
+            if (repairinfoEntity.getStatus().equals("2")) {
+                tvState.setText("待审批");
+                btnOperator1.setVisibility(View.VISIBLE);
+                btnOperator2.setVisibility(View.GONE);
+                btnOperator1.setText("撤销");
+            } else {
+                btnOperator1.setVisibility(View.GONE);
+                btnOperator2.setVisibility(View.GONE);
+                if (repairinfoEntity.getStatus().equals("1")) {
+                    tvState.setText("项目经理已审批");
+                }
+            }
+        }
+
+        if (repairinfoEntity.getStatus().equals("-1")) {
+            tvState.setText("已拒绝");
+            btnOperator1.setVisibility(View.GONE);
+            btnOperator2.setVisibility(View.GONE);
+        } else if (repairinfoEntity.getStatus().equals("3")) {
+            tvState.setText("已撤销");
+            btnOperator1.setVisibility(View.GONE);
+            btnOperator2.setVisibility(View.GONE);
+        } else if (repairinfoEntity.getStatus().equals("0")) {
+            tvState.setText("总经理已审批");
+            btnOperator1.setVisibility(View.GONE);
+            btnOperator2.setVisibility(View.GONE);
         }
     }
 
@@ -167,16 +217,6 @@ public class RepairRecordDetailActivity extends BaseActivity {
         tvProjectAddress.setText(repairinfoEntity.getProjectName());
         tvConstructionAddress.setText("adfa");
         tvServiceType.setText(repairinfoEntity.getTypeName());
-        if (repairinfoEntity.getStatus().equals("0")) {
-            tvState.setText("总经理已审批");
-        } else if (repairinfoEntity.getStatus().equals("1")) {
-            tvState.setText("项目经理已审批");
-        } else if (repairinfoEntity.getStatus().equals("2")) {
-            tvState.setText("待审批");
-        } else if (repairinfoEntity.getStatus().equals("3")) {
-            tvState.setText("已撤销");
-            btnOperator.setVisibility(View.GONE);
-        }
         tvMaintenanceStartTime.setText(repairinfoEntity.getRepairBeginTime().split("T")[0]);
         tvMaintenanceEndTime.setText(repairinfoEntity.getRepairOverTime().split("T")[0]);
         tvReason.setText(repairinfoEntity.getCauseName());
@@ -184,28 +224,100 @@ public class RepairRecordDetailActivity extends BaseActivity {
         tvRemark.setText(repairinfoEntity.getRemark());
     }
 
-    @OnClick(R.id.btn_operator)
+    @OnClick({R.id.btn_operator1, R.id.btn_operator2})
     public void viewClick(View view) {
-        MAlertDialog.show(this, "提示", "是否撤销维修申请", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
-            @Override
-            public void onConfirmClick(String msg) {
-                showDia();
-                revocationData();
-            }
+        switch (view.getId()) {
+            case R.id.btn_operator1:
+                String content = "";
+                if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+                    content = "是否同意当前申请？";
+                } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+                    content = "是否同意当前申请？";
+                } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
+                    content = "是否撤销当前申请？";
+                }
+                MAlertDialog.show(this, "提示", content, false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirmClick(String msg) {
+                        showDia();
+                        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
+                            cancelOrder();
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+                            approvalOrder(0);
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+                            approvalOrder(1);
+                        }
+                    }
 
-            @Override
-            public void onCancelClick() {
+                    @Override
+                    public void onCancelClick() {
 
-            }
-        }, true);
+                    }
+                }, true);
+                break;
+            case R.id.btn_operator2:
+                MAlertDialog.show(this, "提示", "是否拒绝当前申请？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirmClick(String msg) {
+                        approvalOrder(-1);
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
+                    }
+                }, true);
+                break;
+        }
     }
 
     /**
-     * 撤销数据
+     * 审批订单
+     *
+     * @param status 0 总经理审批  1项目经理审批
      */
-    private void revocationData() {
+    private void approvalOrder(final int status) {
+        repairinfoEntity.setStatus(String.valueOf(status));
         HashMap<String, String> params = new HashMap<>();
-        params.put("repairID", repairID);
+        params.put("repairJson", new Gson().toJson(repairinfoEntity));
+        OkHttpManager.postFormBody(Urls.APPROVE_REPAIR, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    Intent intent = new Intent();
+                    intent.putExtra("status", status);
+                    setResult(2, intent);
+                    finish();
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
+    }
+
+
+    /**
+     * 撤销订单
+     */
+    private void cancelOrder() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("repairID", repairinfoEntity.getRepairID());
         OkHttpManager.postFormBody(Urls.POST_CANCELREPAIR, params, recycleViewDetail, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {

@@ -178,22 +178,6 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
             intent.putExtra("PartsInfo", partsInfoEntities.get(position));
             startActivity(intent);
         }
-//        else if (tag == 3) {//配件入库
-//            Intent intent = new Intent(this, PartsInputActivity.class);
-//            intent.putExtra("TAG", 2);
-//            intent.putExtra("PartsInfo", partsInfoEntities.get(position));
-//            startActivity(intent);
-//        }
-//        else if (tag == 4) {//配件出库
-//            Intent intent = new Intent(this, PartsOutDetailActivity.class);
-//            intent.putExtra("TAG", 2);
-//            intent.putExtra("partsID", partsInfoEntities.get(position).getPartsID());
-//            intent.putExtra("partsName", partsInfoEntities.get(position).getPartsName());
-//            intent.putExtra("partsModel", partsInfoEntities.get(position).getPartsModel());
-//            intent.putExtra("partsNumber", partsInfoEntities.get(position).getPartsNumber());
-//            startActivity(intent);
-//        }
-
     }
 
     @OnClick({R.id.iv_search})
@@ -227,6 +211,7 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
     @Override
     public void onClick(View view) {
         //TODO 配件出库记录
-//        startActivity();
+        Intent intent = new Intent(this, PartsOutRecordActivity.class);
+        startActivity(intent);
     }
 }

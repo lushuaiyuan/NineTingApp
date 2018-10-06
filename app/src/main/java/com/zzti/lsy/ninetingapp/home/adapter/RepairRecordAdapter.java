@@ -36,6 +36,9 @@ public class RepairRecordAdapter extends BaseQuickAdapter<RepairinfoEntity, Base
         } else if (item.getStatus().equals("3")) {
             helper.setText(R.id.tv_status, "已撤销");
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_bae886));
+        } else if (item.getStatus().equals("-1")) {
+            helper.setText(R.id.tv_status, "已拒绝");
+            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_red));
         }
     }
 

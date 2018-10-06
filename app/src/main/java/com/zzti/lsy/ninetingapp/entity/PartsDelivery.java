@@ -13,7 +13,7 @@ public class PartsDelivery {
     private String psID;///配件状态 1库存 2途中 3维修 比如他要出库去别的项目部就是2 用来维修就是3 默认为1
     private String PartsID; ///配件编号 用户选择
     private String formProject;///当前项目部编号 无需填写
-    private String userID;
+    private String userID;//经手人ID
     private String projectName;
     private String outProject;
     private String psName;

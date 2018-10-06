@@ -1,14 +1,21 @@
 package com.zzti.lsy.ninetingapp.home.pm;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeBxAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
@@ -17,7 +24,13 @@ import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
 import com.zzti.lsy.ninetingapp.home.repair.RepairRecordActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +42,12 @@ import butterknife.OnClick;
  * 项目经理 operator 4
  */
 public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.tv_lookMore_ns)
+    TextView tvLookMoreNs;
+    @BindView(R.id.tv_lookMore_bx)
+    TextView tvLookMoreBx;
     @BindView(R.id.recycleView_ns)
     RecyclerView mRecycleViewNs;
     @BindView(R.id.recycleView_bx)
@@ -46,6 +65,8 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     @Override
     protected void initView() {
         tvToolbarTitle.setText("首页");
+        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setEnableRefresh(true);
     }
 
     @Override
@@ -67,13 +88,91 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         homeBxAdapter = new HomeBxAdapter(homeHintEntitiesBx);
         mRecycleViewBx.setAdapter(homeBxAdapter);
         homeBxAdapter.setOnItemClickListener(this);
-
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getCarExpire();
+            }
+        });
         if (UIUtils.isNetworkConnected()) {
             showDia();
-//            getCarExpire();
+            getCarExpire();
         }
     }
+    /**
+     * 获取提醒实体类
+     */
+    private void getCarExpire() {
+        homeHintEntitiesBx.clear();
+        homeHintEntitiesNs.clear();
+        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, null, mRecycleViewBx, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
 
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                endRefresh(smartRefreshLayout);
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        if (jsonArray.length() > 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                NsBxEntity nsBxEntity = ParseUtils.parseJson(jsonArray.getString(i), NsBxEntity.class);
+                                if (nsBxEntity.getTypeName().equals("年审")) {
+                                    homeHintEntitiesNs.add(nsBxEntity);
+                                } else if (nsBxEntity.getTypeName().equals("保险")) {
+                                    homeHintEntitiesBx.add(nsBxEntity);
+                                }
+                            }
+                            if (homeHintEntitiesNs.size() == 0) {
+                                tvLookMoreNs.setText("暂无数据");
+                                tvLookMoreNs.setEnabled(false);
+                            } else {
+                                tvLookMoreNs.setText("查看更多");
+                                tvLookMoreNs.setEnabled(true);
+                                if (homeHintEntitiesNs.size() > 5) {
+                                    homeHintEntitiesNs.subList(0, 4);
+                                }
+                            }
+                            if (homeHintEntitiesBx.size() == 0) {
+                                tvLookMoreBx.setText("暂无数据");
+                                tvLookMoreBx.setEnabled(false);
+                            } else {
+                                tvLookMoreBx.setText("查看更多");
+                                tvLookMoreBx.setEnabled(true);
+                                if (homeHintEntitiesBx.size() > 5) {
+                                    homeHintEntitiesBx.subList(0, 4);
+                                }
+                            }
+                        } else {
+                            tvLookMoreNs.setVisibility(View.GONE);
+                            tvLookMoreBx.setVisibility(View.GONE);
+                            UIUtils.showT("暂无保险年审数据");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+                homeBxAdapter.notifyDataSetChanged();
+                homeNsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+                endRefresh(smartRefreshLayout);
+            }
+        });
+    }
     public static Fragment newInstance() {
         PMManageFragment fragment = new PMManageFragment();
         return fragment;
@@ -117,6 +216,11 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(mActivity, DeviceDetailActivity.class);
+        if (adapter == homeBxAdapter) {
+            intent.putExtra("carNumber", homeHintEntitiesBx.get(position).getPlateNumber());
+        } else if (adapter == homeNsAdapter) {
+            intent.putExtra("carNumber", homeHintEntitiesNs.get(position).getPlateNumber());
+        }
         intent.putExtra("TAG", 1);
         startActivity(intent);
     }

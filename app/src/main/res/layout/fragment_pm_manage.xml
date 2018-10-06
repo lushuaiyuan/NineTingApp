@@ -8,208 +8,214 @@
 
     <include layout="@layout/view_toolbar" />
 
-    <ScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="false"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:padding="@dimen/dp16"
-                android:text="工作台"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp18" />
+            android:fillViewport="false"
+            android:scrollbars="none">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16">
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu1"
-                    style="@style/home_menubg"
-                    android:background="@drawable/home_menu1_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu6"
-                        android:text="设备列表" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu2"
-                    style="@style/home_menubg"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:background="@drawable/home_menu2_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu6"
-                        android:text="配件列表" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16"
-                android:paddingTop="@dimen/dp10">
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu3"
-                    style="@style/home_menubg"
-                    android:background="@drawable/home_menu5_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu10"
-                        android:text="采购审批" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu4"
-                    style="@style/home_menubg"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:background="@drawable/home_menu7_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu10"
-                        android:text="维修审批" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/dp16"
-                android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16"
-                android:paddingTop="@dimen/dp10">
-
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu5"
-                    style="@style/home_menubg"
-                    android:background="@drawable/home_menu4_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu2"
-                        android:text="生产统计" />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/rl_menu6"
-                    style="@style/home_menubg"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:background="@drawable/home_menu8_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu2"
-                        android:text="维修统计" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_statistics"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp16"
-                        android:layout_weight="1"
-                        android:text="年审提醒"
-                        android:textColor="@color/color_666666"
-                        android:textSize="@dimen/dp18" />
-
-                    <TextView
-                        android:id="@+id/tv_lookMore_ns"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/dp16"
-                        android:text="查看更多"
-                        android:textColor="@color/color_999999"
-                        android:textSize="@dimen/dp12" />
-                </LinearLayout>
-
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycleView_ns"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:paddingLeft="@dimen/dp16"
-                    android:paddingRight="@dimen/dp6" />
-
+                    android:background="@color/color_white"
+                    android:padding="@dimen/dp16"
+                    android:text="工作台"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp18" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:background="@color/color_white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp16"
+                    android:paddingRight="@dimen/dp16">
 
+                    <RelativeLayout
+                        android:id="@+id/rl_menu1"
+                        style="@style/home_menubg"
+                        android:background="@drawable/home_menu1_selector">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp16"
-                        android:layout_weight="1"
-                        android:text="保险提醒"
-                        android:textColor="@color/color_666666"
-                        android:textSize="@dimen/dp18" />
+                        <TextView
+                            style="@style/home_menu"
+                            android:drawableLeft="@mipmap/icon_menu6"
+                            android:text="设备列表" />
+                    </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/tv_lookMore_bx"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/dp16"
-                        android:text="查看更多"
-                        android:textColor="@color/color_999999"
-                        android:textSize="@dimen/dp12" />
+                    <RelativeLayout
+                        android:id="@+id/rl_menu2"
+                        style="@style/home_menubg"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:background="@drawable/home_menu2_selector">
+
+                        <TextView
+                            style="@style/home_menu"
+                            android:drawableLeft="@mipmap/icon_menu6"
+                            android:text="配件列表" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycleView_bx"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp20"
-                    android:clipToPadding="false"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal"
                     android:paddingLeft="@dimen/dp16"
-                    android:paddingRight="@dimen/dp6" />
+                    android:paddingRight="@dimen/dp16"
+                    android:paddingTop="@dimen/dp10">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_menu3"
+                        style="@style/home_menubg"
+                        android:background="@drawable/home_menu5_selector">
+
+                        <TextView
+                            style="@style/home_menu"
+                            android:drawableLeft="@mipmap/icon_menu10"
+                            android:text="采购审批" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_menu4"
+                        style="@style/home_menubg"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:background="@drawable/home_menu7_selector">
+
+                        <TextView
+                            style="@style/home_menu"
+                            android:drawableLeft="@mipmap/icon_menu10"
+                            android:text="维修审批" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dp16"
+                    android:paddingLeft="@dimen/dp16"
+                    android:paddingRight="@dimen/dp16"
+                    android:paddingTop="@dimen/dp10">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_menu5"
+                        style="@style/home_menubg"
+                        android:background="@drawable/home_menu4_selector">
+
+                        <TextView
+                            style="@style/home_menu"
+                            android:drawableLeft="@mipmap/icon_menu2"
+                            android:text="生产统计" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_menu6"
+                        style="@style/home_menubg"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:background="@drawable/home_menu8_selector">
+
+                        <TextView
+                            style="@style/home_menu"
+                            android:drawableLeft="@mipmap/icon_menu2"
+                            android:text="维修统计" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_statistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp16"
+                            android:layout_weight="1"
+                            android:text="年审提醒"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/dp18" />
+
+                        <TextView
+                            android:id="@+id/tv_lookMore_ns"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp16"
+                            android:text="查看更多"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/dp12" />
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycleView_ns"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingLeft="@dimen/dp16"
+                        android:paddingRight="@dimen/dp6" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp16"
+                            android:layout_weight="1"
+                            android:text="保险提醒"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/dp18" />
+
+                        <TextView
+                            android:id="@+id/tv_lookMore_bx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp16"
+                            android:text="查看更多"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/dp12" />
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycleView_bx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp20"
+                        android:clipToPadding="false"
+                        android:paddingLeft="@dimen/dp16"
+                        android:paddingRight="@dimen/dp6" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
+        </ScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

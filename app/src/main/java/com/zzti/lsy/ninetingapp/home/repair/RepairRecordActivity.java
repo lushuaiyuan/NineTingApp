@@ -410,8 +410,11 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 2) {
-            repairinfoEntities.get(selectPosition).setStatus("3");//设置状态为已撤销
-            repairRecordAdapter.notifyDataSetChanged();
+            if (data != null) {
+                int status = data.getIntExtra("status", -2);
+                repairinfoEntities.get(selectPosition).setStatus(String.valueOf(status));
+                repairRecordAdapter.notifyItemChanged(selectPosition);
+            }
         }
     }
 }
