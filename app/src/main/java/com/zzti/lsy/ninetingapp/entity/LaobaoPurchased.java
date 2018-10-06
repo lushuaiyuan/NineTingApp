@@ -12,7 +12,7 @@ public class LaobaoPurchased implements Serializable {
     private String number;/// 数量 用户填写
     private String userID;///经手人ID 当前用户
     private String lbID;///劳保品编号
-    private String toProject;///项目部编号 无需填写
+    private String projectID;//项目部编号 无需填写
     private String status; //申请单状态（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过 -1为拒绝）
     private String opinion;//审批意见
     private String applyTime;//申请时间
@@ -117,11 +117,11 @@ public class LaobaoPurchased implements Serializable {
         this.lbID = lbID;
     }
 
-    public String getToProject() {
-        return toProject;
+    public String getProjectID() {
+        return projectID;
     }
 
-    public void setToProject(String toProject) {
-        this.toProject = toProject;
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
     }
 }

@@ -222,6 +222,7 @@ public class PartsOutDetailActivity extends BaseActivity implements PopupWindow.
                 partsDelivery.setPdCause(etReason.getText().toString());
                 partsDelivery.setPdDate(tvOutTime.getText().toString());
                 partsDelivery.setPdNumber(etAmount.getText().toString());
+                partsDelivery.setUserID(spUtils.getString(SpUtils.USERID, ""));
                 partsDelivery.setProjectID(projectID);
                 outParts(partsDelivery);
                 break;

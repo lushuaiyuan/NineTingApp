@@ -66,6 +66,7 @@
                 android:id="@+id/et_reason"
                 style="@style/MyEditText"
                 android:gravity="left|top"
+                android:hint="请填写用于XX车辆的维修"
                 android:minHeight="@dimen/dp100" />
 
 

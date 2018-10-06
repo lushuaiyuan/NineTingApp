@@ -17,6 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -261,6 +262,7 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_reason"
                 android:layout_width="wrap_content"
@@ -276,7 +278,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp16"
-                android:background="@drawable/input_shape"
+                android:background="@drawable/circular_white_shape"
                 android:gravity="left|top"
                 android:hint="请输入原因"
                 android:minHeight="@dimen/dp50"
@@ -284,6 +286,7 @@
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/dp15"
                 android:visibility="gone" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

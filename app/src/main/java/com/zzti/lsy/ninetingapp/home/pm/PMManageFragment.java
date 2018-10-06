@@ -183,9 +183,9 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     }
 
     @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.rl_menu7, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
-    public void viewClick(View view) {//设备列表
+    public void viewClick(View view) {
         switch (view.getId()) {
-            case R.id.rl_menu1:
+            case R.id.rl_menu1://设备列表
                 startActivity(new Intent(mActivity, DeviceListActivity.class));
                 break;
             case R.id.rl_menu2://配件列表

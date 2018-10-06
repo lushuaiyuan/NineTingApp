@@ -118,7 +118,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         conditionEntity3.setName("已撤销");
         conditionEntity3.setId("3");
         ConditionEntity conditionEntity4 = new ConditionEntity();
-        conditionEntity4.setName("拒绝");
+        conditionEntity4.setName("已拒绝");
         conditionEntity4.setId("-1");
 
         conditions.add(conditionEntity0);
@@ -207,6 +207,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        wherestr = "";
         tvStatus.setText(conditions.get(i).getName());
         status = conditions.get(i).getId();
         wherestr += " and status=" + status;

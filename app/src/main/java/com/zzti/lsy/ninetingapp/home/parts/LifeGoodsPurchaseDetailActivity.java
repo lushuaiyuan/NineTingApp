@@ -58,7 +58,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
 
     @Override
     public int getContentViewId() {
-        return R.layout.activity_purchase_detail;
+        return R.layout.activity_lifegoods_purchase_detail;
     }
 
     @Override
