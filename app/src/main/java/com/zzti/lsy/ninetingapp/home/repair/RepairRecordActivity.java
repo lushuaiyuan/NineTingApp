@@ -351,12 +351,15 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         ConditionEntity conditionEntity3 = new ConditionEntity();
         conditionEntity3.setName("已撤销");
         conditionEntity3.setId("3");
-
+        ConditionEntity conditionEntity4 = new ConditionEntity();
+        conditionEntity3.setName("已拒绝");
+        conditionEntity3.setId("-1");
 
         conditions.add(conditionEntity0);
         conditions.add(conditionEntity1);
         conditions.add(conditionEntity2);
         conditions.add(conditionEntity3);
+        conditions.add(conditionEntity4);
 
         conditionAdapter = new ConditionAdapter(conditions);
         conditionAdapter.setTag(0);

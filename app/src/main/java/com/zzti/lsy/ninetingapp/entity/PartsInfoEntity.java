@@ -16,9 +16,15 @@ public class PartsInfoEntity implements Serializable {
     private String projectID;//项目部ID
     private String projectName;//项目部名称
     private String purchasedPrice;//价格
+    private String status;
 
+    public String getStatus() {
+        return status;
+    }
 
-
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getFactoryName() {
         return FactoryName;

@@ -11,6 +11,25 @@ public class LaoBao implements Serializable {
     private String price; ///劳保品单价 用户填写
     private String laobaoNumber;/// 劳保数量 返回值
     private String projectName; /// 项目部名称 返回值
+    private String status;
+
+    public int getLpID() {
+        return lpID;
+    }
+
+    public void setLpID(int lpID) {
+        this.lpID = lpID;
+    }
+
+    public String getStatus() {
+
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     //入库工单字段
     private int lpID;
 

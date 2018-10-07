@@ -62,6 +62,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick({R.id.iv_showPwd, R.id.btn_login})
     public void viewClick(View view) {
+        hideSoftInput(etPwd);
         switch (view.getId()) {
             case R.id.iv_showPwd:
                 if ((Integer) ivShowPwd.getTag() == 0) {//显示成明文
