@@ -66,16 +66,18 @@ public class PartsDetailActivity extends BaseActivity {
 
                 break;
             case R.id.btn_out://出库
-                Intent intent = new Intent(this, PartsOutDetailActivity.class);
-                intent.putExtra("partsID", partsInfoEntity.getPartsID());
-                intent.putExtra("partsName", partsInfoEntity.getPartsName());
-                intent.putExtra("partsModel", partsInfoEntity.getPartsModel());
-                intent.putExtra("partsNumber", partsInfoEntity.getPartsNumber());
-                startActivity(intent);
+                Intent intent2 = new Intent(this, PartsOutDetailActivity.class);
+                intent2.putExtra("partsID", partsInfoEntity.getPartsID());
+                intent2.putExtra("partsName", partsInfoEntity.getPartsName());
+                intent2.putExtra("partsModel", partsInfoEntity.getPartsModel());
+                intent2.putExtra("partsNumber", partsInfoEntity.getPartsNumber());
+                startActivity(intent2);
 
                 break;
             case R.id.btn_outRecord://出库记录
-
+                Intent intent3 = new Intent(this, PartsOutRecordActivity.class);
+                intent3.putExtra("PartsID", partsInfoEntity.getPartsID());
+                startActivity(intent3);
                 break;
         }
     }

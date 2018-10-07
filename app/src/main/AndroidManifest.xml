@@ -138,9 +138,13 @@
         <activity android:name=".home.parts.PartsPurchaseDetailActivity" />
         <!--配件在库详情-->
         <activity android:name=".home.parts.PartsInWayDetailActivity" />
+        <!--配件出库记录列表-->
+        <activity android:name=".home.parts.PartsOutRecordActivity" />
 
         <!--配件出库列表-->
         <activity android:name=".home.parts.PartsOutListActivity" />
+
+
 
         <!--配件出库详情-->
         <activity
