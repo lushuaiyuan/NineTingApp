@@ -20,6 +20,15 @@ public class PartsDelivery {
     private String partsName;
     private String partsModel;
     private String FactoryName;
+    private String purpose;//用途
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
 
     public String getUserID() {
         return userID;

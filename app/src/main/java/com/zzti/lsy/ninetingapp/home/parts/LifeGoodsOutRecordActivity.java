@@ -126,7 +126,6 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
                     UIUtils.showT(msgInfo.getMsg());
                 }
                 lifeGoodsOutRecordAdapter.notifyDataSetChanged();
-
             }
 
             @Override

@@ -210,8 +210,8 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
 
     @Override
     public void onClick(View view) {
-        //TODO 配件出库记录
         Intent intent = new Intent(this, PartsOutRecordActivity.class);
+        intent.putExtra("PartsID", "");
         startActivity(intent);
     }
 }
