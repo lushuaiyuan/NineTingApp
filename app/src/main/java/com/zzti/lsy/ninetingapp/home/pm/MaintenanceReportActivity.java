@@ -58,16 +58,6 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
 
     private void initData() {
         List<CarInfoEntity> deviceEntities = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            CarInfoEntity carInfoEntity = new CarInfoEntity();
-            carInfoEntity.setPlateNumber("豫A5555" + i);
-//            carInfoEntity.setAddress("存放地点" + i);
-//            carInfoEntity.setCarType("罐车" + i);
-//            carInfoEntity.setReason("原因" + i);
-//            carInfoEntity.setParts("配件" + i);
-            deviceEntities.add(carInfoEntity);
-        }
-
         //普通列
         Column<String> column1 = new Column<>("车牌号", "carNumber");
         column1.setFixed(true);

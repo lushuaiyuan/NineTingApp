@@ -105,7 +105,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     private List<CarInfoEntity> carInfoEntities;
     private int flag = -1; //-1默认进入到详情界面 1代表获取车牌号 2代表进入单车统计界面 3代表选中
     private String carNumber;//对比的基准车牌号
-    private int tag;//条件中的item
+    private int type;//查询条件
     private String wherestr = "";//查询条件
     private String status;//状态id
     private String CarTypeID;//类型id
@@ -280,6 +280,13 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             CarInfoEntity carInfoEntity = ParseUtils.parseJson(jsonArray.getString(i), CarInfoEntity.class);
+                            if (flag == 3) {
+                                if (carInfoEntity.getPlateNumber().equals(carNumber)) {
+                                    carInfoEntity.setCheck(true);
+                                } else {
+                                    carInfoEntity.setCheck(false);
+                                }
+                            }
                             carInfoEntities.add(carInfoEntity);
                         }
                     } catch (JSONException e) {
@@ -321,13 +328,13 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         int tag = UIUtils.getInt4Intent(this, "TAG");
         if (tag == 1) {
             tvToolbarMenu.setVisibility(View.GONE);
-            rlSearchCarNumber.setVisibility(View.GONE);
-            llCondition.setVisibility(View.GONE);
+//            rlSearchCarNumber.setVisibility(View.GONE);
+//            llCondition.setVisibility(View.GONE);
         } else {
             tvToolbarMenu.setVisibility(View.VISIBLE);
             tvToolbarMenu.setText("表格");
-            rlSearchCarNumber.setVisibility(View.VISIBLE);
-            llCondition.setVisibility(View.VISIBLE);
+//            rlSearchCarNumber.setVisibility(View.VISIBLE);
+//            llCondition.setVisibility(View.VISIBLE);
         }
         flag = UIUtils.getInt4Intent(this, "FLAG");
         carNumber = UIUtils.getStr4Intent(this, "carNumber");
@@ -355,7 +362,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             finish();
         } else if (flag == 2) {
             Intent intent = new Intent(this, OneCarMaintenanceStatisticActivity.class);
-            intent.putExtra("carNumber", carInfoEntities.get(position).getPlateNumber());
+            intent.putExtra("carInfoEntity", carInfoEntities.get(position));
             startActivity(intent);
         } else if (flag == 3) {
             if (!carInfoEntities.get(position).getPlateNumber().equals(carNumber)) {
@@ -405,7 +412,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                 getCarList();
                 break;
             case R.id.rl_project://选择项目部
-                tag = 3;
+                type = 3;
                 if (projectEntities.size() > 0) {
                     if (projectEntities.size() >= 5) {
                         //动态设置listView的高度
@@ -423,11 +430,11 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                 }
                 break;
             case R.id.rl_carStatus:
-                tag = 1;
+                type = 1;
                 showCarStatus();
                 break;
             case R.id.rl_carType:
-                tag = 2;
+                type = 2;
                 if (carTypeEntities.size() > 0) {
                     if (carTypeEntities.size() >= 5) {
                         //动态设置listView的高度
@@ -545,7 +552,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wherestr = "";
-        if (tag == 1) {
+        if (type == 1) {
             tvCarStatus.setText(carStatusEntities.get(i).getName());
             status = carStatusEntities.get(i).getId();
             wherestr += " and status=" + status;
@@ -556,7 +563,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                 wherestr += " and projectID=" + projectID;
             }
             popupWindowCarStatus.dismiss();
-        } else if (tag == 2) {
+        } else if (type == 2) {
             tvCarType.setText(carTypeEntities.get(i).getVehicleTypeName());
             CarTypeID = carTypeEntities.get(i).getVehicleTypeID();
             wherestr += " and CarTypeID=" + carTypeEntities.get(i).getVehicleTypeID();
@@ -567,7 +574,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                 wherestr += " and projectID=" + projectID;
             }
             popupWindowCarType.dismiss();
-        } else if (tag == 3) {
+        } else if (type == 3) {
             tvProject.setText(projectEntities.get(i).getProjectName());
             projectID = projectEntities.get(i).getProjectID();
             wherestr += " and projectID=" + projectEntities.get(i).getProjectID();

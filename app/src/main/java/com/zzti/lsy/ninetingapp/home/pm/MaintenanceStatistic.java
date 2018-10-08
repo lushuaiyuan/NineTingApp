@@ -46,7 +46,6 @@ public class MaintenanceStatistic extends BaseActivity {
     protected void initAllMembersView(Bundle savedInstanceState) {
         initView();
         intData();
-
     }
 
     private void intData() {

@@ -9,8 +9,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/dp10">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -247,36 +250,32 @@
                 android:textSize="@dimen/dp15"
                 android:visibility="gone" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp30">
-
-                <Button
-                    android:id="@+id/btn_operator1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp20"
-                    android:layout_marginRight="@dimen/dp20"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_solid_shape"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dp15" />
-
-                <Button
-                    android:id="@+id/btn_operator2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp20"
-                    android:layout_marginRight="@dimen/dp20"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_empty_shape"
-                    android:textColor="@color/color_6bcfd7"
-                    android:textSize="@dimen/dp15" />
-            </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
+
+    <View style="@style/MyView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/btn_operator2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp45"
+            android:layout_weight="1"
+            android:background="@null"
+            android:textColor="@color/color_6bcfd7"
+            android:textSize="@dimen/dp15" />
+
+        <Button
+            android:id="@+id/btn_operator1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp45"
+            android:layout_weight="1"
+            android:background="@color/color_6bcfd7"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/dp15" />
+    </LinearLayout>
 </LinearLayout>
