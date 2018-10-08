@@ -112,7 +112,7 @@ public class PartsOutRecordActivity extends BaseActivity {
                             PartsDelivery partsDelivery = ParseUtils.parseJson(jsonArray.getString(i), PartsDelivery.class);
                             String pdDate = partsDelivery.getPdDate().split("T")[0];
                             partsDelivery.setPdDate(pdDate);
-                            if (partsDelivery.getFormProject().equals(partsDelivery.getOutProject())) {
+                            if (partsDelivery.getFormProject().equals(partsDelivery.getProjectID())) {//出库项目部ID和目的地项目部ID
                                 partsDelivery.setPurpose("维修");
                             } else {
                                 partsDelivery.setPurpose("调配");
@@ -144,12 +144,12 @@ public class PartsOutRecordActivity extends BaseActivity {
         Column<String> column1 = new Column<>("配件名称", "partsName");
         column1.setFixed(true);
         Column<String> column2 = new Column<>("配件型号", "partsModel");
-        Column<String> column3 = new Column<>("出库项目部", "vehicleTypeName");
-        Column<String> column4 = new Column<>("目的项目部", "AVEDate");
-        Column<String> column5 = new Column<>("经手人", "IPDate");
-        Column<String> column6 = new Column<>("出库时间", "VIN");
-        Column<String> column7 = new Column<>("出库数量", "engineNumber");
-        Column<String> column8 = new Column<>("用途", "way");
+        Column<String> column3 = new Column<>("出库项目部", "outProject");
+        Column<String> column4 = new Column<>("目的项目部", "projectName");
+        Column<String> column5 = new Column<>("经手人", "userID");
+        Column<String> column6 = new Column<>("出库时间", "pdDate");
+        Column<String> column7 = new Column<>("出库数量", "pdNumber");
+        Column<String> column8 = new Column<>("用途", "purpose");
         //表格数据 datas是需要填充的数据
         TableData<PartsDelivery> tableData = new TableData<>("配件出库记录", partsDeliveries, column1, column2, column3, column4, column5, column6, column7, column8);
         //table.setZoom(true,3);是否缩放

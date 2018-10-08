@@ -21,6 +21,15 @@ public class PartsDelivery {
     private String partsModel;
     private String FactoryName;
     private String purpose;//用途
+    private String userName;//经手人名称
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getPurpose() {
         return purpose;
