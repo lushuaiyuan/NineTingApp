@@ -6,45 +6,57 @@
 
     <include layout="@layout/view_toolbar" />
 
-    <RelativeLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp10"
-        android:layout_marginLeft="@dimen/dp15"
-        android:layout_marginRight="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp10"
-        android:background="@drawable/input_shape"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:layout_height="match_parent">
 
-
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="@dimen/dp20"
-            android:layout_height="@dimen/dp20"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp10"
-            android:background="@mipmap/iv_search" />
-
-        <EditText
-            android:id="@+id/et_search"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp40"
-            android:layout_marginRight="@dimen/dp40"
-            android:background="@null"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:hint="请输入车牌号"
-            android:maxLines="1"
-            android:padding="@dimen/dp8"
-            android:textSize="@dimen/dp13" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginRight="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/input_shape"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
-    <com.bin.david.form.core.SmartTable
-        android:id="@+id/table"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:background="@mipmap/iv_search" />
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp40"
+                    android:layout_marginRight="@dimen/dp40"
+                    android:background="@null"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:hint="请输入车牌号或者维修内容"
+                    android:maxLines="1"
+                    android:padding="@dimen/dp8"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+            <com.bin.david.form.core.SmartTable
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

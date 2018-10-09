@@ -138,7 +138,7 @@ public class RepairRecordDetailActivity extends BaseActivity {
     private RepairinfoEntity repairinfoEntity;
 
     private void initView() {
-        setTitle("维修申请");
+        setTitle("维修详情");
         //解决卡顿问题
         recycleViewDetail.setHasFixedSize(true);
         recycleViewDetail.setNestedScrollingEnabled(false);
