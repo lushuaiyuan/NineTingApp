@@ -88,6 +88,7 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
                 hideSoftInput(etSearch);
                 ivToolbarMenu.setVisibility(View.VISIBLE);
                 tvToolbarMenu.setVisibility(View.GONE);
+                etSearch.setText("");
                 whereStr = "";
                 repairID = "";
                 getRecord();
@@ -104,7 +105,7 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
         repairinfoEntities.clear();
         whereStr = "status = 0";
         if (!StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
-            whereStr += " and (repairContent like \'" + etSearch.getText().toString() + "\' or plateNumber like \'" + etSearch.getText().toString() + "\')";
+            whereStr += " and (repairContent like \'%" + etSearch.getText().toString() + "%\' or plateNumber like \'" + etSearch.getText().toString() + "%\')";
         }
         if (!StringUtil.isNullOrEmpty(repairID)) {
             whereStr += " and repairID like \'" + repairID + "%\'";
@@ -240,6 +241,7 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
 
     @OnClick(R.id.iv_search)
     public void viewClick(View view) {
+        hideSoftInput(etSearch);
         switch (view.getId()) {
             case R.id.iv_search:
                 if (StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
