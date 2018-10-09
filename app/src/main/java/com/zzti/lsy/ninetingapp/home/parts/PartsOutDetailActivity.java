@@ -252,7 +252,7 @@ public class PartsOutDetailActivity extends BaseActivity implements PopupWindow.
     private void outParts(PartsDelivery partsDelivery) {
         HashMap<String, String> params = new HashMap<>();
         params.put("partOutJosn", new Gson().toJson(partsDelivery));
-        OkHttpManager.postFormBody(Urls.POST_PARTSOUT, params, tvOutAddress, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.PARTS_PARTSOUT, params, tvOutAddress, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

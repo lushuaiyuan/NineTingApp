@@ -159,7 +159,7 @@ public class LifeGoodsInActivity extends BaseActivity {
         HashMap<String, String> params = new HashMap<>();
         params.put("LaoBaoJosn", new Gson().toJson(laoBao));
         params.put("StorageJson", new Gson().toJson(laobaoPurchased));
-        OkHttpManager.postFormBody(Urls.POST_LAOSTORAGE, params, tvMoneyTitle, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.PARTS_LAOSTORAGE, params, tvMoneyTitle, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

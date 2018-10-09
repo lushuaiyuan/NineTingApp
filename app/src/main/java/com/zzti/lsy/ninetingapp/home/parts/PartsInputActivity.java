@@ -184,7 +184,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
      * 获取配件的生产厂家
      */
     private void getPartsFactory() {
-        OkHttpManager.postFormBody(Urls.POST_GETPARTSFACTORY, null, tvFactory, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.PARTS_GETPARTSFACTORY, null, tvFactory, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -342,7 +342,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
             params.put("partsJosn", new Gson().toJson(partsInfoEntity));
         }
         params.put("StorageJson", new Gson().toJson(partsPurchased));
-        OkHttpManager.postFormBody(Urls.POST_PARTSSTORAGE, params, tvFactory, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.PARTS_PARTSSTORAGE, params, tvFactory, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

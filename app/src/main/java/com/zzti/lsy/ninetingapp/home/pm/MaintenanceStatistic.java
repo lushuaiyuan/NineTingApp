@@ -9,12 +9,23 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.entity.RepairCoutEntity;
+import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
+import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ChartUtils;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,14 +37,10 @@ import butterknife.OnClick;
 public class MaintenanceStatistic extends BaseActivity {
     @BindView(R.id.tv_toolbarTitle)
     TextView tvTitle;
-    @BindView(R.id.tv_monthMaintenance_RecordAmount)
-    TextView tvMonthMaintenanceRecordAmount;
-    @BindView(R.id.tv_monthState)
-    TextView tvMonthState;
-    @BindView(R.id.tv_quarterMaintenance_RecordAmount)
-    TextView tvQuarterMaintenanceRecordAmount;
-    @BindView(R.id.tv_quarterState)
-    TextView tvQuarterState;
+    @BindView(R.id.tv_repairAmount)
+    TextView tvRepairAmount;
+    @BindView(R.id.tv_repairMoney)
+    TextView tvRepairMoney;
     @BindView(R.id.chart)
     LineChart chart;
 
@@ -49,16 +56,58 @@ public class MaintenanceStatistic extends BaseActivity {
     }
 
     private void intData() {
-        ChartUtils.initChart(chart);
-        ChartUtils.notifyDataSetChanged(chart, getData(), ChartUtils.monthValue);
+        showDia();
+        getRepaircount();
     }
 
-    private List<Entry> getData() {
+    private void getRepaircount() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("plateNumber", "");
+        OkHttpManager.postFormBody(Urls.REPAIR_GETREPAIRCOUNT, params, tvRepairAmount, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    tvRepairAmount.setText(msgInfo.getMsg());
+                    List<RepairCoutEntity.RepairStatisticInfo> repairStatisticInfos = new ArrayList<>();
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData().toString());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            RepairCoutEntity.RepairStatisticInfo repairStatisticInfo = ParseUtils.parseJson(jsonArray.getString(i), RepairCoutEntity.RepairStatisticInfo.class);
+                            repairStatisticInfos.add(repairStatisticInfo);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    ChartUtils.initChart(chart);
+                    ChartUtils.notifyDataSetChanged(chart, getData(repairStatisticInfos), ChartUtils.monthValue);
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
+    }
+
+    private List<Entry> getData(List<RepairCoutEntity.RepairStatisticInfo> repairStatisticInfos) {
         List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < DateUtil.getCurrentDay() - 1; i++) {
+        for (int i = 0; i < repairStatisticInfos.size(); i++) {
             Entry entry = new Entry();
-            entry.setX(i);
-            entry.setY(15 + i);
+            entry.setX(Integer.parseInt(repairStatisticInfos.get(i).getTime().split("-")[1]));
+            entry.setY(Float.parseFloat(repairStatisticInfos.get(i).getMoney()));
             entries.add(entry);
         }
         return entries;
@@ -69,7 +118,7 @@ public class MaintenanceStatistic extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_toolbarBack, R.id.tv_lookOneCar_maintenanceRecord, R.id.tv_toolbarMenu, R.id.ll_monthMaintenance_Record, R.id.ll_quarterMaintenance_Record})
+    @OnClick({R.id.iv_toolbarBack, R.id.tv_lookOneCar_maintenanceRecord, R.id.tv_toolbarMenu})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.iv_toolbarBack:
@@ -84,13 +133,6 @@ public class MaintenanceStatistic extends BaseActivity {
             case R.id.tv_toolbarMenu://查看报表
                 startActivity(new Intent(this, MaintenanceReportActivity.class));
                 break;
-            case R.id.ll_monthMaintenance_Record://查看本月维修记录
-                UIUtils.showT("查看本月维修记录");
-                break;
-            case R.id.ll_quarterMaintenance_Record://查看本季度维修记录
-                UIUtils.showT("查看本季度维修记录");
-                break;
-
         }
     }
 }

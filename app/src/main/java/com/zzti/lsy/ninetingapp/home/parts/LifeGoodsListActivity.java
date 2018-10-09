@@ -102,7 +102,7 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
         } else {
             params.put("wherestr", wherestr);
         }
-        OkHttpManager.postFormBody(Urls.POST_GETLAOBAO, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.PARTS_GETLAOBAO, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

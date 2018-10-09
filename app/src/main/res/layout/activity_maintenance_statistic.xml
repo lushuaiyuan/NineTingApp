@@ -56,7 +56,6 @@
         android:paddingRight="@dimen/dp16">
 
         <LinearLayout
-            android:id="@+id/ll_monthMaintenance_Record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -64,7 +63,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当月维修记录"
+                android:text="累计维修次数"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/dp13" />
 
@@ -74,7 +73,7 @@
                 android:gravity="center|bottom">
 
                 <TextView
-                    android:id="@+id/tv_monthMaintenance_RecordAmount"
+                    android:id="@+id/tv_repairAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20"
@@ -85,7 +84,6 @@
                     android:id="@+id/tv_monthState"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@mipmap/icon_up_brown"
                     android:text="条"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dp12" />
@@ -94,7 +92,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_quarterMaintenance_Record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp30"
@@ -103,7 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="本季度维修记录"
+                android:text="累计维修金额"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/dp13" />
 
@@ -113,7 +110,7 @@
                 android:gravity="center|bottom">
 
                 <TextView
-                    android:id="@+id/tv_quarterMaintenance_RecordAmount"
+                    android:id="@+id/tv_repairMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20"
@@ -124,8 +121,7 @@
                     android:id="@+id/tv_quarterState"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@mipmap/icon_down_brown"
-                    android:text="条"
+                    android:text="元"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dp12" />
 

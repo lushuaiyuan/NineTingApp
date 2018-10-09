@@ -114,7 +114,7 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
         } else {
             params.put("wherestr", wherestr);
         }
-        OkHttpManager.postFormBody(Urls.POST_GETPARTS, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.PARTS_GETPARTS, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

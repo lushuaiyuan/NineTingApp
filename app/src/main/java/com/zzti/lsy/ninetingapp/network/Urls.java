@@ -28,20 +28,21 @@ public class Urls {
     public final static String POST_GETREPAIRPARTS = BASE_URL + "/Repair/Repair.asmx/GetRepairParts";//获取维修工单所需配件列表
     public final static String POST_GETREPAIRTYPE = BASE_URL + "/Repair/Repair.asmx/GetRepairType";//获取维修类型
     public final static String POST_GETREPAIRCAUSE = BASE_URL + "/Repair/Repair.asmx/GetRepairCause";//获取维修原因
+    public final static String REPAIR_GETREPAIRCOUNT = BASE_URL + "/Repair/Repair.asmx/GetRepairCount";//获取维修统计
 
     //配件管理员
-    public final static String POST_GETPARTS = BASE_URL + "/Parts/Parts.asmx/GetParts";//获取配件列表
-    public final static String POST_GETPARTSFACTORY = BASE_URL + "/Parts/Parts.asmx/GetFactory";//获取配件生产厂间
-    public final static String POST_PARTSSTORAGE = BASE_URL + "/Parts/Parts.asmx/PartsStorage";//配件入库
-    public final static String POST_PARTSOUT = BASE_URL + "/Parts/Parts.asmx/PartsOut";//配件出库
-    public final static String POST_GETLAOBAO = BASE_URL + "/Parts/Parts.asmx/GetLaoBao";//获取劳保品详情列表
-    public final static String POST_LAOSTORAGE = BASE_URL + "/Parts/Parts.asmx/LaoStorage";//劳保品采购
-    public final static String POST_LAOBAOOUT = BASE_URL + "/Parts/Parts.asmx/LaoBaoOut";//劳保品出库
-    public final static String POST_GETSTAFFLIST = BASE_URL + "/Parts/Parts.asmx/GetStaff";//获取员工地址
-    public final static String PARTS_GETPARTSOUT =BASE_URL +  "/Parts/Parts.asmx/GetPartsOut";//获取配件出库工单列表
-    public final static String PARTS_CANCELPARTS =BASE_URL +  "/Parts/Parts.asmx/CancelParts";//撤销配件入库工单
-    public final static String PARTS_GETLAOBAOOUT =BASE_URL +  "/Parts/Parts.asmx/GetLaoBaoOut";//获取劳保品出库工单列表
-    public final static String PARTS_CANCELLAOBAO =BASE_URL +  "/Parts/Parts.asmx/CancelLaobao";//撤销劳保品入库工单
+    public final static String PARTS_GETPARTS = BASE_URL + "/Parts/Parts.asmx/GetParts";//获取配件列表
+    public final static String PARTS_GETPARTSFACTORY = BASE_URL + "/Parts/Parts.asmx/GetFactory";//获取配件生产厂间
+    public final static String PARTS_PARTSSTORAGE = BASE_URL + "/Parts/Parts.asmx/PartsStorage";//配件入库
+    public final static String PARTS_PARTSOUT = BASE_URL + "/Parts/Parts.asmx/PartsOut";//配件出库
+    public final static String PARTS_GETLAOBAO = BASE_URL + "/Parts/Parts.asmx/GetLaoBao";//获取劳保品详情列表
+    public final static String PARTS_LAOSTORAGE = BASE_URL + "/Parts/Parts.asmx/LaoStorage";//劳保品采购
+    public final static String PARTS_LAOBAOOUT = BASE_URL + "/Parts/Parts.asmx/LaoBaoOut";//劳保品出库
+    public final static String PARTS_GETSTAFFLIST = BASE_URL + "/Parts/Parts.asmx/GetStaff";//获取员工地址
+    public final static String PARTS_GETPARTSOUT = BASE_URL + "/Parts/Parts.asmx/GetPartsOut";//获取配件出库工单列表
+    public final static String PARTS_CANCELPARTS = BASE_URL + "/Parts/Parts.asmx/CancelParts";//撤销配件入库工单
+    public final static String PARTS_GETLAOBAOOUT = BASE_URL + "/Parts/Parts.asmx/GetLaoBaoOut";//获取劳保品出库工单列表
+    public final static String PARTS_CANCELLAOBAO = BASE_URL + "/Parts/Parts.asmx/CancelLaobao";//撤销劳保品入库工单
 
 
     //项目经理

@@ -82,7 +82,7 @@ public class PartsStaffListActivity extends BaseActivity implements BaseQuickAda
      */
     private void getStaff() {
         staffEntities.clear();
-        OkHttpManager.postFormBody(Urls.POST_GETSTAFFLIST, null, mRecycleView, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.PARTS_GETSTAFFLIST, null, mRecycleView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

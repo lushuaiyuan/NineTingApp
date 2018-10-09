@@ -106,7 +106,7 @@ public final class OkHttpManager {
                             }
                         });
                     } else {
-                        final int code = response.code();
+                            final int code = response.code();
                         final String msg = response.message();
                         handler.post(new Runnable() {
                             @Override

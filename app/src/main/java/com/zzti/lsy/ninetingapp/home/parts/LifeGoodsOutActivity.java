@@ -151,7 +151,7 @@ public class LifeGoodsOutActivity extends BaseActivity {
     private void goodsLifeOut(LaobaoDelivery laobaoDelivery) {
         HashMap<String, String> params = new HashMap<>();
         params.put("LaoOutJosn", new Gson().toJson(laobaoDelivery));
-        OkHttpManager.postFormBody(Urls.POST_LAOBAOOUT, params, tvLbName, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.PARTS_LAOBAOOUT, params, tvLbName, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
