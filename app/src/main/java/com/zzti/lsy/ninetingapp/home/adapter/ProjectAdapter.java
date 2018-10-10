@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.entity.CarTypeEntity;
-import com.zzti.lsy.ninetingapp.entity.ProEntity;
 import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
 
 import java.util.List;

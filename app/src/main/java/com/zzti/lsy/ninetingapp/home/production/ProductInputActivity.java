@@ -15,9 +15,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
+import com.zzti.lsy.ninetingapp.entity.StatisticalList;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAdapter;
@@ -26,11 +29,18 @@ import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAddressAdapter;
 import com.zzti.lsy.ninetingapp.entity.ProjectAddressEntitiy;
 import com.zzti.lsy.ninetingapp.network.Constant;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,6 +66,8 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
     private ProjectAdapter projectAdapter;
     private List<ProjectEntity> projectEntities;
 
+    private StatisticalList statisticalList;
+
     @Override
     public int getContentViewId() {
         return R.layout.activity_product_input;
@@ -74,6 +86,42 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
 
     private void initData() {
         tvTime.setText(DateUtil.getCurrentDate());
+        statisticalList = new StatisticalList();
+        showDia();
+        getProject();
+    }
+
+    /**
+     * 获取项目部
+     */
+    private void getProject() {
+        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, null, tvAddress, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
+                            projectEntities.add(projectEntity);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -114,22 +162,26 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
             case R.id.btn_submit:
                 if (StringUtil.isNullOrEmpty(tvCarNumber.getText().toString())) {
                     UIUtils.showT("车牌号不能为空");
-                    break;
+                    return;
                 }
                 if (StringUtil.isNullOrEmpty(tvAddress.getText().toString())) {
                     UIUtils.showT("施工工地不能为空");
-                    break;
+                    return;
                 }
                 if (StringUtil.isNullOrEmpty(etAmount.getText().toString())) {
                     UIUtils.showT("生产方量不能为空");
-                    break;
+                    return;
                 }
                 if (StringUtil.isNullOrEmpty(etOilMass.getText().toString())) {
                     UIUtils.showT("加油量不能为空");
-                    break;
+                    return;
                 }
-                hideSoftInput(etAmount);
                 //TODO
+                statisticalList.setPlateNumber(tvCarNumber.getText().toString());
+                statisticalList.setSlDateTime(tvTime.getText().toString());
+                statisticalList.setSquareQuantity(etAmount.getText().toString());
+                statisticalList.setQilWear(etOilMass.getText().toString());
+                hideSoftInput(etAmount);
                 if (UIUtils.isNetworkConnected()) {
                     showDia();
                     submitInputData();
@@ -181,7 +233,29 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
         tvCarNumber.setText("");
         etOilMass.getText().clear();
         etAmount.getText().clear();
-//        OkHttpManager.post();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("RecordJson", new Gson().toJson(statisticalList));
+        OkHttpManager.postFormBody(Urls.RECORD_ADDRECORD, params, tvAddress, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    Intent intent = new Intent(ProductInputActivity.this, SuccessActivity.class);
+                    intent.putExtra("TAG", 1);
+                    startActivity(intent);
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+        });
     }
 
     @Override
@@ -196,6 +270,7 @@ public class ProductInputActivity extends BaseActivity implements PopupWindow.On
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         tvAddress.setText(projectEntities.get(i).getProjectName());
+        statisticalList.setProjectID(projectEntities.get(i).getProjectID());
         popupWindowProject.dismiss();
     }
 
