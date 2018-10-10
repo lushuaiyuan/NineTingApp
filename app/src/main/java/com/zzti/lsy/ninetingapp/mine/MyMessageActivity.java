@@ -56,6 +56,8 @@ public class MyMessageActivity extends TakePhotoActivity implements View.OnClick
     TextView tvType;
     @BindView(R.id.tv_resume)
     TextView tvResume;
+    @BindView(R.id.tv_project)
+    TextView tvProject;
     private CustomHelper customHelper;
     View view;
     private PopupWindow popupWindow;
@@ -117,9 +119,9 @@ public class MyMessageActivity extends TakePhotoActivity implements View.OnClick
                         tvType.setText("统计员");
                     }
                     tvResume.setText(staffEntity.getResume());
-                } else if(msgInfo.getCode()== C.Constant.HTTP_UNAUTHORIZED){
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
-                }else{
+                } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
             }
@@ -135,8 +137,9 @@ public class MyMessageActivity extends TakePhotoActivity implements View.OnClick
 
     private void initView() {
         setTitle("个人信息");
+        tvProject.setText(spUtils.getString(SpUtils.PROJECT,""));
         customHelper = CustomHelper.of(view);
-        initPop();
+//        initPop();
     }
 
     private void initPop() {

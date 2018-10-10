@@ -112,7 +112,9 @@ public class PartsOutDetailActivity extends BaseActivity implements PopupWindow.
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
-                            projectEntities.add(projectEntity);
+                            if (!projectEntity.getProjectID().equals(spUtils.getString(SpUtils.PROJECTID, ""))) {
+                                projectEntities.add(projectEntity);
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
