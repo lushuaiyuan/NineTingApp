@@ -26,6 +26,11 @@ public class RepairCoutEntity extends BaseEntry {
         private String money;
         private String time;
 
+        public RepairStatisticInfo(String time, String money) {
+            this.money = money;
+            this.time = time;
+        }
+
         public String getTime() {
             return time;
         }

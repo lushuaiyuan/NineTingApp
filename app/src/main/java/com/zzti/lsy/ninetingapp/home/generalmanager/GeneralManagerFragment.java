@@ -21,11 +21,9 @@ import com.zzti.lsy.ninetingapp.home.adapter.HomeBxAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
-import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsPurchaseListActivity;
-import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsPurchaseListActivity;
-import com.zzti.lsy.ninetingapp.home.pm.MaintenanceStatistic;
+import com.zzti.lsy.ninetingapp.home.pm.MaintenanceStatisticActivity;
 import com.zzti.lsy.ninetingapp.home.repair.RepairRecordActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -206,7 +204,7 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
                 UIUtils.showT("生产统计");
                 break;
             case R.id.rl_menu7://维修统计
-                startActivity(new Intent(mActivity, MaintenanceStatistic.class));
+                startActivity(new Intent(mActivity, MaintenanceStatisticActivity.class));
                 break;
             case R.id.tv_lookMore_ns:
                 Intent intent1 = new Intent(mActivity, BxNsActivity.class);

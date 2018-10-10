@@ -130,7 +130,9 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
                         for (int i = 0; i < jsonArray.length(); i++) {
                             RepairinfoEntity repairinfoEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairinfoEntity.class);
                             if (repairinfoEntity.getRepairContent().length() > 5) {
-                                repairinfoEntity.setRepairContent(repairinfoEntity.getRepairContent().substring(0, 4) + "...");
+                                repairinfoEntity.setShowContent(repairinfoEntity.getRepairContent().substring(0, 4) + "...");
+                            } else {
+                                repairinfoEntity.setShowContent(repairinfoEntity.getRepairContent());
                             }
                             repairinfoEntities.add(repairinfoEntity);
                         }
@@ -160,7 +162,7 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
         column1.setFixed(true);
         Column<String> column2 = new Column<>("项目部", "projectName");
         Column<String> column3 = new Column<>("维修原因", "causeName");
-        Column<String> column4 = new Column<>("维修内容", "repairContent");
+        Column<String> column4 = new Column<>("维修内容", "showContent");
         Column<String> column5 = new Column<>("维修金额", "repairMoney");
         //表格数据 datas是需要填充的数据
         TableData<RepairinfoEntity> tableData = new TableData<>("维修记录", repairinfoEntities, column1, column2, column3, column4, column5);

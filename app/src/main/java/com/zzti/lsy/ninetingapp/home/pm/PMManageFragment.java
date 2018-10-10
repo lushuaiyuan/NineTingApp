@@ -205,7 +205,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                 UIUtils.showT("生产统计");
                 break;
             case R.id.rl_menu7://维修统计
-                startActivity(new Intent(mActivity, MaintenanceStatistic.class));
+                startActivity(new Intent(mActivity, MaintenanceStatisticActivity.class));
                 break;
             case R.id.tv_lookMore_ns:
                 Intent intent1 = new Intent(mActivity, BxNsActivity.class);

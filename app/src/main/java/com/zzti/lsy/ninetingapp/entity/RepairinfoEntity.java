@@ -26,6 +26,15 @@ public class RepairinfoEntity implements Serializable {
     private String typeName;//维修类型
     private String staffName;//申请人姓名
     private String projectName;//项目部名称
+    private String showContent;//显示的维修内容
+
+    public String getShowContent() {
+        return showContent;
+    }
+
+    public void setShowContent(String showContent) {
+        this.showContent = showContent;
+    }
 
     public String getProjectName() {
         return projectName;

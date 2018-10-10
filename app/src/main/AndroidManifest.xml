@@ -193,7 +193,7 @@
             android:name=".home.repair.RepairRecordDetailActivity"
             android:hardwareAccelerated="false" />
         <!--维修统计-->
-        <activity android:name=".home.pm.MaintenanceStatistic" />
+        <activity android:name=".home.pm.MaintenanceStatisticActivity" />
         <!--维修报表-->
         <activity android:name=".home.pm.MaintenanceReportActivity" />
         <!--单车维修统计-->

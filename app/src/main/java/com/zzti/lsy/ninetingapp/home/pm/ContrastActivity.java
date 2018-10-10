@@ -8,6 +8,7 @@ import com.bin.david.form.annotation.SmartTable;
 import com.github.mikephil.charting.charts.LineChart;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.utils.ChartUtils;
 
 import java.util.ArrayList;
 
@@ -59,7 +60,7 @@ public class ContrastActivity extends BaseActivity {
     }
 
     private void initView() {
-        tvTitleView.setText("统计");
+        tvTitleView.setText("统计对比");
     }
 
     @OnClick(R.id.iv_toolbarBack)
