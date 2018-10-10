@@ -29,7 +29,7 @@ public class LifeGoodsPurcheaseListAdapter extends BaseQuickAdapter<LaobaoPurcha
         //（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过 -1为拒绝）
         if (item.getStatus().equals("0")) {
             helper.setText(R.id.tv_status, "总经理已审批");
-            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
+            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_ff80b4));
         } else if (item.getStatus().equals("1")) {
             helper.setText(R.id.tv_status, "项目经理已审批");
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));

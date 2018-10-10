@@ -84,7 +84,13 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
         tvTotalMoney.setText(Integer.parseInt(partsPurchased.getNumber()) * Double.parseDouble(partsPurchased.getPurchasedPrice()) + "");
         tvStaffName.setText(partsPurchased.getStaffName());
         if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//3配件管理员
-            if (partsPurchased.getStatus().equals("2")) {
+            if (partsPurchased.getStatus().equals("5")) {
+                tvStatus.setText("待确认入库");
+                tvOperatorTitle.setText("申请时间");
+                tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
+                btnOperator1.setText("确认入库");
+                btnOperator2.setVisibility(View.GONE);
+            } else if (partsPurchased.getStatus().equals("2")) {
                 tvStatus.setText("待审批");
                 tvOperatorTitle.setText("申请时间");
                 tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
@@ -100,6 +106,10 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 } else if (partsPurchased.getStatus().equals("0")) {
                     tvStatus.setText("总经理已审批");
                     tvOperatorTitle.setText("总经理审批时间");
+                    tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
+                } else if (partsPurchased.getStatus().equals("4")) {
+                    tvStatus.setText("已确认入库");
+                    tvOperatorTitle.setText("确认时间");
                     tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 }
             }
@@ -123,6 +133,14 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                     tvStatus.setText("总经理已审批");
                     tvOperatorTitle.setText("总经理审批时间");
                     tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
+                } else if (partsPurchased.getStatus().equals("4")) {
+                    tvStatus.setText("已确认入库");
+                    tvOperatorTitle.setText("确认时间");
+                    tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
+                } else if (partsPurchased.getStatus().equals("5")) {
+                    tvStatus.setText("待确认入库");
+                    tvOperatorTitle.setText("申请时间");
+                    tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
                 }
             }
         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//0总经理
@@ -145,6 +163,14 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                     tvStatus.setText("总经理已审批");
                     tvOperatorTitle.setText("总经理审批时间");
                     tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
+                } else if (partsPurchased.getStatus().equals("4")) {
+                    tvStatus.setText("已确认入库");
+                    tvOperatorTitle.setText("确认时间");
+                    tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
+                } else if (partsPurchased.getStatus().equals("5")) {
+                    tvStatus.setText("待确认入库");
+                    tvOperatorTitle.setText("申请时间");
+                    tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
                 }
             }
         }
@@ -178,17 +204,25 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
                     content = "是否同意当前申请？";
                 } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
-                    content = "是否撤销当前申请？";
+                    if (btnOperator1.getText().toString().equals("确认入库")) {
+                        content = "是否确认入库？";
+                    } else if (btnOperator1.getText().toString().equals("撤销")) {
+                        content = "是否撤销当前申请？";
+                    }
                 }
                 MAlertDialog.show(this, "提示", content, false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
                     @Override
                     public void onConfirmClick(String msg) {
-                        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
-                            canOrder();
+                        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+                            approvalOrder(1);
                         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
                             approvalOrder(0);
-                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-                            approvalOrder(1);
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
+                            if (btnOperator1.getText().toString().equals("确认入库")) {
+                                confrimOrder();
+                            } else if (btnOperator1.getText().toString().equals("撤销")) {
+                                canOrder();
+                            }
                         }
                     }
 
@@ -216,6 +250,45 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
         }
     }
 
+
+    /**
+     * 确认入库工单
+     */
+    private void confrimOrder() {
+        showDia();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("ppID", partsPurchased.getPpID());
+        OkHttpManager.postFormBody(Urls.PARTS_CONFIRMSTORAGE, params, tvAmount, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    Intent intent = new Intent();
+                    intent.putExtra("status", 4);
+                    intent.putExtra("date", msgInfo.getData());
+                    setResult(2, intent);
+                    finish();
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
+    }
+
     /**
      * 审批订单
      *
@@ -239,6 +312,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 if (msgInfo.getCode() == 200) {
                     Intent intent = new Intent();
                     intent.putExtra("status", status);
+                    intent.putExtra("date", msgInfo.getData());
                     setResult(2, intent);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
@@ -278,6 +352,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 if (msgInfo.getCode() == 200) {
                     Intent intent = new Intent();
                     intent.putExtra("status", 3);
+                    intent.putExtra("date", msgInfo.getData());
                     setResult(2, intent);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
@@ -285,7 +360,6 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
-
             }
 
             @Override

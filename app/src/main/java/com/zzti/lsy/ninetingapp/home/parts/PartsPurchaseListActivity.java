@@ -295,7 +295,9 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         if (requestCode == 1 && resultCode == 2) {
             if (data != null) {
                 int status = data.getIntExtra("status", -2);
+                String date = data.getStringExtra("date");
                 partsPurchaseds.get(selectPosition).setStatus(String.valueOf(status));
+                partsPurchaseds.get(selectPosition).setPurchasedDate(date);
                 partsPurcheaseListAdapter.notifyItemChanged(selectPosition);
             }
         }

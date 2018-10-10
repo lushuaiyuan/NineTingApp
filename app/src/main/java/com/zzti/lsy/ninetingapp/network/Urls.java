@@ -43,11 +43,11 @@ public class Urls {
     public final static String PARTS_CANCELPARTS = BASE_URL + "/Parts/Parts.asmx/CancelParts";//撤销配件入库工单
     public final static String PARTS_GETLAOBAOOUT = BASE_URL + "/Parts/Parts.asmx/GetLaoBaoOut";//获取劳保品出库工单列表
     public final static String PARTS_CANCELLAOBAO = BASE_URL + "/Parts/Parts.asmx/CancelLaobao";//撤销劳保品入库工单
+    public final static String PARTS_CONFIRMSTORAGE = BASE_URL + "/Parts/Parts.asmx/ConfirmStorage";//确认入库工单
 
 
     //项目经理
     public final static String APPROVE_GETPARTSIN = BASE_URL + "/Approve/Approve.asmx/GetPartsIn";//获取配件入库工单列表
-
     public final static String APPROVE_GETLAOBAO = BASE_URL + "/Approve/Approve.asmx/GetLaoBao";//获取劳保品入库工单列表
     public final static String APPROVE_REPAIR = BASE_URL + "/Approve/Approve.asmx/ApproveRepair";//维修工单的审批
     public final static String APPROVE_PARTS = BASE_URL + "/Approve/Approve.asmx/ApproveParts";//配件入库工单的审批

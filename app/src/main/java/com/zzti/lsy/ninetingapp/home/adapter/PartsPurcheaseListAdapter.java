@@ -31,7 +31,7 @@ public class PartsPurcheaseListAdapter extends BaseQuickAdapter<PartsPurchased, 
         //（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过 -1为拒绝）
         if (item.getStatus().equals("0")) {
             helper.setText(R.id.tv_operator, "总经理已审批");
-            ((TextView) helper.getView(R.id.tv_operator)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
+            ((TextView) helper.getView(R.id.tv_operator)).setTextColor(App.get().getResources().getColor(R.color.color_ff80b4));
         } else if (item.getStatus().equals("1")) {
             helper.setText(R.id.tv_operator, "项目经理已审批");
             ((TextView) helper.getView(R.id.tv_operator)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
@@ -44,6 +44,12 @@ public class PartsPurcheaseListAdapter extends BaseQuickAdapter<PartsPurchased, 
         } else if (item.getStatus().equals("-1")) {
             helper.setText(R.id.tv_operator, "已拒绝");
             ((TextView) helper.getView(R.id.tv_operator)).setTextColor(App.get().getResources().getColor(R.color.color_red));
+        } else if (item.getStatus().equals("4")) {
+            helper.setText(R.id.tv_operator, "已确认入库");
+            ((TextView) helper.getView(R.id.tv_operator)).setTextColor(App.get().getResources().getColor(R.color.color_4890e2));
+        } else if (item.getStatus().equals("5")) {
+            helper.setText(R.id.tv_operator, "待确认入库");
+            ((TextView) helper.getView(R.id.tv_operator)).setTextColor(App.get().getResources().getColor(R.color.color_ffb947));
         }
     }
 

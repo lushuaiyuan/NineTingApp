@@ -188,7 +188,7 @@
                     android:layout_marginLeft="@dimen/dp20"
                     android:layout_weight="1"
                     android:background="@drawable/btn_solid_shape"
-                    android:text="入库"
+                    android:text="采购"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dp15" />
 
