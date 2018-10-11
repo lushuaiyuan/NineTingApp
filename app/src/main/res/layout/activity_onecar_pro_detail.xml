@@ -73,7 +73,7 @@
                 android:layout_marginBottom="@dimen/dp15"
                 android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp20"
-                android:text="生产统计" />
+                android:text="生产总统计" />
 
             <RelativeLayout
                 android:id="@+id/rl_oilMass"
@@ -84,7 +84,7 @@
                 android:background="@drawable/circular_selector">
 
                 <LinearLayout
-                    android:id="@+id/ll_orilmass"
+                    android:id="@+id/ll_total_orilmass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -134,7 +134,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_oilMass"
+                            android:id="@+id/tv_total_oilMass"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="507"
@@ -152,9 +152,9 @@
                 <ImageView
                     android:layout_width="@dimen/dp3"
                     android:layout_height="match_parent"
-                    android:layout_alignBottom="@id/ll_orilmass"
+                    android:layout_alignBottom="@id/ll_total_orilmass"
                     android:layout_alignParentRight="true"
-                    android:layout_alignTop="@id/ll_orilmass"
+                    android:layout_alignTop="@id/ll_total_orilmass"
                     android:background="@drawable/oilmass_shape" />
             </RelativeLayout>
 
@@ -168,7 +168,7 @@
                 android:background="@drawable/circular_selector">
 
                 <LinearLayout
-                    android:id="@+id/ll_proAmount"
+                    android:id="@+id/ll_total_proAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -218,7 +218,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_proAmount"
+                            android:id="@+id/tv_total_proAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="507"
@@ -236,9 +236,9 @@
                 <ImageView
                     android:layout_width="@dimen/dp3"
                     android:layout_height="match_parent"
-                    android:layout_alignBottom="@id/ll_proAmount"
+                    android:layout_alignBottom="@id/ll_total_proAmount"
                     android:layout_alignParentRight="true"
-                    android:layout_alignTop="@id/ll_proAmount"
+                    android:layout_alignTop="@id/ll_total_proAmount"
                     android:background="@drawable/proamount_shape" />
             </RelativeLayout>
 
@@ -301,7 +301,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_ratio"
+                            android:id="@+id/tv_total_ratio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="507"
@@ -324,6 +324,266 @@
                     android:layout_alignTop="@id/ll_ratio"
                     android:background="@drawable/ratio_shape" />
             </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp15"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp20"
+                android:text="生产月统计" />
+
+            <RelativeLayout
+                android:id="@+id/rl_month_oilMass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:background="@drawable/circular_selector">
+
+                <LinearLayout
+                    android:id="@+id/ll_month_orilmass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp15">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="#FF979797"
+                            android:padding="0.5dp">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp30"
+                                android:layout_height="@dimen/dp30"
+                                android:background="#FFD8D8D8" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:text="月油耗" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="@dimen/dp40"
+                        android:layout_centerInParent="true"
+                        android:background="@color/color_e5e5e5" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center_horizontal">
+
+
+                        <TextView
+                            android:id="@+id/tv_month_oilMass"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="507"
+                            android:textSize="@dimen/dp15"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="L"
+                            android:textSize="@dimen/dp12" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dp3"
+                    android:layout_height="match_parent"
+                    android:layout_alignBottom="@id/ll_month_orilmass"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/ll_month_orilmass"
+                    android:background="@drawable/oilmass_shape" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_month_proAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/circular_selector">
+
+                <LinearLayout
+                    android:id="@+id/ll_month_proAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp15">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="#FF979797"
+                            android:padding="0.5dp">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp30"
+                                android:layout_height="@dimen/dp30"
+                                android:background="#FFD8D8D8" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:text="月方量" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="@dimen/dp40"
+                        android:layout_centerInParent="true"
+                        android:background="@color/color_e5e5e5" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center_horizontal">
+
+
+                        <TextView
+                            android:id="@+id/tv_month_proAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="507"
+                            android:textSize="@dimen/dp15"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="m³"
+                            android:textSize="@dimen/dp12" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dp3"
+                    android:layout_height="match_parent"
+                    android:layout_alignBottom="@id/ll_month_proAmount"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/ll_month_proAmount"
+                    android:background="@drawable/proamount_shape" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_month_ratio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/circular_selector">
+
+                <LinearLayout
+                    android:id="@+id/ll_month_ratio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp15">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="#FF979797"
+                            android:padding="0.5dp">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp30"
+                                android:layout_height="@dimen/dp30"
+                                android:background="#FFD8D8D8" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:text="月油耗比" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="@dimen/dp40"
+                        android:layout_centerInParent="true"
+                        android:background="@color/color_e5e5e5" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center_horizontal">
+
+
+                        <TextView
+                            android:id="@+id/tv_ratio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="507"
+                            android:textSize="@dimen/dp15"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="%"
+                            android:textSize="@dimen/dp12" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dp3"
+                    android:layout_height="match_parent"
+                    android:layout_alignBottom="@id/ll_month_ratio"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/ll_month_ratio"
+                    android:background="@drawable/ratio_shape" />
+            </RelativeLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
