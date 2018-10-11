@@ -7,59 +7,14 @@
 
     <include layout="@layout/view_toolbar" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp5"
-        android:background="@color/color_white"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="车牌号"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/dp14" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="施工工地"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/dp14" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="生产方量（m²）"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/dp14" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="加油量(L)"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/dp14" />
-    </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mRecycleView"
+        <com.bin.david.form.core.SmartTable
+            android:id="@+id/smartTable"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

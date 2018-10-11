@@ -6,15 +6,42 @@ package com.zzti.lsy.ninetingapp.entity;
  * @Describe 生产记录统计报表实体类
  */
 public class StatisticalList {
-    private String slID;
-    private String slDateTime;
-    private String plateNumber;
-    private String projectID;
-    private String squareQuantity;
-    private String qilWear;
-    private String distance;
-    private String timeConsuming;
-    private String remark;
+    private String slID;//统计编号
+    private String slDateTime;///统计日期
+    private String plateNumber;///车牌号
+    private String projectID;///项目部编号
+    private String squareQuantity;///方量
+    private String qilWear; ///油耗
+    private String distance;///距离基地
+    private String timeConsuming; ///耗时
+    private String remark;///备注
+    private String userID;///记录人ID
+    private String staffName;///经手人姓名
+    private String projectName;///项目部名称
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 
     public String getSlID() {
         return slID;

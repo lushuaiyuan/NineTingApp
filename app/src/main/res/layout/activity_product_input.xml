@@ -45,15 +45,6 @@
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="施工工地" />
-
-            <TextView
-                android:id="@+id/tv_address"
-                style="@style/MyEditText"
-                android:hint="点击选择" />
-
-            <TextView
-                style="@style/MyEditTextTitle"
                 android:text="生产方量" />
 
             <RelativeLayout
@@ -86,8 +77,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp10"
+                    android:text="m³"
                     android:textColor="@color/color_999999"
-                    android:text="平方"
                     android:textSize="@dimen/dp13" />
 
 
@@ -98,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp15"
-                android:text="加油量"
+                android:text="油耗"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/dp15" />
 
@@ -129,18 +120,114 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp10"
-                    android:text="升"
+                    android:text="L"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp13" />
 
 
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/tv_distance_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="距离基地"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+            <RelativeLayout
+                android:id="@+id/rl_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_distance"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/dp10"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="㎞"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_timeConsuming_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="耗时"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+            <RelativeLayout
+                android:id="@+id/rl_timeConsuming"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_timeConsuming"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/dp10"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="h"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="备注" />
+
+            <EditText
+                android:id="@+id/et_remark"
+                style="@style/MyEditText"
+                android:gravity="left|top"
+                android:hint="请输入备注"
+                android:minHeight="@dimen/dp100" />
 
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginLeft="@dimen/dp30"
                 android:layout_marginRight="@dimen/dp30"
                 android:layout_marginTop="@dimen/dp16"
