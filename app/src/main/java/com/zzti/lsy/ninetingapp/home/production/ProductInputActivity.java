@@ -115,6 +115,7 @@ public class ProductInputActivity extends BaseActivity {
                 statisticalList.setSquareQuantity(etAmount.getText().toString());
                 statisticalList.setQilWear(etOilMass.getText().toString());
                 statisticalList.setDistance(etDistance.getText().toString());
+                statisticalList.setUserID(spUtils.getString(SpUtils.USERID, ""));
                 statisticalList.setTimeConsuming(etTimeConsuming.getText().toString());
                 if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {
                     statisticalList.setRemark(etRemark.getText().toString());

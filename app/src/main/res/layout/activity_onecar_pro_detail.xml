@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_carNumber_Title"
                     android:layout_marginTop="@dimen/dp16"
-                    android:text="施工工地"
+                    android:text="项目部"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp14" />
 
@@ -228,7 +228,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="m²"
+                            android:text="m³"
                             android:textSize="@dimen/dp12" />
                     </LinearLayout>
                 </LinearLayout>
@@ -301,6 +301,7 @@
 
 
                         <TextView
+                            android:id="@+id/tv_ratio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="507"
@@ -310,7 +311,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="m²"
+                            android:text="%"
                             android:textSize="@dimen/dp12" />
                     </LinearLayout>
                 </LinearLayout>

@@ -1,11 +1,13 @@
 package com.zzti.lsy.ninetingapp.entity;
 
+import java.io.Serializable;
+
 /**
  * @author lsy
  * @create 2018/10/10 23:37
  * @Describe 生产记录统计报表实体类
  */
-public class StatisticalList {
+public class StatisticalList implements Serializable{
     private String slID;//统计编号
     private String slDateTime;///统计日期
     private String plateNumber;///车牌号

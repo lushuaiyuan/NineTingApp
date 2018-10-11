@@ -5,6 +5,7 @@ import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -17,6 +18,7 @@ import com.bin.david.form.data.format.bg.BaseBackgroundFormat;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.style.LineStyle;
 import com.bin.david.form.data.table.TableData;
+import com.bin.david.form.listener.OnColumnItemClickListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -26,6 +28,8 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.StatisticalList;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.home.pm.MaintenanceReportActivity;
+import com.zzti.lsy.ninetingapp.home.repair.RepairRecordDetailActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
@@ -48,7 +52,7 @@ import butterknife.BindView;
  * author：anxin on 2018/8/7 15:59
  * 生产表格
  */
-public class FormListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
+public class FormListActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.smartTable)
@@ -79,14 +83,16 @@ public class FormListActivity extends BaseActivity implements BaseQuickAdapter.O
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageIndex = 1;
-                setTitle(DateUtil.getCurrentDate());
-                whereStr = "slDateTime = \'" + tvToolbarTitle.getText().toString() + "\'";
+                whereStr = "slDateTime = \'" + DateUtil.getCurrentDate() + "\'";
+                data.clear();
                 getRecordList();
             }
         });
         showDia();
         getRecordList();
     }
+
+    private List<StatisticalList> data = new ArrayList<>();
 
     private void getRecordList() {
         HashMap<String, String> params = new HashMap<>();
@@ -110,8 +116,9 @@ public class FormListActivity extends BaseActivity implements BaseQuickAdapter.O
                         if (jsonArray.length() > 0) {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 StatisticalList statisticalList = ParseUtils.parseJson(jsonArray.getString(i), StatisticalList.class);
-                                statisticalList.setSlDateTime(statisticalList.getSlDateTime().split("T")[1]);
+                                statisticalList.setSlDateTime(statisticalList.getSlDateTime().split("T")[0]);
                                 statisticalLists.add(statisticalList);
+                                data.add(statisticalList);
                             }
                         } else {
                             UIUtils.showT("暂无数据");
@@ -140,16 +147,16 @@ public class FormListActivity extends BaseActivity implements BaseQuickAdapter.O
     }
 
     private void setTable(List<StatisticalList> statisticalLists) {
+        //普通列
+        Column<String> column1 = new Column<>("车牌号", "plateNumber");
+        column1.setFixed(true);
+        Column<String> column2 = new Column<>("日期", "slDateTime");
+        Column<String> column3 = new Column<>("方量", "squareQuantity");
+        Column<String> column4 = new Column<>("油耗", "qilWear");
+        Column<String> column5 = new Column<>("距离基地里程", "distance");
+        Column<String> column6 = new Column<>("耗时", "timeConsuming");
+        Column<String> column7 = new Column<>("备注", "remark");
         if (pageIndex == 1) {
-            //普通列
-            Column<String> column1 = new Column<>("车牌号", "plateNumber");
-            column1.setFixed(true);
-            Column<Integer> column2 = new Column<>("日期", "slDateTime");
-            Column<Long> column3 = new Column<>("方量", "squareQuantity");
-            Column<String> column4 = new Column<>("油耗", "qilWear");
-            Column<String> column5 = new Column<>("距离基地里程", "distance");
-            Column<String> column6 = new Column<>("耗时", "timeConsuming");
-            Column<String> column7 = new Column<>("备注", "remark");
             //表格数据 datas是需要填充的数据
             TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7);
             //table.setZoom(true,3);是否缩放
@@ -157,12 +164,29 @@ public class FormListActivity extends BaseActivity implements BaseQuickAdapter.O
         } else {
             mSmartTable.addData(statisticalLists, true);
         }
-
+        column1.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column2.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column3.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column4.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column5.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column6.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column7.setOnColumnItemClickListener(new MyColumnItemClickListener());
     }
 
+    class MyColumnItemClickListener implements OnColumnItemClickListener<String> {
+
+        @Override
+        public void onClick(Column<String> column, String value, String o, int position) {
+            Intent intent = new Intent(FormListActivity.this, OneCarProDetailActivity.class);
+            intent.putExtra("StatisticalList", data.get(position));
+            startActivity(intent);
+        }
+    }
+
+
     private void initView() {
-        setTitle(DateUtil.getCurrentDate());
-        whereStr = "slDateTime = \'" + tvToolbarTitle.getText().toString() + "\'";
+        setTitle("每日方量流水明细");
+        whereStr = "slDateTime = \'" + DateUtil.getCurrentDate() + "\'";
         ivToolbarMenu.setVisibility(View.VISIBLE);
         ivToolbarMenu.setOnClickListener(this);
         smartRefreshLayout.setEnableLoadMore(true);
@@ -173,7 +197,7 @@ public class FormListActivity extends BaseActivity implements BaseQuickAdapter.O
 
         TableConfig tableConfig = mSmartTable.getConfig();
         tableConfig.setVerticalPadding(DensityUtils.dp2px(8));
-        tableConfig.setShowTableTitle(false);//不显示表格标题
+        tableConfig.setShowTableTitle(false);//显示表格标题
         tableConfig.setShowXSequence(false);//不显示顶部序号列
         tableConfig.setShowYSequence(false);//不显示左侧序号列
         tableConfig.setFixedYSequence(true);//固定左侧
@@ -190,10 +214,6 @@ public class FormListActivity extends BaseActivity implements BaseQuickAdapter.O
         tableConfig.setColumnTitleHorizontalPadding(DensityUtils.dp2px(10));   //设置标题的间距  列标题左右
     }
 
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        startActivity(new Intent(this, OneCarProDetailActivity.class));
-    }
 
     @Override
     public void onClick(View view) {
@@ -210,10 +230,10 @@ public class FormListActivity extends BaseActivity implements BaseQuickAdapter.O
         TimePickerView pvTime = new TimePickerBuilder(FormListActivity.this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                setTitle(DateUtil.getDate(date));
-                whereStr = "slDateTime = \'" + tvToolbarTitle.getText().toString() + "\'";
+                whereStr = "slDateTime = \'" + DateUtil.getDate(date) + "\'";
                 pageIndex = 1;
                 showDia();
+                data.clear();
                 getRecordList();
             }
         }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
