@@ -178,7 +178,8 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
         @Override
         public void onClick(Column<String> column, String value, String o, int position) {
             Intent intent = new Intent(FormListActivity.this, OneCarProDetailActivity.class);
-            intent.putExtra("StatisticalList", data.get(position));
+            intent.putExtra("plateNumber", data.get(position).getPlateNumber());
+            intent.putExtra("projectName", data.get(position).getProjectName());
             startActivity(intent);
         }
     }

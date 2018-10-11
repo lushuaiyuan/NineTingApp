@@ -56,6 +56,7 @@ public class Urls {
     //生产员
     public static final String RECORD_ADDRECORD = BASE_URL + "/Record/Record.asmx/AddRecord";//录入生产信息
     public static final String RECORD_GETRECORDLIST = BASE_URL + "/Record/Record.asmx/GetRecordList";//获取统计报表
+    public static final String RECORD_GETCARRECORD = BASE_URL + "/Record/Record.asmx/GetCarRecord";//获取单车生产统计信息
 
 
 

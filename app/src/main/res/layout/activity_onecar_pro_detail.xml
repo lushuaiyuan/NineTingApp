@@ -560,7 +560,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_ratio"
+                            android:id="@+id/tv_month_ratio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="507"
@@ -640,6 +640,7 @@
                             android:textSize="@dimen/dp12" />
 
                         <ImageView
+                            android:id="@+id/iv_oilStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp5"
@@ -709,6 +710,7 @@
                             android:textSize="@dimen/dp12" />
 
                         <ImageView
+                            android:id="@+id/iv_amountStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp5"
@@ -777,6 +779,7 @@
                             android:textSize="@dimen/dp12" />
 
                         <ImageView
+                            android:id="@+id/iv_ratioStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp5"

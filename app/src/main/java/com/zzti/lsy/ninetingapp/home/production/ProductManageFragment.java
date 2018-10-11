@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
+import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 
 import butterknife.OnClick;
 
@@ -42,7 +43,9 @@ public class ProductManageFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, ProductInputActivity.class));
                 break;
             case R.id.rl_menu2:
-                startActivity(new Intent(mActivity, FormListActivity.class));
+                Intent intent = new Intent(mActivity, DeviceListActivity.class);
+                intent.putExtra("FLAG", 4);
+                startActivity(intent);
                 break;
 //            case R.id.rl_menu3:
 //                startActivity(new Intent(mActivity, RepairRequestActivity.class));

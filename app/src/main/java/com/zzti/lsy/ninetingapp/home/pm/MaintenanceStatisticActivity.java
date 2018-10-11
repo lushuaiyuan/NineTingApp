@@ -187,7 +187,7 @@ public class MaintenanceStatisticActivity extends BaseActivity {
                 break;
             case R.id.tv_lookOneCar_maintenanceRecord://查看单车维修统计
                 Intent intent = new Intent(this, DeviceListActivity.class);
-                intent.putExtra("TAG", 1);
+//                intent.putExtra("TAG", 1);
                 intent.putExtra("FLAG", 2);
                 startActivity(intent);
                 break;

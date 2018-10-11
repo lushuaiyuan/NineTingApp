@@ -219,7 +219,7 @@ public class OneCarMaintenanceStatisticActivity extends BaseActivity {
             case R.id.tv_toolbarMenu:
                 Intent intent = new Intent(this, DeviceListActivity.class);
                 intent.putExtra("carNumber", carInfoEntity.getPlateNumber());
-                intent.putExtra("TAG", 1);
+//                intent.putExtra("TAG", 1);
                 intent.putExtra("FLAG", 3);
                 startActivity(intent);
                 break;
