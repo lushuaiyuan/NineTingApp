@@ -188,7 +188,9 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
                 startActivity(new Intent(mActivity, ProjectListActivity.class));
                 break;
             case R.id.rl_menu2://收款模块
-                UIUtils.showT("收款模块");
+                Intent intent = new Intent(mActivity, PactListActivity.class);
+                intent.putExtra("TAG", 1);
+                startActivity(intent);
                 break;
             case R.id.rl_menu3://配件审批
                 startActivity(new Intent(mActivity, PartsPurchaseListActivity.class));

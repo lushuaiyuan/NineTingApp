@@ -59,5 +59,9 @@ public class Urls {
     public static final String RECORD_GETCARRECORD = BASE_URL + "/Record/Record.asmx/GetCarRecord";//获取单车生产统计信息
 
 
+    //总经理
+    public static final String ADMIN_GETPACTLIST = BASE_URL + "/Admin/Admin.asmx/GetPactList";//获取合同列表
+    public static final String ADMIN_UPDATEPACT = BASE_URL + "/Admin/Admin.asmx/UpdatePact";//更新合同信息
+    public static final String ADMIN_ADDPACT = BASE_URL + "/Admin/Admin.asmx/AddPact";//添加合同信息
 
 }
