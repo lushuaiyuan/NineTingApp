@@ -14,6 +14,42 @@ public class PactInfo {
     private String pactRealMoney;//应收金额
     private String pactOutMoney;//合同未收款
     private String pactInMoney;//合同已收款
+    private String projectID;/// 所属项目部ID
+    private String addTime;/// 合同添加时间 无需填写
+    private String projectName;/// 所属项目部 无需填写
+    private String updateTime;/// 更新时间 无需填写
+
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
+    }
+
+    public String getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public String getPactID() {
         return pactID;

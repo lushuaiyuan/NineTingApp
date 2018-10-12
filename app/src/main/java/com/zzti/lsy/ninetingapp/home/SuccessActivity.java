@@ -15,6 +15,8 @@ import com.zzti.lsy.ninetingapp.home.device.DeviceInputListActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceOutputDetailActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceOutputListActivity;
+import com.zzti.lsy.ninetingapp.home.generalmanager.PactInputActivity;
+import com.zzti.lsy.ninetingapp.home.generalmanager.PactListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsOutDetailActivity;
@@ -52,7 +54,7 @@ public class SuccessActivity extends BaseActivity {
     }
 
     int tag = 0; //1代表生产员的生产录入成功 2代表配件管理员的配件入库成功 3代表配件管理员的日用品录入成功  4配件管理员配件出库成功
-    // 5配件管理员对日用品出库成功 6设备管理员录入成功 7设备管理员入库成功 8设备管理员出库成功
+    // 5配件管理员对日用品出库成功 6设备管理员录入成功 7设备管理员入库成功 8设备管理员出库成功 9合同录入
     int type;//1代表录入  2代表入库
 
     private void initData() {
@@ -99,6 +101,11 @@ public class SuccessActivity extends BaseActivity {
             tvMessage.setText("出库成功");
             btnSolid.setText("查看出库详情");
             btnEmpty.setText("查看出库列表");
+        } else if (tag == 9) {//合同
+            setTitle("录入结果");
+            tvMessage.setText("录入成功");
+            btnSolid.setText("继续录入");
+            btnEmpty.setText("查看列表");
         }
 
     }
@@ -140,6 +147,11 @@ public class SuccessActivity extends BaseActivity {
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 } else if (tag == 8) {//设备出库成功查看详情
                     startActivity(new Intent(this, DeviceOutputDetailActivity.class));
+                    EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
+                } else if (tag == 9) {//总经理录入合同成功继续录入
+                    Intent intent = new Intent(this, PactInputActivity.class);
+                    startActivity(intent);
+                    EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 }
                 finish();
                 break;
@@ -159,6 +171,10 @@ public class SuccessActivity extends BaseActivity {
                     startActivity(new Intent(this, DeviceListActivity.class));
                 } else if (tag == 8) {//设备管理员出库成功查看列表
                     startActivity(new Intent(this, DeviceOutputListActivity.class));
+                } else if (tag == 9) {//总经理录入合同成功查看列表
+                    Intent intent = new Intent(this, PactListActivity.class);
+                    intent.putExtra("TAG", 1);
+                    startActivity(intent);
                 }
                 EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 break;

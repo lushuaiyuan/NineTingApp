@@ -18,6 +18,9 @@ public class PactListAdapter extends BaseQuickAdapter<PactInfo, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, PactInfo item) {
-
+        helper.setText(R.id.tv_pactID, item.getPactID())
+                .setText(R.id.tv_pactType, item.getPactType())
+                .setText(R.id.tv_pactSchedule, item.getPactSchedule())
+                .setText(R.id.tv_projectName, item.getProjectName());
     }
 }

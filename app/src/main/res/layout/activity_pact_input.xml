@@ -39,7 +39,14 @@
                 android:id="@+id/tv_pactType"
                 style="@style/MyEditText"
                 android:hint="点击选择" />
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="项目部" />
 
+            <TextView
+                android:id="@+id/tv_project"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
             <TextView
                 style="@style/MyEditTextTitle"
                 android:text="合同进度" />
@@ -54,7 +61,7 @@
                 android:text="合同简介" />
 
             <EditText
-                android:id="@+id/et_carStatus"
+                android:id="@+id/et_pactContent"
                 style="@style/MyEditText"
                 android:gravity="left|top"
                 android:hint="请输入合同简介"
@@ -107,7 +114,7 @@
 
 
             <Button
-                android:id="@+id/btn_inputYearInsurance"
+                android:id="@+id/btn_inputPact"
                 style="@style/MyButton"
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginLeft="@dimen/dp30"

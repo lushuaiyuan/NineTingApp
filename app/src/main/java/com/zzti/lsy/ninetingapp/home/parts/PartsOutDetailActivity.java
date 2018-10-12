@@ -167,8 +167,6 @@ public class PartsOutDetailActivity extends BaseActivity implements PopupWindow.
         switch (view.getId()) {
             case R.id.tv_outAddress:
                 if (projectEntities.size() > 0) {
-                    //设置背景色
-                    setBackgroundAlpha(0.5f);
                     if (projectEntities.size() >= 5) {
                         //动态设置listView的高度
                         View listItem = projectAdapter.getView(0, null, mListViewProject);

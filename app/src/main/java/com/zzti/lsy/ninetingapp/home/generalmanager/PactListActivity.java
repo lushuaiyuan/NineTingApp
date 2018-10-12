@@ -17,6 +17,7 @@ import com.zzti.lsy.ninetingapp.entity.LaoBao;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.PactInfo;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.PactListAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -80,8 +81,9 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
                 getPactList();
             }
         });
-        showDia();
-        getPactList();
+        //TODO
+//        showDia();
+//        getPactList();
     }
 
     private void getPactList() {
@@ -162,5 +164,18 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
     public void viewClick() {
         Intent intent = new Intent(this, PactInputActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected boolean openEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void onEventComing(EventMessage paramEventCenter) {
+        super.onEventComing(paramEventCenter);
+        if (paramEventCenter.getEventCode() == C.EventCode.A && (Boolean) paramEventCenter.getData()) {
+            finish();
+        }
     }
 }
