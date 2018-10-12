@@ -83,8 +83,9 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageIndex = 1;
-                whereStr = "slDateTime = \'" + DateUtil.getCurrentDate() + "\'";
+                whereStr = "";
                 data.clear();
+                setTitle("每日方量流水明细");
                 getRecordList();
             }
         });
@@ -187,7 +188,7 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
 
     private void initView() {
         setTitle("每日方量流水明细");
-        whereStr = "slDateTime = \'" + DateUtil.getCurrentDate() + "\'";
+        whereStr = "";
         ivToolbarMenu.setVisibility(View.VISIBLE);
         ivToolbarMenu.setOnClickListener(this);
         smartRefreshLayout.setEnableLoadMore(true);
@@ -232,6 +233,7 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onTimeSelect(Date date, View v) {
                 whereStr = "slDateTime = \'" + DateUtil.getDate(date) + "\'";
+                setTitle("每日方量流水明细" + DateUtil.getDate(date));
                 pageIndex = 1;
                 showDia();
                 data.clear();
