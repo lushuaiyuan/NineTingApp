@@ -7,11 +7,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
-import com.zzti.lsy.ninetingapp.entity.LaoBao;
 import com.zzti.lsy.ninetingapp.entity.LaobaoDelivery;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.event.C;
@@ -35,7 +33,7 @@ import butterknife.BindView;
  * 日用品出库记录
  */
 public class LifeGoodsOutRecordActivity extends BaseActivity {
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;

@@ -14,7 +14,6 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.event.C;
-import com.zzti.lsy.ninetingapp.home.adapter.BXAdapter;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
 import com.zzti.lsy.ninetingapp.home.adapter.NSAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
@@ -26,7 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,7 +33,7 @@ import butterknife.BindView;
  * 年审
  */
 public class NsFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;

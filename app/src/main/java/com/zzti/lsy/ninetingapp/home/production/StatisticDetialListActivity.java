@@ -29,7 +29,7 @@ public class StatisticDetialListActivity extends BaseActivity implements View.On
     TextView tvTypeValue;
     @BindView(R.id.tv_typeUnit)
     TextView tvTypeUnit;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;

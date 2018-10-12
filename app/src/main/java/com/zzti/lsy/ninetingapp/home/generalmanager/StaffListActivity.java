@@ -1,11 +1,16 @@
-package com.zzti.lsy.ninetingapp.home.parts;
+package com.zzti.lsy.ninetingapp.home.generalmanager;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -20,8 +25,8 @@ import com.zzti.lsy.ninetingapp.home.adapter.StaffAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
-import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
+import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,20 +38,22 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * author：anxin on 2018/9/30 16:14
- * 配件领用人适配器
+ * author：anxin on 2018/10/12 11:47
+ * 员工列表
  */
-public class PartsStaffListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
+public class StaffListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
+    @BindView(R.id.tv_projectName)
+    TextView tvProjectName;
     private List<StaffEntity> staffEntities;
     private StaffAdapter staffAdapter;
 
     @Override
     public int getContentViewId() {
-        return R.layout.activity_list;
+        return R.layout.activity_staff_list;
     }
 
     @Override
@@ -56,36 +63,27 @@ public class PartsStaffListActivity extends BaseActivity implements BaseQuickAda
     }
 
     private void initData() {
-        mRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        final String projectID = UIUtils.getStr4Intent(this, "projectID");
+        tvProjectName.setText(UIUtils.getStr4Intent(this, "projectName"));
         staffEntities = new ArrayList<>();
+        mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         staffAdapter = new StaffAdapter(staffEntities);
         mRecycleView.setAdapter(staffAdapter);
         staffAdapter.setOnItemClickListener(this);
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getStaff();
+                getStaffList(projectID);
             }
         });
         showDia();
-        getStaff();
+        getStaffList(projectID);
     }
 
-    private int tag;//1代表日用品出库获取领用人
-
-    private void initView() {
-        setTitle("员工列表");
-        mSmartRefreshLayout.setEnableLoadMore(false);
-        tag = UIUtils.getInt4Intent(this, "TAG");
-    }
-
-    /**
-     * 获取员工列表
-     */
-    private void getStaff() {
+    private void getStaffList(String projectID) {
         staffEntities.clear();
         HashMap<String, String> params = new HashMap<>();
-        params.put("projectID", spUtils.getString(SpUtils.PROJECTID,""));
+        params.put("projectID", projectID);
         OkHttpManager.postFormBody(Urls.PARTS_GETSTAFFLIST, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
@@ -120,20 +118,39 @@ public class PartsStaffListActivity extends BaseActivity implements BaseQuickAda
                 super.onFailed(code, msg, url);
                 cancelDia();
                 endRefresh(mSmartRefreshLayout);
-
             }
         });
     }
 
+    private void initView() {
+        setTitle("员工列表");
+        mSmartRefreshLayout.setEnableLoadMore(false);
+    }
+
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        if (tag == 1) {
-            StaffEntity staffEntity = staffEntities.get(position);
-            Intent intent = new Intent();
-            intent.putExtra("staffName", staffEntity.getStaffName());
-            intent.putExtra("staffID", staffEntity.getStaffID());
-            setResult(2, intent);
-            finish();
-        }
+        final String phoneNumber = staffEntities.get(position).getStaffPhoneNumber();
+        MAlertDialog.show(this, "提示", "是否拨打联系人" + staffEntities.get(position).getStaffName() + "的电话", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+            @Override
+            public void onConfirmClick(String msg) {
+                Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));//直接拨打电话
+                if (ActivityCompat.checkSelfPermission(StaffListActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                StaffListActivity.this.startActivity(dialIntent);
+            }
+
+            @Override
+            public void onCancelClick() {
+
+            }
+        }, true);
     }
 }

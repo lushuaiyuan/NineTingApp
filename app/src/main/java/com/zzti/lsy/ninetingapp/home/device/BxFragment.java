@@ -25,7 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,7 +33,7 @@ import butterknife.BindView;
  * 保险
  */
 public class BxFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;

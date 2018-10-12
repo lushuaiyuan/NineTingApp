@@ -55,7 +55,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     EditText etSearch;
     @BindView(R.id.tv_status)
     TextView tvStatus;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecyclerView;

@@ -25,16 +25,13 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.RepairCauseEntity;
 import com.zzti.lsy.ninetingapp.entity.RepairTypeEntity;
 import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
 import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
-import com.zzti.lsy.ninetingapp.home.adapter.RepairCauseAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairRecordAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairTypeAdapter;
-import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
@@ -67,7 +64,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     TextView tvHandleState;
     @BindView(R.id.tv_repairType)
     TextView tvRepairType;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;

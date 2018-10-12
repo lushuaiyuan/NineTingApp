@@ -44,7 +44,7 @@ import butterknife.OnClick;
  * 项目经理 operator 4
  */
 public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.tv_lookMore_ns)
     TextView tvLookMoreNs;

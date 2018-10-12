@@ -5,7 +5,6 @@ import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -19,7 +18,6 @@ import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.style.LineStyle;
 import com.bin.david.form.data.table.TableData;
 import com.bin.david.form.listener.OnColumnItemClickListener;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -28,8 +26,6 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.StatisticalList;
 import com.zzti.lsy.ninetingapp.event.C;
-import com.zzti.lsy.ninetingapp.home.pm.MaintenanceReportActivity;
-import com.zzti.lsy.ninetingapp.home.repair.RepairRecordDetailActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
@@ -53,7 +49,7 @@ import butterknife.BindView;
  * 生产表格
  */
 public class FormListActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.smartTable)
     SmartTable mSmartTable;

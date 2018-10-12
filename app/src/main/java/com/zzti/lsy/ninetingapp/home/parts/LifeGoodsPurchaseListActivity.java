@@ -23,7 +23,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
-import com.zzti.lsy.ninetingapp.entity.LaoBao;
 import com.zzti.lsy.ninetingapp.entity.LaobaoPurchased;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.event.C;
@@ -56,7 +55,7 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
     EditText etSearch;
     @BindView(R.id.tv_status)
     TextView tvStatus;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecyclerView;

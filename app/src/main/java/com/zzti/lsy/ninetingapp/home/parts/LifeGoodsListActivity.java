@@ -41,7 +41,7 @@ import butterknife.OnClick;
 public class LifeGoodsListActivity extends BaseActivity implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.et_search)
     EditText etSearch;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;

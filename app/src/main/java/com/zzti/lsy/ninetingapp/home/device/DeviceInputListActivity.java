@@ -24,7 +24,7 @@ import butterknife.BindView;
  * 设备入库列表
  */
 public class DeviceInputListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;

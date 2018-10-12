@@ -1,17 +1,46 @@
 package com.zzti.lsy.ninetingapp.entity;
 
+import java.io.Serializable;
+
 /**
  * 项目部
  */
-public class ProjectEntity {
+public class ProjectEntity implements Serializable{
     private String projectID;//项目编号
     private String projectName;//项目名称
     private String projectAddress;//项目地址
     private String pactID;//合同编号
     private String projectStartTime;//项目开工时间
-    private String projectManagerStaffID;//项目负责人
-    private String ProjectCaptainStaffID;//车队长
-    private String ProjectStatisticianStaffID;//统计员
+    private String projectManagerStaffID;///项目经理ID
+    private String ProjectCaptainStaffID;//项目车队长ID
+    private String ProjectStatisticianStaffID;//项目统计员ID
+    private String MangerName;//项目经理姓名
+    private String CartainName;//车队长姓名
+    private String StatisName;//统计员姓名
+
+    public String getMangerName() {
+        return MangerName;
+    }
+
+    public void setMangerName(String mangerName) {
+        MangerName = mangerName;
+    }
+
+    public String getCartainName() {
+        return CartainName;
+    }
+
+    public void setCartainName(String cartainName) {
+        CartainName = cartainName;
+    }
+
+    public String getStatisName() {
+        return StatisName;
+    }
+
+    public void setStatisName(String statisName) {
+        StatisName = statisName;
+    }
 
     public String getProjectID() {
         return projectID;

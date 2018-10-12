@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * 设备管理员
  */
 public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.recycleView_ns)
     RecyclerView mRecycleViewNs;

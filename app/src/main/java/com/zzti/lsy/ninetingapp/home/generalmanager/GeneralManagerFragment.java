@@ -43,7 +43,7 @@ import butterknife.OnClick;
  * 总经理 operator 5
  */
 public class GeneralManagerFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.tv_lookMore_ns)
     TextView tvLookMoreNs;
@@ -185,7 +185,7 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1://项目模块
-                UIUtils.showT("项目模块");
+                startActivity(new Intent(mActivity, ProjectListActivity.class));
                 break;
             case R.id.rl_menu2://收款模块
                 UIUtils.showT("收款模块");
