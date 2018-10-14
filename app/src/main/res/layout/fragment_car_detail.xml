@@ -91,7 +91,6 @@
                         android:id="@+id/tv_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableRight="@mipmap/icon_down_arrow"
                         android:gravity="right"
                         android:text="多大的"
                         android:textColor="@color/color_333333"

@@ -192,24 +192,24 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
                 startActivity(new Intent(mActivity, MapActivity.class));
                 break;
             case R.id.tv_address:
-                if (projectEntities.size() > 0) {
-                    //设置背景色
-                    setBackgroundAlpha(0.5f);
-                    if (projectEntities.size() >= 5) {
-                        //动态设置listView的高度
-                        View listItem = projectAdapter.getView(0, null, mListViewProject);
-                        listItem.measure(0, 0);
-                        int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
-                        mListViewProject.getLayoutParams().height = totalHei;
-                        ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
-                        params.height = totalHei;
-                        mListViewProject.setLayoutParams(params);
-                    }
-                    setBackgroundAlpha(0.5f);
-                    popupWindowProject.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
-                } else {
-                    UIUtils.showT(C.Constant.NODATA);
-                }
+//                if (projectEntities.size() > 0) {
+//                    //设置背景色
+//                    setBackgroundAlpha(0.5f);
+//                    if (projectEntities.size() >= 5) {
+//                        //动态设置listView的高度
+//                        View listItem = projectAdapter.getView(0, null, mListViewProject);
+//                        listItem.measure(0, 0);
+//                        int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
+//                        mListViewProject.getLayoutParams().height = totalHei;
+//                        ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
+//                        params.height = totalHei;
+//                        mListViewProject.setLayoutParams(params);
+//                    }
+//                    setBackgroundAlpha(0.5f);
+//                    popupWindowProject.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
+//                } else {
+//                    UIUtils.showT(C.Constant.NODATA);
+//                }
                 break;
             case R.id.btn_save:
                 if (StringUtil.isNullOrEmpty(projectID)) {

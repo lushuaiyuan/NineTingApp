@@ -386,7 +386,16 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 2) {
-            pactInfos.get(selcetPosition).setPactInMoney(data.getStringExtra("pactInMoney"));
+            String addMoney = data.getStringExtra("addMoney");
+            String pactInMoney = pactInfos.get(selcetPosition).getPactInMoney();
+            String pactOutMoney = pactInfos.get(selcetPosition).getPactOutMoney();
+
+            double v1 = Double.parseDouble(addMoney);
+            double v2 = Double.parseDouble(pactInMoney);
+            double v3 = Double.parseDouble(pactOutMoney);
+            pactInfos.get(selcetPosition).setPactInMoney(String.valueOf(v2 + v1));
+            pactInfos.get(selcetPosition).setPactOutMoney(String.valueOf(v3 - v1));
+
             pactListAdapter.notifyItemChanged(selcetPosition);
         }
     }

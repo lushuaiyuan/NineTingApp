@@ -76,7 +76,7 @@
                     android:id="@+id/tv_repairAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20"
+                    android:text="0"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dp18" />
 
@@ -113,7 +113,7 @@
                     android:id="@+id/tv_repairMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20"
+                    android:text="0"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dp18" />
 

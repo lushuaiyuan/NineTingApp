@@ -21,6 +21,7 @@ import com.zzti.lsy.ninetingapp.home.adapter.HomeBxAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
+import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsPurchaseListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsPurchaseListActivity;
 import com.zzti.lsy.ninetingapp.home.pm.MaintenanceStatisticActivity;
@@ -201,7 +202,9 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
 
                 break;
             case R.id.rl_menu6://生产统计
-                UIUtils.showT("生产统计");
+                Intent intent = new Intent(mActivity, DeviceListActivity.class);
+                intent.putExtra("FLAG", 4);
+                startActivity(intent);
                 break;
             case R.id.rl_menu7://维修统计
                 startActivity(new Intent(mActivity, MaintenanceStatisticActivity.class));

@@ -12,16 +12,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp300"
+            android:layout_height="@dimen/dp200"
             android:background="@mipmap/iv_mine">
 
-            <ImageView
-                android:id="@+id/iv_head"
-                android:layout_width="@dimen/dp80"
-                android:layout_height="@dimen/dp80"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp40"
-                android:background="@mipmap/iv_submit_success" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -29,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/iv_head"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp80"
                 android:text="罗罗诺亚·索隆"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/dp17" />

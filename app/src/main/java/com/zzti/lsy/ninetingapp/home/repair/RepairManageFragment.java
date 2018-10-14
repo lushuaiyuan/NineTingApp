@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
+import com.zzti.lsy.ninetingapp.home.pm.MaintenanceStatisticActivity;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import butterknife.OnClick;
@@ -41,8 +42,7 @@ public class RepairManageFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, RepairRecordActivity.class));
                 break;
             case R.id.rl_menu3://维修统计
-                //TODO
-                UIUtils.showT("维修统计");
+                startActivity(new Intent(mActivity, MaintenanceStatisticActivity.class));
                 break;
         }
     }

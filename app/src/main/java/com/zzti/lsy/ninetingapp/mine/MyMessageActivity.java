@@ -1,9 +1,7 @@
 package com.zzti.lsy.ninetingapp.mine;
 
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +16,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.zzti.lsy.ninetingapp.App;
-import com.zzti.lsy.ninetingapp.LoginActivity;
-import com.zzti.lsy.ninetingapp.MainActivity;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.StaffEntity;
@@ -32,12 +28,10 @@ import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * author：anxin on 2018/8/14 19:18
