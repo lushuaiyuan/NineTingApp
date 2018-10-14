@@ -159,15 +159,15 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_menu8"
                         style="@style/home_menubg"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:background="@drawable/home_menu4_selector"
-                        android:visibility="invisible">
+                        android:background="@drawable/home_menu4_selector">
 
                         <TextView
                             style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu2"
-                            android:text="生产统计" />
+                            android:drawableLeft="@mipmap/icon_menu3"
+                            android:text="收款模块" />
                     </RelativeLayout>
 
 
