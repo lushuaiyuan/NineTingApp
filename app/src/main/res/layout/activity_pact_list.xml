@@ -38,10 +38,113 @@
             android:background="@null"
             android:ellipsize="end"
             android:gravity="center"
-            android:hint="车牌号"
+            android:hint="请输入合同编号"
             android:maxLines="1"
             android:padding="@dimen/dp8"
             android:textSize="@dimen/dp13" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="@drawable/condition_white_shape"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_project"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@mipmap/icon_down_arrow"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="项目部"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp14" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="@dimen/dp1"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@color/color_e5e5e5" />
+
+        <RelativeLayout
+            android:id="@+id/rl_pactType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_pactType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@mipmap/icon_down_arrow"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="合同类型"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp14" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="@dimen/dp1"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@color/color_e5e5e5" />
+
+        <RelativeLayout
+            android:id="@+id/rl_pactSchedule"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_pactSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@mipmap/icon_down_arrow"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="合同进度"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp14" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/dp16" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

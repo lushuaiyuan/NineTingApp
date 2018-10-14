@@ -150,6 +150,7 @@ public class SuccessActivity extends BaseActivity {
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 } else if (tag == 9) {//总经理录入合同成功继续录入
                     Intent intent = new Intent(this, PactInputActivity.class);
+                    intent.putExtra("TAG", 0);//录入
                     startActivity(intent);
                     EventBus.getDefault().post(new EventMessage<>(C.EventCode.A, true));
                 }

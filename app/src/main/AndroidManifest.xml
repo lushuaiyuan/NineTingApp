@@ -214,7 +214,8 @@
         <!--合同列表-->
         <activity android:name=".home.generalmanager.PactListActivity" />
         <!--合同录入-->
-        <activity android:name=".home.generalmanager.PactInputActivity" />
+        <activity android:name=".home.generalmanager.PactInputActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <!--个人信息-->
         <activity android:name=".mine.MyMessageActivity" />

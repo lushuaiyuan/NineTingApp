@@ -16,6 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/color_white"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:gravity="center_horizontal"
@@ -39,6 +40,7 @@
                 android:id="@+id/tv_pactType"
                 style="@style/MyEditText"
                 android:hint="点击选择" />
+
             <TextView
                 style="@style/MyEditTextTitle"
                 android:text="项目部" />
@@ -47,6 +49,7 @@
                 android:id="@+id/tv_project"
                 style="@style/MyEditText"
                 android:hint="点击选择" />
+
             <TextView
                 style="@style/MyEditTextTitle"
                 android:text="合同进度" />

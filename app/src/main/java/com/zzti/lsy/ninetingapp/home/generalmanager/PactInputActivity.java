@@ -3,10 +3,12 @@ package com.zzti.lsy.ninetingapp.home.generalmanager;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -70,7 +72,8 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
     EditText etPactOutMoney;
     @BindView(R.id.et_pactTime)
     EditText etPactTime;
-
+    @BindView(R.id.btn_inputPact)
+    Button btnInputPact;
 
     private PopupWindow popupWindowPactType;
     private ListView lvPactType;
@@ -95,14 +98,39 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         initView();
-        initData();
+
     }
+
+    private int tag;
 
     private void initView() {
         setTitle("录入合同");
-        initPopPactType();
-        initPopPactSchedule();
-        initPop();
+        etPactInMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etPactMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etPactOutMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etPactRealMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        tag = UIUtils.getInt4Intent(this, "TAG");
+        if (tag == 0) {//录入
+            initPopPactType();
+            initPopPactSchedule();
+            initPop();
+            initData();
+            btnInputPact.setText("录入合同");
+        } else if (tag == 1) {//修改
+            btnInputPact.setText("修改");
+            PactInfo pactInfo = (PactInfo) getIntent().getSerializableExtra("PACTINFO");
+            setData(pactInfo);
+        }
+
+    }
+
+    /**
+     * 设置数据
+     *
+     * @param pactInfo
+     */
+    private void setData(PactInfo pactInfo) {
+
     }
 
     private void initPop() {
@@ -137,10 +165,11 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowPactSchedule = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowPactSchedule = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowPactSchedule.setFocusable(true);
         popupWindowPactSchedule.setOutsideTouchable(true);
         //设置消失监听
+        popupWindowPactSchedule.setOnDismissListener(this);
         popupWindowPactSchedule.setBackgroundDrawable(new ColorDrawable(0x00000000));
         contentview.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -169,7 +198,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         conditionAdapterPactSchedule.setTag(1);//背景色为黑色
         lvPactSchedule.setAdapter(conditionAdapterPactSchedule);
         lvPactSchedule.setOnItemClickListener(this);
-        popupWindowPactSchedule.setAnimationStyle(R.style.anim_upPop);
+        popupWindowPactSchedule.setAnimationStyle(R.style.anim_bottomPop);
     }
 
 
@@ -177,10 +206,11 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowPactType = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowPactType = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowPactType.setFocusable(true);
         popupWindowPactType.setOutsideTouchable(true);
         //设置消失监听
+        popupWindowPactType.setOnDismissListener(this);
         popupWindowPactType.setBackgroundDrawable(new ColorDrawable(0x00000000));
         contentview.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -206,7 +236,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         conditionAdapterPactType.setTag(1);
         lvPactType.setAdapter(conditionAdapterPactType);
         lvPactType.setOnItemClickListener(this);
-        popupWindowPactType.setAnimationStyle(R.style.anim_upPop);
+        popupWindowPactType.setAnimationStyle(R.style.anim_bottomPop);
     }
 
     private void initData() {

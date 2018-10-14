@@ -1,10 +1,12 @@
 package com.zzti.lsy.ninetingapp.entity;
 
+import java.io.Serializable;
+
 /**
  * author：anxin on 2018/10/12 19:17
  * 合同实体类
  */
-public class PactInfo {
+public class PactInfo implements Serializable {
     private String pactID;//合同编号
     private String pactType;//合同类型
     private String pactContent;//合同简介

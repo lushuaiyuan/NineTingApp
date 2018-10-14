@@ -27,12 +27,14 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.CarStatusEntity;
 import com.zzti.lsy.ninetingapp.entity.CarTypeEntity;
+import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.CarStatusAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.CarTypeAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.DeviceListAdapter;
 import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAdapter;
@@ -102,8 +104,8 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     //项目部
     private PopupWindow popupWindowProject;
     private ListView mListViewProject;
-    private ProjectAdapter projectAdapter;
-    private List<ProjectEntity> projectEntities;
+    private ConditionAdapter projectAdapter;
+    private List<ConditionEntity> projectEntities;
 
     private DeviceListAdapter deviceListAdapter;
     private List<CarInfoEntity> carInfoEntities;
@@ -157,7 +159,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         });
         mListViewProject = contentview.findViewById(R.id.pop_list);
         projectEntities = new ArrayList<>();
-        projectAdapter = new ProjectAdapter(projectEntities);
+        projectAdapter = new ConditionAdapter(projectEntities);
         mListViewProject.setAdapter(projectAdapter);
         mListViewProject.setOnItemClickListener(this);
         popupWindowProject.setAnimationStyle(R.style.anim_bottomPop);
@@ -433,7 +435,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                         params.height = totalHei;
                         mListViewProject.setLayoutParams(params);
                     }
-                    popupWindowProject.showAtLocation(rlProject, Gravity.BOTTOM, 0, 0);
+                    popupWindowProject.showAsDropDown(rlProject, 0, 0, Gravity.LEFT);
                 } else {
                     UIUtils.showT("暂无数据");
                 }
@@ -534,7 +536,10 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
-                            projectEntities.add(projectEntity);
+                            ConditionEntity conditionEntity = new ConditionEntity();
+                            conditionEntity.setId(projectEntity.getPactID());
+                            conditionEntity.setName(projectEntity.getProjectName());
+                            projectEntities.add(conditionEntity);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -588,9 +593,9 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
             }
             popupWindowCarType.dismiss();
         } else if (type == 3) {
-            tvProject.setText(projectEntities.get(i).getProjectName());
-            projectID = projectEntities.get(i).getProjectID();
-            wherestr += " and projectID=" + projectEntities.get(i).getProjectID();
+            tvProject.setText(projectEntities.get(i).getName());
+            projectID = projectEntities.get(i).getId();
+            wherestr += " and projectID=" + projectID;
             if (!StringUtil.isNullOrEmpty(status)) {
                 wherestr += " and status=" + status;
             }
