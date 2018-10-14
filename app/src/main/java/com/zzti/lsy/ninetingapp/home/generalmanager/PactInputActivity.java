@@ -68,6 +68,8 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
     EditText etPactRealMoney;
     @BindView(R.id.et_pactInMoney)
     EditText etPactInMoney;
+    @BindView(R.id.tv_hint)
+    TextView tvHint;
     @BindView(R.id.et_pactOutMoney)
     EditText etPactOutMoney;
     @BindView(R.id.et_pactTime)
@@ -118,6 +120,16 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
             btnInputPact.setText("录入合同");
         } else if (tag == 1) {//修改
             btnInputPact.setText("修改");
+            tvPactType.setEnabled(false);
+            tvPactSchedule.setEnabled(false);
+            tvProject.setEnabled(false);
+            etPactRealMoney.setEnabled(false);
+            etPactOutMoney.setEnabled(false);
+            etPactContent.setEnabled(false);
+            etPactMoney.setEnabled(false);
+            etPactID.setEnabled(false);
+            tvHint.setVisibility(View.VISIBLE);
+            etPactTime.setEnabled(false);
             PactInfo pactInfo = (PactInfo) getIntent().getSerializableExtra("PACTINFO");
             setData(pactInfo);
         }
@@ -130,8 +142,20 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
      * @param pactInfo
      */
     private void setData(PactInfo pactInfo) {
-
+        tvProject.setText(pactInfo.getProjectName());
+        tvPactSchedule.setText(pactInfo.getPactSchedule());
+        tvPactType.setText(pactInfo.getPactType());
+        etPactMoney.setText(pactInfo.getPactMoney());
+        etPactTime.setText(pactInfo.getPactTime());
+        etPactID.setText(pactInfo.getPactID());
+        etPactInMoney.setText(pactInfo.getPactInMoney());
+        etPactContent.setText(pactInfo.getPactContent());
+        etPactOutMoney.setText(pactInfo.getPactOutMoney());
+        etPactRealMoney.setText(pactInfo.getPactRealMoney());
+        pactInMoney = etPactInMoney.getText().toString();
     }
+
+    private String pactInMoney;
 
     private void initPop() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
@@ -297,62 +321,104 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                 popupWindowPactSchedule.showAtLocation(etPactContent, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.btn_inputPact://录入合同
-                if (StringUtil.isNullOrEmpty(etPactID.getText().toString())) {
-                    UIUtils.showT("合同编号不能为空");
-                    break;
-                }
-                if (StringUtil.isNullOrEmpty(tvPactType.getText().toString())) {
-                    UIUtils.showT("合同类型不能为空");
-                    break;
-                }
-                if (StringUtil.isNullOrEmpty(tvProject.getText().toString())) {
-                    UIUtils.showT("项目部不能为空");
-                    break;
-                }
-                if (StringUtil.isNullOrEmpty(tvPactSchedule.getText().toString())) {
-                    UIUtils.showT("合同进度不能为空");
-                    break;
-                }
-                if (StringUtil.isNullOrEmpty(etPactContent.getText().toString())) {
-                    UIUtils.showT("合同简介不能为空");
-                    break;
-                }
+                if (tag == 0) {//录入合同
+                    if (StringUtil.isNullOrEmpty(etPactID.getText().toString())) {
+                        UIUtils.showT("合同编号不能为空");
+                        break;
+                    }
+                    if (StringUtil.isNullOrEmpty(tvPactType.getText().toString())) {
+                        UIUtils.showT("合同类型不能为空");
+                        break;
+                    }
+                    if (StringUtil.isNullOrEmpty(tvProject.getText().toString())) {
+                        UIUtils.showT("项目部不能为空");
+                        break;
+                    }
+                    if (StringUtil.isNullOrEmpty(tvPactSchedule.getText().toString())) {
+                        UIUtils.showT("合同进度不能为空");
+                        break;
+                    }
+                    if (StringUtil.isNullOrEmpty(etPactContent.getText().toString())) {
+                        UIUtils.showT("合同简介不能为空");
+                        break;
+                    }
 
-                if (StringUtil.isNullOrEmpty(etPactMoney.getText().toString())) {
-                    UIUtils.showT("合同总金额不能为空");
-                    break;
+                    if (StringUtil.isNullOrEmpty(etPactMoney.getText().toString())) {
+                        UIUtils.showT("合同总金额不能为空");
+                        break;
+                    }
+                    if (StringUtil.isNullOrEmpty(etPactRealMoney.getText().toString())) {
+                        UIUtils.showT("合同应收金额不能为空");
+                        break;
+                    }
+                    if (StringUtil.isNullOrEmpty(etPactInMoney.getText().toString())) {
+                        UIUtils.showT("合同已收金额不能为空");
+                        break;
+                    }
+                    if (StringUtil.isNullOrEmpty(etPactOutMoney.getText().toString())) {
+                        UIUtils.showT("合同未收金额不能为空");
+                        break;
+                    }
+                    if (StringUtil.isNullOrEmpty(etPactTime.getText().toString())) {
+                        UIUtils.showT("合同周期不能为空");
+                        break;
+                    }
+                    PactInfo pactInfo = new PactInfo();
+                    pactInfo.setPactID(etPactID.getText().toString());
+                    pactInfo.setPactContent(etPactContent.getText().toString());
+                    pactInfo.setPactMoney(etPactMoney.getText().toString());
+                    pactInfo.setPactInMoney(etPactInMoney.getText().toString());
+                    pactInfo.setPactOutMoney(etPactOutMoney.getText().toString());
+                    pactInfo.setPactTime(etPactTime.getText().toString());
+                    pactInfo.setPactRealMoney(etPactRealMoney.getText().toString());
+                    pactInfo.setPactSchedule(tvPactSchedule.getText().toString());
+                    pactInfo.setPactType(tvPactType.getText().toString());
+                    pactInfo.setProjectID(projectID);
+                    showDia();
+                    submitPact(pactInfo);
+                } else if (tag == 1) {//修改合同
+                    alertPact();
                 }
-                if (StringUtil.isNullOrEmpty(etPactRealMoney.getText().toString())) {
-                    UIUtils.showT("合同应收金额不能为空");
-                    break;
-                }
-                if (StringUtil.isNullOrEmpty(etPactInMoney.getText().toString())) {
-                    UIUtils.showT("合同已收金额不能为空");
-                    break;
-                }
-                if (StringUtil.isNullOrEmpty(etPactOutMoney.getText().toString())) {
-                    UIUtils.showT("合同未收金额不能为空");
-                    break;
-                }
-                if (StringUtil.isNullOrEmpty(etPactTime.getText().toString())) {
-                    UIUtils.showT("合同周期不能为空");
-                    break;
-                }
-                PactInfo pactInfo = new PactInfo();
-                pactInfo.setPactID(etPactID.getText().toString());
-                pactInfo.setPactContent(etPactContent.getText().toString());
-                pactInfo.setPactMoney(etPactMoney.getText().toString());
-                pactInfo.setPactInMoney(etPactInMoney.getText().toString());
-                pactInfo.setPactOutMoney(etPactOutMoney.getText().toString());
-                pactInfo.setPactTime(etPactTime.getText().toString());
-                pactInfo.setPactRealMoney(etPactRealMoney.getText().toString());
-                pactInfo.setPactSchedule(tvPactSchedule.getText().toString());
-                pactInfo.setPactType(tvPactType.getText().toString());
-                pactInfo.setProjectID(projectID);
-                showDia();
-                submitPact(pactInfo);
                 break;
         }
+    }
+
+
+    /**
+     * 更新合同
+     */
+    private void alertPact() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("pactID", etPactID.getText().toString());
+        params.put("addMoney", etPactInMoney.getText().toString());
+        OkHttpManager.postFormBody(Urls.ADMIN_UPDATEPACT, params, tvPactSchedule, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    Intent intent = new Intent();
+                    intent.putExtra("pactInMoney", String.valueOf(Double.parseDouble(pactInMoney) + Double.parseDouble(etPactInMoney.getText().toString())));
+                    setResult(2, intent);
+                    finish();
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
     }
 
     /**

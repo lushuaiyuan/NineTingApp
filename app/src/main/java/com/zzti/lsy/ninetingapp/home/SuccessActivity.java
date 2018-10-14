@@ -99,7 +99,9 @@ public class SuccessActivity extends BaseActivity {
         } else if (tag == 8) {
             setTitle("出库结果");
             tvMessage.setText("出库成功");
-            btnSolid.setText("查看出库详情");
+            //TODO
+            btnSolid.setVisibility(View.GONE);
+//            btnSolid.setText("查看出库详情");
             btnEmpty.setText("查看出库列表");
         } else if (tag == 9) {//合同
             setTitle("录入结果");

@@ -371,12 +371,24 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
         }
     }
 
+    private int selcetPosition;
+
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        selcetPosition = position;
         Intent intent = new Intent(this, PactInputActivity.class);
         intent.putExtra("TAG", 1);//修改
         intent.putExtra("PACTINFO", pactInfos.get(position));
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            pactInfos.get(selcetPosition).setPactInMoney(data.getStringExtra("pactInMoney"));
+            pactListAdapter.notifyItemChanged(selcetPosition);
+        }
     }
 
     private int type;

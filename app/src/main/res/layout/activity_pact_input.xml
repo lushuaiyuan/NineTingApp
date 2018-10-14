@@ -92,10 +92,45 @@
                 style="@style/MyEditTextTitle"
                 android:text="合同已收款" />
 
-            <EditText
-                android:id="@+id/et_pactInMoney"
-                style="@style/MyEditText"
-                android:hint="请输入合同应已收款" />
+            <RelativeLayout
+                android:id="@+id/rl_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/select_shape">
+
+                <EditText
+                    android:id="@+id/et_pactInMoney"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="请输入合同应已收款"
+                    android:maxLines="1"
+                    android:padding="@dimen/dp10"
+                    android:paddingLeft="@dimen/dp20"
+                    android:paddingRight="@dimen/dp20"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="可修改"
+                    android:visibility="gone"
+                    android:textColor="@color/color_6bcfd7"
+                    android:textSize="@dimen/dp13" />
+
+
+            </RelativeLayout>
+
 
             <TextView
                 style="@style/MyEditTextTitle"
