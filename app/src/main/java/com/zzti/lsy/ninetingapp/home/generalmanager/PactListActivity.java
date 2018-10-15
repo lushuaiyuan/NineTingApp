@@ -442,6 +442,7 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
                     break;
                 }
                 wherestr = "";
+                pageIndex = 1;
                 if (!StringUtil.isNullOrEmpty(pactType)) {
                     wherestr += " and pactType=\'" + pactType + "\'";
                 }
@@ -476,6 +477,7 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wherestr = "";
+        pageIndex = 1;
         if (type == 1) {
             projectID = projectEntities.get(i).getId();
             tvProject.setText(projectEntities.get(i).getName());

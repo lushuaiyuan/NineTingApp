@@ -416,6 +416,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                     break;
                 }
                 wherestr = "";
+                pageIndex = 1;
                 if (!StringUtil.isNullOrEmpty(CarTypeID)) {
                     wherestr += " and CarTypeID=" + CarTypeID;
                 }
@@ -578,6 +579,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wherestr = "";
+        pageIndex = 1;
         if (type == 1) {
             tvCarStatus.setText(carStatusEntities.get(i).getName());
             status = carStatusEntities.get(i).getId();

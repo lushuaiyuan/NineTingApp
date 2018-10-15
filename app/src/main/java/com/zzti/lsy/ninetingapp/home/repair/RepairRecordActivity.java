@@ -257,6 +257,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
                     UIUtils.showT("车牌号格式不正确");
                     break;
                 }
+                pageIndex = 1;
                 wherestr += " and plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
                 showDia();
                 repairinfoEntities.clear();
@@ -372,6 +373,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wherestr = "";
+        pageIndex = 1;
         if (condition == 1) {//处理状态
             tvHandleState.setText(conditions.get(i).getName());
             statusID = conditions.get(i).getId();
