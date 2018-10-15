@@ -387,7 +387,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
             repairTypeID = repairTypeEntities.get(i).getTypeID();
             wherestr += " and repairTypeID=" + repairTypeID;
             if (!StringUtil.isNullOrEmpty(statusID)) {
-                wherestr += " and statusID=" + statusID;
+                wherestr += " and status=" + statusID;
             }
             popupWindowRepairType.dismiss();
             showDia();
