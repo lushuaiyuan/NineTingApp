@@ -263,6 +263,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
                 getRecord();
                 break;
             case R.id.rl_handleState://处理状态
+                condition = 1;
                 popupWindowStatus.showAsDropDown(rlHandleState, 0, 0, Gravity.LEFT);
                 break;
             case R.id.rl_repairType://维修类型
@@ -382,7 +383,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
             showDia();
             repairinfoEntities.clear();
             getRecord();
-        } else if (condition == 2) {//车辆状态
+        } else if (condition == 2) {//维修类型
             tvRepairType.setText(repairTypeEntities.get(i).getTypeName());
             repairTypeID = repairTypeEntities.get(i).getTypeID();
             wherestr += " and repairTypeID=" + repairTypeID;

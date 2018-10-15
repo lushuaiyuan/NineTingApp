@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -36,6 +37,7 @@ import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
+import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,10 +68,12 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
     EditText etPactMoney;
     @BindView(R.id.et_pactRealMoney)
     EditText etPactRealMoney;
+    @BindView(R.id.ll_addMoney)
+    LinearLayout llAddMoney;
+    @BindView(R.id.et_addMoney)
+    EditText etAddMoney;
     @BindView(R.id.et_pactInMoney)
     EditText etPactInMoney;
-    @BindView(R.id.tv_hint)
-    TextView tvHint;
     @BindView(R.id.et_pactOutMoney)
     EditText etPactOutMoney;
     @BindView(R.id.et_pactTime)
@@ -111,6 +115,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         etPactMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etPactOutMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etPactRealMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etAddMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         tag = UIUtils.getInt4Intent(this, "TAG");
         if (tag == 0) {//录入
             initPopPactType();
@@ -128,7 +133,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
             etPactContent.setEnabled(false);
             etPactMoney.setEnabled(false);
             etPactID.setEnabled(false);
-            tvHint.setVisibility(View.VISIBLE);
+            llAddMoney.setVisibility(View.VISIBLE);
             etPactTime.setEnabled(false);
             PactInfo pactInfo = (PactInfo) getIntent().getSerializableExtra("PACTINFO");
             setData(pactInfo);
@@ -152,10 +157,8 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         etPactContent.setText(pactInfo.getPactContent());
         etPactOutMoney.setText(pactInfo.getPactOutMoney());
         etPactRealMoney.setText(pactInfo.getPactRealMoney());
-        pactInMoney = etPactInMoney.getText().toString();
     }
 
-    private String pactInMoney;
 
     private void initPop() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
@@ -284,9 +287,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
-                            if (!projectEntity.getProjectID().equals(spUtils.getString(SpUtils.PROJECTID, ""))) {
-                                projectEntities.add(projectEntity);
-                            }
+                            projectEntities.add(projectEntity);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -377,7 +378,23 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                     showDia();
                     submitPact(pactInfo);
                 } else if (tag == 1) {//修改合同
-                    alertPact();
+                    if (StringUtil.isNullOrEmpty(etAddMoney.getText().toString())) {
+                        UIUtils.showT("本次收款不能为空");
+                        break;
+                    }
+                    MAlertDialog.show(this, "提示", "是否确认已收款" + etAddMoney.getText().toString() + "元？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                        @Override
+                        public void onConfirmClick(String msg) {
+                            showDia();
+                            alertPact();
+                        }
+
+                        @Override
+                        public void onCancelClick() {
+
+                        }
+                    }, true);
+
                 }
                 break;
         }
@@ -403,7 +420,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     Intent intent = new Intent();
-                    intent.putExtra("pactInMoney", String.valueOf(Double.parseDouble(pactInMoney) + Double.parseDouble(etPactInMoney.getText().toString())));
+                    intent.putExtra("addMoney", etAddMoney.getText().toString());
                     setResult(2, intent);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
