@@ -257,12 +257,14 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
                     UIUtils.showT("车牌号格式不正确");
                     break;
                 }
+                pageIndex = 1;
                 wherestr += " and plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
                 showDia();
                 repairinfoEntities.clear();
                 getRecord();
                 break;
             case R.id.rl_handleState://处理状态
+                condition = 1;
                 popupWindowStatus.showAsDropDown(rlHandleState, 0, 0, Gravity.LEFT);
                 break;
             case R.id.rl_repairType://维修类型
@@ -371,6 +373,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wherestr = "";
+        pageIndex = 1;
         if (condition == 1) {//处理状态
             tvHandleState.setText(conditions.get(i).getName());
             statusID = conditions.get(i).getId();
@@ -382,12 +385,12 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
             showDia();
             repairinfoEntities.clear();
             getRecord();
-        } else if (condition == 2) {//车辆状态
+        } else if (condition == 2) {//维修类型
             tvRepairType.setText(repairTypeEntities.get(i).getTypeName());
             repairTypeID = repairTypeEntities.get(i).getTypeID();
             wherestr += " and repairTypeID=" + repairTypeID;
             if (!StringUtil.isNullOrEmpty(statusID)) {
-                wherestr += " and statusID=" + statusID;
+                wherestr += " and status=" + statusID;
             }
             popupWindowRepairType.dismiss();
             showDia();

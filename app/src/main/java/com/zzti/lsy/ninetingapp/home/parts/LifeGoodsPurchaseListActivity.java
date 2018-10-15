@@ -181,6 +181,7 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
                     break;
                 }
                 wherestr = "";
+                pageIndex = 1;
                 if (!StringUtil.isNullOrEmpty(status)) {
                     wherestr += " and status=" + status;
                 }
@@ -200,6 +201,7 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wherestr = "";
+        pageIndex = 1;
         tvStatus.setText(conditions.get(i).getName());
         status = conditions.get(i).getId();
         wherestr += " and status=" + status;

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -67,12 +68,12 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
     EditText etPactMoney;
     @BindView(R.id.et_pactRealMoney)
     EditText etPactRealMoney;
+    @BindView(R.id.ll_addMoney)
+    LinearLayout llAddMoney;
+    @BindView(R.id.et_addMoney)
+    EditText etAddMoney;
     @BindView(R.id.et_pactInMoney)
     EditText etPactInMoney;
-    @BindView(R.id.ll_inputMoney)
-    LinearLayout llInputMoney;
-    @BindView(R.id.et_inputMoney)
-    EditText etInputMoney;
     @BindView(R.id.et_pactOutMoney)
     EditText etPactOutMoney;
     @BindView(R.id.et_pactTime)
@@ -114,7 +115,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         etPactMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etPactOutMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etPactRealMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        etInputMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etAddMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         tag = UIUtils.getInt4Intent(this, "TAG");
         if (tag == 0) {//录入
             initPopPactType();
@@ -132,7 +133,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
             etPactContent.setEnabled(false);
             etPactMoney.setEnabled(false);
             etPactID.setEnabled(false);
-            llInputMoney.setVisibility(View.VISIBLE);
+            llAddMoney.setVisibility(View.VISIBLE);
             etPactTime.setEnabled(false);
             PactInfo pactInfo = (PactInfo) getIntent().getSerializableExtra("PACTINFO");
             setData(pactInfo);
@@ -156,10 +157,8 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         etPactContent.setText(pactInfo.getPactContent());
         etPactOutMoney.setText(pactInfo.getPactOutMoney());
         etPactRealMoney.setText(pactInfo.getPactRealMoney());
-//        pactInMoney = etPactInMoney.getText().toString();
     }
 
-//    private String pactInMoney;
 
     private void initPop() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
@@ -379,11 +378,11 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                     showDia();
                     submitPact(pactInfo);
                 } else if (tag == 1) {//修改合同
-                    if (StringUtil.isNullOrEmpty(etInputMoney.getText().toString())) {
-                        UIUtils.showT("本次收款金额不能为空");
+                    if (StringUtil.isNullOrEmpty(etAddMoney.getText().toString())) {
+                        UIUtils.showT("本次收款不能为空");
                         break;
                     }
-                    MAlertDialog.show(this, "提示", "是否确认已收款" + etInputMoney.getText().toString() + "元？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                    MAlertDialog.show(this, "提示", "是否确认已收款" + etAddMoney.getText().toString() + "元？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
                         @Override
                         public void onConfirmClick(String msg) {
                             showDia();
@@ -408,7 +407,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
     private void alertPact() {
         HashMap<String, String> params = new HashMap<>();
         params.put("pactID", etPactID.getText().toString());
-        params.put("addMoney", etInputMoney.getText().toString());
+        params.put("addMoney", etPactInMoney.getText().toString());
         OkHttpManager.postFormBody(Urls.ADMIN_UPDATEPACT, params, tvPactSchedule, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
@@ -421,7 +420,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     Intent intent = new Intent();
-                    intent.putExtra("addMoney", etInputMoney.getText().toString());
+                    intent.putExtra("addMoney", etAddMoney.getText().toString());
                     setResult(2, intent);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {

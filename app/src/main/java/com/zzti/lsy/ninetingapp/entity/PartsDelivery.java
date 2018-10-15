@@ -14,6 +14,7 @@ public class PartsDelivery {
     private String PartsID; ///配件编号 用户选择
     private String formProject;///当前项目部编号 无需填写
     private String userID;//经手人ID
+    private String staffName;//经手人
     private String projectName;
     private String outProject;
     private String psName;
@@ -22,6 +23,14 @@ public class PartsDelivery {
     private String FactoryName;
     private String purpose;//用途
     private String userName;//经手人名称
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
 
     public String getUserName() {
         return userName;

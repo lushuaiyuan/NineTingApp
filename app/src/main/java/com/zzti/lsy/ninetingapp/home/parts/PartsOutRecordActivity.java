@@ -146,7 +146,7 @@ public class PartsOutRecordActivity extends BaseActivity {
         Column<String> column2 = new Column<>("配件型号", "partsModel");
         Column<String> column3 = new Column<>("出库项目部", "outProject");
         Column<String> column4 = new Column<>("目的项目部", "projectName");
-        Column<String> column5 = new Column<>("经手人", "userID");
+        Column<String> column5 = new Column<>("经手人", "staffName");
         Column<String> column6 = new Column<>("出库时间", "pdDate");
         Column<String> column7 = new Column<>("出库数量", "pdNumber");
         Column<String> column8 = new Column<>("用途", "purpose");

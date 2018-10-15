@@ -92,10 +92,12 @@
                 style="@style/MyEditTextTitle"
                 android:text="合同已收款" />
 
+
             <EditText
                 android:id="@+id/et_pactInMoney"
                 style="@style/MyEditText"
                 android:hint="请输入合同应已收款" />
+
 
             <TextView
                 style="@style/MyEditTextTitle"
@@ -107,7 +109,7 @@
                 android:hint="请输入合同应未收款" />
 
             <LinearLayout
-                android:id="@+id/ll_inputMoney"
+                android:id="@+id/ll_addMoney"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -116,12 +118,12 @@
 
                 <TextView
                     style="@style/MyEditTextTitle"
-                    android:text="本次收款" />
+                    android:text="本次已收款" />
 
                 <EditText
-                    android:id="@+id/et_inputMoney"
+                    android:id="@+id/et_addMoney"
                     style="@style/MyEditText"
-                    android:hint="请输入本次收款金额" />
+                    android:hint="请输入本次已收款" />
             </LinearLayout>
 
             <TextView

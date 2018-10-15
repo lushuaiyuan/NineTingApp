@@ -15,6 +15,14 @@
             android:layout_height="@dimen/dp200"
             android:background="@mipmap/iv_mine">
 
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="@dimen/dp80"
+                android:layout_height="@dimen/dp80"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp40"
+                android:background="@mipmap/iv_submit_success"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_name"

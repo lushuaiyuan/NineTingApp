@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
 import com.zzti.lsy.ninetingapp.App;
+import com.zzti.lsy.ninetingapp.LoginActivity;
+import com.zzti.lsy.ninetingapp.MainActivity;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.StaffEntity;
@@ -27,6 +27,9 @@ import com.zzti.lsy.ninetingapp.photo.TakePhotoActivity;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
+
+import org.devio.takephoto.model.TImage;
+import org.devio.takephoto.model.TResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -4,11 +4,16 @@ import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
 
-import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.compress.CompressConfig;
-import com.jph.takephoto.model.CropOptions;
-import com.jph.takephoto.model.TakePhotoOptions;
+//import com.jph.takephoto.app.TakePhoto;
+//import com.jph.takephoto.compress.CompressConfig;
+//import com.jph.takephoto.model.CropOptions;
+//import com.jph.takephoto.model.TakePhotoOptions;
 import com.zzti.lsy.ninetingapp.R;
+
+import org.devio.takephoto.app.TakePhoto;
+import org.devio.takephoto.compress.CompressConfig;
+import org.devio.takephoto.model.CropOptions;
+import org.devio.takephoto.model.TakePhotoOptions;
 
 import java.io.File;
 

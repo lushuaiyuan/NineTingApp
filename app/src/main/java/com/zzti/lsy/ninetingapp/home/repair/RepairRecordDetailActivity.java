@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
@@ -19,9 +21,11 @@ import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.entity.RequiredParts;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.photo.PhotoActivity;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
+import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
@@ -39,7 +43,7 @@ import butterknife.OnClick;
 /**
  * 维修记录详情
  */
-public class RepairRecordDetailActivity extends BaseActivity {
+public class RepairRecordDetailActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.tv_carNumber)
     TextView tvCarNumber;
     @BindView(R.id.tv_projectAddress)
@@ -150,6 +154,7 @@ public class RepairRecordDetailActivity extends BaseActivity {
             pics.remove(3);
         }
         photoAdapter = new PhotoAdapter(pics);
+        photoAdapter.setOnItemClickListener(this);
         recyclerViewPhoto.setAdapter(photoAdapter);
         setData(repairinfoEntity);
 
@@ -345,6 +350,15 @@ public class RepairRecordDetailActivity extends BaseActivity {
                 cancelDia();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        if (!StringUtil.isNullOrEmpty(pics.get(position))) {
+            Intent intent = new Intent(this, PhotoActivity.class);
+            intent.putExtra("url", pics.get(position));
+            startActivity(intent);
+        }
     }
 }
 

@@ -15,6 +15,7 @@ import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -87,21 +88,22 @@ public class OneCarProDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(String s) {
                 cancelDia();
+                DecimalFormat df = new DecimalFormat("0.0");
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     RecordEntity recordEntity = ParseUtils.parseJson(msgInfo.getData(), RecordEntity.class);
                     //总
                     tvTotalProAmount.setText(recordEntity.getZsquarequantity());
                     tvTotalOilMass.setText(recordEntity.getZqilwear());
-                    tvTotalRatio.setText(String.valueOf(Double.parseDouble(recordEntity.getZratio()) * 100));
+                    tvTotalRatio.setText(String.valueOf(df.format(Double.parseDouble(recordEntity.getZratio()) * 100)));
                     //月
                     tvMonthProAmount.setText(recordEntity.getMsquarequantity());
                     tvMonthOilMass.setText(recordEntity.getMqilwear());
-                    tvMonthRatio.setText(String.valueOf(Double.parseDouble(recordEntity.getMratio()) * 100));
+                    tvMonthRatio.setText(String.valueOf(df.format(Double.parseDouble(recordEntity.getMratio()) * 100)));
                     //日
                     tvTodayProAmount.setText(recordEntity.getSquareQuantity());
                     tvTodayOilMass.setText(recordEntity.getQilWear());
-                    tvTodayRatio.setText(String.valueOf(Double.parseDouble(recordEntity.getRatio()) * 100));
+                    tvTodayRatio.setText(String.valueOf(df.format(Double.parseDouble(recordEntity.getRatio()) * 100)));
 
                     //昨天的
                     if (StringUtil.isNullOrEmpty(recordEntity.getTsquarequantity())) {
@@ -117,7 +119,7 @@ public class OneCarProDetailActivity extends BaseActivity {
                     if (StringUtil.isNullOrEmpty(recordEntity.getTratio())) {
                         tvYesterDayRatio.setText("0%");
                     } else {
-                        tvYesterDayRatio.setText(recordEntity.getTratio() + "%");
+                        tvYesterDayRatio.setText((String.valueOf(df.format(Double.parseDouble(recordEntity.getTratio()) * 100))) + "%");
                     }
 
                     //今天的方量大于昨天的

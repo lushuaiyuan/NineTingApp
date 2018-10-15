@@ -143,7 +143,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowProject = new PopupWindow(contentview, UIUtils.getWidth(this) - DensityUtils.dp2px(32), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowProject = new PopupWindow(contentview, UIUtils.getWidth(this) / 3 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowProject.setFocusable(true);
         popupWindowProject.setOutsideTouchable(true);
         popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -162,14 +162,18 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         projectAdapter = new ConditionAdapter(projectEntities);
         mListViewProject.setAdapter(projectAdapter);
         mListViewProject.setOnItemClickListener(this);
-        popupWindowProject.setAnimationStyle(R.style.anim_bottomPop);
+        popupWindowProject.setAnimationStyle(R.style.anim_upPop);
     }
 
     private void initCarTypePop() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        if (rlProject.getVisibility() == View.VISIBLE) {
+            popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(this) / 3 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        } else {
+            popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        }
         popupWindowCarType.setFocusable(true);
         popupWindowCarType.setOutsideTouchable(true);
         popupWindowCarType.setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -196,7 +200,11 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        if (rlProject.getVisibility() == View.VISIBLE) {
+            popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(this) / 3 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        } else {
+            popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        }
         popupWindowCarStatus.setFocusable(true);
         popupWindowCarStatus.setOutsideTouchable(true);
         popupWindowCarStatus.setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -408,6 +416,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                     break;
                 }
                 wherestr = "";
+                pageIndex = 1;
                 if (!StringUtil.isNullOrEmpty(CarTypeID)) {
                     wherestr += " and CarTypeID=" + CarTypeID;
                 }
@@ -537,7 +546,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
                         for (int i = 0; i < jsonArray.length(); i++) {
                             ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
                             ConditionEntity conditionEntity = new ConditionEntity();
-                            conditionEntity.setId(projectEntity.getPactID());
+                            conditionEntity.setId(projectEntity.getProjectID());
                             conditionEntity.setName(projectEntity.getProjectName());
                             projectEntities.add(conditionEntity);
                         }
@@ -570,6 +579,7 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wherestr = "";
+        pageIndex = 1;
         if (type == 1) {
             tvCarStatus.setText(carStatusEntities.get(i).getName());
             status = carStatusEntities.get(i).getId();

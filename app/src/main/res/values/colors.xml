@@ -35,5 +35,5 @@
     <color name="color_ffa9d76f">#FFA9D76F</color>
     <color name="color_red">#FF0000</color>
     <color name="translucence">#80000000</color>
-
+    <color name="multiple_image_select_primaryDark">#212121</color>
 </resources>

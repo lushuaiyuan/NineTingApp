@@ -220,6 +220,7 @@
         <!--个人信息-->
         <activity android:name=".mine.MyMessageActivity" />
         <activity android:name=".home.production.StatisticDetailActivity" />
+        <activity android:name=".photo.PhotoActivity" />
 
 
     </application>

@@ -386,16 +386,12 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 2) {
-            String addMoney = data.getStringExtra("addMoney");
-            String pactInMoney = pactInfos.get(selcetPosition).getPactInMoney();
-            String pactOutMoney = pactInfos.get(selcetPosition).getPactOutMoney();
+            double addMoney = Double.parseDouble(data.getStringExtra("addMoney"));
+            double pactInMoney = Double.parseDouble(pactInfos.get(selcetPosition).getPactInMoney());
+            double pactOutMoney = Double.parseDouble(pactInfos.get(selcetPosition).getPactOutMoney());
 
-            double v1 = Double.parseDouble(addMoney);
-            double v2 = Double.parseDouble(pactInMoney);
-            double v3 = Double.parseDouble(pactOutMoney);
-            pactInfos.get(selcetPosition).setPactInMoney(String.valueOf(v2 + v1));
-            pactInfos.get(selcetPosition).setPactOutMoney(String.valueOf(v3 - v1));
-
+            pactInfos.get(selcetPosition).setPactInMoney(String.valueOf(pactInMoney + addMoney));
+            pactInfos.get(selcetPosition).setPactOutMoney(String.valueOf(pactOutMoney - addMoney));
             pactListAdapter.notifyItemChanged(selcetPosition);
         }
     }
@@ -446,6 +442,7 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
                     break;
                 }
                 wherestr = "";
+                pageIndex = 1;
                 if (!StringUtil.isNullOrEmpty(pactType)) {
                     wherestr += " and pactType=\'" + pactType + "\'";
                 }
@@ -480,6 +477,7 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wherestr = "";
+        pageIndex = 1;
         if (type == 1) {
             projectID = projectEntities.get(i).getId();
             tvProject.setText(projectEntities.get(i).getName());
