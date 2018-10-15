@@ -23,8 +23,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
+
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RepairCauseEntity;
@@ -41,6 +40,7 @@ import com.zzti.lsy.ninetingapp.network.Constant;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.photo.CustomHelper;
+import com.zzti.lsy.ninetingapp.photo.PhotoActivity;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.photo.TakePhotoActivity;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
@@ -51,6 +51,8 @@ import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
+import org.devio.takephoto.model.TImage;
+import org.devio.takephoto.model.TResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -614,6 +616,10 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         if (StringUtil.isNullOrEmpty(pics.get(position))) {
             setBackgroundAlpha(0.5f);
             popupWindowPic.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        } else {
+            Intent intent = new Intent(this, PhotoActivity.class);
+            intent.putExtra("url", pics.get(position));
+            startActivity(intent);
         }
     }
 

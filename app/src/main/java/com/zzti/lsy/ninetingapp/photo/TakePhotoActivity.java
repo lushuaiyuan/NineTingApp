@@ -3,16 +3,25 @@ package com.zzti.lsy.ninetingapp.photo;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoImpl;
-import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.TContextWrap;
-import com.jph.takephoto.model.TResult;
-import com.jph.takephoto.permission.InvokeListener;
-import com.jph.takephoto.permission.PermissionManager;
-import com.jph.takephoto.permission.PermissionManager.TPermissionType;
-import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+//import com.jph.takephoto.app.TakePhoto;
+//import com.jph.takephoto.app.TakePhotoImpl;
+//import com.jph.takephoto.model.InvokeParam;
+//import com.jph.takephoto.model.TContextWrap;
+//import com.jph.takephoto.model.TResult;
+//import com.jph.takephoto.permission.InvokeListener;
+//import com.jph.takephoto.permission.PermissionManager;
+//import com.jph.takephoto.permission.PermissionManager.TPermissionType;
+//import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+
+import org.devio.takephoto.app.TakePhoto;
+import org.devio.takephoto.app.TakePhotoImpl;
+import org.devio.takephoto.model.InvokeParam;
+import org.devio.takephoto.model.TContextWrap;
+import org.devio.takephoto.model.TResult;
+import org.devio.takephoto.permission.InvokeListener;
+import org.devio.takephoto.permission.PermissionManager;
+import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 /**
  * 继承这个类来让Activity获取拍照的能力<br>
@@ -24,7 +33,6 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
  * Eamil:crazycodeboy@gmail.com
  */
 public class TakePhotoActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
-    private static final String TAG = com.jph.takephoto.app.TakePhotoActivity.class.getName();
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
 
@@ -59,7 +67,7 @@ public class TakePhotoActivity extends BaseActivity implements TakePhoto.TakeRes
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionManager.handlePermissionsResult(this, type, invokeParam, this);
     }
 
@@ -88,9 +96,9 @@ public class TakePhotoActivity extends BaseActivity implements TakePhoto.TakeRes
     }
 
     @Override
-    public TPermissionType invoke(InvokeParam invokeParam) {
-        TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
-        if (TPermissionType.WAIT.equals(type)) {
+    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
+        PermissionManager.TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
+        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
             this.invokeParam = invokeParam;
         }
         return type;

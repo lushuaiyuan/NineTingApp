@@ -70,7 +70,7 @@ dependencies {
     //eventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
     //拍照
-    implementation 'com.jph.takephoto:takephoto_library:4.0.3'
+    implementation 'com.github.crazycodeboy:TakePhoto:v4.1.0'
     //gilde
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
