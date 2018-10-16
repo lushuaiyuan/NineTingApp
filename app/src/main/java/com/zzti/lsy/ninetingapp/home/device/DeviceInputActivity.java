@@ -38,6 +38,7 @@ import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -97,11 +98,11 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
     private FactoryAdapter factoryAdapter;
     private List<FactoryInfoEntity> factoryInfoEntities;
 
-    //项目部
-    private PopupWindow popupWindowProject;
-    private ListView mListViewProject;
-    private ProjectAdapter projectAdapter;
-    private List<ProjectEntity> projectEntities;
+//    //项目部
+//    private PopupWindow popupWindowProject;
+//    private ListView mListViewProject;
+//    private ProjectAdapter projectAdapter;
+//    private List<ProjectEntity> projectEntities;
 
     //车辆状态
     private PopupWindow popupWindowCarStatus;
@@ -120,7 +121,7 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
         initCarTypePop();
         initStandardPop();
         initFactoryPop();
-        initProjectPop();
+//        initProjectPop();
         initCarStatusPop();
     }
 
@@ -208,33 +209,33 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
         popupWindowFactory.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-    private void initProjectPop() {
-        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
-        contentview.setFocusable(true); // 这个很重要
-        contentview.setFocusableInTouchMode(true);
-        popupWindowProject = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindowProject.setFocusable(true);
-        popupWindowProject.setOutsideTouchable(true);
-        //设置消失监听
-        popupWindowProject.setOnDismissListener(this);
-        popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        contentview.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindowProject.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        mListViewProject = contentview.findViewById(R.id.pop_list);
-        projectEntities = new ArrayList<>();
-        projectAdapter = new ProjectAdapter(projectEntities);
-        mListViewProject.setAdapter(projectAdapter);
-        mListViewProject.setOnItemClickListener(this);
-        popupWindowProject.setAnimationStyle(R.style.anim_bottomPop);
-    }
+//    private void initProjectPop() {
+//        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+//        contentview.setFocusable(true); // 这个很重要
+//        contentview.setFocusableInTouchMode(true);
+//        popupWindowProject = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        popupWindowProject.setFocusable(true);
+//        popupWindowProject.setOutsideTouchable(true);
+//        //设置消失监听
+//        popupWindowProject.setOnDismissListener(this);
+//        popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//        contentview.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_BACK) {
+//                    popupWindowProject.dismiss();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        mListViewProject = contentview.findViewById(R.id.pop_list);
+//        projectEntities = new ArrayList<>();
+//        projectAdapter = new ProjectAdapter(projectEntities);
+//        mListViewProject.setAdapter(projectAdapter);
+//        mListViewProject.setOnItemClickListener(this);
+//        popupWindowProject.setAnimationStyle(R.style.anim_bottomPop);
+//    }
 
     private void initCarStatusPop() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
@@ -280,11 +281,13 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
     private void initView() {
         setTitle("设备录入");
         etBuyMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        tvProject.setText(spUtils.getString(SpUtils.PROJECT, ""));
+        projectID = spUtils.getString(SpUtils.PROJECTID, "");
     }
 
     private int tag;
 
-    @OnClick({R.id.tv_carType, R.id.tv_emission_standard, R.id.tv_carStatus, R.id.tv_factory, R.id.tv_project, R.id.tv_buyTime, R.id.tv_drivingNumber_giveTime, R.id.btn_inputYearInsurance})
+    @OnClick({R.id.tv_carType, R.id.tv_emission_standard, R.id.tv_carStatus, R.id.tv_factory, R.id.tv_buyTime, R.id.tv_drivingNumber_giveTime, R.id.btn_inputYearInsurance})
     public void viewClick(View view) {
         hideSoftInput(etBuyMoney);
         switch (view.getId()) {
@@ -310,12 +313,12 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
                 showDia();
                 getCarFactory();
                 break;
-            case R.id.tv_project://项目部
-                projectEntities.clear();
-                tag = 4;
-                showDia();
-                getProject();
-                break;
+//            case R.id.tv_project://项目部
+//                projectEntities.clear();
+//                tag = 4;
+//                showDia();
+//                getProject();
+//                break;
             case R.id.tv_buyTime://选择购买日期
                 showCustomTime(1);
                 break;
@@ -421,53 +424,53 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
     /**
      * 获取项目部
      */
-    private void getProject() {
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, params, tvProject, new OkHttpManager.OnResponse<String>() {
-            @Override
-            public String analyseResult(String result) {
-                return result;
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                cancelDia();
-                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                if (msgInfo.getCode() == 200) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
-                            projectEntities.add(projectEntity);
-                        }
-                        if (projectEntities.size() > 0) {
-                            //设置背景色
-                            setBackgroundAlpha(0.5f);
-                            if (projectEntities.size() >= 5) {
-                                //动态设置listView的高度
-                                View listItem = projectAdapter.getView(0, null, mListViewProject);
-                                listItem.measure(0, 0);
-                                int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
-                                mListViewProject.getLayoutParams().height = totalHei;
-                                ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
-                                params.height = totalHei;
-                                mListViewProject.setLayoutParams(params);
-                            }
-                            popupWindowProject.showAtLocation(tvProject, Gravity.BOTTOM, 0, 0);
-                        } else {
-                            UIUtils.showT("暂无数据");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
-                    loginOut();
-                } else {
-                    UIUtils.showT(msgInfo.getMsg());
-                }
-            }
-        });
-    }
+//    private void getProject() {
+//        HashMap<String, String> params = new HashMap<>();
+//        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, params, tvProject, new OkHttpManager.OnResponse<String>() {
+//            @Override
+//            public String analyseResult(String result) {
+//                return result;
+//            }
+//
+//            @Override
+//            public void onSuccess(String s) {
+//                cancelDia();
+//                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+//                if (msgInfo.getCode() == 200) {
+//                    try {
+//                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
+//                            projectEntities.add(projectEntity);
+//                        }
+//                        if (projectEntities.size() > 0) {
+//                            //设置背景色
+//                            setBackgroundAlpha(0.5f);
+//                            if (projectEntities.size() >= 5) {
+//                                //动态设置listView的高度
+//                                View listItem = projectAdapter.getView(0, null, mListViewProject);
+//                                listItem.measure(0, 0);
+//                                int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
+//                                mListViewProject.getLayoutParams().height = totalHei;
+//                                ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
+//                                params.height = totalHei;
+//                                mListViewProject.setLayoutParams(params);
+//                            }
+//                            popupWindowProject.showAtLocation(tvProject, Gravity.BOTTOM, 0, 0);
+//                        } else {
+//                            UIUtils.showT("暂无数据");
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+//                    loginOut();
+//                } else {
+//                    UIUtils.showT(msgInfo.getMsg());
+//                }
+//            }
+//        });
+//    }
 
     /**
      * 获取汽车的生产厂家
@@ -640,11 +643,13 @@ public class DeviceInputActivity extends BaseActivity implements AdapterView.OnI
             tvFactory.setText(factoryInfoEntities.get(position).getFactoryName());
             FactoryID = factoryInfoEntities.get(position).getFactoryID();
             popupWindowFactory.dismiss();
-        } else if (tag == 4) {//生产厂家
-            tvProject.setText(projectEntities.get(position).getProjectName());
-            projectID = projectEntities.get(position).getProjectID();
-            popupWindowProject.dismiss();
-        } else if (tag == 5) {//车辆状态
+        }
+//        else if (tag == 4) {//生产厂家
+//            tvProject.setText(projectEntities.get(position).getProjectName());
+//            projectID = projectEntities.get(position).getProjectID();
+//            popupWindowProject.dismiss();
+//        }
+        else if (tag == 5) {//车辆状态
             tvCarStauts.setText(carStatusEntities.get(position).getName());
             carStatus = carStatusEntities.get(position).getId();
             popupWindowCarStatus.dismiss();
