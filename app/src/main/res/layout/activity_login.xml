@@ -13,7 +13,7 @@
         android:layout_width="@dimen/dp100"
         android:layout_height="@dimen/dp100"
         android:layout_marginTop="@dimen/dp20"
-        android:background="@mipmap/icon_logo" />
+        android:src="@mipmap/logo" />
 
 
     <View
