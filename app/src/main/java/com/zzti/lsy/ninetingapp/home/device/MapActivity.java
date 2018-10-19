@@ -1,9 +1,10 @@
 package com.zzti.lsy.ninetingapp.home.device;
 
-import android.location.LocationListener;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ZoomControls;
 
 import com.baidu.mapapi.map.BaiduMap;
@@ -16,8 +17,18 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.CarLocation;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 
@@ -26,6 +37,14 @@ import butterknife.BindView;
  */
 
 public class MapActivity extends BaseActivity {
+    @BindView(R.id.tv_carNumber)
+    TextView tvCarNumber;
+    @BindView(R.id.tv_state)
+    TextView tvState;
+    @BindView(R.id.tv_projectAddress)
+    TextView tvProjectAddress;
+    @BindView(R.id.tv_last_updateTime)
+    TextView tvUpdateTime;
     @BindView(R.id.bmapView)
     MapView mMapView;
     BaiduMap mBaiduMap;
@@ -53,13 +72,58 @@ public class MapActivity extends BaseActivity {
                 .icon(bitmap);
         //在地图上添加Marker，并显示
         mBaiduMap.addOverlay(option);
-        //移动到指定位置
-        MapStatus.Builder builder = new MapStatus.Builder();
-        builder.target(new LatLng(34.711244, 113.651735));
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-        //设置缩放级别 ， 缩放级别为3~19，19为最近，3为最远
-        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18.0f);
-        mBaiduMap.setMapStatus(msu);
+
+        String plateNumber = UIUtils.getStr4Intent(this, "plateNumber");
+        tvCarNumber.setText(plateNumber);
+        tvProjectAddress.setText(UIUtils.getStr4Intent(this, "project"));
+        String status = UIUtils.getStr4Intent(this, "status");
+        if (TextUtils.equals(status, "0")) {
+            tvState.setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
+            tvState.setText("存放中");
+        } else if (TextUtils.equals(status, "1")) {
+            tvState.setTextColor(App.get().getResources().getColor(R.color.color_ffb947));
+            tvState.setText("工作中");
+        } else if (TextUtils.equals(status, "2")) {
+            tvState.setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
+            tvState.setText("维修中");
+        }
+        showDia();
+        getLocation(plateNumber);
+    }
+
+    private void getLocation(String plateNumber) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("plateNumber", plateNumber);
+        OkHttpManager.postFormBody(Urls.PARTS_CANCELLAOBAO, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return null;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    CarLocation carLocation = ParseUtils.parseJson(msgInfo.getData(), CarLocation.class);
+                    tvUpdateTime.setText(carLocation.getLastTime().replace("T", " "));
+                    Double latitude = Double.parseDouble(carLocation.getLocation().split(",")[0]);//纬度
+                    Double longitude = Double.parseDouble(carLocation.getLocation().split(",")[1]);//经度
+                    //移动到指定位置
+                    MapStatus.Builder builder = new MapStatus.Builder();
+                    builder.target(new LatLng(latitude, longitude));
+                    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+                    //设置缩放级别 ， 缩放级别为3~19，19为最近，3为最远
+                    MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18.0f);
+                    mBaiduMap.setMapStatus(msu);
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+
+            }
+        });
     }
 
     private void initView() {

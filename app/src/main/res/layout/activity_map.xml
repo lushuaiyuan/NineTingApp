@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_carNumber_Title"
             android:layout_marginTop="@dimen/dp15"
-            android:text="项目"
+            android:text="项目部"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/dp14" />
 
@@ -65,6 +65,25 @@
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dp15" />
 
+        <TextView
+            android:id="@+id/tv_last_updateTime_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_projectAddress_Title"
+            android:layout_marginTop="@dimen/dp15"
+            android:text="更新时间"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:id="@+id/tv_last_updateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_last_updateTime_title"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_toRightOf="@id/tv_projectAddress_Title"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp15" />
 
         <TextView
             android:id="@+id/tv_state"

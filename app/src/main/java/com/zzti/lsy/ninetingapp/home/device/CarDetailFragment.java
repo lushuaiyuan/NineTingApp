@@ -189,7 +189,11 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_map:
-                startActivity(new Intent(mActivity, MapActivity.class));
+                Intent intent = new Intent(mActivity, MapActivity.class);
+                intent.putExtra("plateNumber", carInfoEntity.getPlateNumber());
+                intent.putExtra("project", carInfoEntity.getProjectName());
+                intent.putExtra("status", carInfoEntity.getStatus());
+                startActivity(intent);
                 break;
             case R.id.tv_address:
 //                if (projectEntities.size() > 0) {
