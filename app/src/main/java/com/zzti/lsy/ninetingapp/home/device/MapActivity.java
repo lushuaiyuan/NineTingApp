@@ -28,6 +28,9 @@ import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -61,18 +64,6 @@ public class MapActivity extends BaseActivity {
     }
 
     private void initData() {
-        //定义Maker坐标点
-        LatLng point = new LatLng(34.711244, 113.651735);
-        //构建Marker图标
-        BitmapDescriptor bitmap = BitmapDescriptorFactory
-                .fromResource(R.mipmap.icon_marka);
-        //构建MarkerOption，用于在地图上添加Marker
-        OverlayOptions option = new MarkerOptions()
-                .position(point)
-                .icon(bitmap);
-        //在地图上添加Marker，并显示
-        mBaiduMap.addOverlay(option);
-
         String plateNumber = UIUtils.getStr4Intent(this, "plateNumber");
         tvCarNumber.setText(plateNumber);
         tvProjectAddress.setText(UIUtils.getStr4Intent(this, "project"));
@@ -94,10 +85,10 @@ public class MapActivity extends BaseActivity {
     private void getLocation(String plateNumber) {
         HashMap<String, String> params = new HashMap<>();
         params.put("plateNumber", plateNumber);
-        OkHttpManager.postFormBody(Urls.PARTS_CANCELLAOBAO, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETCARLOCATION, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
-                return null;
+                return result;
             }
 
             @Override
@@ -105,17 +96,39 @@ public class MapActivity extends BaseActivity {
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    CarLocation carLocation = ParseUtils.parseJson(msgInfo.getData(), CarLocation.class);
-                    tvUpdateTime.setText(carLocation.getLastTime().replace("T", " "));
-                    Double latitude = Double.parseDouble(carLocation.getLocation().split(",")[0]);//纬度
-                    Double longitude = Double.parseDouble(carLocation.getLocation().split(",")[1]);//经度
-                    //移动到指定位置
-                    MapStatus.Builder builder = new MapStatus.Builder();
-                    builder.target(new LatLng(latitude, longitude));
-                    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-                    //设置缩放级别 ， 缩放级别为3~19，19为最近，3为最远
-                    MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18.0f);
-                    mBaiduMap.setMapStatus(msu);
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData().toString());
+                        if (jsonArray.length() > 0) {
+                            CarLocation carLocation = ParseUtils.parseJson(jsonArray.optString(0), CarLocation.class);
+                            tvUpdateTime.setText(carLocation.getLastTime().replace("T", " "));
+                            Double latitude = Double.parseDouble(carLocation.getLocation().split(",")[0]);//纬度
+                            Double longitude = Double.parseDouble(carLocation.getLocation().split(",")[1]);//经度
+                            //移动到指定位置
+                            //定义Maker坐标点
+                            LatLng point = new LatLng(latitude, longitude);
+                            //构建Marker图标
+                            BitmapDescriptor bitmap = BitmapDescriptorFactory
+                                    .fromResource(R.mipmap.icon_marka);
+                            //构建MarkerOption，用于在地图上添加Marker
+                            OverlayOptions option = new MarkerOptions()
+                                    .position(point)
+                                    .icon(bitmap);
+                            //在地图上添加Marker，并显示
+                            mBaiduMap.addOverlay(option);
+
+                            MapStatus.Builder builder = new MapStatus.Builder();
+                            builder.target(point);
+                            mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+                            //设置缩放级别 ， 缩放级别为3~19，19为最近，3为最远
+                            MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
+                            mBaiduMap.setMapStatus(msu);
+                        } else {
+                            mMapView.setVisibility(View.GONE);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {

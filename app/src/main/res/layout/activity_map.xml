@@ -81,7 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/tv_last_updateTime_title"
             android:layout_marginLeft="@dimen/dp15"
-            android:layout_toRightOf="@id/tv_projectAddress_Title"
+            android:layout_toRightOf="@id/tv_last_updateTime_title"
+            android:text="暂无数据"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dp15" />
 

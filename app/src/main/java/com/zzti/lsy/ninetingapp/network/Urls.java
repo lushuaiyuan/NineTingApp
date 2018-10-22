@@ -20,6 +20,7 @@ public class Urls {
     public final static String POST_GETINSURANCETYPE = BASE_URL + "/Car/Car.asmx/GetInsuranceType";//获取保险类型
     public final static String POST_UPDATCARINFO = BASE_URL + "/Car/Car.asmx/UpdateCar";//更新车辆信息
     public final static String POST_GETCAREXPIRE = BASE_URL + "/Car/Car.asmx/GetCarExpire";//年审到期时间
+    public final static String POST_GETCARLOCATION = BASE_URL + "/Car/Car.asmx/GetCarLocation";//获取车辆位置信息
 
     //机械师
     public final static String POST_ADDREPAIR = BASE_URL + "/Repair/Repair.asmx/AddRepair";//录入维修申请

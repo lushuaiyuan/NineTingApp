@@ -6,5 +6,11 @@
     <string name="mine">我的</string>
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
+    <string name="message_permission_rationale">授予以下权限程序以继续该程序:\n\n%1$s</string>
+    <string name="message_permission_always_failed">请在设置打开权限:\n\n%1$s</string>
+    <string name="title_dialog">提示</string>
+    <string name="setting">设置</string>
+    <string name="message_setting_comeback">用户从设置页面返回</string>
+    <string name="resume">继续</string>
 
 </resources>

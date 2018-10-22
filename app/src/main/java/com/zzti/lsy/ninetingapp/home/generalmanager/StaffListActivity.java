@@ -1,6 +1,9 @@
 package com.zzti.lsy.ninetingapp.home.generalmanager;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,13 +12,19 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.Setting;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
@@ -25,6 +34,7 @@ import com.zzti.lsy.ninetingapp.home.adapter.StaffAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.RuntimeRationale;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
@@ -36,6 +46,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.yanzhenjie.permission.PermissionActivity.requestPermission;
 
 /**
  * author：anxin on 2018/10/12 11:47
@@ -133,6 +145,7 @@ public class StaffListActivity extends BaseActivity implements BaseQuickAdapter.
         MAlertDialog.show(this, "提示", "是否拨打联系人" + staffEntities.get(position).getStaffName() + "的电话", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
             @Override
             public void onConfirmClick(String msg) {
+                requestPermission(Permission.CALL_PHONE);
                 Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));//直接拨打电话
                 if (ActivityCompat.checkSelfPermission(StaffListActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -153,4 +166,6 @@ public class StaffListActivity extends BaseActivity implements BaseQuickAdapter.
             }
         }, true);
     }
+
+
 }

@@ -1,12 +1,16 @@
 package com.zzti.lsy.ninetingapp.base;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -14,15 +18,23 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.github.mikephil.charting.data.BaseEntry;
 import com.jaeger.library.StatusBarUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.Setting;
 import com.zzti.lsy.ninetingapp.LoginActivity;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
+import com.zzti.lsy.ninetingapp.home.generalmanager.StaffListActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.utils.ActivityStack;
+import com.zzti.lsy.ninetingapp.utils.RuntimeRationale;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.CustomDialog;
@@ -33,6 +45,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -216,5 +229,72 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mSmartRefreshLayout != null && mSmartRefreshLayout.getState() == Loading) {
             mSmartRefreshLayout.finishLoadMore();
         }
+    }
+
+
+    /**
+     * Request permissions.
+     */
+    protected void requestPermission(String... permissions) {
+        AndPermission.with(this)
+                .runtime()
+                .permission(permissions)
+                .rationale(new RuntimeRationale())
+                .onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+
+                    }
+                })
+                .onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(@NonNull List<String> permissions) {
+                        if (AndPermission.hasAlwaysDeniedPermission(BaseActivity.this, permissions)) {
+                            showSettingDialog(BaseActivity.this, permissions);
+                        }
+                    }
+                })
+                .start();
+    }
+
+    /**
+     * Display setting dialog.
+     */
+    private void showSettingDialog(Context context, final List<String> permissions) {
+        List<String> permissionNames = Permission.transformText(context, permissions);
+        String message = context.getString(R.string.message_permission_always_failed, TextUtils.join("\n", permissionNames));
+
+        new AlertDialog.Builder(context)
+                .setCancelable(false)
+                .setTitle(R.string.title_dialog)
+                .setMessage(message)
+                .setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        setPermission();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * Set permissions.
+     */
+    private void setPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .setting()
+                .onComeback(new Setting.Action() {
+                    @Override
+                    public void onAction() {
+                        Toast.makeText(BaseActivity.this, R.string.message_setting_comeback, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .start();
     }
 }
