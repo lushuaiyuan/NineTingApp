@@ -47,7 +47,7 @@ public class ImageUtils {
 
         //1.5M的压缩后在100Kb以内，测试得值,压缩后的大小=94486字节,压缩后的大小=74473字节
         //这里的JPEG 如果换成PNG，那么压缩的就有600kB这样
-        bm.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+        bm.compress(Bitmap.CompressFormat.JPEG, 30, baos);
         byte[] b = baos.toByteArray();
         Log.d("d", "压缩后的大小=" + b.length);
         return Base64.encodeToString(b, Base64.DEFAULT);

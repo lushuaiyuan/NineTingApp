@@ -405,6 +405,10 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                     UIUtils.showT("最多添加5条明细");
                     break;
                 }
+                if (StringUtil.isNullOrEmpty(requiredPartsList.get(requiredPartsList.size() - 1).getPartsName())) {
+                    UIUtils.showT("请先完善上一条信息");
+                    break;
+                }
                 RequiredParts requiredParts = new RequiredParts();
                 requiredParts.setRpNumber("1");
                 requiredPartsList.add(requiredParts);
@@ -442,13 +446,6 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
             UIUtils.showT("请选择维修原因");
             return;
         }
-        for (int i = 0; i < requiredPartsList.size(); i++) {
-            if (StringUtil.isNullOrEmpty(requiredPartsList.get(i).getPartsName())) {
-                UIUtils.showT("请选择所需配件");
-                return;
-            }
-        }
-
         if (StringUtil.isNullOrEmpty(etMoney.getText().toString())) {
             UIUtils.showT("请输入维修金额");
             return;
@@ -492,6 +489,8 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
             }
             devPicture.substring(0, devPicture.length() - 1);
             repairinfoEntity.setDevPicture(devPicture);
+        } else {
+            repairinfoEntity.setDevPicture("");
         }
         submitNet();
     }
@@ -503,8 +502,19 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         showDia();
         HashMap<String, String> params = new HashMap<>();
         params.put("repairJson", new Gson().toJson(repairinfoEntity));
-        params.put("partsJson", new Gson().toJson(requiredPartsList));
-
+        if (requiredPartsList.size() == 1) {//判断是否为空
+            if (StringUtil.isNullOrEmpty(requiredPartsList.get(0).getPartsName())) {
+                params.put("partsJson", "");
+            } else {
+                params.put("partsJson", new Gson().toJson(requiredPartsList));
+            }
+        } else {//判断最后一个是否为空
+            if (StringUtil.isNullOrEmpty(requiredPartsList.get(requiredPartsList.size() - 1).getPartsNumber())) {
+                requiredPartsList.remove(requiredPartsList.size() - 1);
+                requiredPartsAdapter.notifyDataSetChanged();
+            }
+            params.put("partsJson", new Gson().toJson(requiredPartsList));
+        }
         OkHttpManager.postFormBody(Urls.POST_ADDREPAIR, params, tvAddress, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
@@ -613,6 +623,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        hideSoftInput(etInputContent);
         if (StringUtil.isNullOrEmpty(pics.get(position))) {
             setBackgroundAlpha(0.5f);
             popupWindowPic.showAtLocation(view, Gravity.BOTTOM, 0, 0);
