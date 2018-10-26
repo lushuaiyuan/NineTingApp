@@ -42,7 +42,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 项目经理 operator 4
+ * 项目经理 operator 2
  */
 public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.smartRefreshLayout)

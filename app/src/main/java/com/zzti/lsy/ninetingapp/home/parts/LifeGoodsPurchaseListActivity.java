@@ -163,12 +163,20 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
 
     private void initView() {
         setTitle("日用品入库工单");
-        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {
+        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
             tvToolbarMenu.setVisibility(View.VISIBLE);
             tvToolbarMenu.setText("采购");
             tvToolbarMenu.setOnClickListener(this);
+        } else {
+            if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+                tvStatus.setText("项目经理已审批");
+                status = "1";
+            } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+                tvStatus.setText("待审批");
+                status = "2";
+            }
+            wherestr += " and status=" + status;
         }
-
     }
 
     @OnClick({R.id.iv_search, R.id.tv_status})

@@ -41,7 +41,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 总经理 operator 5
+ * 总经理 operator 0
  */
 public class GeneralManagerFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.smartRefreshLayout)

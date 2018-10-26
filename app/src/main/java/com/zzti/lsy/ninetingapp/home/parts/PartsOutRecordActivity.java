@@ -47,7 +47,7 @@ public class PartsOutRecordActivity extends BaseActivity {
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.table)
     SmartTable smartTable;
-    private List<PartsDelivery> partsDeliveries;
+//    private List<PartsDelivery> partsDeliveries;
     private int pageIndex = 0;
     private String PartsID;
 
@@ -64,7 +64,7 @@ public class PartsOutRecordActivity extends BaseActivity {
 
     private void initData() {
         PartsID = UIUtils.getStr4Intent(this, "PartsID");
-        partsDeliveries = new ArrayList<>();
+//        partsDeliveries = new ArrayList<>();
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -75,7 +75,7 @@ public class PartsOutRecordActivity extends BaseActivity {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageIndex = 0;
-                partsDeliveries.clear();
+//                partsDeliveries.clear();
                 getOutList();
             }
         });
@@ -105,6 +105,7 @@ public class PartsOutRecordActivity extends BaseActivity {
                 cancelDia();
                 endRefresh(mSmartRefreshLayout);
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                List<PartsDelivery> partsDeliveries = new ArrayList<>();
                 if (msgInfo.getCode() == 200) {
                     try {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
@@ -127,7 +128,7 @@ public class PartsOutRecordActivity extends BaseActivity {
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
-                setTable();
+                setTable(partsDeliveries);
             }
 
             @Override
@@ -139,7 +140,7 @@ public class PartsOutRecordActivity extends BaseActivity {
         });
     }
 
-    private void setTable() {
+    private void setTable(List<PartsDelivery> partsDeliveries) {
         //普通列
         Column<String> column1 = new Column<>("配件名称", "partsName");
         column1.setFixed(true);

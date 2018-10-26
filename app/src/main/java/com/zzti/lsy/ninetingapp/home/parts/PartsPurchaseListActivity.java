@@ -70,6 +70,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
 
     private int pageIndex = 1;//页码
     private String wherestr = "";//查询条件
+    private String status = "";
 
     @Override
     public int getContentViewId() {
@@ -168,7 +169,17 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
             tvToolbarMenu.setVisibility(View.VISIBLE);
             tvToolbarMenu.setText("采购");
             tvToolbarMenu.setOnClickListener(this);
+        }else {
+            if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+                tvStatus.setText("项目经理已审批");
+                status = "1";
+            } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+                tvStatus.setText("待审批");
+                status = "2";
+            }
+            wherestr += " and status=" + status;
         }
+
     }
 
     @OnClick({R.id.iv_search, R.id.tv_status})
@@ -204,7 +215,6 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         startActivity(intent1);
     }
 
-    private String status;
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

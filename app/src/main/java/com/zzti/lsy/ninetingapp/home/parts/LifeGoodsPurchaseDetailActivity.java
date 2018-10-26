@@ -17,6 +17,7 @@ import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
+import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
@@ -77,8 +78,10 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
         tvGoodsName.setText(laobaoPurchased.getLbName());
         tvOperator.setText(laobaoPurchased.getStaffName());
         tvAmount.setText(laobaoPurchased.getNumber());
-        tvPrice.setText(laobaoPurchased.getPurchasedMoney());
-        tvMoney.setText(Integer.parseInt(laobaoPurchased.getNumber()) * Double.parseDouble(laobaoPurchased.getPurchasedMoney()) + "");
+        if (!StringUtil.isNullOrEmpty(laobaoPurchased.getPurchasedMoney())) {
+            tvPrice.setText(laobaoPurchased.getPurchasedMoney());
+            tvMoney.setText(Integer.parseInt(laobaoPurchased.getNumber()) * Double.parseDouble(laobaoPurchased.getPurchasedMoney()) + "");
+        }
         if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//3配件管理员
             if (laobaoPurchased.getStatus().equals("2")) {
                 tvStatus.setText("待审批");
