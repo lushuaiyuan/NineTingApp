@@ -33,10 +33,10 @@ public class PartsPurcheaseListAdapter extends BaseQuickAdapter<PartsPurchased, 
             helper.setText(R.id.tv_operator, "总经理已审批");
             ((TextView) helper.getView(R.id.tv_operator)).setTextColor(App.get().getResources().getColor(R.color.color_ff80b4));
         } else if (item.getStatus().equals("1")) {
-            helper.setText(R.id.tv_operator, "项目经理已审批");
+            helper.setText(R.id.tv_operator, "待总经理审批");
             ((TextView) helper.getView(R.id.tv_operator)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
         } else if (item.getStatus().equals("2")) {
-            helper.setText(R.id.tv_operator, "待审批");
+            helper.setText(R.id.tv_operator, "待项目经理审批");
             ((TextView) helper.getView(R.id.tv_operator)).setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
         } else if (item.getStatus().equals("3")) {
             helper.setText(R.id.tv_operator, "已撤销");

@@ -108,10 +108,10 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
         conditionEntity0.setName("总经理已审批");
         conditionEntity0.setId("0");
         ConditionEntity conditionEntity1 = new ConditionEntity();
-        conditionEntity1.setName("项目经理已审批");
+        conditionEntity1.setName("待总经理审批");
         conditionEntity1.setId("1");
         ConditionEntity conditionEntity2 = new ConditionEntity();
-        conditionEntity2.setName("待审批");
+        conditionEntity2.setName("待项目经理审批");
         conditionEntity2.setId("2");
         ConditionEntity conditionEntity3 = new ConditionEntity();
         conditionEntity3.setName("已撤销");
@@ -169,10 +169,10 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
             tvToolbarMenu.setOnClickListener(this);
         } else {
             if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-                tvStatus.setText("项目经理已审批");
+                tvStatus.setText("待总经理审批");
                 status = "1";
             } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-                tvStatus.setText("待审批");
+                tvStatus.setText("待项目经理审批");
                 status = "2";
             }
             wherestr += " and status=" + status;

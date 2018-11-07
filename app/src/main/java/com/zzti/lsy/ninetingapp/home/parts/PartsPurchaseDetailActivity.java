@@ -91,7 +91,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 btnOperator1.setText("确认入库");
                 btnOperator2.setVisibility(View.GONE);
             } else if (partsPurchased.getStatus().equals("2")) {
-                tvStatus.setText("待审批");
+                tvStatus.setText("待项目经理审批");
                 tvOperatorTitle.setText("申请时间");
                 tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
                 btnOperator1.setText("撤销");
@@ -100,7 +100,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 btnOperator1.setVisibility(View.GONE);
                 btnOperator2.setVisibility(View.GONE);
                 if (partsPurchased.getStatus().equals("1")) {
-                    tvStatus.setText("项目经理已审批");
+                    tvStatus.setText("待总经理审批");
                     tvOperatorTitle.setText("项目经理审批时间");
                     tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 } else if (partsPurchased.getStatus().equals("0")) {
@@ -115,7 +115,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
             }
         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//2项目经理
             if (partsPurchased.getStatus().equals("2")) {//待项目经理审批
-                tvStatus.setText("待审批");
+                tvStatus.setText("待项目经理审批");
                 tvOperatorTitle.setText("申请时间");
                 tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
                 tvReason.setVisibility(View.VISIBLE);
@@ -126,7 +126,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 btnOperator1.setVisibility(View.GONE);
                 btnOperator2.setVisibility(View.GONE);
                 if (partsPurchased.getStatus().equals("1")) {
-                    tvStatus.setText("项目经理已审批");
+                    tvStatus.setText("待总经理审批");
                     tvOperatorTitle.setText("项目经理审批时间");
                     tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 } else if (partsPurchased.getStatus().equals("0")) {
@@ -145,7 +145,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
             }
         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//0总经理
             if (partsPurchased.getStatus().equals("1")) {//待总经理审批
-                tvStatus.setText("项目经理已审批");
+                tvStatus.setText("待总经理审批");
                 tvOperatorTitle.setText("项目经理审批时间");
                 tvOperatorTime.setText(partsPurchased.getPurchasedDate().replace("T", " "));
                 tvReason.setVisibility(View.VISIBLE);
@@ -156,7 +156,7 @@ public class PartsPurchaseDetailActivity extends BaseActivity {
                 btnOperator1.setVisibility(View.GONE);
                 btnOperator2.setVisibility(View.GONE);
                 if (partsPurchased.getStatus().equals("2")) {//待项目经理审批
-                    tvStatus.setText("待审批");
+                    tvStatus.setText("待项目经理审批");
                     tvOperatorTitle.setText("申请时间");
                     tvOperatorTime.setText(partsPurchased.getApplyTime().replace("T", " "));
                 } else if (partsPurchased.getStatus().equals("0")) {

@@ -82,6 +82,11 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     private RepairTypeAdapter repairTypeAdapter;
     private List<RepairTypeEntity> repairTypeEntities;
 
+    private int condition = 1;
+    private String repairTypeID;
+    private String statusID;
+
+
     @Override
     public int getContentViewId() {
         return R.layout.activity_maintenance_record;
@@ -231,18 +236,18 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         initPopStatus();
         initPopRepairType();
 
-        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
-
+        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+            tvHandleState.setText("待总经理审批");
+            statusID = "1";
+        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+            tvHandleState.setText("待项目经理审批");
+            statusID = "2";
         }
-
+        wherestr += " and status=" + statusID;
     }
 
 
-    private int condition = 1;
+
 
     @OnClick({R.id.iv_search, R.id.rl_handleState, R.id.rl_repairType})
     public void viewClick(View view) {
@@ -342,10 +347,10 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         conditionEntity0.setName("总经理已审批");
         conditionEntity0.setId("0");
         ConditionEntity conditionEntity1 = new ConditionEntity();
-        conditionEntity1.setName("项目经理已审批");
+        conditionEntity1.setName("待总经理审批");
         conditionEntity1.setId("1");
         ConditionEntity conditionEntity2 = new ConditionEntity();
-        conditionEntity2.setName("待审批");
+        conditionEntity2.setName("待项目经理审批");
         conditionEntity2.setId("2");
         ConditionEntity conditionEntity3 = new ConditionEntity();
         conditionEntity3.setName("已撤销");
@@ -367,8 +372,6 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         popupWindowStatus.setAnimationStyle(R.style.anim_upPop);
     }
 
-    private String repairTypeID;
-    private String statusID;
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

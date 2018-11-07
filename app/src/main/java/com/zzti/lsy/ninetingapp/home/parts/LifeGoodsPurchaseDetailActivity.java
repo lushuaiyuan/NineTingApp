@@ -84,7 +84,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
         }
         if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//3配件管理员
             if (laobaoPurchased.getStatus().equals("2")) {
-                tvStatus.setText("待审批");
+                tvStatus.setText("待项目经理审批");
                 tvOperatorTitle.setText("申请时间");
                 tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));
                 btnOperator1.setText("撤销");
@@ -93,7 +93,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
                 btnOperator1.setVisibility(View.GONE);
                 btnOperator2.setVisibility(View.GONE);
                 if (laobaoPurchased.getStatus().equals("1")) {
-                    tvStatus.setText("项目经理已审批");
+                    tvStatus.setText("待总经理审批");
                     tvOperatorTitle.setText("项目经理审批时间");
                     tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
                 } else if (laobaoPurchased.getStatus().equals("0")) {
@@ -104,7 +104,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
             }
         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//2项目经理
             if (laobaoPurchased.getStatus().equals("2")) {//待项目经理审批
-                tvStatus.setText("待审批");
+                tvStatus.setText("待项目经理审批");
                 tvOperatorTitle.setText("申请时间");
                 tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));
                 tvReason.setVisibility(View.VISIBLE);
@@ -115,7 +115,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
                 btnOperator1.setVisibility(View.GONE);
                 btnOperator2.setVisibility(View.GONE);
                 if (laobaoPurchased.getStatus().equals("1")) {
-                    tvStatus.setText("项目经理已审批");
+                    tvStatus.setText("待总经理审批");
                     tvOperatorTitle.setText("项目经理审批时间");
                     tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
                 } else if (laobaoPurchased.getStatus().equals("0")) {
@@ -126,7 +126,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
             }
         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//0总经理
             if (laobaoPurchased.getStatus().equals("1")) {//待总经理审批
-                tvStatus.setText("项目经理已审批");
+                tvStatus.setText("待总经理审批");
                 tvOperatorTitle.setText("项目经理审批时间");
                 tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
                 tvReason.setVisibility(View.VISIBLE);
@@ -137,7 +137,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
                 btnOperator1.setVisibility(View.GONE);
                 btnOperator2.setVisibility(View.GONE);
                 if (laobaoPurchased.getStatus().equals("2")) {//待项目经理审批
-                    tvStatus.setText("待审批");
+                    tvStatus.setText("待项目经理审批");
                     tvOperatorTitle.setText("申请时间");
                     tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));
                 } else if (laobaoPurchased.getStatus().equals("0")) {

@@ -28,10 +28,10 @@ public class RepairRecordAdapter extends BaseQuickAdapter<RepairinfoEntity, Base
             helper.setText(R.id.tv_status, "总经理已审批");
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
         } else if (item.getStatus().equals("1")) {
-            helper.setText(R.id.tv_status, "项目经理已审批");
+            helper.setText(R.id.tv_status, "待总经理审批");
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
         } else if (item.getStatus().equals("2")) {
-            helper.setText(R.id.tv_status, "待审批");
+            helper.setText(R.id.tv_status, "待项目经理审批");
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
         } else if (item.getStatus().equals("3")) {
             helper.setText(R.id.tv_status, "已撤销");

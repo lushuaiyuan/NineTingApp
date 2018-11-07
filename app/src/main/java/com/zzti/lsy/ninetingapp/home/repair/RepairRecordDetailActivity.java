@@ -161,7 +161,7 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
         //（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过 -1拒绝）
         if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
             if (repairinfoEntity.getStatus().equals("2")) {
-                tvState.setText("待审批");
+                tvState.setText("待项目经理审批");
                 btnOperator1.setVisibility(View.VISIBLE);
                 btnOperator2.setVisibility(View.VISIBLE);
                 btnOperator1.setText("通过");
@@ -170,12 +170,12 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
                 btnOperator1.setVisibility(View.GONE);
                 btnOperator2.setVisibility(View.GONE);
                 if (repairinfoEntity.getStatus().equals("1")) {
-                    tvState.setText("项目经理已审批");
+                    tvState.setText("待总经理审批");
                 }
             }
         } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
             if (repairinfoEntity.getStatus().equals("1")) {
-                tvState.setText("项目经理已审批");
+                tvState.setText("待总经理审批");
                 btnOperator2.setVisibility(View.VISIBLE);
                 btnOperator1.setVisibility(View.VISIBLE);
                 btnOperator1.setText("通过");
@@ -184,12 +184,12 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
                 btnOperator2.setVisibility(View.GONE);
                 btnOperator1.setVisibility(View.GONE);
                 if (repairinfoEntity.getStatus().equals("2")) {
-                    tvState.setText("待审批");
+                    tvState.setText("待项目经理审批");
                 }
             }
         } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
             if (repairinfoEntity.getStatus().equals("2")) {
-                tvState.setText("待审批");
+                tvState.setText("待项目经理审批");
                 btnOperator1.setVisibility(View.VISIBLE);
                 btnOperator2.setVisibility(View.GONE);
                 btnOperator1.setText("撤销");
@@ -197,7 +197,7 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
                 btnOperator1.setVisibility(View.GONE);
                 btnOperator2.setVisibility(View.GONE);
                 if (repairinfoEntity.getStatus().equals("1")) {
-                    tvState.setText("项目经理已审批");
+                    tvState.setText("待总经理审批");
                 }
             }
         }
