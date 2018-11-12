@@ -22,7 +22,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp40"
                 android:background="@mipmap/iv_submit_success"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -59,9 +59,9 @@
             android:padding="@dimen/dp16">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_mine" />
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"
+                android:background="@mipmap/icon_mine" />
 
             <TextView
                 android:layout_width="0dp"
@@ -80,6 +80,46 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@drawable/white_gray_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp16">
+
+            <ImageView
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"
+                android:background="@mipmap/icon_version_up" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_weight="1"
+                android:text="软件升级"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp8"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_right_arrow" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/ll_logOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,9 +130,9 @@
             android:padding="@dimen/dp16">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_logout" />
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"
+                android:background="@mipmap/icon_logout" />
 
             <TextView
                 android:layout_width="0dp"

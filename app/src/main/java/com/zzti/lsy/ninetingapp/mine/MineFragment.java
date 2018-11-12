@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.LoginActivity;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
@@ -11,7 +14,10 @@ import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ActivityStack;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
@@ -26,7 +32,8 @@ public class MineFragment extends BaseFragment {
     TextView tvName;
     @BindView(R.id.tv_type)
     TextView tvType;
-
+    @BindView(R.id.tv_version)
+    TextView tvVersion;
 
     public static MineFragment newInstance() {
         MineFragment taskFragment = new MineFragment();
@@ -40,6 +47,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        tvVersion.setText(UIUtils.getVersion());
     }
 
     @Override
@@ -61,7 +69,7 @@ public class MineFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.ll_myMsg, R.id.ll_logOut})
+    @OnClick({R.id.ll_myMsg, R.id.ll_logOut, R.id.ll_version})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.ll_myMsg:
@@ -79,6 +87,9 @@ public class MineFragment extends BaseFragment {
 
                     }
                 }, true);
+                break;
+            case R.id.ll_version:
+                Beta.checkUpgrade();
                 break;
         }
     }
