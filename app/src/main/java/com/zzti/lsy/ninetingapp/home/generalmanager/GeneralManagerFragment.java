@@ -197,16 +197,18 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
             case R.id.rl_menu4://日用品审批
                 startActivity(new Intent(mActivity, LifeGoodsPurchaseListActivity.class));
                 break;
-            case R.id.rl_menu5://维修审批
-                startActivity(new Intent(mActivity, RepairRecordActivity.class));
-
+            case R.id.rl_menu5://设备管理
+                startActivity(new Intent(mActivity, DeviceManageActivity.class));
                 break;
-            case R.id.rl_menu6://生产统计
+            case R.id.rl_menu6://维修审批
+                startActivity(new Intent(mActivity, RepairRecordActivity.class));
+                break;
+            case R.id.rl_menu7://生产统计
                 Intent intent = new Intent(mActivity, DeviceListActivity.class);
                 intent.putExtra("FLAG", 4);
                 startActivity(intent);
                 break;
-            case R.id.rl_menu7://维修统计
+            case R.id.rl_menu8://维修统计
                 startActivity(new Intent(mActivity, MaintenanceStatisticActivity.class));
                 break;
             case R.id.tv_lookMore_ns:
