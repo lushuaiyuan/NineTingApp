@@ -1,4 +1,4 @@
-package com.zzti.lsy.ninetingapp.home.parts;
+package com.zzti.lsy.ninetingapp.home.generalmanager;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -21,7 +21,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.PartsPurchased;
@@ -30,6 +30,8 @@ import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.event.PartsPurchaseMsg;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.PartsPurcheaseListAdapter;
+import com.zzti.lsy.ninetingapp.home.parts.PartsInputActivity;
+import com.zzti.lsy.ninetingapp.home.parts.PartsPurchaseDetailActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
@@ -47,12 +49,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * @author lsy
- * @create 2018/10/4 13:17
- * @Describe 配件入库工单列表
- */
-public class PartsPurchaseListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, PopupWindow.OnDismissListener, BaseQuickAdapter.OnItemClickListener {
+public class PartsPurchaseListFragment extends BaseFragment implements AdapterView.OnItemClickListener, BaseQuickAdapter.OnItemClickListener, PopupWindow.OnDismissListener, View.OnClickListener {
+
     @BindView(R.id.et_search)
     EditText etSearch;
     @BindView(R.id.tv_status)
@@ -75,16 +73,10 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     private String status = "";
 
     @Override
-    public int getContentViewId() {
-        return R.layout.activity_purchese_list;
+    protected int getLayoutId() {
+        return R.layout.fragment_purchese_list;
     }
 
-    @Override
-    protected void initAllMembersView(Bundle savedInstanceState) {
-        initView();
-        initPop();
-        initData();
-    }
 
     private void initPop() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
@@ -136,8 +128,9 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         popupWindowStatus.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-    private void initData() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    @Override
+    protected void initData() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         partsPurchaseds = new ArrayList<>();
         partsPurcheaseListAdapter = new PartsPurcheaseListAdapter(partsPurchaseds);
         mRecyclerView.setAdapter(partsPurcheaseListAdapter);
@@ -165,23 +158,23 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         getPurchaseList();
     }
 
-    private void initView() {
-        setTitle("配件入库工单");
-        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {
+    protected void initView() {
+        etSearch.setHint("请输入配件名称或者型号");
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 3) {
             tvToolbarMenu.setVisibility(View.VISIBLE);
             tvToolbarMenu.setText("采购");
             tvToolbarMenu.setOnClickListener(this);
-        }else {
-            if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+        } else {
+            if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
                 tvStatus.setText("待总经理审批");
                 status = "1";
-            } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+            } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
                 tvStatus.setText("待项目经理审批");
                 status = "2";
             }
             wherestr += " and status=" + status;
         }
-
+        initPop();
     }
 
     @OnClick({R.id.iv_search, R.id.tv_status})
@@ -212,7 +205,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        Intent intent1 = new Intent(this, PartsInputActivity.class);
+        Intent intent1 = new Intent(mActivity, PartsInputActivity.class);
         intent1.putExtra("TAG", 1);//代表采购
         startActivity(intent1);
     }
@@ -298,9 +291,9 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         selectPosition = position;
-        Intent intent = new Intent(this, PartsPurchaseDetailActivity.class);
+        Intent intent = new Intent(mActivity, PartsPurchaseDetailActivity.class);
         intent.putExtra("partsPurchased", partsPurchaseds.get(position));
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
 
     @Override

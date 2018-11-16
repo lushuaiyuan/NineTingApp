@@ -1,4 +1,4 @@
-package com.zzti.lsy.ninetingapp.home.parts;
+package com.zzti.lsy.ninetingapp.home.generalmanager;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -21,15 +21,16 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
+import com.zzti.lsy.ninetingapp.entity.LaobaoPurchased;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.PartsPurchased;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
-import com.zzti.lsy.ninetingapp.event.PartsPurchaseMsg;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
-import com.zzti.lsy.ninetingapp.home.adapter.PartsPurcheaseListAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.LifeGoodsPurcheaseListAdapter;
+import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsInActivity;
+import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsPurchaseDetailActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
@@ -47,12 +48,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * @author lsy
- * @create 2018/10/4 13:17
- * @Describe 配件入库工单列表
- */
-public class PartsPurchaseListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, PopupWindow.OnDismissListener, BaseQuickAdapter.OnItemClickListener {
+public class LifeGoodsPurchaseListFragment extends BaseFragment implements PopupWindow.OnDismissListener, BaseQuickAdapter.OnItemClickListener, AdapterView.OnItemClickListener, View.OnClickListener {
     @BindView(R.id.et_search)
     EditText etSearch;
     @BindView(R.id.tv_status)
@@ -62,28 +58,19 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     @BindView(R.id.mRecycleView)
     RecyclerView mRecyclerView;
 
-    private List<PartsPurchased> partsPurchaseds;
-    private PartsPurcheaseListAdapter partsPurcheaseListAdapter;
-
+    private List<LaobaoPurchased> laobaoPurchaseds;
+    private LifeGoodsPurcheaseListAdapter lifeGoodsPurcheaseListAdapter;
+    private int pageIndex = 1;//页码
+    private String wherestr = "";//查询条件
+    private String status = "";
     private PopupWindow popupWindowStatus;
     private ListView lvStatus;
     private ConditionAdapter conditionAdapter;
     private List<ConditionEntity> conditions;
 
-    private int pageIndex = 1;//页码
-    private String wherestr = "";//查询条件
-    private String status = "";
-
     @Override
-    public int getContentViewId() {
-        return R.layout.activity_purchese_list;
-    }
-
-    @Override
-    protected void initAllMembersView(Bundle savedInstanceState) {
-        initView();
-        initPop();
-        initData();
+    protected int getLayoutId() {
+        return R.layout.fragment_purchese_list;
     }
 
     private void initPop() {
@@ -136,12 +123,13 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         popupWindowStatus.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-    private void initData() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        partsPurchaseds = new ArrayList<>();
-        partsPurcheaseListAdapter = new PartsPurcheaseListAdapter(partsPurchaseds);
-        mRecyclerView.setAdapter(partsPurcheaseListAdapter);
-        partsPurcheaseListAdapter.setOnItemClickListener(this);
+    @Override
+    protected void initData() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        laobaoPurchaseds = new ArrayList<>();
+        lifeGoodsPurcheaseListAdapter = new LifeGoodsPurcheaseListAdapter(laobaoPurchaseds);
+        mRecyclerView.setAdapter(lifeGoodsPurcheaseListAdapter);
+        lifeGoodsPurcheaseListAdapter.setOnItemClickListener(this);
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -151,9 +139,8 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                hideSoftInput(etSearch);
                 pageIndex = 1;
-                partsPurchaseds.clear();
+                laobaoPurchaseds.clear();
                 etSearch.setText("");
                 wherestr = "";
                 status = "";
@@ -165,23 +152,24 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         getPurchaseList();
     }
 
-    private void initView() {
-        setTitle("配件入库工单");
-        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {
+    @Override
+    protected void initView() {
+        etSearch.setHint("请输入日用品名称");
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
             tvToolbarMenu.setVisibility(View.VISIBLE);
             tvToolbarMenu.setText("采购");
             tvToolbarMenu.setOnClickListener(this);
-        }else {
-            if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+        } else {
+            if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
                 tvStatus.setText("待总经理审批");
                 status = "1";
-            } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+            } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
                 tvStatus.setText("待项目经理审批");
                 status = "2";
             }
             wherestr += " and status=" + status;
         }
-
+        initPop();
     }
 
     @OnClick({R.id.iv_search, R.id.tv_status})
@@ -198,9 +186,9 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
                 if (!StringUtil.isNullOrEmpty(status)) {
                     wherestr += " and status=" + status;
                 }
-                wherestr += " and partsName like \'%" + etSearch.getText().toString() + "%\' or partsModel like \'%" + etSearch.getText().toString() + "%\'";
+                wherestr += " and lbName like \'%" + etSearch.getText().toString() + "%\'";
                 showDia();
-                partsPurchaseds.clear();
+                laobaoPurchaseds.clear();
                 getPurchaseList();
                 break;
             case R.id.tv_status:
@@ -208,13 +196,6 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
                 popupWindowStatus.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-        Intent intent1 = new Intent(this, PartsInputActivity.class);
-        intent1.putExtra("TAG", 1);//代表采购
-        startActivity(intent1);
     }
 
 
@@ -226,11 +207,11 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         status = conditions.get(i).getId();
         wherestr += " and status=" + status;
         if (!StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
-            wherestr += " and partsName like \'%" + etSearch.getText().toString() + "%\' or partsModel like \'%" + etSearch.getText().toString() + "%\'";
+            wherestr += " and lbName like \'%" + etSearch.getText().toString() + "%\'";
         }
         popupWindowStatus.dismiss();
         showDia();
-        partsPurchaseds.clear();
+        laobaoPurchaseds.clear();
         getPurchaseList();
     }
 
@@ -242,7 +223,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         } else {
             params.put("wherestr", wherestr);
         }
-        OkHttpManager.postFormBody(Urls.APPROVE_GETPARTSIN, params, mRecyclerView, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.APPROVE_GETLAOBAO, params, mRecyclerView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -258,8 +239,8 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         if (jsonArray.length() > 0) {
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                PartsPurchased partsPurchased = ParseUtils.parseJson(jsonArray.getString(i), PartsPurchased.class);
-                                partsPurchaseds.add(partsPurchased);
+                                LaobaoPurchased laobaoPurchased = ParseUtils.parseJson(jsonArray.getString(i), LaobaoPurchased.class);
+                                laobaoPurchaseds.add(laobaoPurchased);
                             }
                         } else {
                             UIUtils.showT("暂无数据");
@@ -275,7 +256,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
-                partsPurcheaseListAdapter.notifyDataSetChanged();
+                lifeGoodsPurcheaseListAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -288,6 +269,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
 
     }
 
+
     @Override
     public void onDismiss() {
         setBackgroundAlpha(1);
@@ -298,9 +280,14 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         selectPosition = position;
-        Intent intent = new Intent(this, PartsPurchaseDetailActivity.class);
-        intent.putExtra("partsPurchased", partsPurchaseds.get(position));
-        startActivityForResult(intent, 1);
+        Intent intent = new Intent(mActivity, LifeGoodsPurchaseDetailActivity.class);
+        intent.putExtra("laobaoPurchased", laobaoPurchaseds.get(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(mActivity, LifeGoodsInActivity.class));
     }
 
     @Override
@@ -311,11 +298,10 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     @Override
     protected void onEventComing(EventMessage paramEventCenter) {
         super.onEventComing(paramEventCenter);
-        if (paramEventCenter.getEventCode() == C.EventCode.E) {
-            PartsPurchaseMsg partsPurchaseMsg = (PartsPurchaseMsg) paramEventCenter.getData();
-            partsPurchaseds.get(selectPosition).setStatus(String.valueOf(partsPurchaseMsg.getStatus()));
-            partsPurchaseds.get(selectPosition).setPurchasedDate(partsPurchaseMsg.getDate());
-            partsPurcheaseListAdapter.notifyItemChanged(selectPosition);
+        if (paramEventCenter.getEventCode() == C.EventCode.D) {
+            int status = (int) paramEventCenter.getData();
+            laobaoPurchaseds.get(selectPosition).setStatus(String.valueOf(status));
+            lifeGoodsPurcheaseListAdapter.notifyItemChanged(selectPosition);
         }
     }
 
@@ -325,10 +311,8 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
 //        if (requestCode == 1 && resultCode == 2) {
 //            if (data != null) {
 //                int status = data.getIntExtra("status", -2);
-//                String date = data.getStringExtra("date");
-//                partsPurchaseds.get(selectPosition).setStatus(String.valueOf(status));
-//                partsPurchaseds.get(selectPosition).setPurchasedDate(date);
-//                partsPurcheaseListAdapter.notifyItemChanged(selectPosition);
+//                laobaoPurchaseds.get(selectPosition).setStatus(String.valueOf(status));
+//                lifeGoodsPurcheaseListAdapter.notifyItemChanged(selectPosition);
 //            }
 //        }
 //    }

@@ -84,19 +84,19 @@
                         <TextView
                             style="@style/home_menu"
                             android:drawableLeft="@mipmap/icon_menu10"
-                            android:text="配件审批" />
+                            android:text="采购审批" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/rl_menu4"
+                        android:id="@+id/rl_menu5"
                         style="@style/home_menubg"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:background="@drawable/home_menu4_selector">
+                        android:background="@drawable/home_menu5_selector">
 
                         <TextView
                             style="@style/home_menu"
                             android:drawableLeft="@mipmap/icon_menu10"
-                            android:text="日用品审批" />
+                            android:text="维修审批" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -111,27 +111,27 @@
                     android:paddingTop="@dimen/dp10">
 
                     <RelativeLayout
-                        android:id="@+id/rl_menu5"
-                        style="@style/home_menubg"
-                        android:background="@drawable/home_menu5_selector">
-
-                        <TextView
-                            style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu10"
-                            android:text="维修审批" />
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
                         android:id="@+id/rl_menu6"
                         style="@style/home_menubg"
-                        android:layout_marginLeft="@dimen/dp10"
                         android:background="@drawable/home_menu6_selector">
 
                         <TextView
                             style="@style/home_menu"
                             android:drawableLeft="@mipmap/icon_menu2"
                             android:text="生产统计" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_menu7"
+                        style="@style/home_menubg"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:background="@drawable/home_menu7_selector">
+
+                        <TextView
+                            style="@style/home_menu"
+                            android:drawableLeft="@mipmap/icon_menu2"
+                            android:text="维修统计" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -147,22 +147,21 @@
                     android:paddingTop="@dimen/dp10">
 
                     <RelativeLayout
-                        android:id="@+id/rl_menu7"
+                        android:id="@+id/rl_menu8"
                         style="@style/home_menubg"
-
-                        android:background="@drawable/home_menu7_selector">
+                        android:background="@drawable/home_menu4_selector">
 
                         <TextView
                             style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu2"
-                            android:text="维修统计" />
+                            android:drawableLeft="@mipmap/icon_menu3"
+                            android:text="收款模块" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/rl_menu8"
                         style="@style/home_menubg"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:background="@drawable/home_menu4_selector">
+                        android:background="@drawable/home_menu4_selector"
+                        android:visibility="invisible">
 
                         <TextView
                             style="@style/home_menu"

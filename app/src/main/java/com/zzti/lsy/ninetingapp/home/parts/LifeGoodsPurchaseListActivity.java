@@ -26,6 +26,7 @@ import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.entity.LaobaoPurchased;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.LifeGoodsPurcheaseListAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
@@ -299,14 +300,29 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == 2) {
-            if (data != null) {
-                int status = data.getIntExtra("status", -2);
-                laobaoPurchaseds.get(selectPosition).setStatus(String.valueOf(status));
-                lifeGoodsPurcheaseListAdapter.notifyItemChanged(selectPosition);
-            }
+    protected boolean openEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void onEventComing(EventMessage paramEventCenter) {
+        super.onEventComing(paramEventCenter);
+        if (paramEventCenter.getEventCode() == C.EventCode.D) {
+            int status = (int) paramEventCenter.getData();
+            laobaoPurchaseds.get(selectPosition).setStatus(String.valueOf(status));
+            lifeGoodsPurcheaseListAdapter.notifyItemChanged(selectPosition);
         }
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 1 && resultCode == 2) {
+//            if (data != null) {
+//                int status = data.getIntExtra("status", -2);
+//                laobaoPurchaseds.get(selectPosition).setStatus(String.valueOf(status));
+//                lifeGoodsPurcheaseListAdapter.notifyItemChanged(selectPosition);
+//            }
+//        }
+//    }
 }

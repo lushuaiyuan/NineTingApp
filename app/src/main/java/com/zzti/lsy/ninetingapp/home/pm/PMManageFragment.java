@@ -22,6 +22,7 @@ import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
+import com.zzti.lsy.ninetingapp.home.generalmanager.ApprovalActivity;
 import com.zzti.lsy.ninetingapp.home.generalmanager.PactListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsPurchaseListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsPurchaseListActivity;
@@ -183,7 +184,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         return fragment;
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.rl_menu7, R.id.rl_menu8,  R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3,  R.id.rl_menu5, R.id.rl_menu6, R.id.rl_menu7, R.id.rl_menu8,  R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1://设备列表
@@ -192,12 +193,14 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
             case R.id.rl_menu2://配件列表
                 startActivity(new Intent(mActivity, PartsListActivity.class));
                 break;
-            case R.id.rl_menu3://配件审批
-                startActivity(new Intent(mActivity, PartsPurchaseListActivity.class));
+            case R.id.rl_menu3://采购审批  包含配件审批和日用品审批
+                startActivity(new Intent(mActivity, ApprovalActivity.class));
+                //TODO
+//                startActivity(new Intent(mActivity, PartsPurchaseListActivity.class));
                 break;
-            case R.id.rl_menu4://日用品审批
-                startActivity(new Intent(mActivity, LifeGoodsPurchaseListActivity.class));
-                break;
+//            case R.id.rl_menu4://日用品审批
+//                startActivity(new Intent(mActivity, LifeGoodsPurchaseListActivity.class));
+//                break;
             case R.id.rl_menu5://维修审批
                 startActivity(new Intent(mActivity, RepairRecordActivity.class));
 

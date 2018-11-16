@@ -22,9 +22,6 @@ import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
-import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsPurchaseListActivity;
-import com.zzti.lsy.ninetingapp.home.parts.PartsPurchaseListActivity;
-import com.zzti.lsy.ninetingapp.home.pm.MaintenanceStatisticActivity;
 import com.zzti.lsy.ninetingapp.home.repair.RepairRecordActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -191,11 +188,17 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
             case R.id.rl_menu2://收款模块
                 startActivity(new Intent(mActivity, PactListActivity.class));
                 break;
-            case R.id.rl_menu3://配件审批
-                startActivity(new Intent(mActivity, PartsPurchaseListActivity.class));
+
+
+            case R.id.rl_menu3://采购审批  包含配件审批和日用品审批
+                startActivity(new Intent(mActivity, ApprovalActivity.class));
+                //TODO
+//                startActivity(new Intent(mActivity, PartsPurchaseListActivity.class));
                 break;
-            case R.id.rl_menu4://日用品审批
-                startActivity(new Intent(mActivity, LifeGoodsPurchaseListActivity.class));
+            case R.id.rl_menu4://设备管理
+                startActivity(new Intent(mActivity, DeviceManageActivity.class));
+                //TODO
+//                startActivity(new Intent(mActivity, LifeGoodsPurchaseListActivity.class));
                 break;
             case R.id.rl_menu5://设备管理
                 startActivity(new Intent(mActivity, DeviceManageActivity.class));
@@ -207,9 +210,6 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
                 Intent intent = new Intent(mActivity, DeviceListActivity.class);
                 intent.putExtra("FLAG", 4);
                 startActivity(intent);
-                break;
-            case R.id.rl_menu8://维修统计
-                startActivity(new Intent(mActivity, MaintenanceStatisticActivity.class));
                 break;
             case R.id.tv_lookMore_ns:
                 Intent intent1 = new Intent(mActivity, BxNsActivity.class);

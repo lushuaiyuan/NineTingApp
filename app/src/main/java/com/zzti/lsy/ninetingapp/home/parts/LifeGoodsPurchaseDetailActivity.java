@@ -1,6 +1,5 @@
 package com.zzti.lsy.ninetingapp.home.parts;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +12,7 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.LaobaoPurchased;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
@@ -20,6 +20,8 @@ import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
@@ -242,9 +244,10 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    Intent intent = new Intent();
-                    intent.putExtra("status", status);
-                    setResult(2, intent);
+                    EventBus.getDefault().post(new EventMessage(C.EventCode.D, status));
+//                    Intent intent = new Intent();
+//                    intent.putExtra("status", status);
+//                    setResult(2, intent);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
@@ -281,9 +284,10 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    Intent intent = new Intent();
-                    intent.putExtra("status", 3);
-                    setResult(2, intent);
+                    EventBus.getDefault().post(new EventMessage(C.EventCode.D, 3));
+//                    Intent intent = new Intent();
+//                    intent.putExtra("status", 3);
+//                    setResult(2, intent);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();

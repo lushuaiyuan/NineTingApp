@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,12 +20,15 @@ import android.widget.TextView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zzti.lsy.ninetingapp.LoginActivity;
 import com.zzti.lsy.ninetingapp.R;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.utils.ActivityStack;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.view.CustomDialog;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 
@@ -149,6 +153,30 @@ public abstract class BaseFragment extends Fragment {
         return false;
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMianThread(EventMessage paramEventCenter) {
+        onEventComing(paramEventCenter);
+    }
+
+    protected void onEventComing(EventMessage paramEventCenter) {
+
+    }
+
+    /**
+     * 隐藏软键盘
+     *
+     * @param view
+     */
+    public void hideSoftInput(View view) {
+        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        boolean isOpen = imm.isActive();// isOpen若返回true，则表示输入法打开
+        if (isOpen) {//隐藏软键盘
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
+            view.clearFocus();
+        }
+    }
+
     public void cancelDia() {
         cancelDia(false);
     }
@@ -185,6 +213,7 @@ public abstract class BaseFragment extends Fragment {
             }
         }, true);
     }
+
     protected void endRefresh(SmartRefreshLayout mSmartRefreshLayout) {
         if (mSmartRefreshLayout != null && mSmartRefreshLayout.getState() == Refreshing) {
             mSmartRefreshLayout.finishRefresh();

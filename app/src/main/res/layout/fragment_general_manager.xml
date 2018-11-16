@@ -84,7 +84,7 @@
                         <TextView
                             style="@style/home_menu"
                             android:drawableLeft="@mipmap/icon_menu10"
-                            android:text="配件审批" />
+                            android:text="采购审批" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -96,7 +96,7 @@
                         <TextView
                             style="@style/home_menu"
                             android:drawableLeft="@mipmap/icon_menu10"
-                            android:text="日用品审批" />
+                            android:text="设备管理" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -157,10 +157,12 @@
                             android:drawableLeft="@mipmap/icon_menu2"
                             android:text="维修统计" />
                     </RelativeLayout>
+
                     <RelativeLayout
+                        android:visibility="invisible"
                         android:id="@+id/rl_menu8"
                         style="@style/home_menubg"
-
+                        android:layout_marginLeft="@dimen/dp10"
                         android:background="@drawable/home_menu7_selector">
 
                         <TextView
