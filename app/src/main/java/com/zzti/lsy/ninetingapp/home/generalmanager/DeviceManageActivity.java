@@ -15,6 +15,7 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.DeviceManageEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.entity.RecycleViewItemData;
 import com.zzti.lsy.ninetingapp.entity.RepairTypeEntity;
 import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
@@ -27,6 +28,7 @@ import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +47,7 @@ public class DeviceManageActivity extends BaseActivity implements BaseQuickAdapt
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
 
-    private List<DeviceManageEntity> deviceManageEntities;
+    private List<RecycleViewItemData> dataList;
     private DeviceManageAdapter deviceManageAdapter;
 
 
@@ -62,14 +64,14 @@ public class DeviceManageActivity extends BaseActivity implements BaseQuickAdapt
 
     private void initData() {
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        deviceManageEntities = new ArrayList<>();
-        deviceManageAdapter = new DeviceManageAdapter(deviceManageEntities);
+        dataList = new ArrayList<>();
+        deviceManageAdapter = new DeviceManageAdapter(dataList);
         mRecycleView.setAdapter(deviceManageAdapter);
-        deviceManageAdapter.setOnItemClickListener(this);
+        // TODO
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                deviceManageEntities.clear();
+                dataList.clear();
                 getDeviceManage();
             }
         });
@@ -99,7 +101,10 @@ public class DeviceManageActivity extends BaseActivity implements BaseQuickAdapt
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             DeviceManageEntity deviceManageEntity = ParseUtils.parseJson(jsonArray.getString(i), DeviceManageEntity.class);
-                            deviceManageEntities.add(deviceManageEntity);
+                            dataList.add(new RecycleViewItemData(deviceManageEntity.getProjectName(), 1));
+                            for (int j = 0; j < deviceManageEntity.getDeviceDetials().size(); j++) {
+                                dataList.add(new RecycleViewItemData(deviceManageEntity.getDeviceDetials().get(j), 2));
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
