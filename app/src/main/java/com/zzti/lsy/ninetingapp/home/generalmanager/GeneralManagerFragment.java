@@ -22,6 +22,8 @@ import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
+import com.zzti.lsy.ninetingapp.home.pm.MaintenanceReportActivity;
+import com.zzti.lsy.ninetingapp.home.pm.MaintenanceStatisticActivity;
 import com.zzti.lsy.ninetingapp.home.repair.RepairRecordActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -200,14 +202,14 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
                 //TODO
 //                startActivity(new Intent(mActivity, LifeGoodsPurchaseListActivity.class));
                 break;
-            case R.id.rl_menu5://设备管理
-                startActivity(new Intent(mActivity, DeviceManageActivity.class));
-                break;
-            case R.id.rl_menu6://维修审批
+            case R.id.rl_menu5://维修审批
                 startActivity(new Intent(mActivity, RepairRecordActivity.class));
                 break;
-            case R.id.rl_menu7://生产统计
-                Intent intent = new Intent(mActivity, DeviceListActivity.class);
+            case R.id.rl_menu6://生产统计
+                startActivity(new Intent(mActivity, DeviceListActivity.class));
+                break;
+            case R.id.rl_menu7://维修统计
+                Intent intent = new Intent(mActivity, MaintenanceStatisticActivity.class);
                 intent.putExtra("FLAG", 4);
                 startActivity(intent);
                 break;

@@ -9,6 +9,15 @@ import java.util.List;
  */
 public class DeviceManageEntity {
     private String projectName;//项目部名称
+    private String projectID;//项目部ID
+
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
+    }
 
     private List<DeviceDetial> deviceDetials;
 
@@ -31,7 +40,7 @@ public class DeviceManageEntity {
 
     public class DeviceDetial {
         private String carType; //车辆类型
-        private String amount; //总数量
+        private String cmount; //总数量
         private String repairAmount; //维修数量
         private String normalAmount; //正常数量
 
@@ -43,12 +52,12 @@ public class DeviceManageEntity {
             this.carType = carType;
         }
 
-        public String getAmount() {
-            return amount;
+        public String getCmount() {
+            return cmount;
         }
 
-        public void setAmount(String amount) {
-            this.amount = amount;
+        public void setCmount(String cmount) {
+            this.cmount = cmount;
         }
 
         public String getRepairAmount() {

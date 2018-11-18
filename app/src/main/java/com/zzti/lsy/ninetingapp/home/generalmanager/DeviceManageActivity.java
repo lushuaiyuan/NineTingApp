@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.home.generalmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,17 +11,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.DeviceManageEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RecycleViewItemData;
-import com.zzti.lsy.ninetingapp.entity.RepairTypeEntity;
-import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.DeviceManageAdapter;
-import com.zzti.lsy.ninetingapp.home.adapter.RepairRecordAdapter;
+import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
@@ -28,7 +26,6 @@ import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +38,7 @@ import butterknife.BindView;
  * @create 2018/11/15 21:19
  * @Describe 设备管理
  */
-public class DeviceManageActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
+public class DeviceManageActivity extends BaseActivity  {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.mRecycleView)
@@ -67,7 +64,22 @@ public class DeviceManageActivity extends BaseActivity implements BaseQuickAdapt
         dataList = new ArrayList<>();
         deviceManageAdapter = new DeviceManageAdapter(dataList);
         mRecycleView.setAdapter(deviceManageAdapter);
-        // TODO
+        DeviceManageAdapter.OnItemClickListener onItemClickListener = new DeviceManageAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view,int position) {
+                Intent intent = new Intent(DeviceManageActivity.this, DeviceListActivity.class);
+                DeviceManageEntity deviceManageEntity = (DeviceManageEntity) dataList.get(position).getT();
+                intent.putExtra("projectID", deviceManageEntity.getProjectID());
+                intent.putExtra("projectName", deviceManageEntity.getProjectName());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view,int position) {
+
+            }
+        };
+        deviceManageAdapter.setOnItemClickListener(onItemClickListener);
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -83,9 +95,8 @@ public class DeviceManageActivity extends BaseActivity implements BaseQuickAdapt
      * 获取设备管理数据
      */
     private void getDeviceManage() {
-        showDia();
         HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETREPAIRTYPE, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.ADMIN_GETCARCOUNT, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -121,6 +132,7 @@ public class DeviceManageActivity extends BaseActivity implements BaseQuickAdapt
             public void onFailed(int code, String msg, String url) {
                 super.onFailed(code, msg, url);
                 cancelDia();
+                endRefresh(mSmartRefreshLayout);
             }
         });
     }
@@ -130,8 +142,4 @@ public class DeviceManageActivity extends BaseActivity implements BaseQuickAdapt
         mSmartRefreshLayout.setEnableLoadMore(false);
     }
 
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        UIUtils.showT("进入详情");
-    }
 }

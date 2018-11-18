@@ -38,13 +38,21 @@ public class DeviceManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (viewType == TYPE_CONTENT) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_device_manage_content, parent, false);
             ContentViewHolder viewHolder = new ContentViewHolder(view);
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+
+                    }
+                }
+            });
             return viewHolder;
         }
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeadViewHolder) {
             //得到对应position的数据集
             String projectName = (String) dataList.get(position).getT();
@@ -53,12 +61,27 @@ public class DeviceManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof ContentViewHolder) {
             //从数据集合中取出该项
             DeviceManageEntity.DeviceDetial deviceDetial = (DeviceManageEntity.DeviceDetial) dataList.get(position).getT();
-            ((ContentViewHolder) holder).tv_amount.setText(deviceDetial.getAmount() + "辆");
+            ((ContentViewHolder) holder).tv_amount.setText(deviceDetial.getCmount() + "辆");
             ((ContentViewHolder) holder).tv_carType.setText(deviceDetial.getCarType());
             ((ContentViewHolder) holder).tv_repairAmount.setText("维修" + deviceDetial.getRepairAmount() + "辆");
             ((ContentViewHolder) holder).tv_normalAmount.setText("正常" + deviceDetial.getNormalAmount() + "辆");
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(view, position);
+                }
+            }
+        });
     }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        return dataList.get(position).getDataType();
+    }
+
 
     @Override
     public int getItemCount() {
@@ -89,5 +112,22 @@ public class DeviceManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             tv_normalAmount = itemView.findViewById(R.id.tv_normalAmount);
         }
     }
+
+    private OnItemClickListener onItemClickListener;
+
+    public OnItemClickListener getOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public static interface OnItemClickListener {
+        void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
+    }
+
 
 }
