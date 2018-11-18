@@ -11,6 +11,11 @@ public class DeviceManageEntity {
     private String projectName;//项目部名称
     private String projectID;//项目部ID
 
+    public DeviceManageEntity(String projectName, String projectID) {
+        this.projectName = projectName;
+        this.projectID = projectID;
+    }
+
     public String getProjectID() {
         return projectID;
     }

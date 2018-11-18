@@ -227,6 +227,8 @@
         <activity android:name=".home.generalmanager.DeviceManageActivity" />
         <!--采购审批-->
         <activity android:name=".home.generalmanager.ApprovalActivity" />
+        <!--生产统计-->
+        <activity android:name=".home.production.ProductStatisticsActivity" />
 
 
     </application>

@@ -74,10 +74,6 @@ public class DeviceManageActivity extends BaseActivity  {
                 startActivity(intent);
             }
 
-            @Override
-            public void onItemLongClick(View view,int position) {
-
-            }
         };
         deviceManageAdapter.setOnItemClickListener(onItemClickListener);
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -112,7 +108,7 @@ public class DeviceManageActivity extends BaseActivity  {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             DeviceManageEntity deviceManageEntity = ParseUtils.parseJson(jsonArray.getString(i), DeviceManageEntity.class);
-                            dataList.add(new RecycleViewItemData(deviceManageEntity.getProjectName(), 1));
+                            dataList.add(new RecycleViewItemData(new DeviceManageEntity(deviceManageEntity.getProjectName(),deviceManageEntity.getProjectID()), 1));
                             for (int j = 0; j < deviceManageEntity.getDeviceDetials().size(); j++) {
                                 dataList.add(new RecycleViewItemData(deviceManageEntity.getDeviceDetials().get(j), 2));
                             }

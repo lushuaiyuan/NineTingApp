@@ -58,7 +58,7 @@ public class Urls {
     public static final String RECORD_ADDRECORD = BASE_URL + "/Record/Record.asmx/AddRecord";//录入生产信息
     public static final String RECORD_GETRECORDLIST = BASE_URL + "/Record/Record.asmx/GetRecordList";//获取统计报表
     public static final String RECORD_GETCARRECORD = BASE_URL + "/Record/Record.asmx/GetCarRecord";//获取单车生产统计信息
-    public static final String Record_GetProjectRecord = BASE_URL + "/Record/Record.asmx/GetProjectRecord";//
+    public static final String RECORD_GETPROJECTRECORD = BASE_URL + "/Record/Record.asmx/GetProjectRecord";//
 
     //总经理
     public static final String ADMIN_GETPACTLIST = BASE_URL + "/Admin/Admin.asmx/GetPactList";//获取合同列表

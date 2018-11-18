@@ -43,22 +43,8 @@ public class ProductManageFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, ProductInputActivity.class));
                 break;
             case R.id.rl_menu2:
-                Intent intent = new Intent(mActivity, DeviceListActivity.class);
-                intent.putExtra("FLAG", 4);
-                startActivity(intent);
+                startActivity(new Intent(mActivity, ProductStatisticsActivity.class));
                 break;
-//            case R.id.rl_menu3:
-//                startActivity(new Intent(mActivity, RepairRequestActivity.class));
-//                break;
-//            case R.id.rl_menu4:
-//                startActivity(new Intent(mActivity, RepairRecordActivity.class));
-//                break;
-//            case R.id.rl_menu5:
-//                UIUtils.showT("菜单5");
-//                break;
-//            case R.id.rl_menu6:
-//
-//                break;
         }
     }
 

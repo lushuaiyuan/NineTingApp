@@ -38,14 +38,6 @@ public class DeviceManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (viewType == TYPE_CONTENT) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_device_manage_content, parent, false);
             ContentViewHolder viewHolder = new ContentViewHolder(view);
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (onItemClickListener != null) {
-
-                    }
-                }
-            });
             return viewHolder;
         }
         return null;
@@ -55,8 +47,16 @@ public class DeviceManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeadViewHolder) {
             //得到对应position的数据集
-            String projectName = (String) dataList.get(position).getT();
-            ((HeadViewHolder) holder).projectName.setText(projectName);
+            DeviceManageEntity deviceManageEntity = (DeviceManageEntity) dataList.get(position).getT();
+            ((HeadViewHolder) holder).projectName.setText(deviceManageEntity.getProjectName());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(view, position);
+                    }
+                }
+            });
         }
         if (holder instanceof ContentViewHolder) {
             //从数据集合中取出该项
@@ -66,14 +66,6 @@ public class DeviceManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((ContentViewHolder) holder).tv_repairAmount.setText("维修" + deviceDetial.getRepairAmount() + "辆");
             ((ContentViewHolder) holder).tv_normalAmount.setText("正常" + deviceDetial.getNormalAmount() + "辆");
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(view, position);
-                }
-            }
-        });
     }
 
 
@@ -126,7 +118,6 @@ public class DeviceManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static interface OnItemClickListener {
         void onItemClick(View view, int position);
 
-        void onItemLongClick(View view, int position);
     }
 
 
