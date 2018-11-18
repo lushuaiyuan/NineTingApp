@@ -339,8 +339,10 @@ public class DeviceListActivity extends BaseActivity implements BaseQuickAdapter
         smartRefreshLayout.setEnableRefresh(true);
         //使上拉加载具有弹性效果：
         smartRefreshLayout.setEnableAutoLoadMore(false);
-        projectID = UIUtils.getStr4Intent(this, "projectID");
-        tvProject.setText(UIUtils.getStr4Intent(this, "projectName"));
+        if (StringUtil.isNullOrEmpty(UIUtils.getStr4Intent(this, "projectID"))) {
+            projectID = UIUtils.getStr4Intent(this, "projectID");
+            tvProject.setText(UIUtils.getStr4Intent(this, "projectName"));
+        }
 //        int tag = UIUtils.getInt4Intent(this, "TAG");
 //        if (tag == 1) {
 //            tvToolbarMenu.setVisibility(View.GONE);
