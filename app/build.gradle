@@ -40,12 +40,12 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            jniLibs.srcDir 'libs'
-            //说明so的路径为该libs路径，关联所有地图SDK的so文件
-        }
-    }
+//    sourceSets {
+//        main {
+//            jniLibs.srcDir 'libs'
+//            //说明so的路径为该libs路径，关联所有地图SDK的so文件
+//        }
+//    }
 }
 
 dependencies {

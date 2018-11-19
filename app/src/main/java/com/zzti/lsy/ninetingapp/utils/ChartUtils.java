@@ -58,17 +58,12 @@ public class ChartUtils {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
         xAxis.setTextSize(12f);//设置文字大小
         if (type == allCar) {
-            xAxis.setAxisMinimum(0f);//设置x轴的最小值 //`
             xAxis.setAxisMaximum(12f);//设置最大值 //
-            xAxis.setLabelCount(count);  //设置X轴的显示个数
-            mLineChart.setDragEnabled(false);   //能否拖拽
-            mLineChart.setScaleEnabled(false);  //能否缩放
-        } else {
-            xAxis.setAxisMinimum(0f);//设置x轴的最小值 //`
-            mLineChart.setDragEnabled(true);   //能否拖拽
-            mLineChart.setScaleEnabled(true);  //能否缩放
-            xAxis.setLabelCount(count);  //设置X轴的显示个数
         }
+        xAxis.setLabelCount(count);  //设置X轴的显示个数
+        xAxis.setAxisMinimum(0f);//设置x轴的最小值 //`
+        mLineChart.setDragEnabled(true);   //能否拖拽
+        mLineChart.setScaleEnabled(true);  //能否缩放
         xAxis.setAvoidFirstLastClipping(false);//图表将避免第一个和最后一个标签条目被减掉在图表或屏幕的边缘
 
         xAxis.setTextColor(Color.WHITE);//设置字体颜色

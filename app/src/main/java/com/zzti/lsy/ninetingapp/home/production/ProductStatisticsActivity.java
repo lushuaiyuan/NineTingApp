@@ -80,10 +80,16 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
     TextView tvOilMassRatio;
     @BindView(R.id.chart1)
     LineChart mChart1;
+    @BindView(R.id.tv_hint1)
+    TextView tv_hint1;
     @BindView(R.id.chart2)
     LineChart mChart2;
+    @BindView(R.id.tv_hint2)
+    TextView tv_hint2;
     @BindView(R.id.chart3)
     LineChart mChart3;
+    @BindView(R.id.tv_hint3)
+    TextView tv_hint3;
 
     //项目部
     private PopupWindow popupWindowProject;
@@ -154,6 +160,8 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                     projectEntities.clear();
                     try {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        ConditionEntity conditionEntity1 = new ConditionEntity("所有项目部", "");
+                        projectEntities.add(conditionEntity1);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
                             ConditionEntity conditionEntity = new ConditionEntity();
@@ -219,6 +227,12 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
     }
 
     private void getData() {
+        xData1.clear();
+        xData2.clear();
+        xData3.clear();
+        yData1.clear();
+        yData2.clear();
+        yData3.clear();
         showDia();
         HashMap<String, String> params = new HashMap<>();
         if (StringUtil.isNullOrEmpty(projectID))
@@ -245,37 +259,59 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                     List<ProductEntity.WearRecordsBean> wearRecords = productEntity.getWearRecords();//加油量
                     List<ProductEntity.ZratioRecordsBean> zratioRecords = productEntity.getZratioRecords();//油耗比
                     //生产量
-                    for (int i = 0; i < quantityRecords.size(); i++) {
-                        String format = quantityRecords.get(i).getTime().split("T")[0];
-                        String quantity = quantityRecords.get(i).getQuantity();
-                        xData1.add(format);
-                        yData1.add(quantity);
+                    if (quantityRecords != null && quantityRecords.size() > 0) {
+                        for (int i = 0; i < quantityRecords.size(); i++) {
+                            String format = quantityRecords.get(i).getTime().split("T")[0];
+                            String quantity = quantityRecords.get(i).getQuantity();
+                            xData1.add(format);
+                            yData1.add(quantity);
+                        }
                     }
-                    ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size());
-                    setLineChartDate(mChart1, xData1, yData1);
-
-
+                    if (xData1.size() == 0) {
+                        tv_hint1.setVisibility(View.VISIBLE);
+                        mChart1.setVisibility(View.GONE);
+                    } else {
+                        tv_hint1.setVisibility(View.GONE);
+                        mChart1.setVisibility(View.VISIBLE);
+                        ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size());
+                        setLineChartDate(mChart1, xData1, yData1);
+                    }
                     //加油量
-                    for (int i = 0; i < wearRecords.size(); i++) {
-                        String wear = wearRecords.get(i).getWear();
-                        String format = wearRecords.get(i).getTime().split("T")[0];
-                        xData2.add(format);
-                        yData2.add(wear);
+                    if (wearRecords != null && wearRecords.size() > 0) {
+                        for (int i = 0; i < wearRecords.size(); i++) {
+                            String wear = wearRecords.get(i).getWear();
+                            String format = wearRecords.get(i).getTime().split("T")[0];
+                            xData2.add(format);
+                            yData2.add(wear);
+                        }
                     }
-                    ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size());
-                    setLineChartDate(mChart2, xData2, yData2);
-
+                    if (xData2.size() == 0) {
+                        tv_hint2.setVisibility(View.VISIBLE);
+                        mChart2.setVisibility(View.GONE);
+                    } else {
+                        tv_hint2.setVisibility(View.GONE);
+                        mChart2.setVisibility(View.VISIBLE);
+                        ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size());
+                        setLineChartDate(mChart2, xData2, yData2);
+                    }
                     //油耗率
-                    for (int i = 0; i < zratioRecords.size(); i++) {
-                        String format = zratioRecords.get(i).getTime().split("T")[0];
-                        String zratio = zratioRecords.get(i).getZratio();
-                        xData3.add(format);
-                        yData3.add(zratio);
+                    if (zratioRecords != null && zratioRecords.size() > 0) {
+                        for (int i = 0; i < zratioRecords.size(); i++) {
+                            String format = zratioRecords.get(i).getTime().split("T")[0];
+                            String zratio = zratioRecords.get(i).getZratio();
+                            xData3.add(format);
+                            yData3.add(zratio);
+                        }
                     }
-
-                    ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size());
-                    setLineChartDate(mChart3, xData3, yData3);
-
+                    if (xData1.size() == 0) {
+                        tv_hint3.setVisibility(View.VISIBLE);
+                        mChart3.setVisibility(View.GONE);
+                    } else {
+                        tv_hint3.setVisibility(View.GONE);
+                        mChart3.setVisibility(View.VISIBLE);
+                        ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size());
+                        setLineChartDate(mChart3, xData3, yData3);
+                    }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
@@ -302,7 +338,6 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
     private List<String> yData3 = new ArrayList<>();
 
     private void setLineChartDate(LineChart mLineChart, final List<String> xData, List<String> yData) {
-        if (yData.size() == 0) return;
         List<Entry> mValues = new ArrayList<>();
         for (int i = 0; i < yData.size(); i++) {
             Entry entry = new Entry(i, Float.valueOf(yData.get(i)), xData.get(i));
@@ -312,8 +347,12 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
         LineDataSet lineDataSet;
         if (mLineChart.getData() != null &&
                 mLineChart.getData().getDataSetCount() > 0) {
-            //获取数据1
-            lineDataSet = (LineDataSet) mLineChart.getData().getDataSetByIndex(0);
+            if (mValues.size() == 0) {
+                lineDataSet = new LineDataSet(mValues, "数据");
+            } else {
+                //获取数据1
+                lineDataSet = (LineDataSet) mLineChart.getData().getDataSetByIndex(0);
+            }
             lineDataSet.setValues(mValues);
             //刷新数据
             mLineChart.getData().notifyDataChanged();
@@ -352,7 +391,6 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                     }
                 }
             });
-
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(lineDataSet); // add the datasets
             //创建LineData对象 属于LineChart折线图的数据集合

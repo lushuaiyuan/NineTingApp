@@ -42,7 +42,7 @@
                     android:background="@drawable/input_shape"
                     android:drawableRight="@mipmap/icon_down_arrow"
                     android:padding="@dimen/dp8"
-                    android:text="所有"
+                    android:text="所有项目部"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
 
@@ -130,10 +130,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="加油量"
                     android:layout_marginLeft="@dimen/dp10"
+                    android:text="加油量"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />
+
                 <TextView
                     android:id="@+id/tv_oilMassAmount"
                     android:layout_width="wrap_content"
@@ -141,11 +142,12 @@
                     android:layout_marginLeft="@dimen/dp5"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="油耗率"
                     android:layout_marginLeft="@dimen/dp10"
+                    android:text="油耗率"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />
 
@@ -160,11 +162,11 @@
 
 
             <LinearLayout
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@color/color_6bcfd7"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp10"
                 android:layout_weight="1"
+                android:background="@color/color_6bcfd7"
                 android:orientation="vertical">
 
                 <TextView
@@ -176,11 +178,26 @@
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dp16" />
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chart1"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp200"
-                    android:layout_margin="@dimen/dp16" />
+                    android:layout_height="@dimen/dp200">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp200"
+                        android:layout_margin="@dimen/dp16"
+                        android:background="@color/color_6bcfd7" />
+
+                    <TextView
+                        android:id="@+id/tv_hint1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="暂无数据"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dp15" />
+                </RelativeLayout>
 
 
                 <TextView
@@ -191,11 +208,26 @@
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dp16" />
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chart2"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp200"
-                    android:layout_margin="@dimen/dp16" />
+                    android:layout_height="@dimen/dp200">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp200"
+                        android:layout_margin="@dimen/dp16"
+                        android:background="@color/color_6bcfd7" />
+
+                    <TextView
+                        android:id="@+id/tv_hint2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="暂无数据"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dp15" />
+                </RelativeLayout>
 
 
                 <TextView
@@ -206,14 +238,30 @@
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dp16" />
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chart3"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp200"
-                    android:layout_margin="@dimen/dp16" />
+                    android:layout_height="@dimen/dp200">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp200"
+                        android:layout_margin="@dimen/dp16"
+                        android:background="@color/color_6bcfd7" />
+
+                    <TextView
+                        android:id="@+id/tv_hint3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="暂无数据"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dp15" />
+                </RelativeLayout>
 
 
             </LinearLayout>
+
             <Button
                 android:id="@+id/btn_oneCar"
                 android:layout_width="match_parent"

@@ -7,6 +7,14 @@ public class ConditionEntity {
     private String name;
     private String id;
 
+    public ConditionEntity() {
+    }
+
+    public ConditionEntity(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
