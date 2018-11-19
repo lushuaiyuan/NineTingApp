@@ -11,47 +11,73 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dp5"
-        android:paddingLeft="@dimen/dp10"
-        android:paddingRight="@dimen/dp10"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
         android:paddingTop="@dimen/dp5">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="类型："
+            android:layout_weight="1"
+            android:text="类型"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/dp14" />
+            android:textSize="@dimen/dp14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="总数量"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="维修数量/正常数量"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:paddingTop="@dimen/dp5">
 
         <TextView
             android:id="@+id/tv_carType"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dp14" />
 
         <TextView
             android:id="@+id/tv_amount"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp8"
+            android:layout_weight="1"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dp14" />
 
         <TextView
-            android:id="@+id/tv_repairAmount"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_repair_normal_Amount"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp8"
+            android:layout_weight="2"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dp14" />
 
-        <TextView
-            android:id="@+id/tv_normalAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp8"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/dp14" />
 
     </LinearLayout>
 

@@ -64,6 +64,7 @@ public class ChartUtils {
             mLineChart.setDragEnabled(false);   //能否拖拽
             mLineChart.setScaleEnabled(false);  //能否缩放
         } else {
+            xAxis.setAxisMinimum(0f);//设置x轴的最小值 //`
             mLineChart.setDragEnabled(true);   //能否拖拽
             mLineChart.setScaleEnabled(true);  //能否缩放
             xAxis.setLabelCount(count);  //设置X轴的显示个数
@@ -77,6 +78,7 @@ public class ChartUtils {
         YAxis axisRight = mLineChart.getAxisRight();
         leftAxis.enableGridDashedLine(10f, 10f, 0f);  //设置Y轴网格线条的虚线，参1 实线长度，参2 虚线长度 ，参3 周期
         leftAxis.setLabelCount(10, false);
+        leftAxis.setAxisMinimum(0);
         axisRight.setEnabled(false);   //设置是否使用 Y轴右边的
         leftAxis.setEnabled(true);     //设置是否使用 Y轴左边的
         leftAxis.setGridColor(Color.parseColor("#7189a9"));  //网格线条的颜色

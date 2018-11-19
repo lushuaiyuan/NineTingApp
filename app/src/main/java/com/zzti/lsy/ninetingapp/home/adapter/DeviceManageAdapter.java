@@ -61,10 +61,9 @@ public class DeviceManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof ContentViewHolder) {
             //从数据集合中取出该项
             DeviceManageEntity.DeviceDetial deviceDetial = (DeviceManageEntity.DeviceDetial) dataList.get(position).getT();
-            ((ContentViewHolder) holder).tv_amount.setText(deviceDetial.getCmount() + "辆");
+            ((ContentViewHolder) holder).tv_amount.setText(deviceDetial.getCmount());
             ((ContentViewHolder) holder).tv_carType.setText(deviceDetial.getCarType());
-            ((ContentViewHolder) holder).tv_repairAmount.setText("维修" + deviceDetial.getRepairAmount() + "辆");
-            ((ContentViewHolder) holder).tv_normalAmount.setText("正常" + deviceDetial.getNormalAmount() + "辆");
+            ((ContentViewHolder) holder).tv_repair_normal_Amount.setText(deviceDetial.getRepairAmount() + "/" + deviceDetial.getNormalAmount());
         }
     }
 
@@ -93,15 +92,13 @@ public class DeviceManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public class ContentViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_carType;
         public TextView tv_amount;
-        public TextView tv_repairAmount;
-        public TextView tv_normalAmount;
+        public TextView tv_repair_normal_Amount;
 
         public ContentViewHolder(View itemView) {
             super(itemView);
             tv_carType = itemView.findViewById(R.id.tv_carType);
             tv_amount = itemView.findViewById(R.id.tv_amount);
-            tv_repairAmount = itemView.findViewById(R.id.tv_repairAmount);
-            tv_normalAmount = itemView.findViewById(R.id.tv_normalAmount);
+            tv_repair_normal_Amount = itemView.findViewById(R.id.tv_repair_normal_Amount);
         }
     }
 

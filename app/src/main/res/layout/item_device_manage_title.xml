@@ -15,7 +15,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
             android:text="项目部名称"
             android:textColor="@color/color_333333"
             android:textSize="@dimen/dp16" />
