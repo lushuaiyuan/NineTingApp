@@ -91,13 +91,6 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
     private ConditionAdapter projectAdapter;
     private List<ConditionEntity> projectEntities;
 
-
-//    private DynamicLineChartManager dynamicLineChartManager1;
-//    private DynamicLineChartManager dynamicLineChartManager2;
-//    private List<Float> list = new ArrayList<>(); //数据集合
-//    private List<String> names = new ArrayList<>(); //折线名字集合
-//    private List<Integer> color = new ArrayList<>();//折线颜色集合
-
     @Override
     public int getContentViewId() {
         return R.layout.activity_product_static;
@@ -137,17 +130,6 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
     }
 
     private void initData() {
-//        //折线名字
-//        names.add("生产量");
-//        names.add("加油量");
-//        //折线颜色
-//        color.add(R.color.color_ff80b4);
-//        color.add(R.color.color_6bcfd7);
-//
-//        dynamicLineChartManager1 = new DynamicLineChartManager(mChart1, names, color);
-//        dynamicLineChartManager2 = new DynamicLineChartManager(mChart2, "油耗率", R.color.color_6bcfd6);
-//        dynamicLineChartManager1.setDescription("");
-//        dynamicLineChartManager2.setDescription("");
         showDia();
         getProject();
         getData();

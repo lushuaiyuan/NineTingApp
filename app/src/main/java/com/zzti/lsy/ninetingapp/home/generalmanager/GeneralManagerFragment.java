@@ -24,6 +24,7 @@ import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.home.pm.MaintenanceReportActivity;
 import com.zzti.lsy.ninetingapp.home.pm.MaintenanceStatisticActivity;
+import com.zzti.lsy.ninetingapp.home.production.ProductStatisticsActivity;
 import com.zzti.lsy.ninetingapp.home.repair.RepairRecordActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -206,7 +207,8 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
                 startActivity(new Intent(mActivity, RepairRecordActivity.class));
                 break;
             case R.id.rl_menu6://生产统计
-                startActivity(new Intent(mActivity, DeviceListActivity.class));
+                startActivity(new Intent(mActivity, ProductStatisticsActivity.class));
+//                startActivity(new Intent(mActivity, DeviceListActivity.class));
                 break;
             case R.id.rl_menu7://维修统计
                 Intent intent = new Intent(mActivity, MaintenanceStatisticActivity.class);

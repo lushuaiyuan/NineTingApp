@@ -26,6 +26,7 @@ import com.zzti.lsy.ninetingapp.home.generalmanager.ApprovalActivity;
 import com.zzti.lsy.ninetingapp.home.generalmanager.PactListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.LifeGoodsPurchaseListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsPurchaseListActivity;
+import com.zzti.lsy.ninetingapp.home.production.ProductStatisticsActivity;
 import com.zzti.lsy.ninetingapp.home.repair.RepairRecordActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
@@ -206,9 +207,10 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
 
                 break;
             case R.id.rl_menu6://生产统计
-                Intent intent = new Intent(mActivity, DeviceListActivity.class);
-                intent.putExtra("FLAG", 4);
-                startActivity(intent);
+                startActivity(new Intent(mActivity, ProductStatisticsActivity.class));
+//                Intent intent = new Intent(mActivity, DeviceListActivity.class);
+//                intent.putExtra("FLAG", 4);
+//                startActivity(intent);
                 break;
             case R.id.rl_menu7://维修统计
                 startActivity(new Intent(mActivity, MaintenanceStatisticActivity.class));
