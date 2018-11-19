@@ -73,12 +73,11 @@ public class ChartUtils {
         YAxis leftAxis = mLineChart.getAxisLeft();
         YAxis axisRight = mLineChart.getAxisRight();
         leftAxis.enableGridDashedLine(10f, 10f, 0f);  //设置Y轴网格线条的虚线，参1 实线长度，参2 虚线长度 ，参3 周期
-        leftAxis.setGranularity(20f); // 网格线条间距
+        leftAxis.setLabelCount(10, false);
         axisRight.setEnabled(false);   //设置是否使用 Y轴右边的
         leftAxis.setEnabled(true);     //设置是否使用 Y轴左边的
         leftAxis.setGridColor(Color.parseColor("#7189a9"));  //网格线条的颜色
         leftAxis.setDrawLabels(true);        //是否显示Y轴刻度
-//        leftAxis.setStartAtZero(true);        //设置Y轴数值 从零开始
         leftAxis.setDrawGridLines(true);      //是否使用 Y轴网格线条
         leftAxis.setTextSize(12f);            //设置Y轴刻度字体
         leftAxis.setTextColor(Color.WHITE);   //设置字体颜色

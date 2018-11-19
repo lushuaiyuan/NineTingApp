@@ -18,6 +18,13 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
@@ -31,6 +38,7 @@ import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsOutDetailActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.utils.ChartUtils;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.DynamicLineChartManager;
@@ -41,6 +49,7 @@ import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -73,6 +82,8 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
     LineChart mChart1;
     @BindView(R.id.chart2)
     LineChart mChart2;
+    @BindView(R.id.chart3)
+    LineChart mChart3;
 
     //项目部
     private PopupWindow popupWindowProject;
@@ -81,11 +92,11 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
     private List<ConditionEntity> projectEntities;
 
 
-    private DynamicLineChartManager dynamicLineChartManager1;
-    private DynamicLineChartManager dynamicLineChartManager2;
-    private List<Float> list = new ArrayList<>(); //数据集合
-    private List<String> names = new ArrayList<>(); //折线名字集合
-    private List<Integer> color = new ArrayList<>();//折线颜色集合
+//    private DynamicLineChartManager dynamicLineChartManager1;
+//    private DynamicLineChartManager dynamicLineChartManager2;
+//    private List<Float> list = new ArrayList<>(); //数据集合
+//    private List<String> names = new ArrayList<>(); //折线名字集合
+//    private List<Integer> color = new ArrayList<>();//折线颜色集合
 
     @Override
     public int getContentViewId() {
@@ -126,16 +137,17 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
     }
 
     private void initData() {
-        //折线名字
-        names.add("生产量");
-        names.add("加油量");
-        //折线颜色
-        color.add(R.color.color_ff80b4);
-        color.add(R.color.color_6bcfd7);
-
-        dynamicLineChartManager1 = new DynamicLineChartManager(mChart1, names, color);
-        dynamicLineChartManager2 = new DynamicLineChartManager(mChart2, "油耗率", R.color.color_6bcfd6);
-
+//        //折线名字
+//        names.add("生产量");
+//        names.add("加油量");
+//        //折线颜色
+//        color.add(R.color.color_ff80b4);
+//        color.add(R.color.color_6bcfd7);
+//
+//        dynamicLineChartManager1 = new DynamicLineChartManager(mChart1, names, color);
+//        dynamicLineChartManager2 = new DynamicLineChartManager(mChart2, "油耗率", R.color.color_6bcfd6);
+//        dynamicLineChartManager1.setDescription("");
+//        dynamicLineChartManager2.setDescription("");
         showDia();
         getProject();
         getData();
@@ -247,7 +259,40 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                     tvProductAmount.setText(productEntity.getQuantity());
                     tvOilMassAmount.setText(productEntity.getWear());
                     tvOilMassRatio.setText(productEntity.getZratio());
-                    showChart(productEntity);
+                    List<ProductEntity.QuantityRecordsBean> quantityRecords = productEntity.getQuantityRecords();//生产量
+                    List<ProductEntity.WearRecordsBean> wearRecords = productEntity.getWearRecords();//加油量
+                    List<ProductEntity.ZratioRecordsBean> zratioRecords = productEntity.getZratioRecords();//油耗比
+                    //生产量
+                    for (int i = 0; i < quantityRecords.size(); i++) {
+                        String format = quantityRecords.get(i).getTime().split("T")[0];
+                        String quantity = quantityRecords.get(i).getQuantity();
+                        xData1.add(format);
+                        yData1.add(quantity);
+                    }
+                    ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size());
+                    setLineChartDate(mChart1, xData1, yData1);
+
+
+                    //加油量
+                    for (int i = 0; i < wearRecords.size(); i++) {
+                        String wear = wearRecords.get(i).getWear();
+                        String format = wearRecords.get(i).getTime().split("T")[0];
+                        xData2.add(format);
+                        yData2.add(wear);
+                    }
+                    ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size());
+                    setLineChartDate(mChart2, xData2, yData2);
+
+                    //油耗率
+                    for (int i = 0; i < zratioRecords.size(); i++) {
+                        String format = zratioRecords.get(i).getTime().split("T")[0];
+                        String zratio = zratioRecords.get(i).getZratio();
+                        xData3.add(format);
+                        yData3.add(zratio);
+                    }
+
+                    ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size());
+                    setLineChartDate(mChart3, xData3, yData3);
 
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
@@ -264,30 +309,77 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
         });
     }
 
-    /**
-     * @param productEntity
-     */
-    private void showChart(ProductEntity productEntity) {
-        List<ProductEntity.QuantityRecordsBean> quantityRecords = productEntity.getQuantityRecords();//生产量
-        List<ProductEntity.WearRecordsBean> wearRecords = productEntity.getWearRecords();//加油量
-        List<ProductEntity.ZratioRecordsBean> zratioRecords = productEntity.getZratioRecords();//油耗比
 
-        //生产量
-        for (int i = 0; i < quantityRecords.size(); i++) {
-            float quantity = (float) quantityRecords.get(i).getQuantity();
-            list.add(quantity);
+    private List<String> xData1 = new ArrayList<>();
+    private List<String> yData1 = new ArrayList<>();
+
+    private List<String> xData2 = new ArrayList<>();
+    private List<String> yData2 = new ArrayList<>();
+
+    private List<String> xData3 = new ArrayList<>();
+    private List<String> yData3 = new ArrayList<>();
+
+    private void setLineChartDate(LineChart mLineChart, final List<String> xData, List<String> yData) {
+        if (yData.size() == 0) return;
+        List<Entry> mValues = new ArrayList<>();
+        for (int i = 0; i < yData.size(); i++) {
+            Entry entry = new Entry(i, Float.valueOf(yData.get(i)), xData.get(i));
+            mValues.add(entry);
         }
-        List<Float> zratios = new ArrayList<>();
-        for (int i = 0; i < zratioRecords.size(); i++) {
-            float zratio = (float) zratioRecords.get(i).getZratio();
-            zratios.add(zratio);
+        //判断图表中原来是否有数据
+        LineDataSet lineDataSet;
+        if (mLineChart.getData() != null &&
+                mLineChart.getData().getDataSetCount() > 0) {
+            //获取数据1
+            lineDataSet = (LineDataSet) mLineChart.getData().getDataSetByIndex(0);
+            lineDataSet.setValues(mValues);
+            //刷新数据
+            mLineChart.getData().notifyDataChanged();
+            mLineChart.notifyDataSetChanged();
+        } else {
+            //设置数据1  参数1：数据源 参数2：图例名称
+            lineDataSet = new LineDataSet(mValues, "数据");
+            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            lineDataSet.setColor(Color.WHITE);
+            lineDataSet.setCircleColor(Color.parseColor("#AAFFFFFF"));
+            lineDataSet.setHighLightColor(Color.WHITE);//设置点击交点后显示交高亮线的颜色
+            lineDataSet.setHighlightEnabled(true);//是否使用点击高亮线
+            lineDataSet.setDrawCircles(true);
+            lineDataSet.setValueTextColor(Color.WHITE);
+            lineDataSet.setLineWidth(1f);//设置线宽
+            lineDataSet.setCircleRadius(2f);//设置焦点圆心的大小
+            lineDataSet.setHighlightLineWidth(0.5f);//设置点击交点后显示高亮线宽
+            lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);//点击后的高亮线的显示样式
+            lineDataSet.setValueTextSize(12f);//设置显示值的文字大小
+            lineDataSet.setDrawFilled(true);//设置使用 范围背景填充
+
+            lineDataSet.setDrawValues(false);
+            //格式化显示数据
+            XAxis xAxis = mLineChart.getXAxis();
+            xAxis.setValueFormatter(new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    //对X轴上的值进行Format格式化，转成相应的值
+                    int intValue = (int) value;
+                    //筛选出自己需要的值，一般都是这样写没问题，并且一定要加上这个判断，不然会出错
+                    if (xData.size() > intValue && intValue >= 0) {
+                        //这样显示在X轴上值就是 05:30  05:35，不然会是1.0  2.0
+                        return xData.get(intValue);
+                    } else {
+                        return "";
+                    }
+                }
+            });
+
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(lineDataSet); // add the datasets
+            //创建LineData对象 属于LineChart折线图的数据集合
+            LineData data = new LineData(dataSets);
+            // 添加到图表中
+            mLineChart.setData(data);
+            //绘制图表
+            mLineChart.invalidate();
         }
-        dynamicLineChartManager1.setYAxis(100, 0, 10);//生产量和加油量
-        dynamicLineChartManager2.setYAxis(Collections.max(zratios), 0, 10);//油耗比
-
-        dynamicLineChartManager1.addEntry(list);
-        dynamicLineChartManager2.addEntry(zratioRecords.size());
-
     }
 
     private int type = 1;

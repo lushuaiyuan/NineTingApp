@@ -90,7 +90,7 @@ public class ProductEntity {
          */
 
         private String time;
-        private double wear;
+        private String wear;
 
         public String getTime() {
             return time;
@@ -100,11 +100,11 @@ public class ProductEntity {
             this.time = time;
         }
 
-        public double getWear() {
+        public String getWear() {
             return wear;
         }
 
-        public void setWear(double wear) {
+        public void setWear(String wear) {
             this.wear = wear;
         }
     }
@@ -116,7 +116,7 @@ public class ProductEntity {
          */
 
         private String time;
-        private double quantity;
+        private String quantity;
 
         public String getTime() {
             return time;
@@ -126,11 +126,11 @@ public class ProductEntity {
             this.time = time;
         }
 
-        public double getQuantity() {
+        public String getQuantity() {
             return quantity;
         }
 
-        public void setQuantity(double quantity) {
+        public void setQuantity(String quantity) {
             this.quantity = quantity;
         }
     }
@@ -142,7 +142,7 @@ public class ProductEntity {
          */
 
         private String time;
-        private double zratio;
+        private String zratio;
 
         public String getTime() {
             return time;
@@ -152,11 +152,11 @@ public class ProductEntity {
             this.time = time;
         }
 
-        public double getZratio() {
+        public String getZratio() {
             return zratio;
         }
 
-        public void setZratio(double zratio) {
+        public void setZratio(String zratio) {
             this.zratio = zratio;
         }
     }

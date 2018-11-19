@@ -75,6 +75,8 @@ public class DynamicLineChartManager {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
         xAxis.setLabelCount(10);
+        xAxis.setDrawGridLines(false);// 设置为true，则绘制网格线。
+        xAxis.setDrawAxisLine(false);// 设置为true，则绘制该行旁边的轴线。
 
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
