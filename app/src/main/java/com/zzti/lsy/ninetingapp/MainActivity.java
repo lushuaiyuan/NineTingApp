@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
                             mFragment = mFragments[5];
                         }
                         break;
-                    case R.id.radio_button_message:
+                    case R.id.radio_button_monitor:
                         mFragment = mFragments[6];
                         break;
                     case R.id.radio_button_mine:

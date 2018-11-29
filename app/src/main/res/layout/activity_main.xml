@@ -29,10 +29,10 @@
             android:text="@string/home" />
 
         <RadioButton
-            android:id="@+id/radio_button_message"
+            android:id="@+id/radio_button_monitor"
             style="@style/RadioGroupButtonStyle"
-            android:drawableTop="@drawable/tab_message_selector"
-            android:text="@string/message" />
+            android:drawableTop="@drawable/tab_monitor_selector"
+            android:text="@string/monitor" />
 
 
         <RadioButton

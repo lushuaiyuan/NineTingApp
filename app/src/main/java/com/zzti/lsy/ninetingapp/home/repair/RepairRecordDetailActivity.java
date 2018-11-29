@@ -17,6 +17,8 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
+import com.zzti.lsy.ninetingapp.event.PartsPurchaseMsg;
 import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.entity.RequiredParts;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
@@ -29,6 +31,7 @@ import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -296,9 +299,10 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    Intent intent = new Intent();
-                    intent.putExtra("status", status);
-                    setResult(2, intent);
+//                    Intent intent = new Intent();
+//                    intent.putExtra("status", status);
+//                    setResult(2, intent);
+                    EventBus.getDefault().post(new EventMessage(C.EventCode.F, status));
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();

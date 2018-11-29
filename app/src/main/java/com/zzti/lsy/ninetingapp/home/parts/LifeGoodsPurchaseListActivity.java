@@ -290,7 +290,7 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
         selectPosition = position;
         Intent intent = new Intent(this, LifeGoodsPurchaseDetailActivity.class);
         intent.putExtra("laobaoPurchased", laobaoPurchaseds.get(position));
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
 
     @Override

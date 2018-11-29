@@ -182,7 +182,7 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
         return fragment;
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.rl_menu7, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu6, R.id.rl_menu7, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1://项目模块
@@ -193,22 +193,14 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
                 break;
 
 
-            case R.id.rl_menu3://采购审批  包含配件审批和日用品审批
+            case R.id.rl_menu3://采购审批  包含配件审批 日用品审批 维修审批
                 startActivity(new Intent(mActivity, ApprovalActivity.class));
-                //TODO
-//                startActivity(new Intent(mActivity, PartsPurchaseListActivity.class));
                 break;
             case R.id.rl_menu4://设备管理
                 startActivity(new Intent(mActivity, DeviceManageActivity.class));
-                //TODO
-//                startActivity(new Intent(mActivity, LifeGoodsPurchaseListActivity.class));
-                break;
-            case R.id.rl_menu5://维修审批
-                startActivity(new Intent(mActivity, RepairRecordActivity.class));
                 break;
             case R.id.rl_menu6://生产统计
                 startActivity(new Intent(mActivity, ProductStatisticsActivity.class));
-//                startActivity(new Intent(mActivity, DeviceListActivity.class));
                 break;
             case R.id.rl_menu7://维修统计
                 Intent intent = new Intent(mActivity, MaintenanceStatisticActivity.class);

@@ -18,6 +18,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 日用品
+ */
 public class ApprovalActivity extends BaseActivity {
     @BindView(R.id.tab)
     TabLayout mTabLayout;
@@ -39,8 +42,9 @@ public class ApprovalActivity extends BaseActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new PartsPurchaseListFragment());
         fragments.add(new LifeGoodsPurchaseListFragment());
+        fragments.add(new RepairRecordFragment());
 
-        TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"配件", "日用品"});
+        TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"配件", "日用品", "维修"});
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
 

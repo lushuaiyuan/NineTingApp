@@ -300,7 +300,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
         selectPosition = position;
         Intent intent = new Intent(this, PartsPurchaseDetailActivity.class);
         intent.putExtra("partsPurchased", partsPurchaseds.get(position));
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
 
     @Override

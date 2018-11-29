@@ -1,8 +1,7 @@
-package com.zzti.lsy.ninetingapp.home.repair;
+package com.zzti.lsy.ninetingapp.home.generalmanager;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,16 +22,18 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
-import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.base.BaseFragment;
+import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RepairTypeEntity;
 import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
+import com.zzti.lsy.ninetingapp.event.PartsPurchaseMsg;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
-import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairRecordAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairTypeAdapter;
+import com.zzti.lsy.ninetingapp.home.repair.RepairRecordDetailActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
@@ -52,9 +53,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 维修记录
+ * @author lsy
+ * @create 2018/11/29 22:28
+ * @Describe 维修审批
  */
-public class RepairRecordActivity extends BaseActivity implements AdapterView.OnItemClickListener, BaseQuickAdapter.OnItemClickListener {
+public class RepairRecordFragment extends BaseFragment implements AdapterView.OnItemClickListener, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.et_search)
     EditText etSearch;
     @BindView(R.id.rl_handleState)
@@ -87,23 +90,37 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     private String repairTypeID;
     private String statusID;
 
-
-    @Override
-    public int getContentViewId() {
-        return R.layout.activity_maintenance_record;
-    }
-
-    @Override
-    protected void initAllMembersView(Bundle savedInstanceState) {
-        initView();
-        initData();
-    }
-
     private int pageIndex = 1;
     private String wherestr = "";
 
-    private void initData() {
-        mRecycleView.setLayoutManager(new LinearLayoutManager(this));
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_repair_record;
+    }
+
+    @Override
+    protected void initView() {
+        smartRefreshLayout.setEnableRefresh(true);
+        smartRefreshLayout.setEnableLoadMore(true);
+        //使上拉加载具有弹性效果：
+        smartRefreshLayout.setEnableAutoLoadMore(false);
+        initPopStatus();
+        initPopRepairType();
+
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+            tvHandleState.setText("待总经理审批");
+            statusID = "1";
+        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+            tvHandleState.setText("待项目经理审批");
+            statusID = "2";
+        }
+        wherestr += " and status=" + statusID;
+    }
+
+    @Override
+    protected void initData() {
+        mRecycleView.setLayoutManager(new LinearLayoutManager(mActivity));
         repairinfoEntities = new ArrayList<>();
         repairRecordAdapter = new RepairRecordAdapter(repairinfoEntities);
         mRecycleView.setAdapter(repairRecordAdapter);
@@ -134,6 +151,50 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         getRecord();
     }
 
+    @OnClick({R.id.iv_search, R.id.rl_handleState, R.id.rl_repairType})
+    public void viewClick(View view) {
+        hideSoftInput(etSearch);
+        switch (view.getId()) {
+            case R.id.iv_search:
+                if (StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
+                    UIUtils.showT("请输入车牌号");
+                    break;
+                }
+                if (!UIUtils.validateCarNum(etSearch.getText().toString())) {
+                    UIUtils.showT("车牌号格式不正确");
+                    break;
+                }
+                pageIndex = 1;
+                wherestr += " and plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
+                showDia();
+                repairinfoEntities.clear();
+                getRecord();
+                break;
+            case R.id.rl_handleState://处理状态
+                condition = 1;
+                popupWindowStatus.showAsDropDown(rlHandleState, 0, 0, Gravity.LEFT);
+                break;
+            case R.id.rl_repairType://维修类型
+                condition = 2;
+                if (repairTypeEntities.size() > 0) {
+
+                    if (repairTypeEntities.size() >= 4) {
+                        //动态设置listView的高度
+                        View listItem = repairTypeAdapter.getView(0, null, lvRepairType);
+                        listItem.measure(0, 0);
+                        int totalHei = (listItem.getMeasuredHeight() + lvRepairType.getDividerHeight()) * 4;
+                        lvRepairType.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = lvRepairType.getLayoutParams();
+                        params.height = totalHei;
+                        lvRepairType.setLayoutParams(params);
+                    }
+                    popupWindowRepairType.showAsDropDown(rlRepairType, 0, 0, Gravity.LEFT);
+                } else {
+                    UIUtils.showT("暂无数据");
+                }
+                break;
+        }
+    }
     /**
      * 获取维修类型
      */
@@ -227,77 +288,11 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         });
     }
 
-
-    private void initView() {
-        setTitle("维修记录");
-        smartRefreshLayout.setEnableRefresh(true);
-        smartRefreshLayout.setEnableLoadMore(true);
-        //使上拉加载具有弹性效果：
-        smartRefreshLayout.setEnableAutoLoadMore(false);
-        initPopStatus();
-        initPopRepairType();
-
-        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-            tvHandleState.setText("待总经理审批");
-            statusID = "1";
-        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-            tvHandleState.setText("待项目经理审批");
-            statusID = "2";
-        }
-        wherestr += " and status=" + statusID;
-    }
-
-
-    @OnClick({R.id.iv_search, R.id.rl_handleState, R.id.rl_repairType})
-    public void viewClick(View view) {
-        hideSoftInput(etSearch);
-        switch (view.getId()) {
-            case R.id.iv_search:
-                if (StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
-                    UIUtils.showT("请输入车牌号");
-                    break;
-                }
-                if (!UIUtils.validateCarNum(etSearch.getText().toString())) {
-                    UIUtils.showT("车牌号格式不正确");
-                    break;
-                }
-                pageIndex = 1;
-                wherestr += " and plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
-                showDia();
-                repairinfoEntities.clear();
-                getRecord();
-                break;
-            case R.id.rl_handleState://处理状态
-                condition = 1;
-                popupWindowStatus.showAsDropDown(rlHandleState, 0, 0, Gravity.LEFT);
-                break;
-            case R.id.rl_repairType://维修类型
-                condition = 2;
-                if (repairTypeEntities.size() > 0) {
-
-                    if (repairTypeEntities.size() >= 4) {
-                        //动态设置listView的高度
-                        View listItem = repairTypeAdapter.getView(0, null, lvRepairType);
-                        listItem.measure(0, 0);
-                        int totalHei = (listItem.getMeasuredHeight() + lvRepairType.getDividerHeight()) * 4;
-                        lvRepairType.getLayoutParams().height = totalHei;
-                        ViewGroup.LayoutParams params = lvRepairType.getLayoutParams();
-                        params.height = totalHei;
-                        lvRepairType.setLayoutParams(params);
-                    }
-                    popupWindowRepairType.showAsDropDown(rlRepairType, 0, 0, Gravity.LEFT);
-                } else {
-                    UIUtils.showT("暂无数据");
-                }
-                break;
-        }
-    }
-
     private void initPopRepairType() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowRepairType = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowRepairType = new PopupWindow(contentview, UIUtils.getWidth(mActivity) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowRepairType.setFocusable(true);
         popupWindowRepairType.setOutsideTouchable(true);
         //设置消失监听
@@ -325,7 +320,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowStatus = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowStatus = new PopupWindow(contentview, UIUtils.getWidth(mActivity) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowStatus.setFocusable(true);
         popupWindowStatus.setOutsideTouchable(true);
         //设置消失监听
@@ -405,7 +400,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        Intent intent = new Intent(this, RepairRecordDetailActivity.class);
+        Intent intent = new Intent(mActivity, RepairRecordDetailActivity.class);
         intent.putExtra("RepairinfoEntity", repairinfoEntities.get(position));
         selectPosition = position;
         startActivity(intent);
@@ -428,16 +423,4 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         }
     }
 
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1 && resultCode == 2) {
-//            if (data != null) {
-//                int status = data.getIntExtra("status", -2);
-//                repairinfoEntities.get(selectPosition).setStatus(String.valueOf(status));
-//                repairRecordAdapter.notifyItemChanged(selectPosition);
-//            }
-//        }
-//    }
 }

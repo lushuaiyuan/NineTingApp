@@ -12,5 +12,6 @@
     <string name="setting">设置</string>
     <string name="message_setting_comeback">用户从设置页面返回</string>
     <string name="resume">继续</string>
+    <string name="monitor">监控</string>
 
 </resources>

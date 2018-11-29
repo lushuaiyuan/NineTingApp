@@ -7,11 +7,12 @@ import com.zzti.lsy.ninetingapp.base.BaseFragment;
 
 /**
  * author：anxin on 2018/8/3 16:30
+ * 监控
  */
-public class TaskFragment extends BaseFragment {
-    public static TaskFragment newInstance() {
-        TaskFragment taskFragment = new TaskFragment();
-        return taskFragment;
+public class MonitorFragment extends BaseFragment {
+    public static MonitorFragment newInstance() {
+        MonitorFragment monitorFragment = new MonitorFragment();
+        return monitorFragment;
     }
 
     @Override
@@ -21,7 +22,7 @@ public class TaskFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvToolbarTitle.setText("消息");
+        tvToolbarTitle.setText("监控");
         ivToolbarBack.setVisibility(View.GONE);
     }
 

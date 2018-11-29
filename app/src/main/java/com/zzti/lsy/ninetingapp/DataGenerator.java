@@ -9,7 +9,7 @@ import com.zzti.lsy.ninetingapp.home.pm.PMManageFragment;
 import com.zzti.lsy.ninetingapp.home.production.ProductManageFragment;
 import com.zzti.lsy.ninetingapp.home.parts.PartsManagerFragment;
 import com.zzti.lsy.ninetingapp.mine.MineFragment;
-import com.zzti.lsy.ninetingapp.task.TaskFragment;
+import com.zzti.lsy.ninetingapp.task.MonitorFragment;
 
 /**
  * author：anxin on 2018/8/3 16:22
@@ -24,7 +24,7 @@ public class DataGenerator {
         fragments[3] = PMManageFragment.newInstance();
         fragments[4] = GeneralManagerFragment.newInstance();
         fragments[5] = RepairManageFragment.newInstance();
-        fragments[6] = TaskFragment.newInstance();
+        fragments[6] = MonitorFragment.newInstance();
         fragments[7] = MineFragment.newInstance();
         return fragments;
     }

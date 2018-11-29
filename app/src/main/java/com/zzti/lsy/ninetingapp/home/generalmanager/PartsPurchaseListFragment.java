@@ -2,7 +2,6 @@ package com.zzti.lsy.ninetingapp.home.generalmanager;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
