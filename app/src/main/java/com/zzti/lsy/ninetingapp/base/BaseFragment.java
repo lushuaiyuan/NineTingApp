@@ -65,6 +65,10 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (openEventBus()) {
+            EventBus.getDefault()
+                    .register(this);
+        }
     }
 
     @Override
@@ -74,10 +78,7 @@ public abstract class BaseFragment extends Fragment {
         View view = LayoutInflater.from(mActivity)
                 .inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, view);
-        if (openEventBus()) {
-            EventBus.getDefault()
-                    .register(this);
-        }
+
         return view;
     }
 
