@@ -18,6 +18,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
@@ -29,6 +32,8 @@ import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.FactoryAdapter;
+import com.zzti.lsy.ninetingapp.home.generalmanager.PactInputActivity;
+import com.zzti.lsy.ninetingapp.home.repair.RepairRequestActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
@@ -41,6 +46,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -255,7 +262,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
         popupWindowFactory.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-    @OnClick({R.id.tv_factory, R.id.btn_submit})
+    @OnClick({R.id.tv_factory, R.id.tv_time, R.id.btn_submit})
     public void viewClick(View view) {
         hideSoftInput(etAmount);
         switch (view.getId()) {
@@ -278,6 +285,9 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                 } else {
                     UIUtils.showT(C.Constant.NODATA);
                 }
+                break;
+            case R.id.tv_time://进货时间
+                showCustomTime();
                 break;
             case R.id.btn_submit:
                 if (StringUtil.isNullOrEmpty(etPartsName.getText().toString())) {
@@ -333,6 +343,25 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
 
     }
 
+    /**
+     * 显示时间选择器
+     */
+    private void showCustomTime() {
+        Calendar instance = Calendar.getInstance();
+        instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
+        //时间选择器
+        TimePickerView pvTime = new TimePickerBuilder(PartsInputActivity.this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                tvTime.setText(DateUtil.getDate(date));
+
+            }
+        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel(" 年", " 月", " 日", "", "", "")
+                .isCenterLabel(false).build();
+        pvTime.show();
+
+    }
 
     private void submitInputData() {
         HashMap<String, String> params = new HashMap<>();
