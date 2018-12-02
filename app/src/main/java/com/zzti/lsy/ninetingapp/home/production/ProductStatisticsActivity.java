@@ -294,7 +294,7 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                         ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size());
                         setLineChartDate(mChart2, xData2, yData2);
                     }
-                    //油耗率
+                    //油耗比率
                     if (zratioRecords != null && zratioRecords.size() > 0) {
                         for (int i = 0; i < zratioRecords.size(); i++) {
                             String format = zratioRecords.get(i).getTime().split("T")[0];

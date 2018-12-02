@@ -30,25 +30,25 @@ public class OneCarProDetailActivity extends BaseActivity {
     @BindView(R.id.tv_projectAddress)
     TextView tvProjectAddress;
     @BindView(R.id.tv_total_oilMass)
-    TextView tvTotalOilMass;//总油耗
+    TextView tvTotalOilMass;//总加油升数
     @BindView(R.id.tv_total_proAmount)
     TextView tvTotalProAmount;//总方量
     @BindView(R.id.tv_total_ratio)
     TextView tvTotalRatio;//总油耗比
     @BindView(R.id.tv_month_oilMass)
-    TextView tvMonthOilMass;//月油耗
+    TextView tvMonthOilMass;//月加油升数
     @BindView(R.id.tv_month_proAmount)
     TextView tvMonthProAmount;//月方量
     @BindView(R.id.tv_month_ratio)
     TextView tvMonthRatio;//月油耗比
     @BindView(R.id.tv_today_oilmass)
-    TextView tvTodayOilMass;//今日油耗
+    TextView tvTodayOilMass;//今日加油升数
     @BindView(R.id.tv_today_proamount)
     TextView tvTodayProAmount;//今日方量
     @BindView(R.id.tv_today_ratio)
     TextView tvTodayRatio;//今日油耗比
     @BindView(R.id.tv_yesterday_oilmass)
-    TextView tvYesterDayOilMass;//昨日油耗
+    TextView tvYesterDayOilMass;//昨日加油升数
     @BindView(R.id.tv_yesterday_proAmount)
     TextView tvYesterDayProamount;//昨日方量
     @BindView(R.id.tv_yesterday_ratio)
@@ -58,7 +58,7 @@ public class OneCarProDetailActivity extends BaseActivity {
     @BindView(R.id.iv_amountStatus)
     ImageView ivAmountStatus;//方量的幅度
     @BindView(R.id.iv_oilStatus)
-    ImageView ivOilStatus;//油耗的幅度
+    ImageView ivOilStatus;//加油升数的幅度
 
     @Override
     public int getContentViewId() {
@@ -130,7 +130,7 @@ public class OneCarProDetailActivity extends BaseActivity {
                     } else {
                         ivAmountStatus.setImageResource(R.mipmap.icon_flat);
                     }
-                    //今天的油耗大于昨天的
+                    //今天的加油升数大于昨天的
                     if (Double.parseDouble(recordEntity.getQilWear()) > Double.parseDouble(recordEntity.getTqilwear())) {
                         ivOilStatus.setImageResource(R.mipmap.icon_up);
                     } else if (Double.parseDouble(recordEntity.getQilWear()) < Double.parseDouble(recordEntity.getTqilwear())) {

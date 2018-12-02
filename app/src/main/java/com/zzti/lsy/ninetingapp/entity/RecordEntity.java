@@ -7,16 +7,16 @@ package com.zzti.lsy.ninetingapp.entity;
  */
 public class RecordEntity {
     private String squareQuantity;///日方量  单位立方米
-    private String qilWear;///日油耗 单位升
+    private String qilWear;///日加油升数 单位升
     private String Ratio;/// 日油耗比
     private String Msquarequantity; /// 月方量
-    private String Mqilwear; /// 月油耗
+    private String Mqilwear; /// 月加油升数
     private String Mratio;/// 月油耗比
     private String Zsquarequantity; /// 总方量
-    private String Zqilwear;/// 总油耗
+    private String Zqilwear;/// 总加油升数
     private String Zratio;/// 总油耗比
     private String Tsquarequantity; /// 昨日方量
-    private String Tqilwear;/// 昨日油耗
+    private String Tqilwear;/// 昨日加油升数
     private String Tratio;/// 昨日油耗比
 
     public String getSquareQuantity() {

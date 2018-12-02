@@ -98,7 +98,7 @@ public class ProductInputActivity extends BaseActivity {
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etOilMass.getText().toString())) {
-                    UIUtils.showT("油耗不能为空");
+                    UIUtils.showT("加油升数不能为空");
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etDistance.getText().toString())) {

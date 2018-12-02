@@ -55,9 +55,9 @@ public class StatisticDetailActivity extends BaseActivity {
     private void initView() {
         int type = UIUtils.getInt4Intent(this, "TYPE");
         if (type == 1) {
-            tvTitle.setText("油耗统计");
+            tvTitle.setText("加油升数统计");
         }else if (type == 2) {
-            tvTitle.setText("油耗统计");
+            tvTitle.setText("加油升数统计");
         }
     }
 

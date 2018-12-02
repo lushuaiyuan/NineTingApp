@@ -149,7 +149,7 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
         column1.setFixed(true);
         Column<String> column2 = new Column<>("日期", "slDateTime");
         Column<String> column3 = new Column<>("方量", "squareQuantity");
-        Column<String> column4 = new Column<>("油耗", "qilWear");
+        Column<String> column4 = new Column<>("加油升数", "qilWear");
         Column<String> column5 = new Column<>("距离基地里程", "distance");
         Column<String> column6 = new Column<>("耗时", "timeConsuming");
         Column<String> column7 = new Column<>("备注", "remark");

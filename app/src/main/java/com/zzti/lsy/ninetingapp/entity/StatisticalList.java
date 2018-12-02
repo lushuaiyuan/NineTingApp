@@ -13,7 +13,7 @@ public class StatisticalList implements Serializable{
     private String plateNumber;///车牌号
     private String projectID;///项目部编号
     private String squareQuantity;///方量
-    private String qilWear; ///油耗
+    private String qilWear; ///加油升数
     private String distance;///距离基地
     private String timeConsuming; ///耗时
     private String remark;///备注

@@ -117,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dp5"
-                            android:text="总油耗" />
+                            android:text="总加油升数" />
                     </LinearLayout>
 
                     <View
@@ -376,7 +376,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dp5"
-                            android:text="月油耗" />
+                            android:text="月加油升数" />
                     </LinearLayout>
 
                     <View
@@ -611,7 +611,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dp10"
-                        android:text="油耗"
+                        android:text="加油升数"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp12" />
 

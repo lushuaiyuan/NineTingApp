@@ -147,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:text="油耗率"
+                    android:text="油耗比率"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />
 
@@ -234,7 +234,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp16"
-                    android:text="油耗率变动图"
+                    android:text="油耗比率变动图"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dp16" />
 

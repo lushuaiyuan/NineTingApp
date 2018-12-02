@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 总油耗、总方量、油耗比的统计列表
+ * 总加油升数、总方量、油耗比的统计列表
  */
 public class StatisticDetialListActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.tv_type)
@@ -68,9 +68,9 @@ public class StatisticDetialListActivity extends BaseActivity implements View.On
         ivToolbarMenu.setImageResource(R.mipmap.icon_pie);
         ivToolbarMenu.setOnClickListener(this);
         type = UIUtils.getInt4Intent(this, "TYPE");
-        if (type == 1) {//总油耗
-            tvToolbarTitle.setText("油耗");
-            tvType.setText("油耗");
+        if (type == 1) {//总加油升数
+            tvToolbarTitle.setText("加油升数");
+            tvType.setText("加油升数");
             tvTypeUnit.setText("升");
         } else if (type == 2) {//生产方量
             tvToolbarTitle.setText("生产方量");
