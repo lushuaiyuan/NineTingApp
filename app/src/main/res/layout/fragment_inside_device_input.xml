@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="车牌号" />
+
+            <EditText
+                android:id="@+id/et_carNumber"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="车辆类型" />
+
+            <TextView
+                android:id="@+id/tv_carType"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="排放标准" />
+
+            <TextView
+                android:id="@+id/tv_emission_standard"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="车辆状态" />
+
+            <TextView
+                android:id="@+id/tv_carStatus"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="生产厂家" />
+
+            <TextView
+                android:id="@+id/tv_factory"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="项目部" />
+
+            <TextView
+                android:id="@+id/tv_project"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="识别码" />
+
+            <EditText
+                android:id="@+id/et_vin"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="发动机号" />
+
+            <EditText
+                android:id="@+id/et_engine_number"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="购买日期" />
+
+            <TextView
+                android:id="@+id/tv_buyTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="购买金额"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_buyMoney"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/dp8"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="元"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="行驶证号码" />
+
+            <EditText
+                android:id="@+id/et_drivingNumber"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="行驶证发放日期" />
+
+            <TextView
+                android:id="@+id/tv_drivingNumber_giveTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="行驶证有效期" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_drivingNumber_validityTime"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/dp8"
+                    android:inputType="number"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="年"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_inputYearInsurance"
+                style="@style/MyButton"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginRight="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp20"
+                android:text="录入保险年审" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
