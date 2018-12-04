@@ -2,8 +2,77 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_f5f5f5"
+    android:background="@color/color_white"
     android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="车牌号" />
+
+            <EditText
+                android:id="@+id/et_carNumber"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="行驶证号码" />
+
+            <EditText
+                android:id="@+id/et_drivingNumber"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="车主" />
+
+            <EditText
+                android:id="@+id/et_carOwner"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="租用起始日期" />
+
+            <TextView
+                android:id="@+id/tv_startTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="租用终止日期" />
+
+            <TextView
+                android:id="@+id/tv_endTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+
+            <Button
+                android:id="@+id/btn_submit"
+                style="@style/MyButton"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginRight="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp20"
+                android:text="提交" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

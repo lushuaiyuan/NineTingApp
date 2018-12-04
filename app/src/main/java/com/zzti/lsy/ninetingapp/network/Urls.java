@@ -12,7 +12,8 @@ public class Urls {
     public final static String POST_GETPROJECT = BASE_URL + "/Login/Login.asmx/GetProject";//获取项目部
 
     //设备管理员
-    public final static String POST_ADDCAR = BASE_URL + "/Car/Car.asmx/AddCar";//录入车辆
+    public final static String POST_ADDINCAR = BASE_URL + "/Car/Car.asmx/AddCar";//录入车辆
+    public final static String POST_ADDOUTCAR = BASE_URL + "/Car/Car.asmx/AddCar";//录入车辆
     public final static String POST_GETCARLIST = BASE_URL + "/Car/Car.asmx/GetCarList";//获取车辆信息列表
     public final static String POST_GETCARTYPE = BASE_URL + "/Car/Car.asmx/GetCarType";//获取车辆类型信息
     public final static String POST_GETCHARGETYPE = BASE_URL + "/Car/Car.asmx/GetChargeType";//获取车辆排放类型

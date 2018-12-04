@@ -20,13 +20,10 @@ import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
-import com.zzti.lsy.ninetingapp.entity.CarTypeEntity;
 import com.zzti.lsy.ninetingapp.entity.InsuranceEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
-import com.zzti.lsy.ninetingapp.home.adapter.CarTypeAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.InsuranceAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -175,7 +172,7 @@ public class YearInsuranceActivity extends BaseActivity implements AdapterView.O
         showDia();
         HashMap<String, String> params = new HashMap<>();
         params.put("carJson", new Gson().toJson(carInfoEntity));
-        OkHttpManager.postFormBody(Urls.POST_ADDCAR, params, tvBxType, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_ADDINCAR, params, tvBxType, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
