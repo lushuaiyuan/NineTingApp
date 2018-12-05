@@ -40,13 +40,15 @@ public class ProductManageFragment extends BaseFragment {
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1:
-                startActivity(new Intent(mActivity, ProductInputActivity.class));
+                Intent intent = new Intent(mActivity, ProductInputActivity.class);
+                intent.putExtra("TAG", 0);
+                startActivity(intent);
                 break;
             case R.id.rl_menu2:
                 startActivity(new Intent(mActivity, ProductStatisticsActivity.class));
                 break;
             case R.id.rl_menu3:
-                startActivity(new Intent(mActivity,ProductRecordActivity.class));
+                startActivity(new Intent(mActivity, ProductRecordActivity.class));
                 break;
         }
     }

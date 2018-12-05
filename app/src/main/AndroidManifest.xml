@@ -230,6 +230,8 @@
         <!--生产统计-->
         <activity android:name=".home.production.ProductStatisticsActivity" />
 
+        <!--生产录入记录-->
+        <activity android:name=".home.production.ProductRecordActivity" />
 
     </application>
 
