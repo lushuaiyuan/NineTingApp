@@ -14,6 +14,7 @@ import com.bin.david.form.data.style.LineStyle;
 import com.bin.david.form.data.table.TableData;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
@@ -48,7 +49,7 @@ public class PartsOutRecordActivity extends BaseActivity {
     @BindView(R.id.table)
     SmartTable smartTable;
 //    private List<PartsDelivery> partsDeliveries;
-    private int pageIndex = 0;
+//    private int pageIndex = 0;
     private String PartsID;
 
     @Override
@@ -64,21 +65,27 @@ public class PartsOutRecordActivity extends BaseActivity {
 
     private void initData() {
         PartsID = UIUtils.getStr4Intent(this, "PartsID");
-//        partsDeliveries = new ArrayList<>();
-        mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pageIndex++;
-                getOutList();
-            }
-
+        mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                pageIndex = 0;
-//                partsDeliveries.clear();
                 getOutList();
             }
         });
+//        partsDeliveries = new ArrayList<>();
+//        mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+//                pageIndex++;
+//                getOutList();
+//            }
+//
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                pageIndex = 0;
+////                partsDeliveries.clear();
+//                getOutList();
+//            }
+//        });
         showDia();
         getOutList();
     }
@@ -88,7 +95,7 @@ public class PartsOutRecordActivity extends BaseActivity {
      */
     private void getOutList() {
         final HashMap<String, String> params = new HashMap<>();
-        params.put("pageIndex", String.valueOf(pageIndex));
+        params.put("pageIndex", String.valueOf(0));
         if (!StringUtil.isNullOrEmpty(PartsID)) {
             params.put("wherestr", "PartsID=" + PartsID);
         } else {

@@ -15,6 +15,7 @@ import com.bin.david.form.data.style.LineStyle;
 import com.bin.david.form.data.table.TableData;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
@@ -47,7 +48,7 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
     @BindView(R.id.table)
     SmartTable smartTable;
     private String lbID;
-    private int pageIndex = 0;
+//    private int pageIndex = 0;
 
 
     @Override
@@ -65,19 +66,25 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
         lbID = UIUtils.getStr4Intent(this, "lbID");
         showDia();
         getRecord();
-        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pageIndex++;
-                getRecord();
-            }
-
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                pageIndex = 0;
                 getRecord();
             }
         });
+//        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+////                pageIndex++;
+////                getRecord();
+//            }
+//
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+////                pageIndex = 0;
+//                getRecord();
+//            }
+//        });
     }
 
 
@@ -91,7 +98,7 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
         } else {
             params.put("wherestr", "");
         }
-        params.put("pageIndex", String.valueOf(pageIndex));
+        params.put("pageIndex", String.valueOf(0));
         OkHttpManager.postFormBody(Urls.PARTS_GETLAOBAOOUT, params, smartRefreshLayout, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
@@ -119,9 +126,9 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
-                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
-                    }
+//                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
+//                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+//                    }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {

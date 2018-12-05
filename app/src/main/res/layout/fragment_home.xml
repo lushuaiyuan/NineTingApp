@@ -19,7 +19,6 @@
             android:orientation="vertical">
 
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,7 +62,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp10"
@@ -74,59 +72,24 @@
                 <RelativeLayout
                     android:id="@+id/rl_menu3"
                     style="@style/home_menubg"
-                    android:background="@drawable/home_menu3_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu1"
-                        android:text="维修申请" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu4"
-                    style="@style/home_menubg"
-                    android:layout_marginLeft="@dimen/dp10"
                     android:background="@drawable/home_menu4_selector">
 
                     <TextView
                         style="@style/home_menu"
                         android:drawableLeft="@mipmap/icon_menu4"
-                        android:text="维修记录" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp10"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16">
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu5"
-                    style="@style/home_menubg"
-                    android:background="@drawable/home_menu5_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu5"
-                        android:text="维修统计" />
+                        android:text="生产记录" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_menu6"
                     style="@style/home_menubg"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:background="@drawable/home_menu7_selector">
+                    android:background="@drawable/home_menu4_selector"
+                    android:visibility="invisible">
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu10"
-                        android:text="维修审批" />
+                        android:drawableLeft="@mipmap/icon_menu4"
+                        android:text="维修记录" />
                 </RelativeLayout>
 
             </LinearLayout>

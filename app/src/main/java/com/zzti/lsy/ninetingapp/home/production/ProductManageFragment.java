@@ -45,6 +45,9 @@ public class ProductManageFragment extends BaseFragment {
             case R.id.rl_menu2:
                 startActivity(new Intent(mActivity, ProductStatisticsActivity.class));
                 break;
+            case R.id.rl_menu3:
+                startActivity(new Intent(mActivity,ProductRecordActivity.class));
+                break;
         }
     }
 

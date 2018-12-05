@@ -20,6 +20,7 @@ import com.bin.david.form.data.table.TableData;
 import com.bin.david.form.listener.OnColumnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
@@ -54,7 +55,7 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.smartTable)
     SmartTable mSmartTable;
 
-    private int pageIndex = 1;
+    //    private int pageIndex = 0;
     private String whereStr;
 
     @Override
@@ -69,16 +70,9 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initData() {
-        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pageIndex++;
-                getRecordList();
-            }
-
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                pageIndex = 1;
                 whereStr = "";
                 data.clear();
                 setTitle("每日方量流水明细");
@@ -93,7 +87,7 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
 
     private void getRecordList() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("pageIndex", String.valueOf(pageIndex));
+        params.put("pageIndex", String.valueOf(0));
         params.put("wherestr", whereStr);
         OkHttpManager.postFormBody(Urls.RECORD_GETRECORDLIST, params, mSmartTable, new OkHttpManager.OnResponse<String>() {
             @Override
@@ -123,9 +117,9 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
-                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
-                    }
+//                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
+//                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+//                    }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
@@ -153,14 +147,14 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
         Column<String> column5 = new Column<>("距离基地里程", "distance");
         Column<String> column6 = new Column<>("耗时", "timeConsuming");
         Column<String> column7 = new Column<>("备注", "remark");
-        if (pageIndex == 1) {
-            //表格数据 datas是需要填充的数据
-            TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7);
-            //table.setZoom(true,3);是否缩放
-            mSmartTable.setTableData(tableData);
-        } else {
-            mSmartTable.addData(statisticalLists, true);
-        }
+//        if (pageIndex == 1) {
+        //表格数据 datas是需要填充的数据
+        TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7);
+        //table.setZoom(true,3);是否缩放
+        mSmartTable.setTableData(tableData);
+//        } else {
+//            mSmartTable.addData(statisticalLists, true);
+//        }
         column1.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column2.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column3.setOnColumnItemClickListener(new MyColumnItemClickListener());
@@ -183,14 +177,14 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
 
 
     private void initView() {
-        setTitle("每日方量流水明细");
+        setTitle("每日方量流水明细" + DateUtil.getCurYear());
         whereStr = "";
         ivToolbarMenu.setVisibility(View.VISIBLE);
         ivToolbarMenu.setOnClickListener(this);
-        smartRefreshLayout.setEnableLoadMore(true);
+        smartRefreshLayout.setEnableLoadMore(false);
         smartRefreshLayout.setEnableRefresh(true);
         //使上拉加载具有弹性效果：
-        smartRefreshLayout.setEnableAutoLoadMore(false);
+//        smartRefreshLayout.setEnableAutoLoadMore(false);
 
 
         TableConfig tableConfig = mSmartTable.getConfig();
@@ -230,7 +224,7 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
             public void onTimeSelect(Date date, View v) {
                 whereStr = "slDateTime = \'" + DateUtil.getDate(date) + "\'";
                 setTitle("每日方量流水明细" + DateUtil.getDate(date));
-                pageIndex = 1;
+//                pageIndex = 1;
                 showDia();
                 data.clear();
                 getRecordList();
