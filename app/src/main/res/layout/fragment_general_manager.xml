@@ -122,7 +122,6 @@
                     </RelativeLayout>
 
 
-
                     <RelativeLayout
                         android:id="@+id/rl_menu7"
                         style="@style/home_menubg"
@@ -137,6 +136,115 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/dp8"
+                    android:paddingLeft="@dimen/dp16"
+                    android:paddingTop="@dimen/dp16"
+                    android:text="油耗报警"
+                    android:textColor="@color/color_red"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/tv_alarmItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp16"
+                    android:textColor="@color/color_red"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/dp8"
+                    android:paddingLeft="@dimen/dp16"
+                    android:paddingTop="@dimen/dp16"
+                    android:text="生产量"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/dp15"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp16"
+                    android:paddingRight="@dimen/dp16">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_today"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="当日"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/dp15" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:text="当日"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/dp15" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="本月"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/dp15" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:text="本月"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/dp15" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_year"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="年度"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/dp15" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:text="年度"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/dp15" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_statistics"

@@ -14,8 +14,12 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
+import com.zzti.lsy.ninetingapp.entity.DeviceManageEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
+import com.zzti.lsy.ninetingapp.entity.RecentCarEntity;
+import com.zzti.lsy.ninetingapp.entity.RecordCountEntity;
+import com.zzti.lsy.ninetingapp.entity.RecycleViewItemData;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeBxAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
@@ -32,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,6 +52,14 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
     TextView tvLookMoreNs;
     @BindView(R.id.tv_lookMore_bx)
     TextView tvLookMoreBx;
+    @BindView(R.id.tv_alarmItem)
+    TextView tvAlertItem;
+    @BindView(R.id.tv_today)
+    TextView tvToday;
+    @BindView(R.id.tv_month)
+    TextView tvMonth;
+    @BindView(R.id.tv_year)
+    TextView tvYear;
     @BindView(R.id.recycleView_ns)
     RecyclerView mRecycleViewNs;
     @BindView(R.id.recycleView_bx)
@@ -91,13 +104,61 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 getCarExpire();
+                getProjectRecordCount();
             }
         });
         if (UIUtils.isNetworkConnected()) {
             showDia();
             getCarExpire();
+            getProjectRecordCount();
         }
     }
+
+    /**
+     * 获取综合油耗报警以及生产量
+     */
+    private void getProjectRecordCount() {
+        HashMap<String, String> params = new HashMap<>();
+        OkHttpManager.postFormBody(Urls.RECORD_GETPROJECTRECORDCOUNT, params, smartRefreshLayout, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                endRefresh(smartRefreshLayout);
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    RecordCountEntity recordCountEntity = ParseUtils.parseJson(msgInfo.getData(), RecordCountEntity.class);
+                    if (recordCountEntity != null) {
+                        tvToday.setText(recordCountEntity.getDayQuantity() + "方");
+                        tvMonth.setText(recordCountEntity.getMonthQuantity() + "方");
+                        tvYear.setText(recordCountEntity.getYearQuantity() + "方");
+                        RecordCountEntity.Alarm alarm = recordCountEntity.getAlarms();
+                        if (alarm != null) {
+                            tvAlertItem.setText(alarm.getAlarmitem() + alarm.getAllWear());
+                        } else {
+                            tvAlertItem.setText("暂无数据");
+                        }
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+                endRefresh(smartRefreshLayout);
+            }
+        });
+    }
+
 
     /**
      * 获取提醒实体类

@@ -16,6 +16,7 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
+import com.zzti.lsy.ninetingapp.entity.RecordCountEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeBxAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
@@ -35,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,6 +48,14 @@ import butterknife.OnClick;
 public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.tv_alarmItem)
+    TextView tvAlertItem;
+    @BindView(R.id.tv_today)
+    TextView tvToday;
+    @BindView(R.id.tv_month)
+    TextView tvMonth;
+    @BindView(R.id.tv_year)
+    TextView tvYear;
     @BindView(R.id.tv_lookMore_ns)
     TextView tvLookMoreNs;
     @BindView(R.id.tv_lookMore_bx)
@@ -94,13 +104,61 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 getCarExpire();
+                getProjectRecordCount();
             }
         });
         if (UIUtils.isNetworkConnected()) {
             showDia();
             getCarExpire();
+            getProjectRecordCount();
         }
     }
+
+    /**
+     * 获取综合油耗报警以及生产量
+     */
+    private void getProjectRecordCount() {
+        HashMap<String, String> params = new HashMap<>();
+        OkHttpManager.postFormBody(Urls.RECORD_GETPROJECTRECORDCOUNT, params, smartRefreshLayout, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                endRefresh(smartRefreshLayout);
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    RecordCountEntity recordCountEntity = ParseUtils.parseJson(msgInfo.getData(), RecordCountEntity.class);
+                    if (recordCountEntity != null) {
+                        tvToday.setText(recordCountEntity.getDayQuantity() + "方");
+                        tvMonth.setText(recordCountEntity.getMonthQuantity() + "方");
+                        tvYear.setText(recordCountEntity.getYearQuantity() + "方");
+                        RecordCountEntity.Alarm alarm = recordCountEntity.getAlarms();
+                        if (alarm != null) {
+                            tvAlertItem.setText(alarm.getAlarmitem() + alarm.getAllWear());
+                        } else {
+                            tvAlertItem.setText("暂无数据");
+                        }
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+                endRefresh(smartRefreshLayout);
+            }
+        });
+    }
+
 
     /**
      * 获取提醒实体类
@@ -182,7 +240,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         return fragment;
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3,  R.id.rl_menu6, R.id.rl_menu7, R.id.rl_menu8,  R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu6, R.id.rl_menu7, R.id.rl_menu8, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1://设备列表
