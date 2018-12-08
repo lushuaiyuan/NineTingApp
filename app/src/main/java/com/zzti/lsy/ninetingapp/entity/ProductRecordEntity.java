@@ -15,9 +15,62 @@ public class ProductRecordEntity implements Serializable {
     private String oilMass;//加油升数
     private String distance;//距离基地数
     private String orilMassRatio;//油耗比
+    private String eight;//8方以下
+    private String six;//6方以下
+    private String remainMaterial;//剩料
+    private String washMaterial;//洗料耗时
+    private String overTime;//加班时长
+    private String overTimeTrainNumber;//加班趟数
     private String timeConsuming;//耗时
     private String remark;//备注
 
+    public String getEight() {
+        return eight;
+    }
+
+    public void setEight(String eight) {
+        this.eight = eight;
+    }
+
+    public String getSix() {
+        return six;
+    }
+
+    public void setSix(String six) {
+        this.six = six;
+    }
+
+    public String getRemainMaterial() {
+        return remainMaterial;
+    }
+
+    public void setRemainMaterial(String remainMaterial) {
+        this.remainMaterial = remainMaterial;
+    }
+
+    public String getWashMaterial() {
+        return washMaterial;
+    }
+
+    public void setWashMaterial(String washMaterial) {
+        this.washMaterial = washMaterial;
+    }
+
+    public String getOverTime() {
+        return overTime;
+    }
+
+    public void setOverTime(String overTime) {
+        this.overTime = overTime;
+    }
+
+    public String getOverTimeTrainNumber() {
+        return overTimeTrainNumber;
+    }
+
+    public void setOverTimeTrainNumber(String overTimeTrainNumber) {
+        this.overTimeTrainNumber = overTimeTrainNumber;
+    }
 
     public String getCarNumber() {
         return carNumber;

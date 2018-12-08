@@ -41,10 +41,24 @@ public class ProductInputActivity extends BaseActivity {
     TextView tvCarNumber;
     @BindView(R.id.et_amount)
     EditText etAmount;//生产方量
+    @BindView(R.id.et_eight)
+    EditText etEight;//8方以下
+    @BindView(R.id.et_six)
+    EditText etSix;//6方以下
+    @BindView(R.id.et_fillThe)
+    EditText etFillThe;//补方
+    @BindView(R.id.et_remainMaterial)
+    EditText etRemainMaterial;//剩料
+    @BindView(R.id.et_washMaterial)
+    EditText etWashMaterial;//洗料耗时
     @BindView(R.id.et_oilMass)
-    EditText etOilMass;//油耗
+    EditText etOilMass;//加油升数
     @BindView(R.id.et_distance)
     EditText etDistance;//距离基地
+    @BindView(R.id.et_overTime)
+    EditText etOverTime;//加班时长
+    @BindView(R.id.et_overTime_TrainNumber)
+    EditText etOverTimeTrainNumber;//加班趟数
     @BindView(R.id.et_timeConsuming)
     EditText etTimeConsuming;//耗时
     @BindView(R.id.et_remark)
@@ -87,10 +101,17 @@ public class ProductInputActivity extends BaseActivity {
             tvCarNumber.setText(productRecordEntity.getCarNumber());
             tvCarNumber.setEnabled(false);
             etAmount.setText(productRecordEntity.getProductAmount());
-            etDistance.setText(productRecordEntity.getDistance());
+            etEight.setText(productRecordEntity.getEight());
+            etSix.setText(productRecordEntity.getSix());
+            etRemainMaterial.setText(productRecordEntity.getRemainMaterial());
+            etWashMaterial.setText(productRecordEntity.getWashMaterial());
+            if (!StringUtil.isNullOrEmpty(productRecordEntity.getDistance()))
+                etDistance.setText(productRecordEntity.getDistance());
             etOilMass.setText(productRecordEntity.getOilMass());
-            etRemark.setText(productRecordEntity.getRemark());
+            etOverTime.setText(productRecordEntity.getOverTime());
+            etOverTimeTrainNumber.setText(productRecordEntity.getOverTimeTrainNumber());
             etTimeConsuming.setText(productRecordEntity.getTimeConsuming());
+            etRemark.setText(productRecordEntity.getRemark());
         }
 
 
@@ -125,10 +146,6 @@ public class ProductInputActivity extends BaseActivity {
                 }
                 if (StringUtil.isNullOrEmpty(etOilMass.getText().toString())) {
                     UIUtils.showT("加油升数不能为空");
-                    return;
-                }
-                if (StringUtil.isNullOrEmpty(etDistance.getText().toString())) {
-                    UIUtils.showT("距离基地不能为空");
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etTimeConsuming.getText().toString())) {

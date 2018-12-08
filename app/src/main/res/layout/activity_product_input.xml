@@ -85,6 +85,167 @@
             </RelativeLayout>
 
             <TextView
+                style="@style/MyEditTextTitle"
+                android:text="8方以下" />
+
+
+            <EditText
+                android:id="@+id/et_eight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape"
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="@dimen/dp10"
+                android:paddingLeft="@dimen/dp20"
+                android:paddingRight="@dimen/dp20"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp14" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="6方以下" />
+
+
+            <EditText
+                android:id="@+id/et_six"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape"
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="@dimen/dp10"
+                android:paddingLeft="@dimen/dp20"
+                android:paddingRight="@dimen/dp20"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp14" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="补方" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_fillThe"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/dp10"
+                    android:paddingLeft="@dimen/dp20"
+                    android:paddingRight="@dimen/dp20"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="m³"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="剩料" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_remainMaterial"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/dp10"
+                    android:paddingLeft="@dimen/dp20"
+                    android:paddingRight="@dimen/dp20"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="m³"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="洗料耗时" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_washMaterial"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/dp10"
+                    android:paddingLeft="@dimen/dp20"
+                    android:paddingRight="@dimen/dp20"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="h"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+
+            <TextView
                 android:id="@+id/tv_oilMass_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,6 +330,72 @@
 
 
             </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="加班时长"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_overTime"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/dp10"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="h"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="加班趟数"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+
+            <EditText
+                android:id="@+id/et_overTime_TrainNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp14" />
+
 
             <TextView
                 android:id="@+id/tv_timeConsuming_Title"
