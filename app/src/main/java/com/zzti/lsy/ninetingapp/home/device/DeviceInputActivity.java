@@ -8,10 +8,6 @@ import android.support.v4.view.ViewPager;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.TitleFragmentPagerAdapter;
-import com.zzti.lsy.ninetingapp.home.generalmanager.LifeGoodsPurchaseListFragment;
-import com.zzti.lsy.ninetingapp.home.generalmanager.PartsPurchaseListFragment;
-import com.zzti.lsy.ninetingapp.home.generalmanager.RepairRecordFragment;
-import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +37,7 @@ public class DeviceInputActivity extends BaseActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new InsideDeviceInputFragment());
-        fragments.add(new OutsideCarInputFragment());
+        fragments.add(new RecentCarInputFragment());
         TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"自有录入", "外租录入"});
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);

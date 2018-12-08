@@ -13,12 +13,14 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
+import com.zzti.lsy.ninetingapp.entity.RecentCarEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -34,7 +36,7 @@ import butterknife.OnClick;
  * @create 2018/12/2 21:08
  * @Describe 设备录入（外租车）
  */
-public class OutsideCarInputFragment extends BaseFragment {
+public class RecentCarInputFragment extends BaseFragment {
     @BindView(R.id.et_carNumber)
     EditText etCarNumber;
     @BindView(R.id.et_drivingNumber)
@@ -56,7 +58,7 @@ public class OutsideCarInputFragment extends BaseFragment {
 
     }
 
-    @OnClick
+    @OnClick({R.id.btn_submit, R.id.tv_startTime, R.id.tv_endTime})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.btn_submit:
@@ -96,12 +98,17 @@ public class OutsideCarInputFragment extends BaseFragment {
      * 提交数据
      */
     private void submitData() {
-        //TODO
-
+        String projectID = SpUtils.getInstance().getString(SpUtils.PROJECTID, "");
+        RecentCarEntity recentCarEntity = new RecentCarEntity();
+        recentCarEntity.setPlateNumber(etCarNumber.getText().toString());
+        recentCarEntity.setDrivingLicenseNumber(etDrivingNumber.getText().toString());
+        recentCarEntity.setOverTime(tvEndTime.getText().toString());
+        recentCarEntity.setStartTime(tvStartTime.getText().toString());
+        recentCarEntity.setOwnerName(etCarOwner.getText().toString());
+        recentCarEntity.setProjectID(projectID);
         HashMap<String, String> params = new HashMap<>();
-        CarInfoEntity carInfoEntity = new CarInfoEntity();
-        params.put("carJson", new Gson().toJson(carInfoEntity));
-        OkHttpManager.postFormBody(Urls.POST_ADDOUTCAR, params, tvEndTime, new OkHttpManager.OnResponse<String>() {
+        params.put("rentCarJson", new Gson().toJson(recentCarEntity));
+        OkHttpManager.postFormBody(Urls.POST_ADDRENTCAR, params, tvEndTime, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
