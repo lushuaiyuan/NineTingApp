@@ -19,11 +19,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.ProductRecordEntity;
-import com.zzti.lsy.ninetingapp.entity.RecycleViewItemData;
-import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
+import com.zzti.lsy.ninetingapp.entity.StatisticalList;
 import com.zzti.lsy.ninetingapp.event.C;
-import com.zzti.lsy.ninetingapp.home.adapter.DeviceManageAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.ProductRecordAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -50,20 +47,20 @@ import butterknife.OnClick;
  * @Describe 生产记录的界面
  */
 public class ProductRecordActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
-    @BindView(R.id.et_carNumber)
+    @BindView(R.id.et_search)
     EditText etCarNumber;
     @BindView(R.id.tv_selectTime)
     TextView tvSelectTime;
-    @BindView(R.id.smartRefreshLayout)
+    @BindView(R.id.mSmartRefreshLayout)
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
 
-    private List<ProductRecordEntity> productRecordEntities;
+    private List<StatisticalList> statisticalLists;
     private ProductRecordAdapter productRecordAdapter;
 
     private int pageIndex = 1;
-    private String wherestr;
+    private String wherestr = "";
 
     @Override
     public int getContentViewId() {
@@ -78,8 +75,8 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
 
     private void initData() {
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        productRecordEntities = new ArrayList<>();
-        productRecordAdapter = new ProductRecordAdapter(productRecordEntities);
+        statisticalLists = new ArrayList<>();
+        productRecordAdapter = new ProductRecordAdapter(statisticalLists);
         mRecycleView.setAdapter(productRecordAdapter);
         productRecordAdapter.setOnItemClickListener(this);
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -95,7 +92,7 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
                 wherestr = "";
                 tvSelectTime.setText("");
                 etCarNumber.setText("");
-                productRecordEntities.clear();
+                statisticalLists.clear();
                 getProductRecord();
             }
         });
@@ -118,29 +115,34 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
                 showCustomTime();
                 break;
             case R.id.iv_search:
-                if (StringUtil.isNullOrEmpty(etCarNumber.getText().toString())) {
-                    UIUtils.showT("车牌号不能空");
-                    break;
+                wherestr = "";
+                if (!StringUtil.isNullOrEmpty(etCarNumber.getText().toString())) {
+                    wherestr += " and plateNumber=" + "\"" + etCarNumber.getText().toString() + "\"";
                 }
-                if (StringUtil.isNullOrEmpty(tvSelectTime.getText().toString())) {
-                    UIUtils.showT("查询时间不能为空");
-                    break;
+                if (!StringUtil.isNullOrEmpty(tvSelectTime.getText().toString())) {
+                    wherestr += " and slDateTime=" + "\"" + tvSelectTime.getText().toString() + "\"";
                 }
                 showDia();
+                pageIndex = 1;
+                statisticalLists.clear();
                 getProductRecord();
                 break;
         }
     }
 
+
     /**
      * 获取生产记录的数据
      */
     private void getProductRecord() {
-        //TODO
         HashMap<String, String> params = new HashMap<>();
-        params.put("wherestr", wherestr);
         params.put("pageIndex", String.valueOf(pageIndex));
-        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, params, tvSelectTime, new OkHttpManager.OnResponse<String>() {
+        if (wherestr.length() > 0) {
+            params.put("wherestr", wherestr.substring(5, wherestr.length()));
+        } else {
+            params.put("wherestr", wherestr);
+        }
+        OkHttpManager.postFormBody(Urls.RECORD_GETRECORDLIST, params, tvSelectTime, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -154,12 +156,14 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
                 if (msgInfo.getCode() == 200) {
                     try {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            ProductRecordEntity productRecordEntity = ParseUtils.parseJson(jsonArray.getString(i), ProductRecordEntity.class);
-                            productRecordEntities.add(productRecordEntity);
-                        }
-                        if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
-                            mSmartRefreshLayout.finishLoadMoreWithNoMoreData();
+                        if (jsonArray.length() > 0) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                StatisticalList statisticalList = ParseUtils.parseJson(jsonArray.getString(i), StatisticalList.class);
+                                statisticalList.setSlDateTime(statisticalList.getSlDateTime().split("T")[0]);
+                                statisticalLists.add(statisticalList);
+                            }
+                        } else {
+                            UIUtils.showT("暂无数据");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -204,7 +208,17 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(this, ProductInputActivity.class);
         intent.putExtra("TAG", 1);
-        intent.putExtra("productRecordEntity", productRecordEntities.get(position));
-        startActivity(intent);
+        intent.putExtra("StatisticalList", statisticalLists.get(position));
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            showDia();
+            statisticalLists.clear();
+            getProductRecord();
+        }
     }
 }

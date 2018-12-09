@@ -219,7 +219,7 @@
 
 
                 <EditText
-                    android:id="@+id/et_washMaterial"
+                    android:id="@+id/et_washTime"
                     android:layout_width="@dimen/dp200"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"

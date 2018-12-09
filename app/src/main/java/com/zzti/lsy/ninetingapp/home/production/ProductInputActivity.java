@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.ProductRecordEntity;
 import com.zzti.lsy.ninetingapp.entity.StatisticalList;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
@@ -25,6 +24,7 @@ import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
+import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import java.util.HashMap;
 
@@ -49,8 +49,8 @@ public class ProductInputActivity extends BaseActivity {
     EditText etFillThe;//补方
     @BindView(R.id.et_remainMaterial)
     EditText etRemainMaterial;//剩料
-    @BindView(R.id.et_washMaterial)
-    EditText etWashMaterial;//洗料耗时
+    @BindView(R.id.et_washTime)
+    EditText etWashTime;//洗料耗时
     @BindView(R.id.et_oilMass)
     EditText etOilMass;//加油升数
     @BindView(R.id.et_distance)
@@ -68,6 +68,7 @@ public class ProductInputActivity extends BaseActivity {
     private int tag;//0代表的是录入 1代表的是修改
 
     private StatisticalList statisticalList;
+    private String slID;
 
     @Override
     public int getContentViewId() {
@@ -95,23 +96,28 @@ public class ProductInputActivity extends BaseActivity {
         } else if (tag == 1) {
             setTitle("生产修改");
             btnOperator.setText("修改");
-            //TODO
-            ProductRecordEntity productRecordEntity = (ProductRecordEntity) getIntent().getSerializableExtra("productRecordEntity");
-            tvTime.setText(productRecordEntity.getTime());
-            tvCarNumber.setText(productRecordEntity.getCarNumber());
+            StatisticalList statisticalList = (StatisticalList) getIntent().getSerializableExtra("StatisticalList");
+            slID = statisticalList.getSlID();
+            tvTime.setText(statisticalList.getSlDateTime());
+            tvCarNumber.setText(statisticalList.getPlateNumber());
             tvCarNumber.setEnabled(false);
-            etAmount.setText(productRecordEntity.getProductAmount());
-            etEight.setText(productRecordEntity.getEight());
-            etSix.setText(productRecordEntity.getSix());
-            etRemainMaterial.setText(productRecordEntity.getRemainMaterial());
-            etWashMaterial.setText(productRecordEntity.getWashMaterial());
-            if (!StringUtil.isNullOrEmpty(productRecordEntity.getDistance()))
-                etDistance.setText(productRecordEntity.getDistance());
-            etOilMass.setText(productRecordEntity.getOilMass());
-            etOverTime.setText(productRecordEntity.getOverTime());
-            etOverTimeTrainNumber.setText(productRecordEntity.getOverTimeTrainNumber());
-            etTimeConsuming.setText(productRecordEntity.getTimeConsuming());
-            etRemark.setText(productRecordEntity.getRemark());
+            tvCarNumber.setBackgroundColor(getResources().getColor(R.color.color_white));
+            etAmount.setText(statisticalList.getSquareQuantity());
+            etEight.setText(statisticalList.getEightBelow());
+            etSix.setText(statisticalList.getSixBelow());
+            etFillThe.setText(statisticalList.getAddQuantity());
+            etRemainMaterial.setText(statisticalList.getRemainder());
+            etWashTime.setText(statisticalList.getWashTime());
+            etOilMass.setText(statisticalList.getQilWear());
+            if (!StringUtil.isNullOrEmpty(statisticalList.getDistance())) {
+                etDistance.setText(statisticalList.getDistance());
+            }
+            etOverTime.setText(statisticalList.getAddWorkTime());
+            etOverTimeTrainNumber.setText(statisticalList.getAddWorkCount());
+            etTimeConsuming.setText(statisticalList.getTimeConsuming());
+            if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {//备注
+                statisticalList.setRemark(etRemark.getText().toString());
+            }
         }
 
 
@@ -144,33 +150,76 @@ public class ProductInputActivity extends BaseActivity {
                     UIUtils.showT("生产方量不能为空");
                     return;
                 }
+                if (StringUtil.isNullOrEmpty(etEight.getText().toString())) {
+                    UIUtils.showT("8方以下不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etSix.getText().toString())) {
+                    UIUtils.showT("6方以下不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etFillThe.getText().toString())) {
+                    UIUtils.showT("补方不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etRemainMaterial.getText().toString())) {
+                    UIUtils.showT("剩料不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etWashTime.getText().toString())) {
+                    UIUtils.showT("洗料耗时不能为空");
+                    return;
+                }
                 if (StringUtil.isNullOrEmpty(etOilMass.getText().toString())) {
                     UIUtils.showT("加油升数不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etOverTime.getText().toString())) {
+                    UIUtils.showT("加班时长不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etOverTimeTrainNumber.getText().toString())) {
+                    UIUtils.showT("加班趟数不能为空");
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etTimeConsuming.getText().toString())) {
                     UIUtils.showT("耗时不能为空");
                     return;
                 }
-                if (tag == 0) {
-                    statisticalList.setPlateNumber(tvCarNumber.getText().toString());
-                    statisticalList.setSlDateTime(tvTime.getText().toString());
-                    statisticalList.setProjectID(spUtils.getString(SpUtils.PROJECTID, ""));
-                    statisticalList.setSquareQuantity(etAmount.getText().toString());
-                    statisticalList.setQilWear(etOilMass.getText().toString());
-                    statisticalList.setDistance(etDistance.getText().toString());
-                    statisticalList.setUserID(spUtils.getString(SpUtils.USERID, ""));
-                    statisticalList.setTimeConsuming(etTimeConsuming.getText().toString());
-                    if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {
-                        statisticalList.setRemark(etRemark.getText().toString());
-                    }
-                    if (UIUtils.isNetworkConnected()) {
+                if (!StringUtil.isNullOrEmpty(slID)) {
+                    statisticalList.setSlID(slID);
+                }
+                statisticalList.setSlDateTime(tvTime.getText().toString());
+                statisticalList.setPlateNumber(tvCarNumber.getText().toString());//车牌号
+                statisticalList.setSquareQuantity(etAmount.getText().toString());//生产方量
+                statisticalList.setEightBelow(etEight.getText().toString());//8方以下
+                statisticalList.setSixBelow(etSix.getText().toString());//6方以下
+                statisticalList.setAddQuantity(etFillThe.getText().toString());//补方
+                statisticalList.setRemainder(etRemainMaterial.getText().toString());//剩料
+                statisticalList.setWashTime(etWashTime.getText().toString());//洗料耗时
+                statisticalList.setQilWear(etOilMass.getText().toString());//加油升数
+                statisticalList.setDistance(etDistance.getText().toString());//距离基地
+                statisticalList.setAddWorkTime(etOverTime.getText().toString());//加班时长
+                statisticalList.setAddWorkCount(etOverTimeTrainNumber.getText().toString());//加班趟数
+                statisticalList.setTimeConsuming(etTimeConsuming.getText().toString());//耗时
+                if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {//备注
+                    statisticalList.setRemark(etRemark.getText().toString());
+                }
+                statisticalList.setProjectID(spUtils.getString(SpUtils.PROJECTID, ""));
+                statisticalList.setUserID(spUtils.getString(SpUtils.USERID, ""));
+                MAlertDialog.show(this, "温馨提示", "是否提交数据？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirmClick(String msg) {
                         showDia();
                         submitInputData();
                     }
-                } else if (tag == 1) {//修改
-                    //TODO
-                }
+
+                    @Override
+                    public void onCancelClick() {
+
+                    }
+                }, true);
+
                 break;
         }
     }
@@ -178,15 +227,16 @@ public class ProductInputActivity extends BaseActivity {
 
     private void submitInputData() {
         cancelDia();
-        tvCarNumber.setText("");
-        etOilMass.getText().clear();
-        etAmount.getText().clear();
-        etDistance.getText().clear();
-        etTimeConsuming.getText().clear();
-        etRemark.getText().clear();
         HashMap<String, String> params = new HashMap<>();
         params.put("RecordJson", new Gson().toJson(statisticalList));
-        OkHttpManager.postFormBody(Urls.RECORD_ADDRECORD, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
+        String url = "";
+        if (tag == 0) {
+            url = Urls.RECORD_ADDRECORD;
+        } else if (tag == 1) {
+            url = Urls.RECORD_UPDATERECORD;
+        }
+
+        OkHttpManager.postFormBody(url, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -197,9 +247,28 @@ public class ProductInputActivity extends BaseActivity {
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    Intent intent = new Intent(ProductInputActivity.this, SuccessActivity.class);
-                    intent.putExtra("TAG", 1);
-                    startActivity(intent);
+                    tvCarNumber.setText("");
+                    etOilMass.getText().clear();
+                    etAmount.getText().clear();
+                    etDistance.getText().clear();
+                    etTimeConsuming.getText().clear();
+                    etEight.getText().clear();
+                    etSix.getText().clear();
+                    etFillThe.getText().clear();
+                    etRemainMaterial.getText().clear();
+                    etWashTime.getText().clear();
+                    etOverTime.getText().clear();
+                    etOverTimeTrainNumber.getText().clear();
+                    etRemark.getText().clear();
+                    if (tag == 0) {
+                        Intent intent = new Intent(ProductInputActivity.this, SuccessActivity.class);
+                        intent.putExtra("TAG", 1);
+                        startActivity(intent);
+                    } else if (tag == 1) {
+                        setResult(2);
+                        finish();
+                        UIUtils.showT("修改成功");
+                    }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {

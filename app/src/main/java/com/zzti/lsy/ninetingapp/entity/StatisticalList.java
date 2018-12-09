@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @create 2018/10/10 23:37
  * @Describe 生产记录统计报表实体类
  */
-public class StatisticalList implements Serializable{
+public class StatisticalList implements Serializable {
     private String slID;//统计编号
     private String slDateTime;///统计日期
     private String plateNumber;///车牌号
@@ -20,6 +20,71 @@ public class StatisticalList implements Serializable{
     private String userID;///记录人ID
     private String staffName;///经手人姓名
     private String projectName;///项目部名称
+
+    private String eightBelow;//8方以下
+    private String sixBelow;//6方以下
+    private String addQuantity;//补方
+    private String remainder;//剩料
+    private String washTime;//洗料耗时
+    private String addWorkTime;//加班时长
+    private String addWorkCount;//加班趟数
+
+
+    public String getEightBelow() {
+        return eightBelow;
+    }
+
+    public void setEightBelow(String eightBelow) {
+        this.eightBelow = eightBelow;
+    }
+
+    public String getSixBelow() {
+        return sixBelow;
+    }
+
+    public void setSixBelow(String sixBelow) {
+        this.sixBelow = sixBelow;
+    }
+
+    public String getAddQuantity() {
+        return addQuantity;
+    }
+
+    public void setAddQuantity(String addQuantity) {
+        this.addQuantity = addQuantity;
+    }
+
+    public String getRemainder() {
+        return remainder;
+    }
+
+    public void setRemainder(String remainder) {
+        this.remainder = remainder;
+    }
+
+    public String getWashTime() {
+        return washTime;
+    }
+
+    public void setWashTime(String washTime) {
+        this.washTime = washTime;
+    }
+
+    public String getAddWorkTime() {
+        return addWorkTime;
+    }
+
+    public void setAddWorkTime(String addWorkTime) {
+        this.addWorkTime = addWorkTime;
+    }
+
+    public String getAddWorkCount() {
+        return addWorkCount;
+    }
+
+    public void setAddWorkCount(String addWorkCount) {
+        this.addWorkCount = addWorkCount;
+    }
 
     public String getUserID() {
         return userID;
