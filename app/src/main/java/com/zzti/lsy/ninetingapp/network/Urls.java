@@ -15,6 +15,7 @@ public class Urls {
     public final static String POST_ADDINCAR = BASE_URL + "/Car/Car.asmx/AddCar";//录入车辆
     public final static String POST_ADDRENTCAR = BASE_URL + "/Car/Car.asmx/AddRentCar";//录入外租车辆
     public final static String POST_GETCARLIST = BASE_URL + "/Car/Car.asmx/GetCarList";//获取车辆信息列表
+    public final static String POST_GETRENTCARLIST = BASE_URL + "/Car/Car.asmx/GetRentCarList";//获取外租车辆信息列表
     public final static String POST_GETCARTYPE = BASE_URL + "/Car/Car.asmx/GetCarType";//获取车辆类型信息
     public final static String POST_GETCHARGETYPE = BASE_URL + "/Car/Car.asmx/GetChargeType";//获取车辆排放类型
     public final static String POST_GETFACTORY = BASE_URL + "/Car/Car.asmx/GetFactory";//获取生产厂家

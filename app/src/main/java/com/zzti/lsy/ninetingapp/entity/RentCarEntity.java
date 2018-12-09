@@ -5,7 +5,7 @@ package com.zzti.lsy.ninetingapp.entity;
  * @create 2018/12/8 16:27
  * @Describe 外租车的实体类
  */
-public class RecentCarEntity {
+public class RentCarEntity {
     // 车牌号
     public String plateNumber;
     // 行驶证号

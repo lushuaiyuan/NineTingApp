@@ -37,7 +37,7 @@ public class DeviceInputActivity extends BaseActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new InsideDeviceInputFragment());
-        fragments.add(new RecentCarInputFragment());
+        fragments.add(new RentCarInputFragment());
         TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"自有录入", "外租录入"});
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);

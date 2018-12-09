@@ -30,6 +30,20 @@
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/color_6bcfd7"
             app:tabTextAppearance="@style/TabLayoutTitleTextAppearance" />
+
+        <TextView
+            android:id="@+id/tv_toolbarMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp10"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:text="操作"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dp13"
+            android:visibility="gone" />
     </RelativeLayout>
 
 
