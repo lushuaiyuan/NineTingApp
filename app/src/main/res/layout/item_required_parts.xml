@@ -39,6 +39,43 @@
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dp10"
+            android:paddingTop="@dimen/dp10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="采购类型："
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_exist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已有"
+                    android:textSize="@dimen/dp15" />
+
+                <RadioButton
+                    android:id="@+id/rb_purchase"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="现采"
+                    android:textSize="@dimen/dp15" />
+
+            </RadioGroup>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_partsName"
@@ -57,12 +94,14 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dp15" />
 
-            <TextView
-                android:id="@+id/tv_partsName"
+            <EditText
+                android:id="@+id/et_partsName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_weight="1"
+                android:background="@null"
+                android:enabled="false"
                 android:gravity="right"
                 android:hint="请选择"
                 android:textColor="@color/color_333333"
@@ -73,6 +112,46 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/icon_right_arrow" />
+
+        </LinearLayout>
+
+        <View style="@style/MyView" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:text="金额"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <EditText
+                android:id="@+id/et_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_weight="1"
+                android:background="@null"
+                android:enabled="false"
+                android:gravity="right"
+                android:hint="请输入"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_right_arrow"
+                android:visibility="invisible" />
 
         </LinearLayout>
 
@@ -115,6 +194,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
+                    android:background="@null"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
 

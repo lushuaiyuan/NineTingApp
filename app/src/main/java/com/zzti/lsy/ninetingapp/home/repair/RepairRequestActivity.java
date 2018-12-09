@@ -143,7 +143,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
     private void initData() {
         RequiredParts requiredParts = new RequiredParts();
         requiredParts.setRpNumber("1");
-
+        requiredParts.setModel(1);
         recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
         requiredPartsList = new ArrayList<>();
         requiredPartsList.add(requiredParts);
@@ -401,6 +401,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 }
                 break;
             case R.id.tv_addDetail://增加明细
+
                 if (requiredPartsList.size() >= 5) {
                     UIUtils.showT("最多添加5条明细");
                     break;
@@ -411,6 +412,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 }
                 RequiredParts requiredParts = new RequiredParts();
                 requiredParts.setRpNumber("1");
+                requiredParts.setModel(1);
                 requiredPartsList.add(requiredParts);
                 requiredPartsAdapter.notifyDataSetChanged();
                 break;

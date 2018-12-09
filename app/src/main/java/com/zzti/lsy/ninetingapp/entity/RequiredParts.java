@@ -10,6 +10,16 @@ public class RequiredParts {
     private String partsNumber;//配件库存
     private String partsName;//配件名称
     private String partsModel;//配件类型
+    private Integer model;//模式 1代表已有  2代表现采
+
+
+    public Integer getModel() {
+        return model;
+    }
+
+    public void setModel(Integer model) {
+        this.model = model;
+    }
 
     public String getPartsNumber() {
         return partsNumber;

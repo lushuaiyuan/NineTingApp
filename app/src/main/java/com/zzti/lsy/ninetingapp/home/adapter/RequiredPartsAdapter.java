@@ -1,6 +1,11 @@
 package com.zzti.lsy.ninetingapp.home.adapter;
 
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -19,10 +24,50 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, RequiredParts item) {
+    protected void convert(final BaseViewHolder helper, final RequiredParts item) {
         helper.setText(R.id.tv_partsIndex, "配件明细（" + (helper.getAdapterPosition() + 1) + ")");
+        EditText etPartName = helper.getView(R.id.et_partsName);
+        EditText etMoney = helper.getView(R.id.et_money);
+        RadioGroup radioGroup = helper.getView(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(null);
+        radioGroup.clearCheck();
+        switch (item.getModel()) {
+            case 1:
+                radioGroup.check(R.id.rb_exist);
+                etPartName.setHint("请选择");
+                etPartName.setEnabled(false);
+                helper.getView(R.id.imageView).setVisibility(View.VISIBLE);
+                etMoney.setHint("");
+                etMoney.setEnabled(false);
+                break;
+            case 2:
+                radioGroup.check(R.id.rb_purchase);
+                etPartName.setHint("请输入所需配件型号——名称");
+                etPartName.setEnabled(true);
+                helper.getView(R.id.imageView).setVisibility(View.GONE);
+                etMoney.setHint("请输入");
+                etMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                etMoney.setEnabled(true);
+                break;
+        }
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int p = 0;
+                switch (checkedId) {
+                    case R.id.rb_exist:
+                        p = 1;
+                        break;
+                    case R.id.rb_purchase:
+                        p = 2;
+                        break;
+                }
+                item.setModel(p);
+                notifyItemChanged(helper.getAdapterPosition());
+            }
+        });
         if (StringUtil.isNullOrEmpty(item.getPartsName())) {
-            helper.setText(R.id.tv_partsName, "");
+            helper.setText(R.id.et_partsName, "");
         } else {
             if (type == 1) {//录入
                 helper.setText(R.id.tv_partsName, item.getPartsName());
@@ -54,8 +99,6 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
             helper.getView(R.id.ib_add).setVisibility(View.GONE);
             helper.getView(R.id.tv_amount).setVisibility(View.GONE);
         }
-
-
     }
 
     private int type; //1代表录入  2代表记录
