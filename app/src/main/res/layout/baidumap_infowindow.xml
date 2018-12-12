@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/bg_infowindow"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp40"
+        android:paddingLeft="@dimen/dp40"
+        android:paddingRight="@dimen/dp40"
+        android:paddingTop="@dimen/dp30">
+
+        <TextView
+            android:id="@+id/tv_carNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="车牌号：豫A55555"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/dp15" />
+
+        <TextView
+            android:id="@+id/tv_lastTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="最后更新时间：2018-12-11 22:06"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/dp15" />
+
+
+    </LinearLayout>
+</LinearLayout>

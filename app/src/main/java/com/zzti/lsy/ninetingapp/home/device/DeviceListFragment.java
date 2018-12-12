@@ -62,7 +62,7 @@ import butterknife.OnClick;
 /**
  * @author lsy
  * @create 2018/12/9 12:36
- * @Describe 自用车的Fragment
+ * @Describe 自有车的Fragment
  */
 public class DeviceListFragment extends BaseFragment implements AdapterView.OnItemClickListener, BaseQuickAdapter.OnItemClickListener {
 

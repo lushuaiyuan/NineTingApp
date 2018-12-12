@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp;
 
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
@@ -25,6 +26,12 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.radio_button_home)
     RadioButton mRadioButtonHome;
     private Fragment[] mFragments;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+    }
 
     @Override
     public int getContentViewId() {

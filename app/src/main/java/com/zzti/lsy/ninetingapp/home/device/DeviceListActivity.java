@@ -64,7 +64,7 @@ public class DeviceListActivity extends BaseActivity {
         fragments.add(deviceListFragment);
         fragments.add(RentCarListFragment.newInstance());
 
-        TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"自用车", "租用车"});
+        TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"自有车", "租用车"});
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }

@@ -70,9 +70,9 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
             helper.setText(R.id.et_partsName, "");
         } else {
             if (type == 1) {//录入
-                helper.setText(R.id.tv_partsName, item.getPartsName());
+                helper.setText(R.id.et_partsName, item.getPartsName());
             } else {
-                helper.setText(R.id.tv_partsName, item.getPartsModel() + "——" + item.getPartsName());
+                helper.setText(R.id.et_partsName, item.getPartsModel() + "——" + item.getPartsName());
             }
         }
         if (!StringUtil.isNullOrEmpty(item.getRpNumber())) { //所需配件数量
@@ -91,7 +91,13 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
             helper.getView(R.id.ib_add).setVisibility(View.VISIBLE);
             helper.getView(R.id.imageView).setVisibility(View.VISIBLE);
             helper.getView(R.id.tv_amount).setVisibility(View.VISIBLE);
-            helper.addOnClickListener(R.id.ib_sub).addOnClickListener(R.id.ib_add).addOnClickListener(R.id.tv_delete).addOnClickListener(R.id.ll_partsName);
+            if (item.getModel() == 1) {
+                helper.getView(R.id.et_partsName).setClickable(true);
+                helper.addOnClickListener(R.id.et_partsName);
+            } else {
+                helper.getView(R.id.et_partsName).setClickable(false);
+            }
+            helper.addOnClickListener(R.id.ib_sub).addOnClickListener(R.id.ib_add).addOnClickListener(R.id.tv_delete);
         } else {
             helper.getView(R.id.imageView).setVisibility(View.GONE);
             helper.getView(R.id.tv_delete).setVisibility(View.GONE);

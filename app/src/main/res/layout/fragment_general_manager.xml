@@ -43,15 +43,16 @@
                     android:paddingRight="@dimen/dp16">
 
                     <RelativeLayout
-                        android:id="@+id/rl_menu1"
+                        android:id="@+id/rl_menu3"
                         style="@style/home_menubg"
-                        android:background="@drawable/home_menu1_selector">
+                        android:background="@drawable/home_menu7_selector">
 
                         <TextView
                             style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu6"
-                            android:text="项目模块" />
+                            android:drawableLeft="@mipmap/icon_menu10"
+                            android:text="审批" />
                     </RelativeLayout>
+
 
                     <RelativeLayout
                         android:id="@+id/rl_menu2"
@@ -62,7 +63,7 @@
                         <TextView
                             style="@style/home_menu"
                             android:drawableLeft="@mipmap/icon_menu6"
-                            android:text="收款模块" />
+                            android:text="款项" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -77,15 +78,16 @@
                     android:paddingTop="@dimen/dp10">
 
                     <RelativeLayout
-                        android:id="@+id/rl_menu3"
+                        android:id="@+id/rl_menu1"
                         style="@style/home_menubg"
-                        android:background="@drawable/home_menu7_selector">
+                        android:background="@drawable/home_menu1_selector">
 
                         <TextView
                             style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu10"
-                            android:text="审批" />
+                            android:drawableLeft="@mipmap/icon_menu6"
+                            android:text="项目详情" />
                     </RelativeLayout>
+
 
                     <RelativeLayout
                         android:id="@+id/rl_menu4"
@@ -111,8 +113,20 @@
                     android:paddingTop="@dimen/dp10">
 
                     <RelativeLayout
+                        android:id="@+id/rl_menu7"
+                        style="@style/home_menubg"
+                        android:background="@drawable/home_menu6_selector">
+
+                        <TextView
+                            style="@style/home_menu"
+                            android:drawableLeft="@mipmap/icon_menu2"
+                            android:text="维修统计" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:id="@+id/rl_menu6"
                         style="@style/home_menubg"
+                        android:layout_marginLeft="@dimen/dp10"
                         android:background="@drawable/home_menu5_selector">
 
                         <TextView
@@ -121,18 +135,6 @@
                             android:text="生产统计" />
                     </RelativeLayout>
 
-
-                    <RelativeLayout
-                        android:id="@+id/rl_menu7"
-                        style="@style/home_menubg"
-                        android:layout_marginLeft="@dimen/dp10"
-                        android:background="@drawable/home_menu6_selector">
-
-                        <TextView
-                            style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu2"
-                            android:text="维修统计" />
-                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -250,7 +252,8 @@
                     android:id="@+id/ll_statistics"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"

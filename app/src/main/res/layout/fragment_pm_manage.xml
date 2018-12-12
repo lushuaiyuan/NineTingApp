@@ -43,15 +43,16 @@
                     android:paddingRight="@dimen/dp16">
 
                     <RelativeLayout
-                        android:id="@+id/rl_menu1"
+                        android:id="@+id/rl_menu3"
                         style="@style/home_menubg"
-                        android:background="@drawable/home_menu1_selector">
+                        android:background="@drawable/home_menu7_selector">
 
                         <TextView
                             style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu6"
-                            android:text="设备列表" />
+                            android:drawableLeft="@mipmap/icon_menu10"
+                            android:text="审批" />
                     </RelativeLayout>
+
 
                     <RelativeLayout
                         android:id="@+id/rl_menu2"
@@ -77,28 +78,28 @@
                     android:paddingTop="@dimen/dp10">
 
                     <RelativeLayout
-                        android:id="@+id/rl_menu3"
+                        android:id="@+id/rl_menu8"
                         style="@style/home_menubg"
-                        android:background="@drawable/home_menu7_selector">
+                        android:background="@drawable/home_menu6_selector">
 
                         <TextView
                             style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu10"
-                            android:text="审批" />
+                            android:drawableLeft="@mipmap/icon_menu3"
+                            android:text="款项" />
                     </RelativeLayout>
 
+
                     <RelativeLayout
-                        android:id="@+id/rl_menu6"
+                        android:id="@+id/rl_menu1"
                         style="@style/home_menubg"
                         android:layout_marginLeft="@dimen/dp10"
                         android:background="@drawable/home_menu4_selector">
 
                         <TextView
                             style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu2"
-                            android:text="生产统计" />
+                            android:drawableLeft="@mipmap/icon_menu6"
+                            android:text="设备列表" />
                     </RelativeLayout>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -121,18 +122,18 @@
                             android:text="维修统计" />
                     </RelativeLayout>
 
-
                     <RelativeLayout
-                        android:id="@+id/rl_menu8"
+                        android:id="@+id/rl_menu6"
                         style="@style/home_menubg"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:background="@drawable/home_menu6_selector">
+                        android:background="@drawable/home_menu1_selector">
 
                         <TextView
                             style="@style/home_menu"
-                            android:drawableLeft="@mipmap/icon_menu3"
-                            android:text="收款模块" />
+                            android:drawableLeft="@mipmap/icon_menu2"
+                            android:text="生产统计" />
                     </RelativeLayout>
+
 
                 </LinearLayout>
 
@@ -245,7 +246,6 @@
                             android:textSize="@dimen/dp15" />
                     </LinearLayout>
                 </LinearLayout>
-
 
 
                 <LinearLayout

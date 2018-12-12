@@ -143,13 +143,20 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
         column1.setFixed(true);
         Column<String> column2 = new Column<>("日期", "slDateTime");
         Column<String> column3 = new Column<>("方量", "squareQuantity");
-        Column<String> column4 = new Column<>("加油升数", "qilWear");
-        Column<String> column5 = new Column<>("距离基地里程", "distance");
-        Column<String> column6 = new Column<>("耗时", "timeConsuming");
-        Column<String> column7 = new Column<>("备注", "remark");
+        Column<String> column4 = new Column<>("8方以下", "eightBelow");
+        Column<String> column5 = new Column<>("6方以下", "sixBelow");
+        Column<String> column6 = new Column<>("补方", "addQuantity");
+        Column<String> column7 = new Column<>("剩料", "remainder");
+        Column<String> column8 = new Column<>("洗料耗时", "washTime");
+        Column<String> column9 = new Column<>("加油升数", "qilWear");
+        Column<String> column10 = new Column<>("距离基地里程", "distance");
+        Column<String> column11 = new Column<>("加班时长", "addWorkTime");
+        Column<String> column12 = new Column<>("加班趟数", "addWorkCount");
+        Column<String> column13 = new Column<>("耗时", "timeConsuming");
+        Column<String> column14 = new Column<>("备注", "remark");
 //        if (pageIndex == 1) {
         //表格数据 datas是需要填充的数据
-        TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7);
+        TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14);
         //table.setZoom(true,3);是否缩放
         mSmartTable.setTableData(tableData);
 //        } else {
@@ -162,6 +169,13 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
         column5.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column6.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column7.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column8.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column9.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column10.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column11.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column12.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column13.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column14.setOnColumnItemClickListener(new MyColumnItemClickListener());
     }
 
     class MyColumnItemClickListener implements OnColumnItemClickListener<String> {
