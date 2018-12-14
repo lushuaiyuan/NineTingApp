@@ -143,11 +143,13 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
     private void initData() {
         RequiredParts requiredParts = new RequiredParts();
         requiredParts.setRpNumber("1");
-        requiredParts.setModel(1);
+        requiredParts.setType(0);
         recycleViewDetail.setLayoutManager(new LinearLayoutManager(this));
         requiredPartsList = new ArrayList<>();
         requiredPartsList.add(requiredParts);
         requiredPartsAdapter = new RequiredPartsAdapter(requiredPartsList);
+        requiredPartsAdapter.setGroupSelectListener(new MyGroupSelectListener());
+        requiredPartsAdapter.setPartNameClickListener(new MyPartNameClickListener());
         requiredPartsAdapter.setType(1);
         recycleViewDetail.setAdapter(requiredPartsAdapter);
         requiredPartsAdapter.setOnItemChildClickListener(this);
@@ -260,7 +262,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         initPopPic();
         initRepairTypePop();
         initRepairCausePop();
-
+        etMoney.setOnFocusChangeListener(new MyOnFocusChangeListener());
     }
 
     private void initRepairCausePop() {
@@ -401,19 +403,35 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 }
                 break;
             case R.id.tv_addDetail://增加明细
-
+                etMoney.clearFocus();
                 if (requiredPartsList.size() >= 5) {
                     UIUtils.showT("最多添加5条明细");
                     break;
                 }
-                if (StringUtil.isNullOrEmpty(requiredPartsList.get(requiredPartsList.size() - 1).getPartsName())) {
-                    UIUtils.showT("请先完善上一条信息");
+                RequiredParts requiredParts = requiredPartsList.get(requiredPartsList.size() - 1);
+                EditText etPartsName = (EditText) requiredPartsAdapter.getViewByPosition(recycleViewDetail, requiredPartsList.size() - 1, R.id.et_partsName);
+                EditText etPrice = (EditText) requiredPartsAdapter.getViewByPosition(recycleViewDetail, requiredPartsList.size() - 1, R.id.et_price);
+                if (StringUtil.isNullOrEmpty(etPartsName.getText().toString()) || StringUtil.isNullOrEmpty(etPrice.getText().toString())) {
+                    UIUtils.showT("配件和金额不能为空");
                     break;
+                } else {
+                    if (etPartsName.getText().toString().split("#").length == 2) {
+                        requiredParts.setPartsName(etPartsName.getText().toString().split("#")[1]);
+                        requiredParts.setPartsModel(etPartsName.getText().toString().split("#")[0]);
+                        requiredParts.setPurchasedPrice(etPrice.getText().toString());
+                        etPartsName.clearFocus();
+                        etPrice.clearFocus();
+                    } else {
+                        UIUtils.showT("请输入正确配件名称格式");
+                        etPartsName.requestFocus();
+                        etPrice.clearFocus();
+                        break;
+                    }
                 }
-                RequiredParts requiredParts = new RequiredParts();
-                requiredParts.setRpNumber("1");
-                requiredParts.setModel(1);
-                requiredPartsList.add(requiredParts);
+                RequiredParts requiredParts2 = new RequiredParts();
+                requiredParts2.setRpNumber("1");
+                requiredParts2.setType(0);
+                requiredPartsList.add(requiredParts2);
                 requiredPartsAdapter.notifyDataSetChanged();
                 break;
             case R.id.ll_maintenanceStartTime://计划开始维修时间
@@ -425,6 +443,35 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
             case R.id.btn_submit://提交
                 submitData();
                 break;
+        }
+    }
+
+
+    class MyOnFocusChangeListener implements View.OnFocusChangeListener {
+
+        @Override
+        public void onFocusChange(View view, boolean b) {
+            if (b) {
+                RequiredParts requiredParts = requiredPartsList.get(requiredPartsList.size() - 1);
+                EditText etPartsName = (EditText) requiredPartsAdapter.getViewByPosition(recycleViewDetail, requiredPartsList.size() - 1, R.id.et_partsName);
+                EditText etPrice = (EditText) requiredPartsAdapter.getViewByPosition(recycleViewDetail, requiredPartsList.size() - 1, R.id.et_price);
+                if (!StringUtil.isNullOrEmpty(etPartsName.getText().toString()) || !StringUtil.isNullOrEmpty(etPrice.getText().toString())) {
+                    if (requiredParts.getType() == 1) {
+                        if (etPartsName.getText().toString().split("#").length == 2) {
+                            requiredParts.setPartsName(etPartsName.getText().toString().split("#")[1]);
+                            requiredParts.setPartsModel(etPartsName.getText().toString().split("#")[0]);
+                            requiredParts.setPurchasedPrice(etPrice.getText().toString());
+                        } else {
+                            etPartsName.requestFocus();
+                            view.clearFocus();
+                            UIUtils.showT("请输入正确配件名称格式");
+                        }
+                    }
+                } else {
+                    view.clearFocus();
+                    UIUtils.showT("配件和金额不能为空");
+                }
+            }
         }
     }
 
@@ -674,33 +721,84 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                     break;
                 amount1--;
                 requiredParts1.setRpNumber(String.valueOf(amount1));
-                requiredPartsAdapter.notifyDataSetChanged();
+                requiredPartsAdapter.notifyItemChanged(position);
                 break;
             case R.id.ib_add:
                 RequiredParts requiredParts2 = requiredPartsList.get(position);
-                if (StringUtil.isNullOrEmpty(requiredParts2.getPartsName())) {
-                    UIUtils.showT("请先选择配件");
-                    break;
-                }
                 int amount2 = Integer.parseInt(requiredParts2.getRpNumber());
                 amount2++;
-                if (amount2 > Integer.parseInt(requiredParts2.getPartsNumber())) {
-                    UIUtils.showT("配件所需数量不能大于库存数量");
-                    break;
+                if (requiredParts2.getType() == 0) {
+                    if (StringUtil.isNullOrEmpty(requiredParts2.getPartsName())) {
+                        UIUtils.showT("请先选择配件");
+                        break;
+                    }
+                    if (amount2 > Integer.parseInt(requiredParts2.getPartsNumber())) {
+                        UIUtils.showT("配件所需数量不能大于库存数量");
+                        break;
+                    }
+                } else {
+                    EditText etPartsName = (EditText) requiredPartsAdapter.getViewByPosition(recycleViewDetail, position, R.id.et_partsName);
+                    EditText etPrice = (EditText) requiredPartsAdapter.getViewByPosition(recycleViewDetail, position, R.id.et_price);
+                    if (StringUtil.isNullOrEmpty(etPartsName.getText().toString()) || StringUtil.isNullOrEmpty(etPrice.getText().toString())) {
+                        UIUtils.showT("配件和金额不能为空");
+                        break;
+                    } else {
+                        if (etPartsName.getText().toString().split("#").length == 2) {
+                            requiredParts2.setPartsName(etPartsName.getText().toString().split("#")[1]);
+                            requiredParts2.setPartsModel(etPartsName.getText().toString().split("#")[0]);
+                            requiredParts2.setPurchasedPrice(etPrice.getText().toString());
+                            etPartsName.clearFocus();
+                            etPrice.clearFocus();
+                        } else {
+                            UIUtils.showT("请输入正确配件名称格式");
+                            etPartsName.requestFocus();
+                            etPrice.clearFocus();
+                            break;
+                        }
+                    }
                 }
                 requiredParts2.setRpNumber(String.valueOf(amount2));
-                requiredPartsAdapter.notifyDataSetChanged();
-                break;
-            case R.id.ll_partsName:
-                selectPosition = position;
-                Intent intent = new Intent(this, PartsListActivity.class);
-                intent.putExtra("TAG", 1);
-                startActivityForResult(intent, 2);
+                requiredPartsAdapter.notifyItemChanged(position);
                 break;
 
         }
     }
 
+    class MyPartNameClickListener implements RequiredPartsAdapter.PartNameClickListener {
+
+        @Override
+        public void partNameClick(int position) {
+            selectPosition = position;
+            Intent intent = new Intent(RepairRequestActivity.this, PartsListActivity.class);
+            intent.putExtra("TAG", 1);
+            startActivityForResult(intent, 2);
+        }
+    }
+
+    class MyGroupSelectListener implements RequiredPartsAdapter.GroupSelectListener {
+        @Override
+        public void radioSelect(int checkedId, int position) {
+            int type = -1;
+            switch (checkedId) {
+                case R.id.rb_exist:
+                    type = 0;
+                    break;
+                case R.id.rb_purchase:
+                    type = 1;
+                    break;
+
+            }
+            RequiredParts requiredPart = requiredPartsList.get(position);
+            requiredPart.setPartsID("0");//配件id
+            requiredPart.setPartsName("");//配件名称
+            requiredPart.setPurchasedPrice("");//价格
+            requiredPart.setRpNumber("1");//配件数量
+            requiredPart.setPartsNumber("");//配件库存
+            requiredPart.setType(type);
+            requiredPartsAdapter.notifyItemChanged(position);
+        }
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -721,7 +819,10 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 }
                 requiredPartsList.get(selectPosition).setPartsID(data.getStringExtra("partsID"));
                 requiredPartsList.get(selectPosition).setPartsName(data.getStringExtra("partsName"));
+                requiredPartsList.get(selectPosition).setPartsModel(data.getStringExtra("partsModel"));
+                requiredPartsList.get(selectPosition).setPurchasedPrice(data.getStringExtra("partsPrice"));
                 requiredPartsList.get(selectPosition).setPartsNumber(data.getStringExtra("partsNumber"));
+                requiredPartsList.get(selectPosition).setType(0);
                 requiredPartsAdapter.notifyItemChanged(selectPosition);
             }
         }

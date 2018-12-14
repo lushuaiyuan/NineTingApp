@@ -98,7 +98,6 @@ public class MonitorFragment extends BaseFragment implements BaiduMap.OnMarkerCl
             baidumap_infowindow = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.baidumap_infowindow, null);
             //自定义Marker
             v_temp = LayoutInflater.from(mActivity.getApplicationContext()).inflate(R.layout.text_up_img_down, null);
-
         } else {
             require = false;
             mMapView.setVisibility(View.GONE);
@@ -131,8 +130,6 @@ public class MonitorFragment extends BaseFragment implements BaiduMap.OnMarkerCl
                     try {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData().toString());
                         if (jsonArray.length() > 0) {
-                            //创建OverlayOptions的集合
-//                            List<OverlayOptions> options = new ArrayList<>();
                             List<LatLng> points = new ArrayList<>();
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 CarLocation carLocation = ParseUtils.parseJson(jsonArray.optString(i), CarLocation.class);
@@ -151,17 +148,19 @@ public class MonitorFragment extends BaseFragment implements BaiduMap.OnMarkerCl
                                 OverlayOptions marker = new MarkerOptions()
                                         .icon(bitmap)
                                         .position(point);
-//                                options.add(marker);
                                 Marker markOverlay = (Marker) mBaiduMap.addOverlay(marker);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("plateNumber", carLocation.getPlatenumber());
-                                bundle.putString("lastTime", carLocation.getLastTime());
+                                bundle.putString("lastTime", carLocation.getLastTime().replace("T", " "));
                                 markOverlay.setExtraInfo(bundle);
                             }
                             //移动到指定的位置
                             MapStatus.Builder builder = new MapStatus.Builder();
                             builder.target(points.get(0));
                             mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+                            //设置缩放级别 ， 缩放级别为4~21，21为最近，4为最远
+                            MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(8.0f);
+                            mBaiduMap.setMapStatus(msu);
                         } else {
                             mMapView.setVisibility(View.GONE);
                         }

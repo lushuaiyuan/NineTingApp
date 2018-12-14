@@ -10,15 +10,23 @@ public class RequiredParts {
     private String partsNumber;//配件库存
     private String partsName;//配件名称
     private String partsModel;//配件类型
-    private Integer model;//模式 1代表已有  2代表现采
+    private String purchasedPrice;//配件单价
+    private Integer type;//模式 已有为0  现采为1
 
-
-    public Integer getModel() {
-        return model;
+    public String getPurchasedPrice() {
+        return purchasedPrice;
     }
 
-    public void setModel(Integer model) {
-        this.model = model;
+    public void setPurchasedPrice(String purchasedPrice) {
+        this.purchasedPrice = purchasedPrice;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getPartsNumber() {

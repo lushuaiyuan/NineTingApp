@@ -119,7 +119,7 @@ public class MapActivity extends BaseActivity {
                             MapStatus.Builder builder = new MapStatus.Builder();
                             builder.target(point);
                             mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-                            //设置缩放级别 ， 缩放级别为3~19，19为最近，3为最远
+                            //设置缩放级别 ， 缩放级别为4~21，21为最近，4为最远
                             MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
                             mBaiduMap.setMapStatus(msu);
                         } else {

@@ -164,9 +164,12 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
             String partsName = partsInfoEntities.get(position).getPartsName();
             String partsModel = partsInfoEntities.get(position).getPartsModel();
             String partsNumber = partsInfoEntities.get(position).getPartsNumber();
+            String partsPrice = partsInfoEntities.get(position).getPurchasedPrice();
             Intent intent = new Intent();
             intent.putExtra("partsID", partsID);
-            intent.putExtra("partsName", partsModel + "——" + partsName);
+            intent.putExtra("partsName", partsName);
+            intent.putExtra("partsModel", partsModel);
+            intent.putExtra("partsPrice", partsPrice);
             intent.putExtra("partsNumber", partsNumber);
             setResult(2, intent);
             finish();
