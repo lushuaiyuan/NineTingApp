@@ -85,7 +85,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
 
     private int condition = 1;
     private String repairTypeID;
-    private String statusID;
+    private String statusID = "";
 
 
     @Override
@@ -240,11 +240,12 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
             tvHandleState.setText("待总经理审批");
             statusID = "1";
+            wherestr += " and status=" + statusID;
         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
             tvHandleState.setText("待项目经理审批");
             statusID = "2";
+            wherestr += " and status=" + statusID;
         }
-        wherestr += " and status=" + statusID;
     }
 
 

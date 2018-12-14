@@ -163,11 +163,16 @@ public class LifeGoodsPurchaseListFragment extends BaseFragment implements Popup
             if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
                 tvStatus.setText("待总经理审批");
                 status = "1";
+                wherestr += " and status=" + status;
             } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
                 tvStatus.setText("待项目经理审批");
                 status = "2";
+                wherestr += " and status=" + status;
+            } else {
+                tvStatus.setText("处理状态");
+                status = "";
             }
-            wherestr += " and status=" + status;
+
         }
         initPop();
     }
