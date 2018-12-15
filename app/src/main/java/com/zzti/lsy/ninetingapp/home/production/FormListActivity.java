@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
@@ -21,7 +23,6 @@ import com.bin.david.form.listener.OnColumnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
@@ -32,6 +33,7 @@ import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import org.json.JSONArray;
@@ -44,19 +46,28 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * author：anxin on 2018/8/7 15:59
  * 生产表格
  */
-public class FormListActivity extends BaseActivity implements View.OnClickListener {
+public class FormListActivity extends BaseActivity {
+    @BindView(R.id.tv_startTime)
+    TextView tvStartTime;
+    @BindView(R.id.iv_clearStartTime)
+    ImageView ivClearStartTime;
+    @BindView(R.id.iv_clearEndTime)
+    ImageView ivClearEndTime;
+    @BindView(R.id.tv_endTime)
+    TextView tvEndTime;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.smartTable)
     SmartTable mSmartTable;
 
-    //    private int pageIndex = 0;
     private String whereStr;
+    private List<StatisticalList> statisticalLists = new ArrayList<>();
 
     @Override
     public int getContentViewId() {
@@ -74,8 +85,11 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 whereStr = "";
-                data.clear();
-                setTitle("每日方量流水明细");
+                tvStartTime.setText("");
+                ivClearStartTime.setVisibility(View.GONE);
+                tvEndTime.setText("");
+                ivClearEndTime.setVisibility(View.GONE);
+                statisticalLists.clear();
                 getRecordList();
             }
         });
@@ -83,9 +97,46 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
         getRecordList();
     }
 
-    private List<StatisticalList> data = new ArrayList<>();
+
+    @OnClick({R.id.tv_startTime, R.id.iv_clearStartTime, R.id.tv_endTime, R.id.iv_clearEndTime, R.id.iv_search})
+    public void viewClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_startTime:
+                showCustomTime(1);
+                break;
+            case R.id.iv_clearStartTime:
+                tvStartTime.setText("");
+                ivClearStartTime.setVisibility(View.GONE);
+                break;
+            case R.id.tv_endTime:
+                showCustomTime(2);
+                break;
+            case R.id.iv_clearEndTime:
+                tvEndTime.setText("");
+                ivClearEndTime.setVisibility(View.GONE);
+                break;
+            case R.id.iv_search:
+                if (StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && !StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+                    UIUtils.showT("请输入开始时间");
+                    return;
+                }
+                if (!StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+                    UIUtils.showT("请输入结束时间");
+                    return;
+                }
+                showDia();
+                getRecordList();
+                break;
+        }
+    }
+
 
     private void getRecordList() {
+        statisticalLists.clear();
+        whereStr = "";
+        if (!StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && !StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+            whereStr = "'" + tvStartTime.getText().toString() + "'<slDateTime and slDateTime<'" + tvEndTime.getText().toString() + "'";
+        }
         HashMap<String, String> params = new HashMap<>();
         params.put("pageIndex", String.valueOf(0));
         params.put("wherestr", whereStr);
@@ -100,7 +151,6 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
                 cancelDia();
                 endRefresh(smartRefreshLayout);
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                List<StatisticalList> statisticalLists = new ArrayList<>();
                 if (msgInfo.getCode() == 200) {
                     try {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
@@ -109,7 +159,6 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
                                 StatisticalList statisticalList = ParseUtils.parseJson(jsonArray.getString(i), StatisticalList.class);
                                 statisticalList.setSlDateTime(statisticalList.getSlDateTime().split("T")[0]);
                                 statisticalLists.add(statisticalList);
-                                data.add(statisticalList);
                             }
                         } else {
                             UIUtils.showT("暂无数据");
@@ -117,15 +166,12 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-//                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
-//                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
-//                    }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
-                setTable(statisticalLists);
+                setTable();
             }
 
             @Override
@@ -137,7 +183,7 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
-    private void setTable(List<StatisticalList> statisticalLists) {
+    private void setTable() {
         //普通列
         Column<String> column1 = new Column<>("车牌号", "plateNumber");
         column1.setFixed(true);
@@ -154,14 +200,9 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
         Column<String> column12 = new Column<>("加班趟数", "addWorkCount");
         Column<String> column13 = new Column<>("耗时", "timeConsuming");
         Column<String> column14 = new Column<>("备注", "remark");
-//        if (pageIndex == 1) {
         //表格数据 datas是需要填充的数据
         TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14);
-        //table.setZoom(true,3);是否缩放
         mSmartTable.setTableData(tableData);
-//        } else {
-//            mSmartTable.addData(statisticalLists, true);
-//        }
         column1.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column2.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column3.setOnColumnItemClickListener(new MyColumnItemClickListener());
@@ -183,24 +224,18 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
         @Override
         public void onClick(Column<String> column, String value, String o, int position) {
             Intent intent = new Intent(FormListActivity.this, OneCarProDetailActivity.class);
-            intent.putExtra("plateNumber", data.get(position).getPlateNumber());
-            intent.putExtra("projectName", data.get(position).getProjectName());
+            intent.putExtra("plateNumber", statisticalLists.get(position).getPlateNumber());
+            intent.putExtra("projectName", statisticalLists.get(position).getProjectName());
             startActivity(intent);
         }
     }
 
 
     private void initView() {
-        setTitle("每日方量流水明细" + DateUtil.getCurYear());
+        setTitle("每日方量流水明细");
         whereStr = "";
-        ivToolbarMenu.setVisibility(View.VISIBLE);
-        ivToolbarMenu.setOnClickListener(this);
         smartRefreshLayout.setEnableLoadMore(false);
         smartRefreshLayout.setEnableRefresh(true);
-        //使上拉加载具有弹性效果：
-//        smartRefreshLayout.setEnableAutoLoadMore(false);
-
-
         TableConfig tableConfig = mSmartTable.getConfig();
         tableConfig.setVerticalPadding(DensityUtils.dp2px(8));
         tableConfig.setShowTableTitle(false);//显示表格标题
@@ -221,32 +256,27 @@ public class FormListActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-    @Override
-    public void onClick(View view) {
-        showCustomTime();
-    }
-
     /**
      * 显示时间选择器
      */
-    private void showCustomTime() {
+    private void showCustomTime(final int type) {
         Calendar instance = Calendar.getInstance();
         instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
         //时间选择器
         TimePickerView pvTime = new TimePickerBuilder(FormListActivity.this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                whereStr = "slDateTime = \'" + DateUtil.getDate(date) + "\'";
-                setTitle("每日方量流水明细" + DateUtil.getDate(date));
-//                pageIndex = 1;
-                showDia();
-                data.clear();
-                getRecordList();
+                if (type == 1) {
+                    tvStartTime.setText(DateUtil.getDate(date));
+                    ivClearStartTime.setVisibility(View.VISIBLE);
+                } else {
+                    tvEndTime.setText(DateUtil.getDate(date));
+                    ivClearEndTime.setVisibility(View.VISIBLE);
+                }
             }
         }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
                 .setLabel(" 年", " 月", " 日", "", "", "")
                 .isCenterLabel(false).build();
         pvTime.show();
-
     }
 }

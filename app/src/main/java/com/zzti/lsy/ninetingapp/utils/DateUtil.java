@@ -137,7 +137,6 @@ public class DateUtil {
     }
 
 
-
     /**
      * 获取日期字符串。
      */
@@ -373,6 +372,21 @@ public class DateUtil {
     }
 
     /**
+     * 获取一个月前的日期
+     *
+     * @param date 传入的日期
+     * @return
+     */
+    public static String getMonthAgo(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, -1);
+        String monthAgo = simpleDateFormat.format(calendar.getTime());
+        return monthAgo;
+    }
+
+    /**
      * 获取当前年月日
      */
     public static String getCurrentDate() {
@@ -453,21 +467,22 @@ public class DateUtil {
 
     /**
      * 指定日期N个月后的日期
+     *
      * @param inputDate
      * @param number
      * @return
      */
-    public static String  getAfterMonth(String inputDate,int number) {
+    public static String getAfterMonth(String inputDate, int number) {
         Calendar c = Calendar.getInstance();//获得一个日历的实例
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
-        try{
+        try {
             date = sdf.parse(inputDate);//初始日期
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
         c.setTime(date);//设置日历时间
-        c.add(Calendar.MONTH,number);//在日历的月份上增加6个月
+        c.add(Calendar.MONTH, number);//在日历的月份上增加6个月
 
         String strDate = sdf.format(c.getTime());//的到你想要得6个月后的日期
         return strDate;

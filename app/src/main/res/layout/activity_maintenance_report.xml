@@ -6,57 +6,122 @@
 
     <include layout="@layout/view_toolbar" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:paddingTop="@dimen/dp8">
+
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:background="@drawable/input_shape_gray"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:hint="请输入车牌号或者维修内容"
+            android:maxLines="1"
+            android:padding="@dimen/dp8"
+            android:textSize="@dimen/dp13" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/dp8"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:paddingTop="@dimen/dp8">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/input_shape_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_startTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="开始时间"
+                android:padding="@dimen/dp8"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp14" />
+
+            <ImageView
+                android:id="@+id/iv_clearStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp8"
+                android:src="@mipmap/icon_clear"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <View
+            style="@style/MyView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp1"
+            android:layout_margin="@dimen/dp8"
+            android:layout_weight="0.3"
+            android:background="@color/color_e5e5e5" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/input_shape_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_endTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="结束时间"
+                android:padding="@dimen/dp8"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp14" />
+
+            <ImageView
+                android:id="@+id/iv_clearEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp8"
+                android:src="@mipmap/icon_clear"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:background="@mipmap/iv_search"
+            android:padding="@dimen/dp10" />
+
+    </LinearLayout>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <com.bin.david.form.core.SmartTable
+            android:id="@+id/table"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp10"
-                android:layout_marginLeft="@dimen/dp15"
-                android:layout_marginRight="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/input_shape"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
-
-
-                <ImageView
-                    android:id="@+id/iv_search"
-                    android:layout_width="@dimen/dp20"
-                    android:layout_height="@dimen/dp20"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:background="@mipmap/iv_search" />
-
-                <EditText
-                    android:id="@+id/et_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp40"
-                    android:layout_marginRight="@dimen/dp40"
-                    android:background="@null"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:hint="请输入车牌号或者维修内容"
-                    android:maxLines="1"
-                    android:padding="@dimen/dp8"
-                    android:textSize="@dimen/dp13" />
-
-            </RelativeLayout>
-
-            <com.bin.david.form.core.SmartTable
-                android:id="@+id/table"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+            android:layout_height="match_parent" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

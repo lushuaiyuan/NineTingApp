@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.core.TableConfig;
 import com.bin.david.form.data.column.Column;
@@ -25,6 +31,7 @@ import com.zzti.lsy.ninetingapp.entity.StatisticalList;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
@@ -34,21 +41,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 日用品出库记录
  */
 public class LifeGoodsOutRecordActivity extends BaseActivity {
+    @BindView(R.id.tv_startTime)
+    TextView tvStartTime;
+    @BindView(R.id.iv_clearStartTime)
+    ImageView ivClearStartTime;
+    @BindView(R.id.iv_clearEndTime)
+    ImageView ivClearEndTime;
+    @BindView(R.id.tv_endTime)
+    TextView tvEndTime;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.table)
     SmartTable smartTable;
     private String lbID;
-//    private int pageIndex = 0;
 
 
     @Override
@@ -69,32 +86,89 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                tvEndTime.setText("");
+                tvStartTime.setText("");
+                ivClearStartTime.setVisibility(View.GONE);
+                ivClearEndTime.setVisibility(View.GONE);
                 getRecord();
             }
         });
-//        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-//            @Override
-//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-////                pageIndex++;
-////                getRecord();
-//            }
-//
-//            @Override
-//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-////                pageIndex = 0;
-//                getRecord();
-//            }
-//        });
     }
 
+    @OnClick({R.id.tv_startTime, R.id.iv_clearStartTime, R.id.tv_endTime, R.id.iv_clearEndTime, R.id.iv_search})
+    public void viewClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_startTime:
+                showCustomTime(1);
+                break;
+            case R.id.iv_clearStartTime:
+                tvStartTime.setText("");
+                ivClearStartTime.setVisibility(View.GONE);
+                break;
+            case R.id.tv_endTime:
+                showCustomTime(2);
+                break;
+            case R.id.iv_clearEndTime:
+                tvEndTime.setText("");
+                ivClearEndTime.setVisibility(View.GONE);
+                break;
+            case R.id.iv_search:
+                if (StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && !StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+                    UIUtils.showT("请输入开始时间");
+                    return;
+                }
+                if (!StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+                    UIUtils.showT("请输入结束时间");
+                    return;
+                }
+                showDia();
+                getRecord();
+                break;
+        }
+    }
+
+    /**
+     * 显示时间选择器
+     */
+    private void showCustomTime(final int type) {
+        Calendar instance = Calendar.getInstance();
+        instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
+        //时间选择器
+        TimePickerView pvTime = new TimePickerBuilder(LifeGoodsOutRecordActivity.this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                if (type == 1) {
+                    tvStartTime.setText(DateUtil.getDate(date));
+                    ivClearStartTime.setVisibility(View.VISIBLE);
+                } else {
+                    tvEndTime.setText(DateUtil.getDate(date));
+                    ivClearEndTime.setVisibility(View.VISIBLE);
+                }
+            }
+        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel(" 年", " 月", " 日", "", "", "")
+                .isCenterLabel(false).build();
+        pvTime.show();
+
+    }
+
+
+    private String whereStr = "";
 
     /**
      * 获取出库记录
      */
     private void getRecord() {
+        whereStr = "";
         HashMap<String, String> params = new HashMap<>();
         if (!StringUtil.isNullOrEmpty(lbID)) {
-            params.put("wherestr", "lbID=" + lbID);
+            whereStr = " and lbID=" + lbID;
+        }
+        if (!StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && !StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+            whereStr += " and '" + tvStartTime.getText().toString() + "'<ldDate and ldDate<'" + tvEndTime.getText().toString() + "'";
+        }
+        if (whereStr.length() > 0) {
+            params.put("wherestr", whereStr.substring(5, whereStr.length()));
         } else {
             params.put("wherestr", "");
         }
@@ -126,9 +200,6 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-//                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
-//                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
-//                    }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
@@ -156,22 +227,14 @@ public class LifeGoodsOutRecordActivity extends BaseActivity {
         Column<String> column4 = new Column<>("经手人", "useName");
         Column<String> column5 = new Column<>("出库数量", "ldNumber");
         Column<String> column6 = new Column<>("领用人", "staffName");
-//        if (pageIndex == 0) {
-            //表格数据 datas是需要填充的数据
-            TableData<LaobaoDelivery> tableData = new TableData<>("日用品出库", laobaoDeliveries, column1, column2, column3, column4, column5, column6);
-            //table.setZoom(true,3);是否缩放
-            smartTable.setTableData(tableData);
-//        } else {
-//            smartTable.addData(laobaoDeliveries, true);
-//        }
+        //表格数据 datas是需要填充的数据
+        TableData<LaobaoDelivery> tableData = new TableData<>("日用品出库", laobaoDeliveries, column1, column2, column3, column4, column5, column6);
+        smartTable.setTableData(tableData);
     }
 
     private void initView() {
         setTitle("出库记录");
         smartRefreshLayout.setEnableLoadMore(false);
-//        smartRefreshLayout.setEnableRefresh(true);
-        //使上拉加载具有弹性效果：
-//        smartRefreshLayout.setEnableAutoLoadMore(false);
 
         TableConfig tableConfig = smartTable.getConfig();
         tableConfig.setVerticalPadding(DensityUtils.dp2px(8));

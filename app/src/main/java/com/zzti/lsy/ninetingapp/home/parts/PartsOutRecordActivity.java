@@ -4,7 +4,13 @@ import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.core.TableConfig;
 import com.bin.david.form.data.column.Column;
@@ -15,16 +21,14 @@ import com.bin.david.form.data.table.TableData;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
-import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
-import com.zzti.lsy.ninetingapp.entity.LaobaoDelivery;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.PartsDelivery;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
@@ -34,22 +38,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * author：anxin on 2018/10/6 09:58
  * 配件出库记录
  */
 public class PartsOutRecordActivity extends BaseActivity {
+    @BindView(R.id.tv_startTime)
+    TextView tvStartTime;
+    @BindView(R.id.iv_clearStartTime)
+    ImageView ivClearStartTime;
+    @BindView(R.id.iv_clearEndTime)
+    ImageView ivClearEndTime;
+    @BindView(R.id.tv_endTime)
+    TextView tvEndTime;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.table)
     SmartTable smartTable;
-//    private List<PartsDelivery> partsDeliveries;
-//    private int pageIndex = 0;
     private String PartsID;
 
     @Override
@@ -68,39 +81,95 @@ public class PartsOutRecordActivity extends BaseActivity {
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                tvEndTime.setText("");
+                tvStartTime.setText("");
+                ivClearStartTime.setVisibility(View.GONE);
+                ivClearEndTime.setVisibility(View.GONE);
                 getOutList();
             }
         });
-//        partsDeliveries = new ArrayList<>();
-//        mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-//            @Override
-//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                pageIndex++;
-//                getOutList();
-//            }
-//
-//            @Override
-//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//                pageIndex = 0;
-////                partsDeliveries.clear();
-//                getOutList();
-//            }
-//        });
         showDia();
         getOutList();
     }
+
+    @OnClick({R.id.tv_startTime, R.id.iv_clearStartTime, R.id.tv_endTime, R.id.iv_clearEndTime, R.id.iv_search})
+    public void viewClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_startTime:
+                showCustomTime(1);
+                break;
+            case R.id.iv_clearStartTime:
+                tvStartTime.setText("");
+                ivClearStartTime.setVisibility(View.GONE);
+                break;
+            case R.id.tv_endTime:
+                showCustomTime(2);
+                break;
+            case R.id.iv_clearEndTime:
+                tvEndTime.setText("");
+                ivClearEndTime.setVisibility(View.GONE);
+                break;
+            case R.id.iv_search:
+                if (StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && !StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+                    UIUtils.showT("请输入开始时间");
+                    return;
+                }
+                if (!StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+                    UIUtils.showT("请输入结束时间");
+                    return;
+                }
+                showDia();
+                getOutList();
+                break;
+        }
+    }
+
+    /**
+     * 显示时间选择器
+     */
+    private void showCustomTime(final int type) {
+        Calendar instance = Calendar.getInstance();
+        instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
+        //时间选择器
+        TimePickerView pvTime = new TimePickerBuilder(PartsOutRecordActivity.this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                if (type == 1) {
+                    tvStartTime.setText(DateUtil.getDate(date));
+                    ivClearStartTime.setVisibility(View.VISIBLE);
+                } else {
+                    tvEndTime.setText(DateUtil.getDate(date));
+                    ivClearEndTime.setVisibility(View.VISIBLE);
+                }
+            }
+        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel(" 年", " 月", " 日", "", "", "")
+                .isCenterLabel(false).build();
+        pvTime.show();
+
+    }
+
+
+    private String whereStr;
 
     /**
      * 出库记录
      */
     private void getOutList() {
-        final HashMap<String, String> params = new HashMap<>();
-        params.put("pageIndex", String.valueOf(0));
+        HashMap<String, String> params = new HashMap<>();
+        whereStr = "";
         if (!StringUtil.isNullOrEmpty(PartsID)) {
-            params.put("wherestr", "PartsID=" + PartsID);
+            whereStr = " and PartsID=" + PartsID;
+        }
+        if (!StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && !StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+            whereStr += " and '" + tvStartTime.getText().toString() + "'<pdDate and pdDate<'" + tvEndTime.getText().toString() + "'";
+        }
+        if (whereStr.length() > 0) {
+            params.put("wherestr", whereStr.substring(5, whereStr.length()));
         } else {
             params.put("wherestr", "");
         }
+        params.put("pageIndex", String.valueOf(0));
         OkHttpManager.postFormBody(Urls.PARTS_GETPARTSOUT, params, smartTable, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {

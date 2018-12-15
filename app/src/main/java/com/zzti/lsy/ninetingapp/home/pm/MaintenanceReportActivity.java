@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
@@ -15,20 +16,16 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.core.TableConfig;
 import com.bin.david.form.data.column.Column;
-import com.bin.david.form.data.column.ColumnInfo;
 import com.bin.david.form.data.format.bg.BaseBackgroundFormat;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.style.LineStyle;
 import com.bin.david.form.data.table.TableData;
-import com.bin.david.form.listener.OnColumnClickListener;
 import com.bin.david.form.listener.OnColumnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
-import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
@@ -56,11 +53,19 @@ import butterknife.OnClick;
 /**
  * 维修报表
  */
-public class MaintenanceReportActivity extends BaseActivity implements View.OnClickListener {
+public class MaintenanceReportActivity extends BaseActivity {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.et_search)
     EditText etSearch;
+    @BindView(R.id.tv_startTime)
+    TextView tvStartTime;
+    @BindView(R.id.iv_clearStartTime)
+    ImageView ivClearStartTime;
+    @BindView(R.id.iv_clearEndTime)
+    ImageView ivClearEndTime;
+    @BindView(R.id.tv_endTime)
+    TextView tvEndTime;
     @BindView(R.id.iv_search)
     ImageView ivSearch;
     @BindView(R.id.table)
@@ -86,11 +91,12 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 hideSoftInput(etSearch);
-                ivToolbarMenu.setVisibility(View.VISIBLE);
-                tvToolbarMenu.setVisibility(View.GONE);
                 etSearch.setText("");
                 whereStr = "";
-                repairID = "";
+                tvStartTime.setText("");
+                tvEndTime.setText("");
+                ivClearEndTime.setVisibility(View.GONE);
+                ivClearStartTime.setVisibility(View.GONE);
                 getRecord();
             }
         });
@@ -107,8 +113,8 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
         if (!StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
             whereStr += " and (repairContent like \'%" + etSearch.getText().toString() + "%\' or plateNumber like \'" + etSearch.getText().toString() + "%\')";
         }
-        if (!StringUtil.isNullOrEmpty(repairID)) {
-            whereStr += " and repairID like \'" + repairID + "%\'";
+        if (!StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && !StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+            whereStr += " and '" + tvStartTime.getText().toString() + "'<repairApplyTime and repairApplyTime<'" + tvEndTime.getText().toString() + "'";
         }
         HashMap<String, String> params = new HashMap<>();
         params.put("pageIndex", "0");
@@ -187,9 +193,6 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
 
     private void initView() {
         setTitle("表格查看");
-        ivToolbarMenu.setVisibility(View.VISIBLE);
-        ivToolbarMenu.setOnClickListener(this);
-        tvToolbarMenu.setOnClickListener(this);
         mSmartRefreshLayout.setEnableLoadMore(false);
         TableConfig tableConfig = mSmartTable.getConfig();
         tableConfig.setVerticalPadding(DensityUtils.dp2px(8));
@@ -210,46 +213,61 @@ public class MaintenanceReportActivity extends BaseActivity implements View.OnCl
         tableConfig.setColumnTitleHorizontalPadding(DensityUtils.dp2px(10));   //设置标题的间距  列标题左右
     }
 
-    @Override
-    public void onClick(View view) {
-        hideSoftInput(etSearch);
-        showCustomTime();
-    }
 
     /**
      * 显示时间选择器
      */
-    private void showCustomTime() {
+    private void showCustomTime(final int type) {
         Calendar instance = Calendar.getInstance();
         instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
         //时间选择器
         TimePickerView pvTime = new TimePickerBuilder(MaintenanceReportActivity.this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                ivToolbarMenu.setVisibility(View.GONE);
-                tvToolbarMenu.setVisibility(View.VISIBLE);
-                tvToolbarMenu.setText(DateUtil.getDate(date).split("-")[0] + "-" + DateUtil.getDate(date).split("-")[1]);
-                repairID = DateUtil.getDate(date).split("-")[0] + DateUtil.getDate(date).split("-")[1];
-                getRecord();
+                if (type == 1) {
+                    tvStartTime.setText(DateUtil.getDate(date));
+                    ivClearStartTime.setVisibility(View.VISIBLE);
+                } else {
+                    tvEndTime.setText(DateUtil.getDate(date));
+                    ivClearEndTime.setVisibility(View.VISIBLE);
+                }
             }
-        }).setDate(instance).setType(new boolean[]{true, true, false, false, false, false})
-                .setLabel(" 年", " 月", "", "", "", "")
+        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel(" 年", " 月", " 日", "", "", "")
                 .isCenterLabel(false).build();
         pvTime.show();
 
     }
 
-    private String repairID;//时间的条件
 
-    @OnClick(R.id.iv_search)
+    @OnClick({R.id.tv_startTime, R.id.iv_clearStartTime, R.id.tv_endTime, R.id.iv_clearEndTime, R.id.iv_search})
     public void viewClick(View view) {
         hideSoftInput(etSearch);
         switch (view.getId()) {
+            case R.id.tv_startTime:
+                showCustomTime(1);
+                break;
+            case R.id.iv_clearStartTime:
+                tvStartTime.setText("");
+                ivClearStartTime.setVisibility(View.GONE);
+                break;
+            case R.id.tv_endTime:
+                showCustomTime(2);
+                break;
+            case R.id.iv_clearEndTime:
+                tvEndTime.setText("");
+                ivClearEndTime.setVisibility(View.GONE);
+                break;
             case R.id.iv_search:
-                if (StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
-                    UIUtils.showT("输入内容不能为空");
-                    break;
+                if (StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && !StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+                    UIUtils.showT("请输入开始时间");
+                    return;
                 }
+                if (!StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
+                    UIUtils.showT("请输入结束时间");
+                    return;
+                }
+                showDia();
                 getRecord();
                 break;
         }
