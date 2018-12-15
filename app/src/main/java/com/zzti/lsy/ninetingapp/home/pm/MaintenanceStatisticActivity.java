@@ -2,37 +2,55 @@ package com.zzti.lsy.ninetingapp.home.pm;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.Utils;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.RepairCoutEntity;
+import com.zzti.lsy.ninetingapp.entity.ProductEntity;
+import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
+import com.zzti.lsy.ninetingapp.entity.RepairEntity;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
+import com.zzti.lsy.ninetingapp.home.production.ProductStatisticsActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ChartUtils;
+import com.zzti.lsy.ninetingapp.utils.DateUtil;
+import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,16 +60,45 @@ import butterknife.OnClick;
 /**
  * 维修统计
  */
-public class MaintenanceStatisticActivity extends BaseActivity {
-    @BindView(R.id.tv_toolbarTitle)
-    TextView tvTitle;
-    @BindView(R.id.tv_repairAmount)
-    TextView tvRepairAmount;
-    @BindView(R.id.tv_repairMoney)
-    TextView tvRepairMoney;
-    @BindView(R.id.chart)
-    LineChart mLineChart;
-    private List<RepairCoutEntity.RepairStatisticInfo> repairStatisticInfos;
+public class MaintenanceStatisticActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+    @BindView(R.id.tv_project)
+    TextView tvProject;
+    @BindView(R.id.tv_startTime)
+    TextView tvStartTime;
+    @BindView(R.id.tv_endTime)
+    TextView tvEndTime;
+
+    @BindView(R.id.tv_moneyChange)
+    TextView tvMoneyChange;//维修费用变动
+    @BindView(R.id.tv_amountChange)
+    TextView tvAmountChange;//生产量变动
+    @BindView(R.id.tv_totalMoneyChange)
+    TextView tvTotalMoneyChange;//综合维修费变动
+    @BindView(R.id.chart1)
+    LineChart mChart1;
+    @BindView(R.id.tv_hint1)
+    TextView tvHint1;
+    @BindView(R.id.chart2)
+    LineChart mChart2;
+    @BindView(R.id.tv_hint2)
+    TextView tvHint2;
+    @BindView(R.id.chart3)
+    LineChart mChart3;
+    @BindView(R.id.tv_hint3)
+    TextView tvHint3;
+
+    private List<Integer> xData1 = new ArrayList<>();
+    private List<String> yData1 = new ArrayList<>();
+    private List<Integer> xData2 = new ArrayList<>();
+    private List<String> yData2 = new ArrayList<>();
+    private List<Integer> xData3 = new ArrayList<>();
+    private List<String> yData3 = new ArrayList<>();
+    //项目部
+    private PopupWindow popupWindowProject;
+    private ListView mListViewProject;
+    private ConditionAdapter projectAdapter;
+    private List<ConditionEntity> projectEntities;
+
 
     @Override
     public int getContentViewId() {
@@ -61,18 +108,59 @@ public class MaintenanceStatisticActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         initView();
+        initProjectPop();
         intData();
     }
 
+    private void initProjectPop() {
+        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+        contentview.setFocusable(true); // 这个很重要
+        contentview.setFocusableInTouchMode(true);
+        popupWindowProject = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowProject.setFocusable(true);
+        popupWindowProject.setOutsideTouchable(true);
+        popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        contentview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    popupWindowProject.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        mListViewProject = contentview.findViewById(R.id.pop_list);
+        projectEntities = new ArrayList<>();
+        projectAdapter = new ConditionAdapter(projectEntities);
+        mListViewProject.setAdapter(projectAdapter);
+        mListViewProject.setOnItemClickListener(this);
+        popupWindowProject.setAnimationStyle(R.style.anim_upPop);
+    }
+
+
     private void intData() {
         showDia();
+        getProject();
         getRepaircount();
     }
 
+
     private void getRepaircount() {
+        xData1.clear();
+        yData1.clear();
+        xData2.clear();
+        yData2.clear();
+        xData3.clear();
+        yData3.clear();
+        if (StringUtil.isNullOrEmpty(projectID))
+            projectID = "";
         HashMap<String, String> params = new HashMap<>();
-        params.put("plateNumber", "");
-        OkHttpManager.postFormBody(Urls.REPAIR_GETREPAIRCOUNT, params, tvRepairAmount, new OkHttpManager.OnResponse<String>() {
+        params.put("projectID", projectID);
+        params.put("StarTime", tvStartTime.getText().toString());
+        params.put("OverTime", tvEndTime.getText().toString());
+
+        OkHttpManager.postFormBody(Urls.REPAIR_GETREPAIRCOUNT, params, tvStartTime, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -80,26 +168,71 @@ public class MaintenanceStatisticActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String s) {
-                boolean hasData = false;
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    tvRepairAmount.setText(msgInfo.getMsg());
-                    try {
-                        JSONArray jsonArray = new JSONArray(msgInfo.getData().toString());
-                        float totalMoney = 0;
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            hasData = true;
-                            RepairCoutEntity.RepairStatisticInfo repairStatisticInfo = ParseUtils.parseJson(jsonArray.getString(i), RepairCoutEntity.RepairStatisticInfo.class);
-                            repairStatisticInfos.set(Integer.parseInt(repairStatisticInfo.getTime()) - 1, repairStatisticInfo);
-                            totalMoney += Float.parseFloat(repairStatisticInfo.getMoney());
+                    RepairEntity repairEntity = ParseUtils.parseJson(msgInfo.getData().toString(), RepairEntity.class);
+                    tvMoneyChange.setText(repairEntity.getAllRepairMoney());
+                    tvAmountChange.setText(repairEntity.getAllQuantity());
+                    tvTotalMoneyChange.setText(repairEntity.getScale());
+                    List<RepairEntity.RepairMoneysBean> repairMoneys = repairEntity.getRepairMoneys();//总维修费
+                    List<RepairEntity.QuantityRecordsBean> quantityRecords = repairEntity.getQuantityRecords();//总生产量
+                    List<RepairEntity.ScalesBean> scales = repairEntity.getScales();//总综合维修费
+                    //总维修费
+                    if (repairMoneys != null && repairMoneys.size() > 0) {
+                        for (int i = 0; i < repairMoneys.size(); i++) {
+                            int time = repairMoneys.get(i).getTime();
+                            String money = repairMoneys.get(i).getMoney();
+                            xData1.add(time);
+                            yData1.add(money);
                         }
-                        tvRepairMoney.setText(String.valueOf(totalMoney));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                    ChartUtils.initChart(mLineChart, ChartUtils.allCar, 12);
-                    setLineChartDate(hasData);
+                    if (xData1.size() == 0) {
+                        tvHint1.setVisibility(View.VISIBLE);
+                        mChart1.setVisibility(View.GONE);
+                    } else {
+                        tvHint1.setVisibility(View.GONE);
+                        mChart1.setVisibility(View.VISIBLE);
+                        ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size());
+                        setLineChartDate(mChart1, xData1, yData1);
+                    }
+                    //生产量
+                    if (quantityRecords != null && quantityRecords.size() > 0) {
+                        for (int i = 0; i < quantityRecords.size(); i++) {
+                            int time = quantityRecords.get(i).getTime();
+                            String quantity = quantityRecords.get(i).getQuantity();
+                            xData2.add(time);
+                            yData2.add(quantity);
+                        }
+                    }
+                    if (xData2.size() == 0) {
+                        tvHint2.setVisibility(View.VISIBLE);
+                        mChart2.setVisibility(View.GONE);
+                    } else {
+                        tvHint2.setVisibility(View.GONE);
+                        mChart2.setVisibility(View.VISIBLE);
+                        ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size());
+                        setLineChartDate(mChart2, xData2, yData2);
+                    }
+                    //总综合维修费
+                    if (scales != null && scales.size() > 0) {
+                        for (int i = 0; i < scales.size(); i++) {
+                            int time = scales.get(i).getTime();
+                            String scale = scales.get(i).getScale();
+                            xData3.add(time);
+                            yData3.add(scale);
+                        }
+                    }
+                    if (xData3.size() == 0) {
+                        tvHint3.setVisibility(View.VISIBLE);
+                        mChart3.setVisibility(View.GONE);
+                    } else {
+                        tvHint3.setVisibility(View.GONE);
+                        mChart3.setVisibility(View.VISIBLE);
+                        ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size());
+                        setLineChartDate(mChart3, xData3, yData3);
+                    }
+
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
@@ -115,26 +248,29 @@ public class MaintenanceStatisticActivity extends BaseActivity {
         });
     }
 
-    private void setLineChartDate(boolean hasData) {
-        if (!hasData) return;
-        List<Entry> mValues = new ArrayList<>(12);
-        for (int i = 0; i < repairStatisticInfos.size(); i++) {
-            Entry entry = new Entry(Integer.parseInt(repairStatisticInfos.get(i).getTime()), Float.parseFloat(repairStatisticInfos.get(i).getMoney()));
+    private void setLineChartDate(LineChart mLineChart, final List<Integer> xData, List<String> yData) {
+        List<Entry> mValues = new ArrayList<>();
+        for (int i = 0; i < yData.size(); i++) {
+            Entry entry = new Entry(i, Float.valueOf(yData.get(i)), xData.get(i));
             mValues.add(entry);
         }
         //判断图表中原来是否有数据
         LineDataSet lineDataSet;
         if (mLineChart.getData() != null &&
                 mLineChart.getData().getDataSetCount() > 0) {
-            //获取数据1
-            lineDataSet = (LineDataSet) mLineChart.getData().getDataSetByIndex(0);
+            if (mValues.size() == 0) {
+                lineDataSet = new LineDataSet(mValues, "数据");
+            } else {
+                //获取数据1
+                lineDataSet = (LineDataSet) mLineChart.getData().getDataSetByIndex(0);
+            }
             lineDataSet.setValues(mValues);
             //刷新数据
             mLineChart.getData().notifyDataChanged();
             mLineChart.notifyDataSetChanged();
         } else {
             //设置数据1  参数1：数据源 参数2：图例名称
-            lineDataSet = new LineDataSet(mValues, "测试数据1");
+            lineDataSet = new LineDataSet(mValues, "数据");
             lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             lineDataSet.setColor(Color.WHITE);
             lineDataSet.setCircleColor(Color.parseColor("#AAFFFFFF"));
@@ -151,11 +287,19 @@ public class MaintenanceStatisticActivity extends BaseActivity {
 
             lineDataSet.setDrawValues(false);
             //格式化显示数据
-            final DecimalFormat mFormat = new DecimalFormat("###,###,##0");
-            lineDataSet.setValueFormatter(new IValueFormatter() {
+            XAxis xAxis = mLineChart.getXAxis();
+            xAxis.setValueFormatter(new IAxisValueFormatter() {
                 @Override
-                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                    return mFormat.format(value);
+                public String getFormattedValue(float value, AxisBase axis) {
+                    //对X轴上的值进行Format格式化，转成相应的值
+                    int intValue = (int) value;
+                    //筛选出自己需要的值，一般都是这样写没问题，并且一定要加上这个判断，不然会出错
+                    if (xData.size() > intValue && intValue >= 0) {
+                        //这样显示在X轴上值就是 05:30  05:35，不然会是1.0  2.0
+                        return String.valueOf(xData.get(intValue));
+                    } else {
+                        return "";
+                    }
                 }
             });
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -171,29 +315,129 @@ public class MaintenanceStatisticActivity extends BaseActivity {
 
 
     private void initView() {
-        tvTitle.setText("维修统计");
-        repairStatisticInfos = new ArrayList<>();
-        for (int i = 1; i < 13; i++) {
-            repairStatisticInfos.add(new RepairCoutEntity.RepairStatisticInfo(String.valueOf(i), "0"));
-        }
+        setTitle("维修统计");
+        tvToolbarMenu.setVisibility(View.VISIBLE);
+        tvToolbarMenu.setText("查看报表");
+        tvToolbarMenu.setOnClickListener(this);
+        tvEndTime.setText(DateUtil.getCurrentDate());
+        tvStartTime.setText(DateUtil.getAfterMonth(DateUtil.getCurrentDate(), -1));
+
+    }
+
+    /**
+     * 获取项目部
+     */
+    private void getProject() {
+        HashMap<String, String> params = new HashMap<>();
+        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, params, tvProject, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    projectEntities.clear();
+                    try {
+                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+                        ConditionEntity conditionEntity1 = new ConditionEntity("所有项目部", "");
+                        projectEntities.add(conditionEntity1);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
+                            ConditionEntity conditionEntity = new ConditionEntity();
+                            conditionEntity.setId(projectEntity.getProjectID());
+                            conditionEntity.setName(projectEntity.getProjectName());
+                            projectEntities.add(conditionEntity);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+        });
     }
 
 
-    @OnClick({R.id.iv_toolbarBack, R.id.tv_lookOneCar_maintenanceRecord, R.id.tv_toolbarMenu})
+    @OnClick({R.id.tv_project, R.id.tv_startTime, R.id.tv_endTime, R.id.tv_lookOneCar_maintenanceRecord, R.id.btn_search})
     public void viewClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_toolbarBack:
-                finish();
+            case R.id.tv_project:
+                if (projectEntities.size() > 0) {
+                    if (projectEntities.size() >= 5) {
+                        //动态设置listView的高度
+                        View listItem = projectAdapter.getView(0, null, mListViewProject);
+                        listItem.measure(0, 0);
+                        int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
+                        mListViewProject.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
+                        params.height = totalHei;
+                        mListViewProject.setLayoutParams(params);
+                    }
+                    popupWindowProject.showAsDropDown(tvProject, 0, 0, Gravity.BOTTOM);
+                } else {
+                    UIUtils.showT("暂无数据");
+                }
                 break;
+            case R.id.tv_startTime:
+                showCustomTime(1);
+                break;
+            case R.id.tv_endDate:
+                showCustomTime(2);
+                break;
+            case R.id.btn_search:
+                getRepaircount();
+                break;
+
             case R.id.tv_lookOneCar_maintenanceRecord://查看单车维修统计
                 Intent intent = new Intent(this, DeviceListActivity.class);
 //                intent.putExtra("TAG", 1);
                 intent.putExtra("FLAG", 2);
                 startActivity(intent);
                 break;
-            case R.id.tv_toolbarMenu://查看报表
-                startActivity(new Intent(this, MaintenanceReportActivity.class));
-                break;
         }
+    }
+
+    /**
+     * 显示时间选择器
+     */
+    private void showCustomTime(final int type) {
+        Calendar instance = Calendar.getInstance();
+        instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
+        //时间选择器
+        TimePickerView pvTime = new TimePickerBuilder(MaintenanceStatisticActivity.this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                if (type == 1) {
+                    tvStartTime.setText(DateUtil.getDate(date));
+                } else {
+                    tvEndTime.setText(DateUtil.getDate(date));
+                }
+            }
+        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel(" 年", " 月", " 日", "", "", "")
+                .isCenterLabel(false).build();
+        pvTime.show();
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(this, MaintenanceReportActivity.class));
+    }
+
+    private String projectID;
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        tvProject.setText(projectEntities.get(i).getName());
+        projectID = projectEntities.get(i).getId();
+        popupWindowProject.dismiss();
     }
 }

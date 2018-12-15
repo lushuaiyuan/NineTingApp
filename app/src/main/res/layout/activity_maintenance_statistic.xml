@@ -5,156 +5,282 @@
     android:background="@color/color_6bcfd6"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <include layout="@layout/view_toolbar" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp44">
-
-
-        <ImageButton
-            android:id="@+id/iv_toolbarBack"
-            android:layout_width="@dimen/dp45"
-            android:layout_height="@dimen/dp48"
-            android:background="@null"
-            android:src="@mipmap/icon_backarrow_white" />
-
-
-        <TextView
-            android:id="@+id/tv_toolbarTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="标题"
-            android:textColor="@color/color_white"
-            android:textSize="@dimen/dp17" />
-
-        <TextView
-            android:id="@+id/tv_toolbarMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp6"
-            android:padding="@dimen/dp10"
-            android:text="查看报表"
-            android:textColor="@color/color_white"
-            android:textSize="@dimen/dp13" />
-
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp16"
-        android:text="汇总"
-        android:textColor="@color/color_white"
-        android:textSize="@dimen/dp16" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dp16"
-        android:paddingRight="@dimen/dp16">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="累计维修次数"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/dp13" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|bottom">
+                android:background="@color/color_white"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_repairAmount"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dp18" />
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/dp8"
+                    android:paddingLeft="@dimen/dp16"
+                    android:paddingRight="@dimen/dp16"
+                    android:paddingTop="@dimen/dp8">
 
-                <TextView
-                    android:id="@+id/tv_monthState"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="项目部名称"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/dp15" />
+
+                    <TextView
+                        android:id="@+id/tv_project"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp8"
+                        android:layout_weight="1"
+                        android:background="@drawable/input_shape"
+                        android:drawableRight="@mipmap/icon_down_arrow"
+                        android:padding="@dimen/dp8"
+                        android:text="所有项目部"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="条"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dp12" />
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/dp8"
+                    android:paddingLeft="@dimen/dp16"
+                    android:paddingRight="@dimen/dp16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="查询范围"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/dp15" />
+
+                    <TextView
+                        android:id="@+id/tv_startTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp8"
+                        android:layout_weight="1"
+                        android:background="@drawable/input_shape"
+                        android:gravity="center"
+                        android:hint="开始时间"
+                        android:padding="@dimen/dp8"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+
+                    <View
+                        style="@style/MyView"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp1"
+                        android:layout_margin="@dimen/dp8"
+                        android:layout_weight="0.5"
+                        android:background="@color/color_e5e5e5" />
+
+                    <TextView
+                        android:id="@+id/tv_endTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/input_shape"
+                        android:gravity="center"
+                        android:hint="结束时间"
+                        android:padding="@dimen/dp8"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_search"
+                    style="@style/MyButton"
+                    android:layout_margin="@dimen/dp16"
+                    android:text="查询" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="维修费变动"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/dp15" />
+
+                    <TextView
+                        android:id="@+id/tv_moneyChange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:text="生产量变动"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/dp15" />
+
+                    <TextView
+                        android:id="@+id/tv_amountChange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:text="综合维修费变动"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/dp15" />
+
+                    <TextView
+                        android:id="@+id/tv_totalMoneyChange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+                </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp30"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="累计维修金额"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/dp13" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|bottom">
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_weight="1"
+                android:background="@color/color_6bcfd7"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_repairMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:text="生产量变动图"
                     android:textColor="@color/color_white"
-                    android:textSize="@dimen/dp18" />
+                    android:textSize="@dimen/dp16" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp200">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp200"
+                        android:layout_margin="@dimen/dp16"
+                        android:background="@color/color_6bcfd7" />
+
+                    <TextView
+                        android:id="@+id/tv_hint1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="暂无数据"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dp15" />
+                </RelativeLayout>
+
 
                 <TextView
-                    android:id="@+id/tv_quarterState"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="元"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="加油量变动图"
                     android:textColor="@color/color_white"
-                    android:textSize="@dimen/dp12" />
+                    android:textSize="@dimen/dp16" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp200">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp200"
+                        android:layout_margin="@dimen/dp16"
+                        android:background="@color/color_6bcfd7" />
+
+                    <TextView
+                        android:id="@+id/tv_hint2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="暂无数据"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dp15" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="油耗比率变动图"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/dp16" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp200">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp200"
+                        android:layout_margin="@dimen/dp16"
+                        android:background="@color/color_6bcfd7" />
+
+                    <TextView
+                        android:id="@+id/tv_hint3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="暂无数据"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dp15" />
+                </RelativeLayout>
+
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_lookOneCar_maintenanceRecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp16"
+                android:drawableRight="@mipmap/icon_right_arrow_white"
+                android:gravity="center"
+                android:padding="@dimen/dp16"
+                android:text="查看单车维修统计"
+                android:textColor="@color/color_white" />
+
         </LinearLayout>
-    </LinearLayout>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp16"
-        android:layout_marginTop="@dimen/dp50"
-        android:text="维修量总趋势"
-        android:textColor="@color/color_white"
-        android:textSize="@dimen/dp16" />
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp180"
-        android:layout_margin="@dimen/dp16" />
-
-
-    <TextView
-        android:id="@+id/tv_lookOneCar_maintenanceRecord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/dp16"
-        android:drawableRight="@mipmap/icon_right_arrow_white"
-        android:gravity="center"
-        android:padding="@dimen/dp16"
-        android:text="查看单车维修统计"
-        android:textColor="@color/color_white" />
+    </ScrollView>
 </LinearLayout>
