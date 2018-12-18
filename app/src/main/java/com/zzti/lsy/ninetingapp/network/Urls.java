@@ -32,6 +32,7 @@ public class Urls {
     public final static String POST_GETREPAIRTYPE = BASE_URL + "/Repair/Repair.asmx/GetRepairType";//获取维修类型
     public final static String POST_GETREPAIRCAUSE = BASE_URL + "/Repair/Repair.asmx/GetRepairCause";//获取维修原因
     public final static String REPAIR_GETREPAIRCOUNT = BASE_URL + "/Repair/Repair.asmx/GetRepairRecord";//获取维修统计
+    public final static String REPAIR_ONECARREPAIR = BASE_URL + "/Repair/Repair.asmx/GetRepairCount";//（单车维修统计）
 
     //配件管理员
     public final static String PARTS_GETPARTS = BASE_URL + "/Parts/Parts.asmx/GetParts";//获取配件列表

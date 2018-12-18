@@ -102,7 +102,7 @@ public class ContrastActivity extends BaseActivity {
     private void getRepaircount(final String plateNumber) {
         HashMap<String, String> params = new HashMap<>();
         params.put("plateNumber", plateNumber);
-        OkHttpManager.postFormBody(Urls.REPAIR_GETREPAIRCOUNT, params, tvCarNumber1, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.REPAIR_ONECARREPAIR, params, tvCarNumber1, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

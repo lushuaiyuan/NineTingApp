@@ -78,7 +78,7 @@ public class OneCarMaintenanceStatisticActivity extends BaseActivity {
     private void getRepaircount() {
         HashMap<String, String> params = new HashMap<>();
         params.put("plateNumber", tvCarNumber.getText().toString());
-        OkHttpManager.postFormBody(Urls.REPAIR_GETREPAIRCOUNT, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.REPAIR_ONECARREPAIR, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;

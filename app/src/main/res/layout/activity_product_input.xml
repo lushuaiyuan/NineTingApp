@@ -440,6 +440,48 @@
             </RelativeLayout>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="行驶公里数"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_travelKm"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/dp10"
+                    android:text="0"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="km"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+
+            <TextView
                 style="@style/MyEditTextTitle"
                 android:text="备注" />
 
@@ -449,6 +491,7 @@
                 android:gravity="left|top"
                 android:hint="请输入备注"
                 android:minHeight="@dimen/dp100" />
+
 
             <Button
                 android:id="@+id/btn_submit"

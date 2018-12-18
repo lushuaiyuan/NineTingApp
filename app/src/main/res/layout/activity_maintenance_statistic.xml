@@ -121,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="维修费变动"
+                        android:text="维修费"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/dp15" />
 
@@ -137,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="生产量变动"
+                        android:text="生产量"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/dp15" />
 
@@ -153,7 +153,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="综合维修费变动"
+                        android:text="综合维修费"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/dp15" />
 

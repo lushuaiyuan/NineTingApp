@@ -177,8 +177,8 @@
                     android:layout_centerHorizontal="true"
                     android:background="@null"
                     android:gravity="center"
-                    android:padding="@dimen/dp8"
                     android:inputType="number"
+                    android:padding="@dimen/dp8"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp15" />
 
@@ -194,6 +194,83 @@
 
 
             </RelativeLayout>
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="初始方量" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_initQuantity"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:padding="@dimen/dp8"
+                    android:text="0"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="m³"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="初始公里数" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_initTravelKm"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:padding="@dimen/dp8"
+                    android:text="0"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="km"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
 
             <Button
                 android:id="@+id/btn_inputYearInsurance"

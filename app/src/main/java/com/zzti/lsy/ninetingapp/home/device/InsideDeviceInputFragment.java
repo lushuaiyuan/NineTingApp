@@ -83,6 +83,11 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
     TextView tvDrivingNumberGiveTime;//行驶证发放日期
     @BindView(R.id.et_drivingNumber_validityTime)
     EditText etDrivingNumberValidityTime;//行驶证有效期
+    @BindView(R.id.et_initQuantity)
+    EditText etInitQuantity;//初始方量
+    @BindView(R.id.et_initTravelKm)
+    EditText etInitTravelKm;//初始公里数
+
 
     //车辆类型pop
     private PopupWindow popupWindowCarType;
@@ -279,6 +284,8 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
 //        initProjectPop();
         initCarStatusPop();
         etBuyMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etInitQuantity.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etInitTravelKm.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         tvProject.setText(SpUtils.getInstance().getString(SpUtils.PROJECT, ""));
         projectID = SpUtils.getInstance().getString(SpUtils.PROJECTID, "");
     }
@@ -401,6 +408,14 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
             UIUtils.showT("请输入行驶证有效期");
             return;
         }
+        if (StringUtil.isNullOrEmpty(etInitQuantity.getText().toString())) {
+            UIUtils.showT("请输入初始方量");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(etInitTravelKm.getText().toString())) {
+            UIUtils.showT("请输入初始公里数");
+            return;
+        }
         carInfoEntity.setPlateNumber(etCarNumber.getText().toString());
         carInfoEntity.setCarTypeID(CarTypeID);
         carInfoEntity.setStatus(carStatus);
@@ -420,6 +435,8 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
         carInfoEntity.setDLValidDate(DateUtil.getAfterMonth(tvDrivingNumberGiveTime.getText().toString(), Integer.parseInt(etDrivingNumberValidityTime.getText().toString()) * 12));
         Intent intent = new Intent(mActivity, YearInsuranceActivity.class);
         intent.putExtra("carInfoEntity", carInfoEntity);
+        intent.putExtra("initQuantity", etInitQuantity.getText().toString());
+        intent.putExtra("initTravelKm", etInitTravelKm.getText().toString());
         startActivity(intent);
 
     }

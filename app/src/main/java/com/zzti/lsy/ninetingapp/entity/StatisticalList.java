@@ -29,6 +29,15 @@ public class StatisticalList implements Serializable {
     private String addWorkTime;//加班时长
     private String addWorkCount;//加班趟数
 
+    private String travelKm;//行驶公里数
+
+    public String getTravelKm() {
+        return travelKm;
+    }
+
+    public void setTravelKm(String travelKm) {
+        this.travelKm = travelKm;
+    }
 
     public String getEightBelow() {
         return eightBelow;

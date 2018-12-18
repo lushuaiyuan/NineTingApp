@@ -61,8 +61,11 @@ public class ProductInputActivity extends BaseActivity {
     EditText etOverTimeTrainNumber;//加班趟数
     @BindView(R.id.et_timeConsuming)
     EditText etTimeConsuming;//耗时
+    @BindView(R.id.et_travelKm)
+    EditText etTravelKm;//耗时
     @BindView(R.id.et_remark)
     EditText etRemark;//备注
+
     @BindView(R.id.btn_submit)
     Button btnOperator;//操作按钮
     private int tag;//0代表的是录入 1代表的是修改
@@ -99,6 +102,7 @@ public class ProductInputActivity extends BaseActivity {
             StatisticalList statisticalList = (StatisticalList) getIntent().getSerializableExtra("StatisticalList");
             slID = statisticalList.getSlID();
             tvTime.setText(statisticalList.getSlDateTime());
+            etTravelKm.setText(statisticalList.getTravelKm());
             tvCarNumber.setText(statisticalList.getPlateNumber());
             tvCarNumber.setEnabled(false);
             tvCarNumber.setBackgroundColor(getResources().getColor(R.color.color_white));
@@ -130,6 +134,7 @@ public class ProductInputActivity extends BaseActivity {
         etOilMass.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etDistance.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etTimeConsuming.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etTravelKm.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
     }
 
     @OnClick({R.id.tv_carNumber, R.id.btn_submit})
@@ -184,6 +189,10 @@ public class ProductInputActivity extends BaseActivity {
                 }
                 if (StringUtil.isNullOrEmpty(etTimeConsuming.getText().toString())) {
                     UIUtils.showT("耗时不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etTravelKm.getText().toString())) {
+                    UIUtils.showT("行驶公里数不能为空");
                     return;
                 }
                 if (!StringUtil.isNullOrEmpty(slID)) {

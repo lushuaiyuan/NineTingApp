@@ -106,10 +106,15 @@ public class YearInsuranceActivity extends BaseActivity implements AdapterView.O
         popupWindowInsurance.setAnimationStyle(R.style.anim_bottomPop);
     }
 
+    private String initQuantity;
+    private String initTravelKm;
 
     private void initView() {
         setTitle("设备录入");
         carInfoEntity = (CarInfoEntity) getIntent().getSerializableExtra("carInfoEntity");
+        initQuantity = UIUtils.getStr4Intent(this, "initQuantity");
+        initTravelKm = UIUtils.getStr4Intent(this, "initTravelKm");
+
     }
 
     @OnClick({R.id.tv_ns_endTime, R.id.tv_bx_type, R.id.tv_bx_buyTime, R.id.tv_bx_endTime, R.id.btn_inputYearInsurance})
@@ -140,7 +145,7 @@ public class YearInsuranceActivity extends BaseActivity implements AdapterView.O
                     public void onCancelClick() {
 
                     }
-                },true);
+                }, true);
                 break;
         }
     }
@@ -172,6 +177,8 @@ public class YearInsuranceActivity extends BaseActivity implements AdapterView.O
         showDia();
         HashMap<String, String> params = new HashMap<>();
         params.put("carJson", new Gson().toJson(carInfoEntity));
+        params.put("initQuantity", initQuantity);
+        params.put("initTravelKm", initTravelKm);
         OkHttpManager.postFormBody(Urls.POST_ADDINCAR, params, tvBxType, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
