@@ -53,8 +53,6 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
     TextView tvLookMoreNs;
     @BindView(R.id.tv_lookMore_bx)
     TextView tvLookMoreBx;
-    @BindView(R.id.tv_alarmItem)
-    TextView tvAlertItem;
     @BindView(R.id.tv_today)
     TextView tvToday;
     @BindView(R.id.tv_month)

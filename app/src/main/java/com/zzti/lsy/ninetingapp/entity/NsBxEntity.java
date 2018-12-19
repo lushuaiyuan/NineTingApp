@@ -12,6 +12,15 @@ public class NsBxEntity {
     public String insuranceName;//保险名称
     public String buyTime;//保险购买时间
     private String vehicleTypeName;//车辆类型
+    private String alarm;
+
+    public String getAlarm() {
+        return alarm;
+    }
+
+    public void setAlarm(String alarm) {
+        this.alarm = alarm;
+    }
 
     public String getProjectName() {
         return projectName;

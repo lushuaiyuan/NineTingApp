@@ -22,6 +22,7 @@ import com.zzti.lsy.ninetingapp.entity.RecordCountEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.adapter.AlarmAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeBxAdapter;
+import com.zzti.lsy.ninetingapp.home.adapter.HomeByAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
@@ -65,13 +66,17 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     TextView tvLookMoreBx;
     @BindView(R.id.recycleView_ns)
     RecyclerView mRecycleViewNs;
+    @BindView(R.id.recycleView_by)
+    RecyclerView mRecycleViewBy;
     @BindView(R.id.recycleView_bx)
     RecyclerView mRecycleViewBx;
     private List<NsBxEntity> homeHintEntitiesNs;
     private List<NsBxEntity> homeHintEntitiesBx;
+    private List<NsBxEntity> homeHintEntitiesBy;
     private List<AlarmItemEntity> alarmItemEntities;
     private HomeBxAdapter homeBxAdapter;
     private HomeNsAdapter homeNsAdapter;
+    private HomeByAdapter homeByAdapter;
     private AlarmAdapter alarmAdapter;
 
     @Override
@@ -91,6 +96,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         homeHintEntitiesBx = new ArrayList<>();
         homeHintEntitiesNs = new ArrayList<>();
         alarmItemEntities = new ArrayList<>();
+        homeHintEntitiesBy = new ArrayList<>();
 
         LinearLayoutManager linearLayoutManagerBj = new LinearLayoutManager(getContext());
         linearLayoutManagerBj.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -113,6 +119,13 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         homeBxAdapter = new HomeBxAdapter(homeHintEntitiesBx);
         mRecycleViewBx.setAdapter(homeBxAdapter);
         homeBxAdapter.setOnItemClickListener(this);
+
+        LinearLayoutManager linearLayoutManagerBy = new LinearLayoutManager(getContext());
+        linearLayoutManagerBx.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecycleViewBy.setLayoutManager(linearLayoutManagerBy);
+        homeByAdapter = new HomeByAdapter(homeHintEntitiesBy);
+        mRecycleViewBy.setAdapter(homeByAdapter);
+
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -192,6 +205,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     private void getCarExpire() {
         homeHintEntitiesBx.clear();
         homeHintEntitiesNs.clear();
+        homeHintEntitiesBy.clear();
         OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, null, mRecycleViewBx, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
@@ -213,6 +227,8 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                                     homeHintEntitiesNs.add(nsBxEntity);
                                 } else if (nsBxEntity.getTypeName().equals("保险")) {
                                     homeHintEntitiesBx.add(nsBxEntity);
+                                } else if (nsBxEntity.getTypeName().equals("保养")) {
+                                    homeHintEntitiesBy.add(nsBxEntity);
                                 }
                             }
                             if (homeHintEntitiesNs.size() == 0) {
@@ -238,7 +254,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                         } else {
                             tvLookMoreNs.setVisibility(View.GONE);
                             tvLookMoreBx.setVisibility(View.GONE);
-                            UIUtils.showT("暂无保险年审数据");
+                            UIUtils.showT("暂无保险、年审、保养数据");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -250,6 +266,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                 }
                 homeBxAdapter.notifyDataSetChanged();
                 homeNsAdapter.notifyDataSetChanged();
+                homeByAdapter.notifyDataSetChanged();
             }
 
             @Override

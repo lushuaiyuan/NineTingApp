@@ -171,9 +171,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/color_white"
                     android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dp8"
                     android:paddingLeft="@dimen/dp16"
-                    android:paddingRight="@dimen/dp16">
+                    android:paddingRight="@dimen/dp16"
+                    android:paddingTop="@dimen/dp8">
 
                     <LinearLayout
                         android:layout_width="0dp"
