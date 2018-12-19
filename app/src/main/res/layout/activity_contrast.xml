@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp16"
                 android:text="车牌号1"
-                android:textColor="@color/color_white"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/dp16" />
 
             <com.github.mikephil.charting.charts.LineChart
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp16"
                 android:text="车牌号1"
-                android:textColor="@color/color_white"
+                android:textColor="@color/blue"
                 android:textSize="@dimen/dp16" />
 
             <com.github.mikephil.charting.charts.LineChart
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp16"
                 android:text="车牌号1"
-                android:textColor="@color/color_white"
+                android:textColor="@color/yellow"
                 android:textSize="@dimen/dp16" />
 
             <com.github.mikephil.charting.charts.LineChart

@@ -87,11 +87,11 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
     @BindView(R.id.tv_hint3)
     TextView tvHint3;
 
-    private List<Integer> xData1 = new ArrayList<>();
+    private List<String> xData1 = new ArrayList<>();
     private List<String> yData1 = new ArrayList<>();
-    private List<Integer> xData2 = new ArrayList<>();
+    private List<String> xData2 = new ArrayList<>();
     private List<String> yData2 = new ArrayList<>();
-    private List<Integer> xData3 = new ArrayList<>();
+    private List<String> xData3 = new ArrayList<>();
     private List<String> yData3 = new ArrayList<>();
     //项目部
     private PopupWindow popupWindowProject;
@@ -181,7 +181,7 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
                     //总维修费
                     if (repairMoneys != null && repairMoneys.size() > 0) {
                         for (int i = 0; i < repairMoneys.size(); i++) {
-                            int time = repairMoneys.get(i).getTime();
+                            String time = repairMoneys.get(i).getTime().split("T")[0];
                             String money = repairMoneys.get(i).getMoney();
                             xData1.add(time);
                             yData1.add(money);
@@ -193,13 +193,13 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
                     } else {
                         tvHint1.setVisibility(View.GONE);
                         mChart1.setVisibility(View.VISIBLE);
-                        ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size());
-                        setLineChartDate(mChart1, xData1, yData1);
+                        ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size(), Color.WHITE);
+                        setLineChartDate(mChart1, xData1, yData1, Color.WHITE);
                     }
                     //生产量
                     if (quantityRecords != null && quantityRecords.size() > 0) {
                         for (int i = 0; i < quantityRecords.size(); i++) {
-                            int time = quantityRecords.get(i).getTime();
+                            String time = quantityRecords.get(i).getTime().split("T")[0];
                             String quantity = quantityRecords.get(i).getQuantity();
                             xData2.add(time);
                             yData2.add(quantity);
@@ -211,13 +211,13 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
                     } else {
                         tvHint2.setVisibility(View.GONE);
                         mChart2.setVisibility(View.VISIBLE);
-                        ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size());
-                        setLineChartDate(mChart2, xData2, yData2);
+                        ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size(), Color.BLUE);
+                        setLineChartDate(mChart2, xData2, yData2, Color.BLUE);
                     }
                     //总综合维修费
                     if (scales != null && scales.size() > 0) {
                         for (int i = 0; i < scales.size(); i++) {
-                            int time = scales.get(i).getTime();
+                            String time = scales.get(i).getTime().split("T")[0];
                             String scale = scales.get(i).getScale();
                             xData3.add(time);
                             yData3.add(scale);
@@ -229,8 +229,8 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
                     } else {
                         tvHint3.setVisibility(View.GONE);
                         mChart3.setVisibility(View.VISIBLE);
-                        ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size());
-                        setLineChartDate(mChart3, xData3, yData3);
+                        ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size(), Color.YELLOW);
+                        setLineChartDate(mChart3, xData3, yData3, Color.YELLOW);
                     }
 
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
@@ -248,7 +248,7 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
         });
     }
 
-    private void setLineChartDate(LineChart mLineChart, final List<Integer> xData, List<String> yData) {
+    private void setLineChartDate(LineChart mLineChart, final List<String> xData, List<String> yData, int color) {
         List<Entry> mValues = new ArrayList<>();
         for (int i = 0; i < yData.size(); i++) {
             Entry entry = new Entry(i, Float.valueOf(yData.get(i)), xData.get(i));
@@ -272,12 +272,12 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
             //设置数据1  参数1：数据源 参数2：图例名称
             lineDataSet = new LineDataSet(mValues, "数据");
             lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            lineDataSet.setColor(Color.WHITE);
-            lineDataSet.setCircleColor(Color.parseColor("#AAFFFFFF"));
-            lineDataSet.setHighLightColor(Color.WHITE);//设置点击交点后显示交高亮线的颜色
+            lineDataSet.setColor(color);
+            lineDataSet.setCircleColor(color);
+            lineDataSet.setHighLightColor(color);//设置点击交点后显示交高亮线的颜色
             lineDataSet.setHighlightEnabled(true);//是否使用点击高亮线
             lineDataSet.setDrawCircles(true);
-            lineDataSet.setValueTextColor(Color.WHITE);
+            lineDataSet.setValueTextColor(color);
             lineDataSet.setLineWidth(1f);//设置线宽
             lineDataSet.setCircleRadius(2f);//设置焦点圆心的大小
             lineDataSet.setHighlightLineWidth(0.5f);//设置点击交点后显示高亮线宽

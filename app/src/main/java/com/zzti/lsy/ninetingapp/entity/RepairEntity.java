@@ -89,14 +89,14 @@ public class RepairEntity {
          * money : 128.0
          */
 
-        private int time;
+        private String time;
         private String money;
 
-        public int getTime() {
+        public String getTime() {
             return time;
         }
 
-        public void setTime(int time) {
+        public void setTime(String time) {
             this.time = time;
         }
 
@@ -115,14 +115,14 @@ public class RepairEntity {
          * quantity : 0.0
          */
 
-        private int time;
+        private String time;
         private String quantity;
 
-        public int getTime() {
+        public String getTime() {
             return time;
         }
 
-        public void setTime(int time) {
+        public void setTime(String time) {
             this.time = time;
         }
 
@@ -141,14 +141,14 @@ public class RepairEntity {
          * scale : Infinity
          */
 
-        private int time;
+        private String time;
         private String scale;
 
-        public int getTime() {
+        public String getTime() {
             return time;
         }
 
-        public void setTime(int time) {
+        public void setTime(String time) {
             this.time = time;
         }
 

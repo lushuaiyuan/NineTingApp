@@ -212,7 +212,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp16"
                     android:text="加油量变动图"
-                    android:textColor="@color/color_white"
+                    android:textColor="@color/blue"
                     android:textSize="@dimen/dp16" />
 
                 <RelativeLayout
@@ -232,7 +232,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="暂无数据"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/blue"
                         android:textSize="@dimen/dp15" />
                 </RelativeLayout>
 
@@ -242,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp16"
                     android:text="油耗比率变动图"
-                    android:textColor="@color/color_white"
+                    android:textColor="@color/yellow"
                     android:textSize="@dimen/dp16" />
 
                 <RelativeLayout
@@ -262,7 +262,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="暂无数据"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/yellow"
                         android:textSize="@dimen/dp15" />
                 </RelativeLayout>
 

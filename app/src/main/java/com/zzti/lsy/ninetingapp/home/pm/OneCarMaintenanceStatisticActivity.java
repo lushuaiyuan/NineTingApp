@@ -99,7 +99,7 @@ public class OneCarMaintenanceStatisticActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    ChartUtils.initChart(mLineChart, ChartUtils.oneCar, xData.size());
+                    ChartUtils.initChart(mLineChart, ChartUtils.oneCar, xData.size(), Color.WHITE);
                     setLineChartDate();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
@@ -141,7 +141,7 @@ public class OneCarMaintenanceStatisticActivity extends BaseActivity {
             lineDataSet = new LineDataSet(mValues, "数据");
             lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             lineDataSet.setColor(Color.WHITE);
-            lineDataSet.setCircleColor(Color.parseColor("#AAFFFFFF"));
+            lineDataSet.setCircleColor(Color.WHITE);
             lineDataSet.setHighLightColor(Color.WHITE);//设置点击交点后显示交高亮线的颜色
             lineDataSet.setHighlightEnabled(true);//是否使用点击高亮线
             lineDataSet.setDrawCircles(true);

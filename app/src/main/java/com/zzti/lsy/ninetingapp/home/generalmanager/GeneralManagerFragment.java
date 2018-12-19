@@ -100,13 +100,13 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getCarExpire();
+//                getCarExpire();
                 getProjectRecordCount();
             }
         });
         if (UIUtils.isNetworkConnected()) {
             showDia();
-            getCarExpire();
+//            getCarExpire();
             getProjectRecordCount();
         }
     }

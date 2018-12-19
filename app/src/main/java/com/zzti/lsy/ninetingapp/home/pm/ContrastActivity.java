@@ -120,18 +120,18 @@ public class ContrastActivity extends BaseActivity {
                             if (plateNumber.equals(tvCarNumber1.getText().toString())) {
                                 xData1.add(jsonObject.optString("time").substring(5, jsonObject.optString("time").length()));
                                 yData1.add(jsonObject.optString("money"));
-                                ChartUtils.initChart(mLineChart1, ChartUtils.oneCar, xData1.size());
-                                setLineChartDate(mLineChart1, xData1, yData1);
+                                ChartUtils.initChart(mLineChart1, ChartUtils.oneCar, xData1.size(), Color.WHITE);
+                                setLineChartDate(mLineChart1, xData1, yData1, Color.WHITE);
                             } else if (plateNumber.equals(tvCarNumber2.getText().toString())) {
                                 xData2.add(jsonObject.optString("time").substring(5, jsonObject.optString("time").length()));
                                 yData2.add(jsonObject.optString("money"));
-                                ChartUtils.initChart(mLineChart2, ChartUtils.oneCar, xData2.size());
-                                setLineChartDate(mLineChart2, xData2, yData2);
+                                ChartUtils.initChart(mLineChart2, ChartUtils.oneCar, xData2.size(), Color.BLUE);
+                                setLineChartDate(mLineChart2, xData2, yData2, Color.BLUE);
                             } else if (plateNumber.equals(tvCarNumber3.getText().toString())) {
                                 xData3.add(jsonObject.optString("time").substring(5, jsonObject.optString("time").length()));
                                 yData3.add(jsonObject.optString("money"));
-                                ChartUtils.initChart(mLineChart3, ChartUtils.oneCar, xData3.size());
-                                setLineChartDate(mLineChart3, xData3, yData3);
+                                ChartUtils.initChart(mLineChart3, ChartUtils.oneCar, xData3.size(), Color.YELLOW);
+                                setLineChartDate(mLineChart3, xData3, yData3, Color.YELLOW);
                             }
                         }
                     } catch (JSONException e) {
@@ -153,7 +153,7 @@ public class ContrastActivity extends BaseActivity {
     }
 
 
-    private void setLineChartDate(LineChart mLineChart, final List<String> xData, List<String> yData) {
+    private void setLineChartDate(LineChart mLineChart, final List<String> xData, List<String> yData, int color) {
         if (yData.size() == 0) return;
         List<Entry> mValues = new ArrayList<>();
         for (int i = 0; i < yData.size(); i++) {
@@ -174,12 +174,12 @@ public class ContrastActivity extends BaseActivity {
             //设置数据1  参数1：数据源 参数2：图例名称
             lineDataSet = new LineDataSet(mValues, "数据");
             lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            lineDataSet.setColor(Color.WHITE);
-            lineDataSet.setCircleColor(Color.parseColor("#AAFFFFFF"));
-            lineDataSet.setHighLightColor(Color.WHITE);//设置点击交点后显示交高亮线的颜色
+            lineDataSet.setColor(color);
+            lineDataSet.setCircleColor(color);
+            lineDataSet.setHighLightColor(color);//设置点击交点后显示交高亮线的颜色
             lineDataSet.setHighlightEnabled(true);//是否使用点击高亮线
             lineDataSet.setDrawCircles(true);
-            lineDataSet.setValueTextColor(Color.WHITE);
+            lineDataSet.setValueTextColor(color);
             lineDataSet.setLineWidth(1f);//设置线宽
             lineDataSet.setCircleRadius(2f);//设置焦点圆心的大小
             lineDataSet.setHighlightLineWidth(0.5f);//设置点击交点后显示高亮线宽

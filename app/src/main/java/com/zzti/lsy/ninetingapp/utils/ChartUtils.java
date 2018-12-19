@@ -32,15 +32,15 @@ public class ChartUtils {
      * @param mLineChart 原始图表
      * @return 初始化后的图表
      */
-    public static LineChart initChart(LineChart mLineChart, int type, int count) {
+    public static LineChart initChart(LineChart mLineChart, int type, int count, int color) {
         mLineChart.setLogEnabled(true);//打印日志
         //取消描述文字
         mLineChart.getDescription().setEnabled(false);
         mLineChart.setNoDataText("没有数据");//没有数据时显示的文字
-        mLineChart.setNoDataTextColor(Color.WHITE);//没有数据时显示文字的颜色
+        mLineChart.setNoDataTextColor(color);//没有数据时显示文字的颜色
         mLineChart.setDrawGridBackground(false);//chart 绘图区后面的背景矩形将绘制
         mLineChart.setDrawBorders(false);//是否禁止绘制图表边框的线
-        mLineChart.setBorderColor(Color.WHITE); //设置 chart 边框线的颜色。
+        mLineChart.setBorderColor(color); //设置 chart 边框线的颜色。
         mLineChart.setBorderWidth(1f); //设置 chart 边界线的宽度，单位 dp。
         mLineChart.setTouchEnabled(true);     //能否点击
         mLineChart.setDragEnabled(true);   //能否拖拽
@@ -66,8 +66,8 @@ public class ChartUtils {
         mLineChart.setScaleEnabled(true);  //能否缩放
         xAxis.setAvoidFirstLastClipping(false);//图表将避免第一个和最后一个标签条目被减掉在图表或屏幕的边缘
 
-        xAxis.setTextColor(Color.WHITE);//设置字体颜色
-        xAxis.setAxisLineColor(Color.WHITE);//设置x轴线颜色
+        xAxis.setTextColor(color);//设置字体颜色
+        xAxis.setAxisLineColor(color);//设置x轴线颜色
         xAxis.setAxisLineWidth(1.5f);//设置x轴线宽度
         YAxis leftAxis = mLineChart.getAxisLeft();
         YAxis axisRight = mLineChart.getAxisRight();
@@ -76,12 +76,12 @@ public class ChartUtils {
         leftAxis.setAxisMinimum(0);
         axisRight.setEnabled(false);   //设置是否使用 Y轴右边的
         leftAxis.setEnabled(true);     //设置是否使用 Y轴左边的
-        leftAxis.setGridColor(Color.parseColor("#7189a9"));  //网格线条的颜色
+        leftAxis.setGridColor(color);  //网格线条的颜色
         leftAxis.setDrawLabels(true);        //是否显示Y轴刻度
         leftAxis.setDrawGridLines(true);      //是否使用 Y轴网格线条
         leftAxis.setTextSize(12f);            //设置Y轴刻度字体
-        leftAxis.setTextColor(Color.WHITE);   //设置字体颜色
-        leftAxis.setAxisLineColor(Color.WHITE); //设置Y轴颜色
+        leftAxis.setTextColor(color);   //设置字体颜色
+        leftAxis.setAxisLineColor(color); //设置Y轴颜色
         leftAxis.setAxisLineWidth(1.5f);
         leftAxis.setDrawAxisLine(true);//是否绘制轴线
         leftAxis.setMinWidth(0f);
@@ -103,40 +103,40 @@ public class ChartUtils {
 
     }
 
-    /**
-     * 设置图表数据
-     *
-     * @param chart  图表
-     * @param values 数据
-     */
-    public static void setChartData(LineChart chart, List<Entry> values) {
-        LineDataSet lineDataSet;
-
-        if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
-            lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
-            lineDataSet.setValues(values);
-            chart.getData().notifyDataChanged();
-            chart.notifyDataSetChanged();
-        } else {
-            lineDataSet = new LineDataSet(values, "");
-            // 设置曲线颜色
-            lineDataSet.setColor(Color.parseColor("#FF66C1"));
-            // 线宽
-            lineDataSet.setLineWidth(1.75f);
-            // 设置平滑曲线
-            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            // 不显示坐标点的小圆点
-            lineDataSet.setDrawCircles(false);
-            // 不显示坐标点的数据
-            lineDataSet.setDrawValues(false);
-            // 不显示定位线
-            lineDataSet.setHighlightEnabled(true);
-
-            LineData data = new LineData(lineDataSet);
-            chart.setData(data);
-            chart.invalidate();
-        }
-    }
+//    /**
+//     * 设置图表数据
+//     *
+//     * @param chart  图表
+//     * @param values 数据
+//     */
+//    public static void setChartData(LineChart chart, List<Entry> values) {
+//        LineDataSet lineDataSet;
+//
+//        if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
+//            lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
+//            lineDataSet.setValues(values);
+//            chart.getData().notifyDataChanged();
+//            chart.notifyDataSetChanged();
+//        } else {
+//            lineDataSet = new LineDataSet(values, "");
+//            // 设置曲线颜色
+//            lineDataSet.setColor(Color.parseColor("#FF66C1"));
+//            // 线宽
+//            lineDataSet.setLineWidth(1.75f);
+//            // 设置平滑曲线
+//            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+//            // 不显示坐标点的小圆点
+//            lineDataSet.setDrawCircles(false);
+//            // 不显示坐标点的数据
+//            lineDataSet.setDrawValues(false);
+//            // 不显示定位线
+//            lineDataSet.setHighlightEnabled(true);
+//
+//            LineData data = new LineData(lineDataSet);
+//            chart.setData(data);
+//            chart.invalidate();
+//        }
+//    }
 
     /**
      * 更新图表

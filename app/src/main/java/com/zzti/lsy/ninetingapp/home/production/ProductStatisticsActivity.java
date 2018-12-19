@@ -268,8 +268,8 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                     } else {
                         tv_hint1.setVisibility(View.GONE);
                         mChart1.setVisibility(View.VISIBLE);
-                        ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size());
-                        setLineChartDate(mChart1, xData1, yData1);
+                        ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size(), Color.WHITE);
+                        setLineChartDate(mChart1, xData1, yData1, Color.WHITE);
                     }
                     //加油量
                     if (wearRecords != null && wearRecords.size() > 0) {
@@ -286,8 +286,8 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                     } else {
                         tv_hint2.setVisibility(View.GONE);
                         mChart2.setVisibility(View.VISIBLE);
-                        ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size());
-                        setLineChartDate(mChart2, xData2, yData2);
+                        ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size(), Color.BLUE);
+                        setLineChartDate(mChart2, xData2, yData2, Color.BLUE);
                     }
                     //油耗比率
                     if (zratioRecords != null && zratioRecords.size() > 0) {
@@ -304,8 +304,8 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                     } else {
                         tv_hint3.setVisibility(View.GONE);
                         mChart3.setVisibility(View.VISIBLE);
-                        ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size());
-                        setLineChartDate(mChart3, xData3, yData3);
+                        ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size(), Color.YELLOW);
+                        setLineChartDate(mChart3, xData3, yData3, Color.YELLOW);
                     }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
@@ -332,7 +332,7 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
     private List<String> xData3 = new ArrayList<>();
     private List<String> yData3 = new ArrayList<>();
 
-    private void setLineChartDate(LineChart mLineChart, final List<String> xData, List<String> yData) {
+    private void setLineChartDate(LineChart mLineChart, final List<String> xData, List<String> yData, int color) {
         List<Entry> mValues = new ArrayList<>();
         for (int i = 0; i < yData.size(); i++) {
             Entry entry = new Entry(i, Float.valueOf(yData.get(i)), xData.get(i));
@@ -356,12 +356,12 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
             //设置数据1  参数1：数据源 参数2：图例名称
             lineDataSet = new LineDataSet(mValues, "数据");
             lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            lineDataSet.setColor(Color.WHITE);
-            lineDataSet.setCircleColor(Color.parseColor("#AAFFFFFF"));
-            lineDataSet.setHighLightColor(Color.WHITE);//设置点击交点后显示交高亮线的颜色
+            lineDataSet.setColor(color);
+            lineDataSet.setCircleColor(color);
+            lineDataSet.setHighLightColor(color);//设置点击交点后显示交高亮线的颜色
             lineDataSet.setHighlightEnabled(true);//是否使用点击高亮线
             lineDataSet.setDrawCircles(true);
-            lineDataSet.setValueTextColor(Color.WHITE);
+            lineDataSet.setValueTextColor(color);
             lineDataSet.setLineWidth(1f);//设置线宽
             lineDataSet.setCircleRadius(2f);//设置焦点圆心的大小
             lineDataSet.setHighlightLineWidth(0.5f);//设置点击交点后显示高亮线宽
