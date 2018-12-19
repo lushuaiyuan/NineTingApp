@@ -14,10 +14,11 @@ import com.zzti.lsy.ninetingapp.R;
 public class MyMarkerView extends MarkerView {
     private final TextView tvContent;
 
-    public MyMarkerView(Context context, int layoutResource) {
+    public MyMarkerView(Context context, int layoutResource, int color) {
         super(context, layoutResource);
 
         tvContent = findViewById(R.id.tvContent);
+        tvContent.setTextColor(color);
     }
 
     // runs every time the MarkerView is redrawn, can be used to update the
@@ -32,7 +33,7 @@ public class MyMarkerView extends MarkerView {
             tvContent.setText(Utils.formatNumber(ce.getHigh(), 0, true));
         } else {
 
-            tvContent.setText(Utils.formatNumber(e.getY(), 0, true));
+            tvContent.setText(String.valueOf(e.getY()));
         }
 
         super.refreshContent(e, highlight);

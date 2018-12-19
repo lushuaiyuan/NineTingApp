@@ -100,7 +100,7 @@ public class OneCarMaintenanceStatisticActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                     ChartUtils.initChart(mLineChart, ChartUtils.oneCar, xData.size(), Color.WHITE);
-                    setLineChartDate();
+                    ChartUtils.setLineChartDate(mLineChart, xData, yData, Color.WHITE);
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {

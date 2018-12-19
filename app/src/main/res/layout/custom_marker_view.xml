@@ -8,14 +8,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginLeft="@dimen/dp5"
+        android:layout_marginRight="@dimen/dp5"
+        android:layout_marginTop="@dimen/dp7"
         android:ellipsize="end"
         android:singleLine="true"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/white"
         android:textSize="12dp" />
 
 </RelativeLayout>

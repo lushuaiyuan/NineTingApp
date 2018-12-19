@@ -121,17 +121,17 @@ public class ContrastActivity extends BaseActivity {
                                 xData1.add(jsonObject.optString("time").substring(5, jsonObject.optString("time").length()));
                                 yData1.add(jsonObject.optString("money"));
                                 ChartUtils.initChart(mLineChart1, ChartUtils.oneCar, xData1.size(), Color.WHITE);
-                                setLineChartDate(mLineChart1, xData1, yData1, Color.WHITE);
+                                ChartUtils.setLineChartDate(mLineChart1, xData1, yData1, Color.WHITE);
                             } else if (plateNumber.equals(tvCarNumber2.getText().toString())) {
                                 xData2.add(jsonObject.optString("time").substring(5, jsonObject.optString("time").length()));
                                 yData2.add(jsonObject.optString("money"));
                                 ChartUtils.initChart(mLineChart2, ChartUtils.oneCar, xData2.size(), Color.BLUE);
-                                setLineChartDate(mLineChart2, xData2, yData2, Color.BLUE);
+                                ChartUtils.setLineChartDate(mLineChart2, xData2, yData2, Color.BLUE);
                             } else if (plateNumber.equals(tvCarNumber3.getText().toString())) {
                                 xData3.add(jsonObject.optString("time").substring(5, jsonObject.optString("time").length()));
                                 yData3.add(jsonObject.optString("money"));
                                 ChartUtils.initChart(mLineChart3, ChartUtils.oneCar, xData3.size(), Color.YELLOW);
-                                setLineChartDate(mLineChart3, xData3, yData3, Color.YELLOW);
+                                ChartUtils.setLineChartDate(mLineChart3, xData3, yData3, Color.YELLOW);
                             }
                         }
                     } catch (JSONException e) {

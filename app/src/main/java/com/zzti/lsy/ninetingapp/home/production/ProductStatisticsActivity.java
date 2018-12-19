@@ -268,7 +268,7 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                         tv_hint1.setVisibility(View.GONE);
                         mChart1.setVisibility(View.VISIBLE);
                         ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size(), Color.WHITE);
-                        setLineChartDate(mChart1, xData1, yData1, Color.WHITE);
+                        ChartUtils.setLineChartDate(mChart1, xData1, yData1, Color.WHITE);
                     }
                     //加油量
                     if (wearRecords != null && wearRecords.size() > 0) {
@@ -286,7 +286,7 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                         tv_hint2.setVisibility(View.GONE);
                         mChart2.setVisibility(View.VISIBLE);
                         ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size(), Color.BLUE);
-                        setLineChartDate(mChart2, xData2, yData2, Color.BLUE);
+                        ChartUtils.setLineChartDate(mChart2, xData2, yData2, Color.BLUE);
                     }
                     //油耗比率
                     if (zratioRecords != null && zratioRecords.size() > 0) {
@@ -304,7 +304,7 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                         tv_hint3.setVisibility(View.GONE);
                         mChart3.setVisibility(View.VISIBLE);
                         ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size(), Color.YELLOW);
-                        setLineChartDate(mChart3, xData3, yData3, Color.YELLOW);
+                        ChartUtils.setLineChartDate(mChart3, xData3, yData3, Color.YELLOW);
                     }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,11 +21,16 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
@@ -194,7 +200,7 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
                         tvHint1.setVisibility(View.GONE);
                         mChart1.setVisibility(View.VISIBLE);
                         ChartUtils.initChart(mChart1, ChartUtils.oneCar, xData1.size(), Color.WHITE);
-                        setLineChartDate(mChart1, xData1, yData1, Color.WHITE);
+                        ChartUtils.setLineChartDate(mChart1, xData1, yData1, Color.WHITE);
                     }
                     //生产量
                     if (quantityRecords != null && quantityRecords.size() > 0) {
@@ -212,7 +218,7 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
                         tvHint2.setVisibility(View.GONE);
                         mChart2.setVisibility(View.VISIBLE);
                         ChartUtils.initChart(mChart2, ChartUtils.oneCar, xData2.size(), Color.BLUE);
-                        setLineChartDate(mChart2, xData2, yData2, Color.BLUE);
+                        ChartUtils.setLineChartDate(mChart2, xData2, yData2, Color.BLUE);
                     }
                     //总综合维修费
                     if (scales != null && scales.size() > 0) {
@@ -230,7 +236,7 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
                         tvHint3.setVisibility(View.GONE);
                         mChart3.setVisibility(View.VISIBLE);
                         ChartUtils.initChart(mChart3, ChartUtils.oneCar, xData3.size(), Color.YELLOW);
-                        setLineChartDate(mChart3, xData3, yData3, Color.YELLOW);
+                        ChartUtils.setLineChartDate(mChart3, xData3, yData3, Color.YELLOW);
                     }
 
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
@@ -269,47 +275,50 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
             mLineChart.getData().notifyDataChanged();
             mLineChart.notifyDataSetChanged();
         } else {
-            //设置数据1  参数1：数据源 参数2：图例名称
-            lineDataSet = new LineDataSet(mValues, "数据");
-            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            lineDataSet.setColor(color);
-            lineDataSet.setCircleColor(color);
-            lineDataSet.setHighLightColor(color);//设置点击交点后显示交高亮线的颜色
-            lineDataSet.setHighlightEnabled(true);//是否使用点击高亮线
-            lineDataSet.setDrawCircles(true);
-            lineDataSet.setValueTextColor(color);
-            lineDataSet.setLineWidth(1f);//设置线宽
-            lineDataSet.setCircleRadius(2f);//设置焦点圆心的大小
-            lineDataSet.setHighlightLineWidth(0.5f);//设置点击交点后显示高亮线宽
-            lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);//点击后的高亮线的显示样式
-            lineDataSet.setValueTextSize(12f);//设置显示值的文字大小
-            lineDataSet.setDrawFilled(true);//设置使用 范围背景填充
-
-            lineDataSet.setDrawValues(false);
             //格式化显示数据
             XAxis xAxis = mLineChart.getXAxis();
-            xAxis.setValueFormatter(new IAxisValueFormatter() {
+            xAxis.setValueFormatter(new LargeValueFormatter() {
                 @Override
                 public String getFormattedValue(float value, AxisBase axis) {
                     //对X轴上的值进行Format格式化，转成相应的值
+                    Log.d("22222", "----->getFormattedValue: " + value);
                     int intValue = (int) value;
                     //筛选出自己需要的值，一般都是这样写没问题，并且一定要加上这个判断，不然会出错
                     if (xData.size() > intValue && intValue >= 0) {
-                        //这样显示在X轴上值就是 05:30  05:35，不然会是1.0  2.0
-                        return String.valueOf(xData.get(intValue));
+                        return xData.get(intValue);
                     } else {
                         return "";
                     }
                 }
             });
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(lineDataSet); // add the datasets
-            //创建LineData对象 属于LineChart折线图的数据集合
+            //设置折线的属性
+            lineDataSet = new LineDataSet(mValues, "数据");
+            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);   //设置左右两边Y轴节点描述
+            lineDataSet.setValueTextColor(color); //设置节点文字颜色
+            lineDataSet.setDrawCircles(true);  //设置是否显示节点的小圆点
+            lineDataSet.setDrawValues(false);       //设置是否显示节点的值
+            lineDataSet.setHighLightColor(color);//当点击节点时，将会出现与节点水平和垂直的两条线，可以对其进行定制.此方法为设置线条颜色
+            lineDataSet.setHighlightEnabled(true);//设置是否显示十字线
+            lineDataSet.setColor(color);    //设置线条颜色
+            lineDataSet.setCircleColor(color);  //设置节点的圆圈颜色
+            lineDataSet.setLineWidth(1f);   //设置线条宽度
+            lineDataSet.setCircleRadius(2f);//设置每个坐标点的圆大小
+            lineDataSet.setHighlightLineWidth(0.5f);//设置点击交点后显示高亮线宽
+            lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);//点击后的高亮线的显示样式
+            lineDataSet.setDrawCircleHole(false);//是否定制节点圆心的颜色，若为false，则节点为单一的同色点，若为true则可以设置节点圆心的颜色
+            lineDataSet.setValueTextSize(12f);   //设置 DataSets 数据对象包含的数据的值文本的大小（单位是dp）。
+            //设置折线图填充
+            lineDataSet.setDrawFilled(true);    //Fill填充，可以将折线图以下部分用颜色填满
+            lineDataSet.setFillAlpha(65);       ////设置填充区域透明度，默认值为85
+            lineDataSet.setFillColor(ColorTemplate.getHoloBlue());//设置填充颜色
+            lineDataSet.setFormLineWidth(1f);
+            lineDataSet.setFormSize(15.f);
+            dataSets.add(lineDataSet);
             LineData data = new LineData(dataSets);
-            // 添加到图表中
-            mLineChart.setData(data);
-            //绘制图表
-            mLineChart.invalidate();
+            mLineChart.setData(data);    //添加数据
+
         }
     }
 
