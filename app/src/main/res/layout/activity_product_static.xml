@@ -81,7 +81,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dp1"
                     android:layout_margin="@dimen/dp8"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.3"
                     android:background="@color/color_e5e5e5" />
 
                 <TextView

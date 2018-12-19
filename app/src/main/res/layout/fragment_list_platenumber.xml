@@ -31,6 +31,7 @@
             android:maxLines="1"
             android:padding="@dimen/dp8"
             android:textSize="@dimen/dp15" />
+
         <ImageView
             android:id="@+id/iv_search"
             android:layout_width="@dimen/dp20"
@@ -50,7 +51,11 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mRecycleView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dp16"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:background="@color/color_f5f5f5" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

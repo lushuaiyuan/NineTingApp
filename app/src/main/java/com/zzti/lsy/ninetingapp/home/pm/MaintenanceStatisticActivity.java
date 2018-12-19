@@ -157,8 +157,8 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
             projectID = "";
         HashMap<String, String> params = new HashMap<>();
         params.put("projectID", projectID);
-        params.put("StarTime", tvStartTime.getText().toString());
-        params.put("OverTime", tvEndTime.getText().toString());
+        params.put("StarTime", tvStartTime.getText().toString() + "-01");
+        params.put("OverTime", tvEndTime.getText().toString() + "-" + DateUtil.getDaysOfMonth(tvEndTime.getText().toString()));
 
         OkHttpManager.postFormBody(Urls.REPAIR_GETREPAIRCOUNT, params, tvStartTime, new OkHttpManager.OnResponse<String>() {
             @Override
@@ -319,8 +319,8 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
         tvToolbarMenu.setVisibility(View.VISIBLE);
         tvToolbarMenu.setText("查看报表");
         tvToolbarMenu.setOnClickListener(this);
-        tvEndTime.setText(DateUtil.getCurrentDate());
-        tvStartTime.setText(DateUtil.getAfterMonth(DateUtil.getCurrentDate(), -1));
+        tvEndTime.setText(DateUtil.getCurYear() + "-" + (DateUtil.getCurMonth() + 1));
+        tvStartTime.setText(DateUtil.getAfterMonth(tvEndTime.getText().toString(), -6));
 
     }
 
@@ -388,7 +388,7 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
             case R.id.tv_startTime:
                 showCustomTime(1);
                 break;
-            case R.id.tv_endDate:
+            case R.id.tv_endTime:
                 showCustomTime(2);
                 break;
             case R.id.btn_search:
@@ -415,13 +415,13 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
             @Override
             public void onTimeSelect(Date date, View v) {
                 if (type == 1) {
-                    tvStartTime.setText(DateUtil.getDate(date));
+                    tvStartTime.setText(DateUtil.getDateMonth(date));
                 } else {
-                    tvEndTime.setText(DateUtil.getDate(date));
+                    tvEndTime.setText(DateUtil.getDateMonth(date));
                 }
             }
-        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel(" 年", " 月", " 日", "", "", "")
+        }).setDate(instance).setType(new boolean[]{true, true, false, false, false, false})
+                .setLabel(" 年", " 月", "", "", "", "")
                 .isCenterLabel(false).build();
         pvTime.show();
     }

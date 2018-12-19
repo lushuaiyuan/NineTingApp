@@ -178,8 +178,8 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
 
     private void initView() {
         setTitle("生产统计");
-        tvEndTime.setText(DateUtil.getCurrentDate());
-        tvStartTime.setText(DateUtil.getAfterMonth(DateUtil.getCurrentDate(), -1));
+        tvEndTime.setText(DateUtil.getCurYear() + "-" + (DateUtil.getCurMonth() + 1));
+        tvStartTime.setText(DateUtil.getAfterMonth(tvEndTime.getText().toString(), -6));
     }
 
     @OnClick({R.id.tv_project, R.id.tv_startTime, R.id.tv_endTime, R.id.btn_search, R.id.btn_oneCar})
@@ -203,12 +203,10 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
                 }
                 break;
             case R.id.tv_startTime:
-                type = 1;
-                showCustomTime();
+                showCustomTime(1);
                 break;
             case R.id.tv_endTime:
-                type = 2;
-                showCustomTime();
+                showCustomTime(2);
                 break;
             case R.id.btn_search:
                 getData();
@@ -233,8 +231,9 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
         if (StringUtil.isNullOrEmpty(projectID))
             projectID = "";
         params.put("projectID", projectID);
-        params.put("StarTime", tvStartTime.getText().toString());
-        params.put("OverTime", tvEndTime.getText().toString());
+        params.put("StarTime", tvStartTime.getText().toString() + "-01");
+        params.put("OverTime", tvEndTime.getText().toString() + "-" + DateUtil.getDaysOfMonth(tvEndTime.getText().toString()));
+
         OkHttpManager.postFormBody(Urls.RECORD_GETPROJECTRECORD, params, tvOilMassAmount, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
@@ -397,12 +396,11 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
         }
     }
 
-    private int type = 1;
 
     /**
      * 显示时间选择器
      */
-    private void showCustomTime() {
+    private void showCustomTime(final int type) {
         Calendar instance = Calendar.getInstance();
         instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
         //时间选择器
@@ -410,13 +408,13 @@ public class ProductStatisticsActivity extends BaseActivity implements AdapterVi
             @Override
             public void onTimeSelect(Date date, View v) {
                 if (type == 1) {
-                    tvStartTime.setText(DateUtil.getDate(date));
+                    tvStartTime.setText(DateUtil.getDateMonth(date));
                 } else {
-                    tvEndTime.setText(DateUtil.getDate(date));
+                    tvEndTime.setText(DateUtil.getDateMonth(date));
                 }
             }
-        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel(" 年", " 月", " 日", "", "", "")
+        }).setDate(instance).setType(new boolean[]{true, true, false, false, false, false})
+                .setLabel(" 年", " 月", "", "", "", "")
                 .isCenterLabel(false).build();
         pvTime.show();
     }

@@ -94,6 +94,16 @@ public class DateUtil {
     /**
      * 获取日期字符串。
      */
+    public static String getDateMonth(Date date) {
+        if (date == null)
+            return "";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+        return formatter.format(date);
+    }
+
+    /**
+     * 获取日期字符串。
+     */
     public static String getDateString(Date date) {
         if (date == null)
             return "";
@@ -430,6 +440,26 @@ public class DateUtil {
     }
 
 
+    /**
+     * 获取某个日期月份的天数
+     *
+     * @param date
+     * @return
+     */
+    public static int getDaysOfMonth(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        try {
+            Date parse = sdf.parse(date);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(parse);
+            return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 28;
+    }
+
+
     public static boolean IsToday(String day) {
 
         Calendar pre = Calendar.getInstance();
@@ -474,7 +504,7 @@ public class DateUtil {
      */
     public static String getAfterMonth(String inputDate, int number) {
         Calendar c = Calendar.getInstance();//获得一个日历的实例
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         Date date = null;
         try {
             date = sdf.parse(inputDate);//初始日期
