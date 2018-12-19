@@ -14,10 +14,13 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
+import com.zzti.lsy.ninetingapp.entity.AlarmItemEntity;
+import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
 import com.zzti.lsy.ninetingapp.entity.RecordCountEntity;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.home.adapter.AlarmAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeBxAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
@@ -48,8 +51,8 @@ import butterknife.OnClick;
 public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-    @BindView(R.id.tv_alarmItem)
-    TextView tvAlertItem;
+    @BindView(R.id.recycleView_bj)
+    RecyclerView mRecycleViewBj;
     @BindView(R.id.tv_today)
     TextView tvToday;
     @BindView(R.id.tv_month)
@@ -66,8 +69,10 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     RecyclerView mRecycleViewBx;
     private List<NsBxEntity> homeHintEntitiesNs;
     private List<NsBxEntity> homeHintEntitiesBx;
+    private List<AlarmItemEntity> alarmItemEntities;
     private HomeBxAdapter homeBxAdapter;
     private HomeNsAdapter homeNsAdapter;
+    private AlarmAdapter alarmAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -85,6 +90,14 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     protected void initData() {
         homeHintEntitiesBx = new ArrayList<>();
         homeHintEntitiesNs = new ArrayList<>();
+        alarmItemEntities = new ArrayList<>();
+
+        LinearLayoutManager linearLayoutManagerBj = new LinearLayoutManager(getContext());
+        linearLayoutManagerBj.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecycleViewBj.setLayoutManager(linearLayoutManagerBj);
+        alarmAdapter = new AlarmAdapter(alarmItemEntities);
+        mRecycleViewBj.setAdapter(alarmAdapter);
+
 
         LinearLayoutManager linearLayoutManagerNs = new LinearLayoutManager(getContext());
         linearLayoutManagerNs.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -118,6 +131,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
      * 获取综合油耗报警以及生产量
      */
     private void getProjectRecordCount() {
+        alarmItemEntities.clear();
         HashMap<String, String> params = new HashMap<>();
         OkHttpManager.postFormBody(Urls.RECORD_GETPROJECTRECORDCOUNT, params, smartRefreshLayout, new OkHttpManager.OnResponse<String>() {
             @Override
@@ -138,9 +152,20 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                         tvYear.setText(recordCountEntity.getYearQuantity() + "方");
                         RecordCountEntity.Alarm alarm = recordCountEntity.getAlarms();
                         if (alarm != null) {
-                            tvAlertItem.setText(alarm.getAlarmitem() + alarm.getAllWear());
-                        } else {
-                            tvAlertItem.setText("暂无数据");
+                            int length;
+                            String[] splitAlarmItems = alarm.getAlarmitem().split("\\|");
+                            String[] splitAllWears = alarm.getAllWear().split("\\|");
+                            if (splitAlarmItems.length > splitAllWears.length) {
+                                length = splitAllWears.length;
+                            } else {
+                                length = splitAlarmItems.length;
+                            }
+                            for (int i = 0; i < length; i++) {
+                                AlarmItemEntity alarmItemEntity = new AlarmItemEntity();
+                                alarmItemEntity.setTitle(splitAlarmItems[i]);
+                                alarmItemEntity.setContent(splitAllWears[i]);
+                                alarmItemEntities.add(alarmItemEntity);
+                            }
                         }
                     }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
@@ -148,6 +173,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
+                alarmAdapter.notifyDataSetChanged();
             }
 
             @Override

@@ -147,6 +147,14 @@
                     android:textColor="@color/color_red"
                     android:textSize="@dimen/dp15" />
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycleView_bj"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/dp16"
+                    android:paddingRight="@dimen/dp16" />
+
                 <TextView
                     android:id="@+id/tv_alarmItem"
                     android:layout_width="match_parent"
@@ -288,7 +296,7 @@
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
                         android:paddingLeft="@dimen/dp16"
-                        android:paddingRight="@dimen/dp6" />
+                        android:paddingRight="@dimen/dp16" />
 
 
                     <LinearLayout
@@ -325,7 +333,7 @@
                         android:layout_marginBottom="@dimen/dp20"
                         android:clipToPadding="false"
                         android:paddingLeft="@dimen/dp16"
-                        android:paddingRight="@dimen/dp6" />
+                        android:paddingRight="@dimen/dp16" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
