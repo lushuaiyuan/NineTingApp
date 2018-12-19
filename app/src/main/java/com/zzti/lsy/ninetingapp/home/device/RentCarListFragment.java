@@ -117,7 +117,7 @@ public class RentCarListFragment extends BaseFragment implements BaseQuickAdapte
     private void getRentCarList() {
         wherestr = "";
         if (!StringUtil.isNullOrEmpty(etCarNumber.getText().toString())) {
-            wherestr += " and plateNumber=" + "\"" + etCarNumber.getText().toString() + "\"";
+            wherestr += " and plateNumber like \'" + etCarNumber.getText().toString() + "%\'";
         }
         HashMap<String, String> params = new HashMap<>();
         if (wherestr.length() > 0) {

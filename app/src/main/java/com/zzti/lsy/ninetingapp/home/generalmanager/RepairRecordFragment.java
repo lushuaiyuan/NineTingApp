@@ -160,12 +160,12 @@ public class RepairRecordFragment extends BaseFragment implements AdapterView.On
                     UIUtils.showT("请输入车牌号");
                     break;
                 }
-                if (!UIUtils.validateCarNum(etSearch.getText().toString())) {
-                    UIUtils.showT("车牌号格式不正确");
-                    break;
-                }
+//                if (!UIUtils.validateCarNum(etSearch.getText().toString())) {
+//                    UIUtils.showT("车牌号格式不正确");
+//                    break;
+//                }
                 pageIndex = 1;
-                wherestr += " and plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
+                wherestr += " and plateNumber like \'" + etSearch.getText().toString() + "%\'";
                 showDia();
                 repairinfoEntities.clear();
                 getRecord();

@@ -272,7 +272,7 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
     private void getCarList() {
         wherestr = "";
         if (!StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
-            wherestr += " and plateNumber=" + "\"" + etSearch.getText().toString() + "\"";
+            wherestr += " and plateNumber like \'" + etSearch.getText().toString() + "%\'";
         }
         if (!StringUtil.isNullOrEmpty(projectID)) {
             wherestr += " and projectID=" + projectID;
@@ -426,10 +426,10 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
                     UIUtils.showT("请输入车牌号");
                     break;
                 }
-                if (!UIUtils.validateCarNum(etSearch.getText().toString())) {
-                    UIUtils.showT("车牌号格式不正确");
-                    break;
-                }
+//                if (!UIUtils.validateCarNum(etSearch.getText().toString())) {
+//                    UIUtils.showT("车牌号格式不正确");
+//                    break;
+//                }
                 pageIndex = 1;
                 showDia();
                 carInfoEntities.clear();

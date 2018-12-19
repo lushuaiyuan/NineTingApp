@@ -268,32 +268,32 @@ public class UIUtils {
         return height;
     }
 
-    /**
-     * 车牌号判断
-     *
-     * @param carNum
-     * @return
-     */
-    public static boolean validateCarNum(String carNum) {
-        boolean result = false;
-        String[] provence = new String[]{"京", "津", "冀", "晋", "辽", "吉", "黑", "沪", "苏", "浙", "皖", "闽", "赣", "鲁", "豫", "鄂", "湘", "粤", "桂", "琼", "渝",
-                "川", "黔", "滇", "藏", "陕", "甘", "青", "宁", "新", "港", "澳", "蒙"};
-        String reg = "[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}";
-        boolean firstChar = false;
-        if (carNum.length() > 0) {
-            firstChar = Arrays.asList(provence).contains(carNum.substring(0, 1));
-        }
-        try {
-            Pattern p = Pattern.compile(reg);
-            Matcher m = p.matcher(carNum);
-            if (m.matches() && firstChar) {
-                result = true;
-            } else {
-                result = false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+//    /**
+//     * 车牌号判断
+//     *
+//     * @param carNum
+//     * @return
+//     */
+//    public static boolean validateCarNum(String carNum) {
+//        boolean result = false;
+//        String[] provence = new String[]{"京", "津", "冀", "晋", "辽", "吉", "黑", "沪", "苏", "浙", "皖", "闽", "赣", "鲁", "豫", "鄂", "湘", "粤", "桂", "琼", "渝",
+//                "川", "黔", "滇", "藏", "陕", "甘", "青", "宁", "新", "港", "澳", "蒙"};
+//        String reg = "[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}";
+//        boolean firstChar = false;
+//        if (carNum.length() > 0) {
+//            firstChar = Arrays.asList(provence).contains(carNum.substring(0, 1));
+//        }
+//        try {
+//            Pattern p = Pattern.compile(reg);
+//            Matcher m = p.matcher(carNum);
+//            if (m.matches() && firstChar) {
+//                result = true;
+//            } else {
+//                result = false;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 }

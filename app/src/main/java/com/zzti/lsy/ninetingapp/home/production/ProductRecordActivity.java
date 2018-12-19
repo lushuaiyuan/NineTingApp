@@ -117,7 +117,7 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
             case R.id.iv_search:
                 wherestr = "";
                 if (!StringUtil.isNullOrEmpty(etCarNumber.getText().toString())) {
-                    wherestr += " and plateNumber=" + "\"" + etCarNumber.getText().toString() + "\"";
+                    wherestr += " and plateNumber like \'" + etCarNumber.getText().toString() + "%\'";
                 }
                 if (!StringUtil.isNullOrEmpty(tvSelectTime.getText().toString())) {
                     wherestr += " and slDateTime=" + "\"" + tvSelectTime.getText().toString() + "\"";
