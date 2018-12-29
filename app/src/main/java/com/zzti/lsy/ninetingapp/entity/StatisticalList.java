@@ -31,6 +31,25 @@ public class StatisticalList implements Serializable {
 
     private String travelKm;//行驶公里数
 
+    private String washing;//洗料
+    private String water;//水
+
+    public String getWashing() {
+        return washing;
+    }
+
+    public void setWashing(String washing) {
+        this.washing = washing;
+    }
+
+    public String getWater() {
+        return water;
+    }
+
+    public void setWater(String water) {
+        this.water = water;
+    }
+
     public String getTravelKm() {
         return travelKm;
     }

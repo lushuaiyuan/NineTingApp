@@ -63,6 +63,12 @@ public class ProductInputActivity extends BaseActivity {
     EditText etTimeConsuming;//耗时
     @BindView(R.id.et_travelKm)
     EditText etTravelKm;//耗时
+    @BindView(R.id.et_washing)
+    EditText etWashing;//洗料
+    @BindView(R.id.et_water)
+    EditText etWater;//水
+
+
     @BindView(R.id.et_remark)
     EditText etRemark;//备注
 
@@ -119,12 +125,12 @@ public class ProductInputActivity extends BaseActivity {
             etOverTime.setText(statisticalList.getAddWorkTime());
             etOverTimeTrainNumber.setText(statisticalList.getAddWorkCount());
             etTimeConsuming.setText(statisticalList.getTimeConsuming());
+            etWashing.setText(statisticalList.getWashing());
+            etWater.setText(statisticalList.getWater());
             if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {//备注
                 statisticalList.setRemark(etRemark.getText().toString());
             }
         }
-
-
     }
 
 
@@ -195,6 +201,14 @@ public class ProductInputActivity extends BaseActivity {
                     UIUtils.showT("行驶公里数不能为空");
                     return;
                 }
+                if (StringUtil.isNullOrEmpty(etWashing.getText().toString())) {
+                    UIUtils.showT("洗料值不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etWater.getText().toString())) {
+                    UIUtils.showT("水值不能为空");
+                    return;
+                }
                 if (!StringUtil.isNullOrEmpty(slID)) {
                     statisticalList.setSlID(slID);
                 }
@@ -211,6 +225,8 @@ public class ProductInputActivity extends BaseActivity {
                 statisticalList.setAddWorkTime(etOverTime.getText().toString());//加班时长
                 statisticalList.setAddWorkCount(etOverTimeTrainNumber.getText().toString());//加班趟数
                 statisticalList.setTimeConsuming(etTimeConsuming.getText().toString());//耗时
+                statisticalList.setWashing(etWashing.getText().toString());//洗料
+                statisticalList.setWater(etWater.getText().toString());//水
                 if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {//备注
                     statisticalList.setRemark(etRemark.getText().toString());
                 }
@@ -268,6 +284,9 @@ public class ProductInputActivity extends BaseActivity {
                     etWashTime.getText().clear();
                     etOverTime.getText().clear();
                     etOverTimeTrainNumber.getText().clear();
+                    etTravelKm.setText("0");
+                    etWashing.setText("0");
+                    etWater.setText("0");
                     etRemark.getText().clear();
                     if (tag == 0) {
                         Intent intent = new Intent(ProductInputActivity.this, SuccessActivity.class);

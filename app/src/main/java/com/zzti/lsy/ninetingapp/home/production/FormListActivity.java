@@ -200,9 +200,11 @@ public class FormListActivity extends BaseActivity {
         Column<String> column12 = new Column<>("加班趟数", "addWorkCount");
         Column<String> column13 = new Column<>("耗时", "timeConsuming");
         Column<String> column14 = new Column<>("行驶公里数", "travelKm");
-        Column<String> column15 = new Column<>("备注", "remark");
+        Column<String> column15 = new Column<>("洗料", "washing");
+        Column<String> column16 = new Column<>("水", "water");
+        Column<String> column17 = new Column<>("备注", "remark");
         //表格数据 datas是需要填充的数据
-        TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14, column15);
+        TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14, column15, column16, column17);
         mSmartTable.setTableData(tableData);
         column1.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column2.setOnColumnItemClickListener(new MyColumnItemClickListener());
@@ -218,6 +220,9 @@ public class FormListActivity extends BaseActivity {
         column12.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column13.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column14.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column15.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column16.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column17.setOnColumnItemClickListener(new MyColumnItemClickListener());
     }
 
     class MyColumnItemClickListener implements OnColumnItemClickListener<String> {
