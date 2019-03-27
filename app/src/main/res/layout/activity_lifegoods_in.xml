@@ -7,7 +7,7 @@
 
     <include layout="@layout/view_toolbar" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -124,7 +124,14 @@
 
 
             </RelativeLayout>
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="告警值" />
 
+            <EditText
+                android:id="@+id/et_alarmValue"
+                style="@style/MyEditText"
+                android:inputType="number" />
             <TextView
                 style="@style/MyEditTextTitle"
                 android:text="经手人" />
@@ -140,6 +147,6 @@
                 android:layout_margin="@dimen/dp30"
                 android:text="提交" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

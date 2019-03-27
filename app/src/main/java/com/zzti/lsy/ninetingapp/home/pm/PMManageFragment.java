@@ -292,8 +292,12 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
             case R.id.rl_menu2://配件列表
                 startActivity(new Intent(mActivity, PartsListActivity.class));
                 break;
-            case R.id.rl_menu3://采购审批  包含配件审批 日用品审批 维修审批
-                startActivity(new Intent(mActivity, ApprovalActivity.class));
+                //TODO
+//            case R.id.rl_menu3://采购审批  包含配件审批 日用品审批 维修审批
+//                startActivity(new Intent(mActivity, ApprovalActivity.class));
+//                break;
+            case R.id.rl_menu3://数据修改授权
+                startActivity(new Intent(mActivity, AuthorizationActivity.class));
                 break;
             case R.id.rl_menu6://生产统计
                 startActivity(new Intent(mActivity, ProductStatisticsActivity.class));

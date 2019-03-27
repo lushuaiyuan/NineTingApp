@@ -4,7 +4,7 @@ package com.zzti.lsy.ninetingapp.network;
  * author：anxin on 2018/8/3 10:21
  */
 public class Urls {
-    private final static String BASE_URL = "http://120.79.217.86:8087";
+    private final static String BASE_URL = "http://120.79.217.86:8086";
     //        private final static String BASE_URL = "http://192.168.0.110:8086";
     public final static String POST_LOGIN_URL = BASE_URL + "/Login/Login.asmx/LoginCheck";//登录
     public final static String POST_LOGIN_OUT = BASE_URL + "/Login/Login.asmx/LoginOut";//登出

@@ -7,7 +7,7 @@
 
     <include layout="@layout/view_toolbar" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -105,15 +105,40 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:id="@+id/tv_operatorTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="申请时间"
+                        android:text="单据号"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp14" />
 
                     <TextView
-                        android:id="@+id/tv_operatorTime"
+                        android:id="@+id/tv_receipts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:layout_marginRight="@dimen/dp15"
+                        android:gravity="right"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp16" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_operatorTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="采购时间"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp14" />
+
+                    <TextView
+                        android:id="@+id/tv_purchaseTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp15"
@@ -209,18 +234,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="状态"
-                        android:textColor="@color/color_6bcfd7"
+                        android:text="发货地"
+                        android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp14" />
 
                     <TextView
-                        android:id="@+id/tv_status"
+                        android:id="@+id/tv_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp15"
                         android:layout_marginRight="@dimen/dp15"
                         android:gravity="right"
-                        android:textColor="@color/color_6bcfd7"
+                        android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp16" />
                 </LinearLayout>
             </LinearLayout>
@@ -251,11 +276,12 @@
                 android:visibility="gone" />
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <View style="@style/MyView" />
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

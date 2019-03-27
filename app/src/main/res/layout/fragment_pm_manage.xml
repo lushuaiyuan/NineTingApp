@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="false"
@@ -50,7 +50,7 @@
                         <TextView
                             style="@style/home_menu"
                             android:drawableLeft="@mipmap/icon_menu10"
-                            android:text="审批" />
+                            android:text="授权" />
                     </RelativeLayout>
 
 
@@ -352,6 +352,6 @@
 
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

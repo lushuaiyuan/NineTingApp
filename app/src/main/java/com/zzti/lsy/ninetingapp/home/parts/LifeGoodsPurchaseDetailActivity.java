@@ -38,10 +38,10 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
     TextView tvGoodsName;
     @BindView(R.id.tv_operator)
     TextView tvOperator;
-    @BindView(R.id.tv_operatorTitle)
-    TextView tvOperatorTitle;
-    @BindView(R.id.tv_operatorTime)
-    TextView tvOperatorTime;
+    @BindView(R.id.tv_receipts)
+    TextView tvReceipts;
+    @BindView(R.id.tv_purchaseTime)
+    TextView tvPurchaseTime;
     @BindView(R.id.tv_amount)
     TextView tvAmount;
     @BindView(R.id.tv_price)
@@ -56,8 +56,8 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
     Button btnOperator1;
     @BindView(R.id.btn_operator2)
     Button btnOperator2;
-    @BindView(R.id.tv_status)
-    TextView tvStatus;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
 
     @Override
     public int getContentViewId() {
@@ -77,6 +77,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
      */
     private void initData() {
         laobaoPurchased = (LaobaoPurchased) getIntent().getSerializableExtra("laobaoPurchased");
+        tvReceipts.setText(laobaoPurchased.getReceipts());
         tvGoodsName.setText(laobaoPurchased.getLbName());
         tvOperator.setText(laobaoPurchased.getStaffName());
         tvAmount.setText(laobaoPurchased.getNumber());
@@ -84,89 +85,96 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
             tvPrice.setText(laobaoPurchased.getPurchasedMoney());
             tvMoney.setText(Integer.parseInt(laobaoPurchased.getNumber()) * Double.parseDouble(laobaoPurchased.getPurchasedMoney()) + "");
         }
-        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//3配件管理员
-            if (laobaoPurchased.getStatus().equals("2")) {
-                tvStatus.setText("待项目经理审批");
-                tvOperatorTitle.setText("申请时间");
-                tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));
-                btnOperator1.setText("撤销");
-                btnOperator2.setVisibility(View.GONE);
-            } else {
-                btnOperator1.setVisibility(View.GONE);
-                btnOperator2.setVisibility(View.GONE);
-                if (laobaoPurchased.getStatus().equals("1")) {
-                    tvStatus.setText("待总经理审批");
-                    tvOperatorTitle.setText("项目经理审批时间");
-                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
-                } else if (laobaoPurchased.getStatus().equals("0")) {
-                    tvStatus.setText("总经理已审批");
-                    tvOperatorTitle.setText("总经理审批时间");
-                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
-                }
-            }
-        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//2项目经理
-            if (laobaoPurchased.getStatus().equals("2")) {//待项目经理审批
-                tvStatus.setText("待项目经理审批");
-                tvOperatorTitle.setText("申请时间");
-                tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));
-                tvReason.setVisibility(View.VISIBLE);
-                etReason.setVisibility(View.VISIBLE);
-                btnOperator1.setText("同意");
-                btnOperator2.setText("拒绝");
-            } else {
-                btnOperator1.setVisibility(View.GONE);
-                btnOperator2.setVisibility(View.GONE);
-                if (laobaoPurchased.getStatus().equals("1")) {
-                    tvStatus.setText("待总经理审批");
-                    tvOperatorTitle.setText("项目经理审批时间");
-                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
-                } else if (laobaoPurchased.getStatus().equals("0")) {
-                    tvStatus.setText("总经理已审批");
-                    tvOperatorTitle.setText("总经理审批时间");
-                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
-                }
-            }
-        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//0总经理
-            if (laobaoPurchased.getStatus().equals("1")) {//待总经理审批
-                tvStatus.setText("待总经理审批");
-                tvOperatorTitle.setText("项目经理审批时间");
-                tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
-                tvReason.setVisibility(View.VISIBLE);
-                etReason.setVisibility(View.VISIBLE);
-                btnOperator1.setText("同意");
-                btnOperator2.setText("拒绝");
-            } else {
-                btnOperator1.setVisibility(View.GONE);
-                btnOperator2.setVisibility(View.GONE);
-                if (laobaoPurchased.getStatus().equals("2")) {//待项目经理审批
-                    tvStatus.setText("待项目经理审批");
-                    tvOperatorTitle.setText("申请时间");
-                    tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));
-                } else if (laobaoPurchased.getStatus().equals("0")) {
-                    tvStatus.setText("总经理已审批");
-                    tvOperatorTitle.setText("总经理审批时间");
-                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
-                }
-            }
-        }
+        tvPurchaseTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
+        tvAddress.setText(laobaoPurchased.getAddress());
 
-        if (laobaoPurchased.getStatus().equals("-1")) {
-            tvStatus.setText("已拒绝");
-            tvOperatorTitle.setText("拒绝时间");
-            tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
-            tvReason.setVisibility(View.VISIBLE);
-            etReason.setVisibility(View.VISIBLE);
-            etReason.setText(laobaoPurchased.getOpinion());
-            etReason.setEnabled(false);
-            btnOperator1.setVisibility(View.GONE);
-            btnOperator2.setVisibility(View.GONE);
-        } else if (laobaoPurchased.getStatus().equals("3")) {
-            tvStatus.setText("已撤销");
-            tvOperatorTitle.setText("撤销时间");
-            tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
-            btnOperator1.setVisibility(View.GONE);
-            btnOperator2.setVisibility(View.GONE);
-        }
+//        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//3配件管理员
+//            if (laobaoPurchased.getStatus().equals("2")) {
+//                tvStatus.setText("待项目经理审批");
+//                tvOperatorTitle.setText("申请时间");
+//                tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));
+//                btnOperator1.setText("撤销");
+//                btnOperator2.setVisibility(View.GONE);
+//            } else {
+//                btnOperator1.setVisibility(View.GONE);
+//                btnOperator2.setVisibility(View.GONE);
+//                if (laobaoPurchased.getStatus().equals("1")) {
+//                    tvStatus.setText("待总经理审批");
+//                    tvOperatorTitle.setText("项目经理审批时间");
+//                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
+//                } else if (laobaoPurchased.getStatus().equals("0")) {
+//                    tvStatus.setText("总经理已审批");
+//                    tvOperatorTitle.setText("总经理审批时间");
+//                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
+//                }
+//        }
+//        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2)
+//
+//        {//2项目经理
+//            if (laobaoPurchased.getStatus().equals("2")) {//待项目经理审批
+//                tvStatus.setText("待项目经理审批");
+//                tvOperatorTitle.setText("申请时间");
+//                tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));
+//                tvReason.setVisibility(View.VISIBLE);
+//                etReason.setVisibility(View.VISIBLE);
+//                btnOperator1.setText("同意");
+//                btnOperator2.setText("拒绝");
+//            } else {
+//                btnOperator1.setVisibility(View.GONE);
+//                btnOperator2.setVisibility(View.GONE);
+//                if (laobaoPurchased.getStatus().equals("1")) {
+//                    tvStatus.setText("待总经理审批");
+//                    tvOperatorTitle.setText("项目经理审批时间");
+//                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
+//                } else if (laobaoPurchased.getStatus().equals("0")) {
+//                    tvStatus.setText("总经理已审批");
+//                    tvOperatorTitle.setText("总经理审批时间");
+//                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
+//                }
+//            }
+//        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0)
+//
+//        {//0总经理
+//            if (laobaoPurchased.getStatus().equals("1")) {//待总经理审批
+//                tvStatus.setText("待总经理审批");
+//                tvOperatorTitle.setText("项目经理审批时间");
+//                tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
+//                tvReason.setVisibility(View.VISIBLE);
+//                etReason.setVisibility(View.VISIBLE);
+//                btnOperator1.setText("同意");
+//                btnOperator2.setText("拒绝");
+//            } else {
+//                btnOperator1.setVisibility(View.GONE);
+//                btnOperator2.setVisibility(View.GONE);
+//                if (laobaoPurchased.getStatus().equals("2")) {//待项目经理审批
+//                    tvStatus.setText("待项目经理审批");
+//                    tvOperatorTitle.setText("申请时间");
+//                    tvOperatorTime.setText(laobaoPurchased.getApplyTime().replace("T", " "));
+//                } else if (laobaoPurchased.getStatus().equals("0")) {
+//                    tvStatus.setText("总经理已审批");
+//                    tvOperatorTitle.setText("总经理审批时间");
+//                    tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
+//                }
+//            }
+//        }
+//
+//        if (laobaoPurchased.getStatus().equals("-1")) {
+//            tvStatus.setText("已拒绝");
+//            tvOperatorTitle.setText("拒绝时间");
+//            tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
+//            tvReason.setVisibility(View.VISIBLE);
+//            etReason.setVisibility(View.VISIBLE);
+//            etReason.setText(laobaoPurchased.getOpinion());
+//            etReason.setEnabled(false);
+//            btnOperator1.setVisibility(View.GONE);
+//            btnOperator2.setVisibility(View.GONE);
+//        } else if (laobaoPurchased.getStatus().equals("3")) {
+//            tvStatus.setText("已撤销");
+//            tvOperatorTitle.setText("撤销时间");
+//            tvOperatorTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
+//            btnOperator1.setVisibility(View.GONE);
+//            btnOperator2.setVisibility(View.GONE);
+//        }
 
     }
 
@@ -174,54 +182,54 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
         setTitle("工单详情");
     }
 
-    @OnClick({R.id.btn_operator1, R.id.btn_operator2})
-    public void viewClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_operator1:
-                String content = "";
-                if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-                    content = "是否同意当前申请？";
-                } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-                    content = "是否同意当前申请？";
-                } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
-                    content = "是否撤销当前申请？";
-                }
-                MAlertDialog.show(this, "提示", content, false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
-                    @Override
-                    public void onConfirmClick(String msg) {
-                        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
-                            canOrder();
-                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-                            approvalOrder(0);
-                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-                            approvalOrder(1);
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelClick() {
-
-                    }
-                }, true);
-
-
-                break;
-            case R.id.btn_operator2:
-                MAlertDialog.show(this, "提示", "是否拒绝当前申请？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
-                    @Override
-                    public void onConfirmClick(String msg) {
-                        approvalOrder(-1);
-                    }
-
-                    @Override
-                    public void onCancelClick() {
-
-                    }
-                }, true);
-                break;
-        }
-    }
+//    @OnClick({R.id.btn_operator1, R.id.btn_operator2})
+//    public void viewClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.btn_operator1:
+//                String content = "";
+//                if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+//                    content = "是否同意当前申请？";
+//                } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+//                    content = "是否同意当前申请？";
+//                } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
+//                    content = "是否撤销当前申请？";
+//                }
+//                MAlertDialog.show(this, "提示", content, false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+//                    @Override
+//                    public void onConfirmClick(String msg) {
+//                        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
+//                            canOrder();
+//                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+//                            approvalOrder(0);
+//                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+//                            approvalOrder(1);
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelClick() {
+//
+//                    }
+//                }, true);
+//
+//
+//                break;
+//            case R.id.btn_operator2:
+//                MAlertDialog.show(this, "提示", "是否拒绝当前申请？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+//                    @Override
+//                    public void onConfirmClick(String msg) {
+//                        approvalOrder(-1);
+//                    }
+//
+//                    @Override
+//                    public void onCancelClick() {
+//
+//                    }
+//                }, true);
+//                break;
+//        }
+//    }
 
     /**
      * 审批订单

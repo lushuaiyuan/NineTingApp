@@ -65,6 +65,27 @@ public class RentCarListFragment extends BaseFragment implements BaseQuickAdapte
 
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        myIsVisibleToUser = isVisibleToUser;
+        if (isVisibleToUser && getActivity() != null && rentCarEntities.size() == 0) {
+            if (UIUtils.isNetworkConnected()) {
+                showDia();
+                myIsVisibleToUser = false;
+                getRentCarList();
+            }
+        }
+    }
+
+    private boolean myIsVisibleToUser;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setUserVisibleHint(myIsVisibleToUser);
+    }
+
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
@@ -107,8 +128,6 @@ public class RentCarListFragment extends BaseFragment implements BaseQuickAdapte
                 getRentCarList();
             }
         });
-        showDia();
-        getRentCarList();
     }
 
     /**

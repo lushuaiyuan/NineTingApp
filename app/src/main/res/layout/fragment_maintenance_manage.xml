@@ -7,7 +7,7 @@
 
     <include layout="@layout/view_toolbar" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -38,42 +38,9 @@
                 android:paddingLeft="@dimen/dp16"
                 android:paddingRight="@dimen/dp16">
 
+
                 <RelativeLayout
                     android:id="@+id/rl_menu1"
-                    style="@style/home_menubg"
-                    android:background="@drawable/home_menu3_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu1"
-                        android:text="维修申请" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu2"
-                    style="@style/home_menubg"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:background="@drawable/home_menu4_selector">
-
-                    <TextView
-                        style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu4"
-                        android:text="维修记录" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp10"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16">
-
-                <RelativeLayout
-                    android:id="@+id/rl_menu3"
                     style="@style/home_menubg"
                     android:background="@drawable/home_menu5_selector">
 
@@ -84,22 +51,22 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_menu2"
                     style="@style/home_menubg"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:background="@drawable/home_menu7_selector"
-                    android:visibility="invisible">
+                    android:background="@drawable/home_menu2_selector">
 
                     <TextView
                         style="@style/home_menu"
-                        android:drawableLeft="@mipmap/icon_menu10"
-                        android:text="维修审批" />
+                        android:drawableLeft="@mipmap/icon_menu2"
+                        android:text="生产统计" />
                 </RelativeLayout>
-
             </LinearLayout>
+
 
         </LinearLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
 </LinearLayout>

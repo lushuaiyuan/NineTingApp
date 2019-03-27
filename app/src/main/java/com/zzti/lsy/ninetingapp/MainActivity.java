@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
                             mFragment = mFragments[3];
                         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
                             mFragment = mFragments[4];
-                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 1) {//车队长
                             mFragment = mFragments[5];
                         }
                         break;

@@ -10,7 +10,7 @@
         android:id="@+id/view_title"
         layout="@layout/view_toolbar" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -176,6 +176,6 @@
                 android:layout_marginTop="@dimen/dp16"
                 android:text="提交" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

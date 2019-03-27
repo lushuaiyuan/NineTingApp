@@ -40,6 +40,8 @@ public class LifeGoodsInActivity extends BaseActivity {
     EditText etGoodsName;
     @BindView(R.id.et_amount)
     EditText etAmount;
+    @BindView(R.id.et_alarmValue)
+    EditText etAlarmValue;
     @BindView(R.id.tv_priceTitle)
     TextView tvPriceTitle;
     @BindView(R.id.rl_price)
@@ -131,10 +133,6 @@ public class LifeGoodsInActivity extends BaseActivity {
             UIUtils.showT("数量不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvOperator.getText().toString())) {
-            UIUtils.showT("经手人不能为空");
-            return;
-        }
         if (StringUtil.isNullOrEmpty(etPrice.getText().toString())) {
             UIUtils.showT("单价不能为空");
             return;
@@ -143,8 +141,17 @@ public class LifeGoodsInActivity extends BaseActivity {
             UIUtils.showT("总金额不能为空");
             return;
         }
+        if (StringUtil.isNullOrEmpty(etAlarmValue.getText().toString())) {
+            UIUtils.showT("告警值不能为空");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(tvOperator.getText().toString())) {
+            UIUtils.showT("经手人不能为空");
+            return;
+        }
         laoBao.setLbName(etGoodsName.getText().toString());
         laoBao.setPrice(etPrice.getText().toString());
+        laoBao.setAlarmValue(etAlarmValue.getText().toString());
         laobaoPurchased.setNumber(etAmount.getText().toString());
         laobaoPurchased.setUserID(spUtils.getString(SpUtils.USERID, ""));
         hideSoftInput(etAmount);

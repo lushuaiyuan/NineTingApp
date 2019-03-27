@@ -79,7 +79,7 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         initView();
-        initPop();
+//        initPop();
         initData();
     }
 

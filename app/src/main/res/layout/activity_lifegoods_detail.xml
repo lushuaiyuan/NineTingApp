@@ -7,7 +7,7 @@
 
     <include layout="@layout/view_toolbar" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -41,9 +41,9 @@
                     <TextView
                         android:id="@+id/tv_goodsName"
                         android:layout_width="match_parent"
-                        android:layout_marginRight="@dimen/dp15"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp15"
+                        android:layout_marginRight="@dimen/dp15"
                         android:gravity="right"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp16" />
@@ -63,15 +63,24 @@
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp14" />
 
-                    <TextView
-                        android:id="@+id/tv_amount"
-                        android:layout_width="match_parent"
+
+                    <EditText
+                        android:id="@+id/et_amount"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp15"
                         android:layout_marginRight="@dimen/dp15"
+                        android:layout_weight="1"
+                        android:background="@drawable/input_shape_gray"
                         android:gravity="right"
+                        android:paddingBottom="@dimen/dp8"
+                        android:paddingLeft="@dimen/dp15"
+                        android:paddingRight="@dimen/dp15"
+                        android:paddingTop="@dimen/dp8"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp16" />
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -102,7 +111,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp20"
                     android:layout_marginLeft="@dimen/dp15"
                     android:layout_marginTop="@dimen/dp20"
                     android:gravity="center_vertical">
@@ -123,6 +131,40 @@
                         android:gravity="right"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp16" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="告警值"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp14" />
+
+                    <EditText
+                        android:id="@+id/et_alarmValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:layout_marginRight="@dimen/dp15"
+                        android:layout_weight="1"
+                        android:background="@drawable/input_shape_gray"
+                        android:gravity="right"
+                        android:paddingBottom="@dimen/dp8"
+                        android:paddingLeft="@dimen/dp15"
+                        android:paddingRight="@dimen/dp15"
+                        android:paddingTop="@dimen/dp8"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp16" />
+
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -152,6 +194,30 @@
                 android:textColor="@color/color_6bcfd6"
                 android:textSize="@dimen/dp15" />
 
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp40"
+                android:layout_marginRight="@dimen/dp40"
+                android:background="@drawable/btn_solid_shape"
+                android:text="提交"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp15" />
+
+            <Button
+                android:id="@+id/btn_alert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp40"
+                android:layout_marginRight="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp15"
+                android:background="@drawable/btn_empty_shape"
+                android:text="修改"
+                android:textColor="@color/color_6bcfd6"
+                android:textSize="@dimen/dp15" />
+
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

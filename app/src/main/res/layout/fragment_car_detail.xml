@@ -5,7 +5,7 @@
     android:background="@color/color_f5f5f5"
     android:orientation="vertical">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="false"
@@ -324,5 +324,5 @@
                 android:layout_marginTop="@dimen/dp20"
                 android:text="保存" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
