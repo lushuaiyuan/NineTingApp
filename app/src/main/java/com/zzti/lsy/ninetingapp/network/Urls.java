@@ -48,7 +48,8 @@ public class Urls {
     public final static String PARTS_GETLAOBAOOUT = BASE_URL + "/Parts/Parts.asmx/GetLaoBaoOut";//获取劳保品出库工单列表
     public final static String PARTS_CANCELLAOBAO = BASE_URL + "/Parts/Parts.asmx/CancelLaobao";//撤销劳保品入库工单
     public final static String PARTS_CONFIRMSTORAGE = BASE_URL + "/Parts/Parts.asmx/ConfirmStorage";//确认入库工单
-
+    public final static String PARTS_UPDATEALARM = BASE_URL + "/Parts/Parts.asmx/UpdateAlarm";//修改库存告警值
+    public final static String PARTS_UPDATENUMBER = BASE_URL + "/Parts/Parts.asmx/UpdateNumber";//提交修改库存值
 
     //项目经理
     public final static String APPROVE_GETPARTSIN = BASE_URL + "/Approve/Approve.asmx/GetPartsIn";//获取配件入库工单列表

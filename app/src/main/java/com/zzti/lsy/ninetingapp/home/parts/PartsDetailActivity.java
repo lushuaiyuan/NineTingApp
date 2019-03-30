@@ -6,11 +6,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
+import com.zzti.lsy.ninetingapp.network.OkHttpManager;
+import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
+import com.zzti.lsy.ninetingapp.view.MAlertDialog;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -60,7 +71,7 @@ public class PartsDetailActivity extends BaseActivity {
         tvTotalMoney.setText(Integer.parseInt(partsInfoEntity.getPartsNumber()) * Double.parseDouble(partsInfoEntity.getPurchasedPrice()) + "");
     }
 
-    @OnClick({R.id.btn_in, R.id.btn_out, R.id.btn_outRecord})
+    @OnClick({R.id.btn_in, R.id.btn_out, R.id.btn_outRecord,R.id.btn_submit,R.id.btn_alert})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.btn_in://入库
@@ -84,7 +95,108 @@ public class PartsDetailActivity extends BaseActivity {
                 intent3.putExtra("PartsID", partsInfoEntity.getPartsID());
                 startActivity(intent3);
                 break;
+            case R.id.btn_submit:
+                MAlertDialog.show(this, "温馨提示", "是否提交库存数量？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirmClick(String msg) {
+                        alertNumber();
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
+                    }
+                }, true);
+                break;
+            case R.id.btn_alert://修改告警值
+                MAlertDialog.show(this, "温馨提示", "是否修改库存告警值？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirmClick(String msg) {
+                        alertAlarmNumber();
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+
+                    }
+                }, true);
+                break;
         }
+    }
+
+
+
+    /**
+     * 修改库存值
+     */
+    private void alertNumber() {
+        showDia();
+        partsInfoEntity.setPartsNumber(etAmount.getText().toString());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("jsonList", new Gson().toJson(partsInfoEntity));
+        params.put("type", "0");
+        OkHttpManager.postFormBody(Urls.PARTS_UPDATENUMBER, params, tvFactory, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                showDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    finish();
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
+    }
+
+    /**
+     * 修改告警值
+     */
+    private void alertAlarmNumber() {
+        showDia();
+        partsInfoEntity.setAlarmNumber(etAlarmValue.getText().toString());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("type", "0");
+        params.put("json", new Gson().toJson(partsInfoEntity));
+        OkHttpManager.postFormBody(Urls.PARTS_UPDATEALARM, params, tvFactory, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    EventBus.getDefault().post(new EventMessage(C.EventCode.H, null));
+                    finish();
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+            }
+        });
     }
 
 

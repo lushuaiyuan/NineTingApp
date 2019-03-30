@@ -198,6 +198,7 @@ public class LifeGoodsListActivity extends BaseActivity implements View.OnClickL
         if (paramEventCenter.getEventCode() == C.EventCode.A && (Boolean) paramEventCenter.getData()) {
             finish();
         } else if (paramEventCenter.getEventCode() == C.EventCode.G) {
+            lifeGoodEntities.clear();
             getLaoBaoList();
         }
     }
