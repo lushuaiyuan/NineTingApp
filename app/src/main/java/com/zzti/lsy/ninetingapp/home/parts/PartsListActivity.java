@@ -80,7 +80,7 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         partsInfoEntities = new ArrayList<>();
         partsListAdapter = new PartsListAdapter(partsInfoEntities);
-        partsListAdapter.setTag(tag);
+//        partsListAdapter.setTag(tag);
         mRecycleView.setAdapter(partsListAdapter);
         partsListAdapter.setOnItemClickListener(this);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

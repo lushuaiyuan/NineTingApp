@@ -19,23 +19,23 @@ public class LaobaoPurchased implements Serializable {
     private String staffName;//经手人名称
     private String projectName;//项目部
     private String lbName;//名称
-    private String address;//发货地
-    private String receipts;//单据号
+    private String shipaddr;//发货地
+    private String receiptNo;//单据号
 
-    public String getAddress() {
-        return address;
+    public String getShipaddr() {
+        return shipaddr;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setShipaddr(String shipaddr) {
+        this.shipaddr = shipaddr;
     }
 
-    public String getReceipts() {
-        return receipts;
+    public String getReceiptNo() {
+        return receiptNo;
     }
 
-    public void setReceipts(String receipts) {
-        this.receipts = receipts;
+    public void setReceiptNo(String receiptNo) {
+        this.receiptNo = receiptNo;
     }
 
     public String getApplyTime() {

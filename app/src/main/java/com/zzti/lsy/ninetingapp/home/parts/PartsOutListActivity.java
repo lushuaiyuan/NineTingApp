@@ -62,7 +62,7 @@ public class PartsOutListActivity extends BaseActivity implements BaseQuickAdapt
         partsEntities = new ArrayList<>();
         partsListAdapter = new PartsListAdapter(partsEntities);
         mRecycleView.setAdapter(partsListAdapter);
-        partsListAdapter.setTag(1);
+//        partsListAdapter.setTag(1);
         partsListAdapter.setOnItemClickListener(this);
     }
 

@@ -23,6 +23,25 @@ public class PartsPurchased implements Serializable {
     private String partsModel;//配件类型
     private String projectName;//项目部名称
     private String FactoryName;//生产厂家名称
+    private String receiptNo;//单据号
+    private String alarmNumber;//告警值
+
+    public String getAlarmNumber() {
+        return alarmNumber;
+    }
+
+    public void setAlarmNumber(String alarmNumber) {
+        this.alarmNumber = alarmNumber;
+    }
+
+    public String getReceiptNo() {
+        return receiptNo;
+    }
+
+    public void setReceiptNo(String receiptNo) {
+        this.receiptNo = receiptNo;
+    }
+
 
     public String getStatus() {
         return status;

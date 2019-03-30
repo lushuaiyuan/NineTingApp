@@ -160,6 +160,22 @@
 
             <TextView
                 style="@style/MyEditTextTitle"
+                android:text="告警值" />
+
+            <EditText
+                android:id="@+id/et_alarmValue"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="单据号" />
+
+            <EditText
+                android:id="@+id/et_receiptNo"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
                 android:text="经手人" />
 
             <TextView

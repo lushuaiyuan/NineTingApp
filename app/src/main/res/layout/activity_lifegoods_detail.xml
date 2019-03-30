@@ -43,7 +43,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp15"
-                        android:layout_marginRight="@dimen/dp15"
+                        android:layout_marginRight="@dimen/dp30"
                         android:gravity="right"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp16" />
@@ -102,7 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp15"
-                        android:layout_marginRight="@dimen/dp15"
+                        android:layout_marginRight="@dimen/dp30"
                         android:gravity="right"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp16" />
@@ -127,7 +127,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp15"
-                        android:layout_marginRight="@dimen/dp15"
+                        android:layout_marginRight="@dimen/dp30"
                         android:gravity="right"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp16" />
@@ -163,8 +163,6 @@
                         android:paddingTop="@dimen/dp8"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp16" />
-
-
                 </LinearLayout>
 
             </LinearLayout>
@@ -173,9 +171,9 @@
                 android:id="@+id/btn_out"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp40"
-                android:layout_marginRight="@dimen/dp40"
-                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
                 android:background="@drawable/btn_solid_shape"
                 android:text="出库"
                 android:textColor="@color/color_white"
@@ -185,23 +183,23 @@
                 android:id="@+id/btn_outRecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp40"
-                android:layout_marginRight="@dimen/dp40"
-                android:layout_marginTop="@dimen/dp15"
-                android:background="@drawable/btn_empty_shape"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:background="@drawable/btn_solid_shape"
                 android:text="出库记录"
-                android:textColor="@color/color_6bcfd6"
+                android:textColor="@color/color_white"
                 android:textSize="@dimen/dp15" />
 
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp40"
-                android:layout_marginRight="@dimen/dp40"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
                 android:background="@drawable/btn_solid_shape"
-                android:text="提交"
+                android:text="提交库存修改"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/dp15" />
 
@@ -209,15 +207,15 @@
                 android:id="@+id/btn_alert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp40"
-                android:layout_marginRight="@dimen/dp40"
-                android:layout_marginTop="@dimen/dp15"
-                android:background="@drawable/btn_empty_shape"
-                android:text="修改"
-                android:textColor="@color/color_6bcfd6"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:background="@drawable/btn_solid_shape"
+                android:text="修改告警值"
+                android:textColor="@color/color_white"
                 android:textSize="@dimen/dp15" />
 
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

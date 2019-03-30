@@ -124,6 +124,7 @@
 
 
             </RelativeLayout>
+
             <TextView
                 style="@style/MyEditTextTitle"
                 android:text="告警值" />
@@ -132,6 +133,23 @@
                 android:id="@+id/et_alarmValue"
                 style="@style/MyEditText"
                 android:inputType="number" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="单据号" />
+
+            <EditText
+                android:id="@+id/et_receiptNo"
+                style="@style/MyEditText" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="发货地" />
+
+            <EditText
+                android:id="@+id/et_address"
+                style="@style/MyEditText" />
+
             <TextView
                 style="@style/MyEditTextTitle"
                 android:text="经手人" />

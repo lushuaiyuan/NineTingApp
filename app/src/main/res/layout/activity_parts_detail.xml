@@ -44,10 +44,11 @@
                         android:id="@+id/tv_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp15"
                         android:gravity="right"
                         android:text="多大的"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/dp15" />
+                        android:textSize="@dimen/dp16" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -68,10 +69,11 @@
                         android:id="@+id/tv_model"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp15"
                         android:gravity="right"
                         android:text="多大的"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/dp15" />
+                        android:textSize="@dimen/dp16" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -92,10 +94,11 @@
                         android:id="@+id/tv_factory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp15"
                         android:gravity="right"
                         android:text="多大的"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/dp15" />
+                        android:textSize="@dimen/dp16" />
                 </LinearLayout>
 
 
@@ -117,10 +120,11 @@
                         android:id="@+id/tv_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp15"
                         android:gravity="right"
                         android:text="多大的"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/dp15" />
+                        android:textSize="@dimen/dp16" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -137,14 +141,20 @@
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
-                    <TextView
-                        android:id="@+id/tv_amount"
-                        android:layout_width="match_parent"
+                    <EditText
+                        android:id="@+id/et_amount"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:layout_weight="1"
+                        android:background="@drawable/input_shape_gray"
                         android:gravity="right"
-                        android:text="多大的"
+                        android:paddingBottom="@dimen/dp8"
+                        android:paddingLeft="@dimen/dp15"
+                        android:paddingRight="@dimen/dp15"
+                        android:paddingTop="@dimen/dp8"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/dp15" />
+                        android:textSize="@dimen/dp16" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -165,56 +175,106 @@
                         android:id="@+id/tv_totalMoney"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp15"
                         android:gravity="right"
                         android:text="多大的"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/dp15" />
+                        android:textSize="@dimen/dp16" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp15"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="告警值"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp14" />
+
+                    <EditText
+                        android:id="@+id/et_alarmValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:layout_weight="1"
+                        android:background="@drawable/input_shape_gray"
+                        android:gravity="right"
+                        android:paddingBottom="@dimen/dp8"
+                        android:paddingLeft="@dimen/dp15"
+                        android:paddingRight="@dimen/dp15"
+                        android:paddingTop="@dimen/dp8"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp16" />
                 </LinearLayout>
 
 
             </LinearLayout>
 
 
-            <LinearLayout
+            <Button
+                android:id="@+id/btn_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp20"
-                android:gravity="center_vertical">
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_weight="1"
+                android:background="@drawable/btn_solid_shape"
+                android:text="采购"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp14" />
 
-                <Button
-                    android:id="@+id/btn_in"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp20"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_solid_shape"
-                    android:text="采购"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dp15" />
+            <Button
+                android:id="@+id/btn_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:background="@drawable/btn_solid_shape"
+                android:text="出库"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp14" />
 
-                <Button
-                    android:id="@+id/btn_out"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp20"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_solid_shape"
-                    android:text="出库"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dp15" />
+            <Button
+                android:id="@+id/btn_outRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:background="@drawable/btn_solid_shape"
+                android:text="出库记录"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp14" />
 
-                <Button
-                    android:id="@+id/btn_outRecord"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp20"
-                    android:layout_marginRight="@dimen/dp20"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_empty_shape"
-                    android:text="出库记录"
-                    android:textColor="@color/color_6bcfd7"
-                    android:textSize="@dimen/dp15" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:background="@drawable/btn_solid_shape"
+                android:text="提交库存修改"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp14" />
+
+            <Button
+                android:id="@+id/btn_alert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:background="@drawable/btn_solid_shape"
+                android:text="修改告警值"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dp14" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

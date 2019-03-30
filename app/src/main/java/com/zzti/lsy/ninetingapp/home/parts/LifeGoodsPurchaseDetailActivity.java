@@ -1,7 +1,6 @@
 package com.zzti.lsy.ninetingapp.home.parts;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,17 +15,14 @@ import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
-import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
-import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @author lsy
@@ -77,7 +73,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
      */
     private void initData() {
         laobaoPurchased = (LaobaoPurchased) getIntent().getSerializableExtra("laobaoPurchased");
-        tvReceipts.setText(laobaoPurchased.getReceipts());
+        tvReceipts.setText(laobaoPurchased.getReceiptNo());
         tvGoodsName.setText(laobaoPurchased.getLbName());
         tvOperator.setText(laobaoPurchased.getStaffName());
         tvAmount.setText(laobaoPurchased.getNumber());
@@ -86,7 +82,7 @@ public class LifeGoodsPurchaseDetailActivity extends BaseActivity {
             tvMoney.setText(Integer.parseInt(laobaoPurchased.getNumber()) * Double.parseDouble(laobaoPurchased.getPurchasedMoney()) + "");
         }
         tvPurchaseTime.setText(laobaoPurchased.getPurchasedDate().replace("T", " "));
-        tvAddress.setText(laobaoPurchased.getAddress());
+        tvAddress.setText(laobaoPurchased.getShipaddr());
 
 //        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//3配件管理员
 //            if (laobaoPurchased.getStatus().equals("2")) {

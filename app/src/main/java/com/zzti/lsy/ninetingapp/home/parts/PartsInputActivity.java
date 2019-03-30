@@ -32,8 +32,6 @@ import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.FactoryAdapter;
-import com.zzti.lsy.ninetingapp.home.generalmanager.PactInputActivity;
-import com.zzti.lsy.ninetingapp.home.repair.RepairRequestActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
@@ -85,7 +83,10 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
     TextView tvTotalMoney;
     @BindView(R.id.tv_operator)
     TextView tvOperator;
-
+    @BindView(R.id.et_alarmValue)
+    EditText etAlarmValue;
+    @BindView(R.id.et_receiptNo)
+    EditText etReceiptNo;
     //生产厂家pop
     private PopupWindow popupWindowFactory;
     private ListView mListViewFactory;
@@ -134,6 +135,8 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
             partsPurchased.setpType("1");//代表入库
             partsPurchased.setPartsID(partsInfoEntity.getPartsID());
             partsPurchased.setPurchasedPrice(partsInfoEntity.getPurchasedPrice());
+            etAlarmValue.setEnabled(false);
+            etAlarmValue.setText(partsInfoEntity.getAlarmNumber());
         } else {//录入
             etPrice.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -324,11 +327,22 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                         UIUtils.showT("总金额不能为空");
                         return;
                     }
+                    if (StringUtil.isNullOrEmpty(etAlarmValue.getText().toString())) {
+                        UIUtils.showT("告警值不能为空");
+                        return;
+                    }
+                    if (StringUtil.isNullOrEmpty(etReceiptNo.getText().toString())) {
+                        UIUtils.showT("单据号不能为空");
+                        return;
+                    }
+
+
                     partsInfoEntity.setPartsName(etPartsName.getText().toString());
                     partsInfoEntity.setPartsModel(etModel.getText().toString());
                     partsInfoEntity.setFactoryID(factoryID);
-
+                    partsInfoEntity.setAlarmNumber(etAlarmValue.getText().toString());
                     partsPurchased.setPurchasedPrice(etPrice.getText().toString());
+                    partsPurchased.setReceiptNo(etReceiptNo.getText().toString());
                 }
                 partsPurchased.setPurchasedChanel(etWay.getText().toString());
                 partsPurchased.setNumber(etAmount.getText().toString());
@@ -387,6 +401,7 @@ public class PartsInputActivity extends BaseActivity implements PopupWindow.OnDi
                         etModel.getText().clear();
                         etPrice.getText().clear();
                         etAmount.getText().clear();
+                        etReceiptNo.getText().clear();
                         tvTotalMoney.setText("");
                     } else {//入库
                         finish();

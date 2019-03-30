@@ -3,6 +3,7 @@ package com.zzti.lsy.ninetingapp.home.parts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
@@ -27,10 +28,12 @@ public class PartsDetailActivity extends BaseActivity {
     TextView tvFactory;
     @BindView(R.id.tv_price)
     TextView tvPrice;
-    @BindView(R.id.tv_amount)
-    TextView tvAmount;
+    @BindView(R.id.et_amount)
+    EditText etAmount;
     @BindView(R.id.tv_totalMoney)
     TextView tvTotalMoney;
+    @BindView(R.id.et_alarmValue)
+    EditText etAlarmValue;
 
     private PartsInfoEntity partsInfoEntity;
 
@@ -47,7 +50,9 @@ public class PartsDetailActivity extends BaseActivity {
 
     private void initData() {
         partsInfoEntity = (PartsInfoEntity) getIntent().getSerializableExtra("PartsInfo");
-        tvAmount.setText(partsInfoEntity.getPartsNumber());
+        etAmount.setText(partsInfoEntity.getPartsNumber());
+        etAmount.setSelection(etAmount.getText().toString().length());
+        etAlarmValue.setText(partsInfoEntity.getAlarmNumber());
         tvFactory.setText(partsInfoEntity.getFactoryName());
         tvModel.setText(partsInfoEntity.getPartsModel());
         tvName.setText(partsInfoEntity.getPartsName());

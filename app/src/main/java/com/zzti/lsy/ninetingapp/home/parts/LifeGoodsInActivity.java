@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,8 +15,6 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.LaoBao;
 import com.zzti.lsy.ninetingapp.entity.LaobaoPurchased;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
-import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
-import com.zzti.lsy.ninetingapp.entity.PartsPurchased;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
@@ -56,6 +53,10 @@ public class LifeGoodsInActivity extends BaseActivity {
     TextView tvTotalMoney;
     @BindView(R.id.tv_operator)
     TextView tvOperator;
+    @BindView(R.id.et_receiptNo)
+    EditText etReceiptNo;
+    @BindView(R.id.et_address)
+    EditText etAddress;
     private LaoBao laoBao;
     private LaobaoPurchased laobaoPurchased;
 
@@ -145,14 +146,24 @@ public class LifeGoodsInActivity extends BaseActivity {
             UIUtils.showT("告警值不能为空");
             return;
         }
+        if (StringUtil.isNullOrEmpty(etReceiptNo.getText().toString())) {
+            UIUtils.showT("单据号不能为空");
+            return;
+        }
         if (StringUtil.isNullOrEmpty(tvOperator.getText().toString())) {
             UIUtils.showT("经手人不能为空");
             return;
         }
+        if (StringUtil.isNullOrEmpty(etAddress.getText().toString())) {
+            UIUtils.showT("发货地不能为空");
+            return;
+        }
         laoBao.setLbName(etGoodsName.getText().toString());
         laoBao.setPrice(etPrice.getText().toString());
-        laoBao.setAlarmValue(etAlarmValue.getText().toString());
+        laoBao.setAlarmNumber(etAlarmValue.getText().toString());
         laobaoPurchased.setNumber(etAmount.getText().toString());
+        laobaoPurchased.setReceiptNo(etReceiptNo.getText().toString());
+        laobaoPurchased.setShipaddr(etAddress.getText().toString());
         laobaoPurchased.setUserID(spUtils.getString(SpUtils.USERID, ""));
         hideSoftInput(etAmount);
         if (UIUtils.isNetworkConnected()) {
@@ -180,6 +191,7 @@ public class LifeGoodsInActivity extends BaseActivity {
                     etGoodsName.getText().clear();
                     etPrice.getText().clear();
                     etAmount.getText().clear();
+                    etReceiptNo.getText().clear();
                     tvTotalMoney.setText("");
                     UIUtils.showT("提交成功");
                     Intent intent = new Intent(LifeGoodsInActivity.this, SuccessActivity.class);

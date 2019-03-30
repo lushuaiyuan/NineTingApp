@@ -12,14 +12,14 @@ public class LaoBao implements Serializable {
     private String laobaoNumber;/// 劳保数量 返回值
     private String projectName; /// 项目部名称 返回值
     private String status;
-    private String alarmValue;//告警值
+    private String alarmNumber;//告警值
 
-    public String getAlarmValue() {
-        return alarmValue;
+    public String getAlarmNumber() {
+        return alarmNumber;
     }
 
-    public void setAlarmValue(String alarmValue) {
-        this.alarmValue = alarmValue;
+    public void setAlarmNumber(String alarmNumber) {
+        this.alarmNumber = alarmNumber;
     }
 
     public int getLpID() {

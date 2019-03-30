@@ -82,7 +82,7 @@ public class PartsPurchaseListActivity extends BaseActivity implements View.OnCl
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         initView();
-        initPop();
+//        initPop();
         initData();
     }
 

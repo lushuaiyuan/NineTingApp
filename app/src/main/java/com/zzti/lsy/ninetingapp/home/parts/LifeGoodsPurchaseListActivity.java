@@ -65,7 +65,7 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
     private LifeGoodsPurcheaseListAdapter lifeGoodsPurcheaseListAdapter;
     private int pageIndex = 1;//页码
     private String wherestr = "";//查询条件
-    private String status = "";
+//    private String status = "";
     private PopupWindow popupWindowStatus;
     private ListView lvStatus;
     private ConditionAdapter conditionAdapter;
@@ -153,11 +153,12 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
                 laobaoPurchaseds.clear();
                 etSearch.setText("");
                 wherestr = "";
-                status = "";
+//                status = "";
                 tvStatus.setText("");
                 getPurchaseList();
             }
         });
+//        wherestr += " and status=" + status;
         showDia();
         getPurchaseList();
     }
@@ -168,16 +169,16 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
             tvToolbarMenu.setVisibility(View.VISIBLE);
             tvToolbarMenu.setText("采购");
             tvToolbarMenu.setOnClickListener(this);
-        } else {
-            if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-                tvStatus.setText("待总经理审批");
-                status = "1";
-            } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-                tvStatus.setText("待项目经理审批");
-                status = "2";
-            }
-            wherestr += " and status=" + status;
         }
+//        else {
+//            if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+//                tvStatus.setText("待总经理审批");
+//                status = "1";
+//            } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+//                tvStatus.setText("待项目经理审批");
+//                status = "2";
+//            }
+//        }
     }
 
     @OnClick({R.id.iv_search, R.id.tv_status})
@@ -191,9 +192,9 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
                 }
                 wherestr = "";
                 pageIndex = 1;
-                if (!StringUtil.isNullOrEmpty(status)) {
-                    wherestr += " and status=" + status;
-                }
+//                if (!StringUtil.isNullOrEmpty(status)) {
+//                    wherestr += " and status=" + status;
+//                }
                 wherestr += " and lbName like \'%" + etSearch.getText().toString() + "%\'";
                 showDia();
                 laobaoPurchaseds.clear();
@@ -212,8 +213,8 @@ public class LifeGoodsPurchaseListActivity extends BaseActivity implements Adapt
         wherestr = "";
         pageIndex = 1;
         tvStatus.setText(conditions.get(i).getName());
-        status = conditions.get(i).getId();
-        wherestr += " and status=" + status;
+//        status = conditions.get(i).getId();
+//        wherestr += " and status=" + status;
         if (!StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
             wherestr += " and lbName like \'%" + etSearch.getText().toString() + "%\'";
         }

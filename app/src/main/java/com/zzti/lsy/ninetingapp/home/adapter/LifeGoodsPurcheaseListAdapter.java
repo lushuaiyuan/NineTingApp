@@ -20,7 +20,7 @@ public class LifeGoodsPurcheaseListAdapter extends BaseQuickAdapter<LaobaoPurcha
         helper.setText(R.id.tv_goodsName, item.getLbName())
                 .setText(R.id.tv_amount, item.getNumber())
                 .setText(R.id.tv_price, item.getPurchasedMoney())
-                .setText(R.id.tv_address, item.getAddress())
+                .setText(R.id.tv_address, item.getShipaddr())
                 .setText(R.id.tv_inTime, item.getPurchasedDate().replace("T", " "));
 
         //（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过 -1为拒绝）

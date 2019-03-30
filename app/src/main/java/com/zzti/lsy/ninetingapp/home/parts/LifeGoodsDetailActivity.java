@@ -11,7 +11,6 @@ import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.LaoBao;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
-import com.zzti.lsy.ninetingapp.utils.SpUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,7 +50,7 @@ public class LifeGoodsDetailActivity extends BaseActivity {
         tvPrice.setText(laoBao.getPrice());
         etAmount.setText(laoBao.getLaobaoNumber());
         etAmount.setSelection(etAmount.getText().length());
-        etAlarmValue.setText(laoBao.getAlarmValue());
+        etAlarmValue.setText(laoBao.getAlarmNumber());
         etAlarmValue.setSelection(etAlarmValue.getText().length());
         tvMoney.setText(Integer.parseInt(laoBao.getLaobaoNumber()) * Double.parseDouble(laoBao.getPrice()) + "");
     }
