@@ -47,7 +47,7 @@
                     <TextView
                         style="@style/home_menu"
                         android:drawableLeft="@mipmap/icon_menu5"
-                        android:text="维修统计" />
+                        android:text="维修记录" />
                 </RelativeLayout>
 
                 <RelativeLayout

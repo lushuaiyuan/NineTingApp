@@ -31,6 +31,7 @@ import com.zzti.lsy.ninetingapp.home.generalmanager.ApprovalActivity;
 import com.zzti.lsy.ninetingapp.home.generalmanager.PactListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
 import com.zzti.lsy.ninetingapp.home.production.ProductStatisticsActivity;
+import com.zzti.lsy.ninetingapp.home.repair.RepairRecordActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
@@ -283,30 +284,29 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         return fragment;
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu6, R.id.rl_menu7, R.id.rl_menu8, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.rl_menu7, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
     public void viewClick(View view) {
         switch (view.getId()) {
-            case R.id.rl_menu1://设备列表
-                startActivity(new Intent(mActivity, DeviceListActivity.class));
-                break;
-            case R.id.rl_menu2://配件列表
-                startActivity(new Intent(mActivity, PartsListActivity.class));
-                break;
-                //TODO
-//            case R.id.rl_menu3://采购审批  包含配件审批 日用品审批 维修审批
-//                startActivity(new Intent(mActivity, ApprovalActivity.class));
-//                break;
-            case R.id.rl_menu3://数据修改授权
+            case R.id.rl_menu1://授权
                 startActivity(new Intent(mActivity, AuthorizationActivity.class));
                 break;
-            case R.id.rl_menu6://生产统计
-                startActivity(new Intent(mActivity, ProductStatisticsActivity.class));
+            case R.id.rl_menu2://款项
+                startActivity(new Intent(mActivity, PactListActivity.class));
                 break;
-            case R.id.rl_menu7://维修统计
+            case R.id.rl_menu3://配件列表
+                startActivity(new Intent(mActivity, PartsListActivity.class));
+                break;
+            case R.id.rl_menu4://设备列表
+                startActivity(new Intent(mActivity, DeviceListActivity.class));
+                break;
+            case R.id.rl_menu5://维修列表
+                startActivity(new Intent(mActivity, RepairRecordActivity.class));
+                break;
+            case R.id.rl_menu6://维修统计
                 startActivity(new Intent(mActivity, MaintenanceStatisticActivity.class));
                 break;
-            case R.id.rl_menu8://收款模块
-                startActivity(new Intent(mActivity, PactListActivity.class));
+            case R.id.rl_menu7://生产统计
+                startActivity(new Intent(mActivity, ProductStatisticsActivity.class));
                 break;
             case R.id.tv_lookMore_ns:
                 Intent intent1 = new Intent(mActivity, BxNsActivity.class);

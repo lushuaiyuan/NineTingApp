@@ -7,6 +7,7 @@ import android.view.View;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.home.pm.MaintenanceStatisticActivity;
+import com.zzti.lsy.ninetingapp.home.production.ProductRecordActivity;
 import com.zzti.lsy.ninetingapp.home.production.ProductStatisticsActivity;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -32,12 +33,11 @@ public class RepairManageFragment extends BaseFragment {
     }
 
 
-
     @OnClick({R.id.rl_menu1, R.id.rl_menu2})
     public void viewClick(View view) {
         switch (view.getId()) {
-            case R.id.rl_menu1: //维修统计
-                startActivity(new Intent(mActivity, MaintenanceStatisticActivity.class));
+            case R.id.rl_menu1: //生产记录
+                startActivity(new Intent(mActivity, ProductRecordActivity.class));
                 break;
             case R.id.rl_menu2://生产统计
                 startActivity(new Intent(mActivity, ProductStatisticsActivity.class));
