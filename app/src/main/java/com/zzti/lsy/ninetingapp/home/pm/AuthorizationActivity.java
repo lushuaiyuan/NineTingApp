@@ -1,19 +1,24 @@
 package com.zzti.lsy.ninetingapp.home.pm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.TitleFragmentPagerAdapter;
+import com.zzti.lsy.ninetingapp.home.device.DeviceFormActivity;
+import com.zzti.lsy.ninetingapp.home.production.FormListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author lsy
@@ -52,5 +57,14 @@ public class AuthorizationActivity extends BaseActivity {
     }
 
     private void initView() {
+    }
+
+    @OnClick({R.id.iv_toolbarBack})
+    public void viewClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_toolbarBack:
+                finish();
+                break;
+        }
     }
 }

@@ -371,7 +371,6 @@ public class RepertoryListFragment extends BaseFragment implements AdapterView.O
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        //TODO 进入详情
         UpdateApply updateApply = updateApplies.get(position);
         Intent intent = new Intent(mActivity, UpdateApplyDetailActivity.class);
         intent.putExtra("updateApply", updateApply);
