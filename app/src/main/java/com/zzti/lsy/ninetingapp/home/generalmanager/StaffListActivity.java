@@ -62,6 +62,7 @@ public class StaffListActivity extends BaseActivity implements BaseQuickAdapter.
     TextView tvProjectName;
     private List<StaffEntity> staffEntities;
     private StaffAdapter staffAdapter;
+    private int type;
 
     @Override
     public int getContentViewId() {
@@ -76,6 +77,7 @@ public class StaffListActivity extends BaseActivity implements BaseQuickAdapter.
 
     private void initData() {
         final String projectID = UIUtils.getStr4Intent(this, "projectID");
+        type = UIUtils.getInt4Intent(this, "TYPE");
         tvProjectName.setText(UIUtils.getStr4Intent(this, "projectName"));
         staffEntities = new ArrayList<>();
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
@@ -141,30 +143,37 @@ public class StaffListActivity extends BaseActivity implements BaseQuickAdapter.
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        final String phoneNumber = staffEntities.get(position).getStaffPhoneNumber();
-        MAlertDialog.show(this, "提示", "是否拨打联系人" + staffEntities.get(position).getStaffName() + "的电话", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
-            @Override
-            public void onConfirmClick(String msg) {
-                requestPermission(Permission.CALL_PHONE);
-                Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));//直接拨打电话
-                if (ActivityCompat.checkSelfPermission(StaffListActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
+        if (type == 1) {
+            Intent intent = new Intent();
+            intent.putExtra("wearName", staffEntities.get(position).getStaffName());
+            setResult(2,intent);
+            finish();
+        }else {
+            final String phoneNumber = staffEntities.get(position).getStaffPhoneNumber();
+            MAlertDialog.show(this, "提示", "是否拨打联系人" + staffEntities.get(position).getStaffName() + "的电话", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                @Override
+                public void onConfirmClick(String msg) {
+                    requestPermission(Permission.CALL_PHONE);
+                    Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));//直接拨打电话
+                    if (ActivityCompat.checkSelfPermission(StaffListActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    StaffListActivity.this.startActivity(dialIntent);
                 }
-                StaffListActivity.this.startActivity(dialIntent);
-            }
 
-            @Override
-            public void onCancelClick() {
+                @Override
+                public void onCancelClick() {
 
-            }
-        }, true);
+                }
+            }, true);
+        }
     }
 
 

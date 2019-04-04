@@ -387,6 +387,8 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
         } else if (flag == 1) {
             Intent intent = new Intent();
             intent.putExtra("carNumber", carInfoEntities.get(position).getPlateNumber());
+            intent.putExtra("carType", carInfoEntities.get(position).getVehicleTypeName());
+            intent.putExtra("carTypeID", carInfoEntities.get(position).getCarTypeID());
             mActivity.setResult(2, intent);
             mActivity.finish();
         } else if (flag == 2) {
