@@ -1,7 +1,9 @@
 package com.zzti.lsy.ninetingapp.home.device;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -46,6 +48,27 @@ public class NsFragment extends BaseFragment implements BaseQuickAdapter.OnItemC
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        myIsVisibleToUser = isVisibleToUser;
+        if (isVisibleToUser && getActivity() != null && homeHintEntities.size() == 0) {
+            if (UIUtils.isNetworkConnected()) {
+                showDia();
+                myIsVisibleToUser = false;
+                getCarExpire();
+            }
+        }
+    }
+
+    private boolean myIsVisibleToUser;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setUserVisibleHint(myIsVisibleToUser);
+    }
+
+
+    @Override
     protected void initView() {
         smartRefreshLayout.setEnableRefresh(true);
         smartRefreshLayout.setEnableLoadMore(false);
@@ -69,8 +92,6 @@ public class NsFragment extends BaseFragment implements BaseQuickAdapter.OnItemC
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
             }
         });
-        showDia();
-        getCarExpire();
     }
 
     /**

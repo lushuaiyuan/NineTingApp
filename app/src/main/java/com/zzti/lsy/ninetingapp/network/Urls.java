@@ -57,6 +57,9 @@ public class Urls {
     public final static String APPROVE_REPAIR = BASE_URL + "/Approve/Approve.asmx/ApproveRepair";//维修工单的审批
     public final static String APPROVE_PARTS = BASE_URL + "/Approve/Approve.asmx/ApproveParts";//配件入库工单的审批
     public final static String APPROVE_DAYUSE = BASE_URL + "/Approve/Approve.asmx/ApproveDayUse";//日用品入库工单的审批
+    public final static String APPROVE_GETUPDATENUMBER = BASE_URL + "/Approve/Approve.asmx/GetUpdateNumber";//库存修改列表
+    public final static String APPROVE_APPROVENUMBER = BASE_URL + "/Approve/Approve.asmx/ApproveNumber";//库存修改审批
+
 
     //生产员
     public static final String RECORD_ADDRECORD = BASE_URL + "/Record/Record.asmx/AddRecord";//录入生产信息

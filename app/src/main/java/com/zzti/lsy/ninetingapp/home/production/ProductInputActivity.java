@@ -108,23 +108,23 @@ public class ProductInputActivity extends BaseActivity {
             StatisticalList statisticalList = (StatisticalList) getIntent().getSerializableExtra("StatisticalList");
             slID = statisticalList.getSlID();
             tvTime.setText(statisticalList.getSlDateTime());
-            etTravelKm.setText(statisticalList.getTravelKm());
+//            etTravelKm.setText(statisticalList.getTravelKm());
             tvCarNumber.setText(statisticalList.getPlateNumber());
             tvCarNumber.setEnabled(false);
             tvCarNumber.setBackgroundColor(getResources().getColor(R.color.color_white));
             etAmount.setText(statisticalList.getSquareQuantity());
             etEight.setText(statisticalList.getEightBelow());
             etSix.setText(statisticalList.getSixBelow());
-            etFillThe.setText(statisticalList.getAddQuantity());
+//            etFillThe.setText(statisticalList.getAddQuantity());
             etRemainMaterial.setText(statisticalList.getRemainder());
-            etWashTime.setText(statisticalList.getWashTime());
+//            etWashTime.setText(statisticalList.getWashTime());
             etOilMass.setText(statisticalList.getQilWear());
-            if (!StringUtil.isNullOrEmpty(statisticalList.getDistance())) {
-                etDistance.setText(statisticalList.getDistance());
-            }
-            etOverTime.setText(statisticalList.getAddWorkTime());
-            etOverTimeTrainNumber.setText(statisticalList.getAddWorkCount());
-            etTimeConsuming.setText(statisticalList.getTimeConsuming());
+//            if (!StringUtil.isNullOrEmpty(statisticalList.getDistance())) {
+//                etDistance.setText(statisticalList.getDistance());
+//            }
+//            etOverTime.setText(statisticalList.getAddWorkTime());
+//            etOverTimeTrainNumber.setText(statisticalList.getAddWorkCount());
+//            etTimeConsuming.setText(statisticalList.getTimeConsuming());
             etWashing.setText(statisticalList.getWashing());
             etWater.setText(statisticalList.getWater());
             if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {//备注
@@ -217,14 +217,14 @@ public class ProductInputActivity extends BaseActivity {
                 statisticalList.setSquareQuantity(etAmount.getText().toString());//生产方量
                 statisticalList.setEightBelow(etEight.getText().toString());//8方以下
                 statisticalList.setSixBelow(etSix.getText().toString());//6方以下
-                statisticalList.setAddQuantity(etFillThe.getText().toString());//补方
+//                statisticalList.setAddQuantity(etFillThe.getText().toString());//补方
                 statisticalList.setRemainder(etRemainMaterial.getText().toString());//剩料
-                statisticalList.setWashTime(etWashTime.getText().toString());//洗料耗时
+//                statisticalList.setWashTime(etWashTime.getText().toString());//洗料耗时
                 statisticalList.setQilWear(etOilMass.getText().toString());//加油升数
-                statisticalList.setDistance(etDistance.getText().toString());//距离基地
-                statisticalList.setAddWorkTime(etOverTime.getText().toString());//加班时长
-                statisticalList.setAddWorkCount(etOverTimeTrainNumber.getText().toString());//加班趟数
-                statisticalList.setTimeConsuming(etTimeConsuming.getText().toString());//耗时
+//                statisticalList.setDistance(etDistance.getText().toString());//距离基地
+//                statisticalList.setAddWorkTime(etOverTime.getText().toString());//加班时长
+//                statisticalList.setAddWorkCount(etOverTimeTrainNumber.getText().toString());//加班趟数
+//                statisticalList.setTimeConsuming(etTimeConsuming.getText().toString());//耗时
                 statisticalList.setWashing(etWashing.getText().toString());//洗料
                 statisticalList.setWater(etWater.getText().toString());//水
                 if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {//备注

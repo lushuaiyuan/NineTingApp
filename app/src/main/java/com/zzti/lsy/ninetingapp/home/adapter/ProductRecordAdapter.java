@@ -26,7 +26,6 @@ public class ProductRecordAdapter extends BaseQuickAdapter<StatisticalList, Base
                 .setText(R.id.tv_time, item.getSlDateTime())
                 .setText(R.id.tv_amount, item.getSquareQuantity())
                 .setText(R.id.tv_oilMass, item.getQilWear())
-                .setText(R.id.tv_travelKm, item.getTravelKm())
                 .setText(R.id.tv_oilMassRatio, df.format((Double.parseDouble(item.getQilWear()) / Double.parseDouble(item.getSquareQuantity()))));
     }
 

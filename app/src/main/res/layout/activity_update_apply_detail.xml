@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/dp10"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp16"
+                android:background="@drawable/circular_white_shape"
+                android:padding="@dimen/dp15">
+
+                <TextView
+                    android:id="@+id/tv_applyID_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请单编号"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_applyID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_toRightOf="@id/tv_applyID_Title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/tv_applyTime_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_applyID_Title"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:text="申请时间"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_applyTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/tv_applyTime_Title"
+                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_marginTop="0dp"
+                    android:layout_toRightOf="@id/tv_applyTime_Title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/tv_projectName_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_applyTime_Title"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:text="项目部名称"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_projectName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/tv_projectName_Title"
+                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_toRightOf="@id/tv_projectName_Title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/tv_type_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_projectName_Title"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:text="修改类型"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/tv_type_Title"
+                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_toRightOf="@id/tv_applyUser_Title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/tv_applyUser_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_type_Title"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:text="申请人"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_applyUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/tv_applyUser_Title"
+                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_toRightOf="@id/tv_applyUser_Title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp20"
+                android:text="修改详情"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp16" />
+
+            <TextView
+                android:id="@+id/tv_updateInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp16"
+                android:background="@drawable/circular_white_shape"
+                android:orientation="vertical"
+                android:padding="@dimen/dp16"
+                android:textColor="@color/color_normal"
+                android:textSize="@dimen/dp14" />
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <View style="@style/MyView" />
+
+
+    <Button
+        android:id="@+id/btn_apply"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp45"
+        android:background="@color/color_6bcfd7"
+        android:text="通过"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/dp15" />
+
+</LinearLayout>

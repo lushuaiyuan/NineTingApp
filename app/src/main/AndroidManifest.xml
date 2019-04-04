@@ -234,7 +234,10 @@
         <activity
             android:name=".home.production.ProductRecordActivity"
             android:hardwareAccelerated="false" />
+        <!--审批-->
         <activity android:name=".home.pm.AuthorizationActivity" />
+        <!--审批详情-->
+        <activity android:name=".home.pm.UpdateApplyDetailActivity" />
 
     </application>
 
