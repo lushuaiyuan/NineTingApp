@@ -117,13 +117,18 @@ public class BCInputFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString())) {
+                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
                     double onOrderqua = Double.parseDouble(etOnOrderqua.getText().toString());
                     double inorderqua = Double.parseDouble(editable.toString());
                     etQuantityCount.setText(String.valueOf(onOrderqua + inorderqua));
                 } else {
-                    etQuantityCount.setText(editable.toString());
+                    if (StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString())) {
+                        etQuantityCount.setText(editable.toString());
+                    } else {
+                        etQuantityCount.setText(etOnOrderqua.toString());
+                    }
                 }
+
             }
         });
         etOnOrderqua.addTextChangedListener(new TextWatcher() {
@@ -139,12 +144,45 @@ public class BCInputFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!StringUtil.isNullOrEmpty(etInOrderqua.getText().toString())) {
+                if (!StringUtil.isNullOrEmpty(etInOrderqua.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
                     double inorderqua = Double.parseDouble(etInOrderqua.getText().toString());
                     double onOrderqua = Double.parseDouble(editable.toString());
                     etQuantityCount.setText(String.valueOf(onOrderqua + inorderqua));
                 } else {
-                    etQuantityCount.setText(editable.toString());
+                    if (StringUtil.isNullOrEmpty(etInOrderqua.getText().toString())) {
+                        etQuantityCount.setText(editable.toString());
+                    } else {
+                        etQuantityCount.setText(etInOrderqua.toString());
+                    }
+                }
+                if (!StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
+                    double onOrderPrice = Double.parseDouble(etOnOrderprice.getText().toString());
+                    double onOrderqua = Double.parseDouble(editable.toString());
+                    etOnOrderpriceCount.setText(String.valueOf(onOrderPrice * onOrderqua));
+                } else {
+                    etOnOrderpriceCount.setText("");
+                }
+            }
+        });
+        etOnOrderprice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
+                    double onOrderqua = Double.parseDouble(etOnOrderqua.getText().toString());
+                    double onOrderPrice = Double.parseDouble(editable.toString());
+                    etOnOrderpriceCount.setText(String.valueOf(onOrderPrice * onOrderqua));
+                } else {
+                    etOnOrderpriceCount.setText("");
                 }
             }
         });
@@ -161,13 +199,16 @@ public class BCInputFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!StringUtil.isNullOrEmpty(etWearPrice.getText().toString())) {
+                if (!StringUtil.isNullOrEmpty(etWearPrice.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
                     double wearPrice = Double.parseDouble(etWearPrice.getText().toString());
                     double qilWear = Double.parseDouble(editable.toString());
                     etWearCount.setText(String.valueOf((wearPrice * qilWear)));
+                } else {
+                    etWearCount.setText("");
                 }
             }
         });
+
         etWearPrice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -181,10 +222,12 @@ public class BCInputFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!StringUtil.isNullOrEmpty(etQilWear.getText().toString())) {
+                if (!StringUtil.isNullOrEmpty(etQilWear.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
                     double qilWear = Double.parseDouble(etQilWear.getText().toString());
                     double wearPrice = Double.parseDouble(editable.toString());
                     etWearCount.setText(String.valueOf((wearPrice * qilWear)));
+                } else {
+                    etWearCount.setText("");
                 }
             }
         });
@@ -375,6 +418,11 @@ public class BCInputFragment extends BaseFragment {
                     tvCarType.setText("");
                     etWorkSite.getText().clear();
                     etWorkPart.getText().clear();
+                    etInOrderqua.getText().clear();
+                    etOnOrderqua.getText().clear();
+                    etOnOrderprice.getText().clear();
+                    etOnOrderpriceCount.getText().clear();
+
                     etQilWear.getText().clear();
                     etWearPrice.getText().clear();
                     etWearCount.getText().clear();

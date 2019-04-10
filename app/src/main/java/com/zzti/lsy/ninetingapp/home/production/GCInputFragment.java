@@ -128,10 +128,12 @@ public class GCInputFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!StringUtil.isNullOrEmpty(etWearPrice.getText().toString())) {
+                if (!StringUtil.isNullOrEmpty(etWearPrice.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
                     double wearPrice = Double.parseDouble(etWearPrice.getText().toString());
                     double qilWear = Double.parseDouble(editable.toString());
                     etWearCount.setText(String.valueOf((wearPrice * qilWear)));
+                } else {
+                    etWearCount.setText("");
                 }
             }
         });
@@ -148,10 +150,12 @@ public class GCInputFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!StringUtil.isNullOrEmpty(etQilWear.getText().toString())) {
+                if (!StringUtil.isNullOrEmpty(etQilWear.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
                     double qilWear = Double.parseDouble(etQilWear.getText().toString());
                     double wearPrice = Double.parseDouble(editable.toString());
                     etWearCount.setText(String.valueOf((wearPrice * qilWear)));
+                } else {
+                    etWearCount.setText("");
                 }
             }
         });

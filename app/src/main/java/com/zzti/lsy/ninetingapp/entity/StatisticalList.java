@@ -1,5 +1,8 @@
 package com.zzti.lsy.ninetingapp.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
@@ -7,7 +10,7 @@ import java.io.Serializable;
  * @create 2018/10/10 23:37
  * @Describe 生产记录统计报表实体类
  */
-public class StatisticalList implements Serializable {
+public class StatisticalList implements Parcelable {
     private String slID;//统计编号  共有
     private String slDateTime;///日期  共有
     private String plateNumber;///车牌号  共有
@@ -46,6 +49,8 @@ public class StatisticalList implements Serializable {
     private String onOrderpriceCount;//外单金额 泵车
 
     private String quantityCount;//合计方量 共有 罐车：用户填写 泵车：外单方量+内单方量
+
+
 
     public String getSlID() {
         return slID;
@@ -302,4 +307,95 @@ public class StatisticalList implements Serializable {
     public void setQuantityCount(String quantityCount) {
         this.quantityCount = quantityCount;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.slID);
+        dest.writeString(this.slDateTime);
+        dest.writeString(this.plateNumber);
+        dest.writeString(this.CarTypeID);
+        dest.writeString(this.workSite);
+        dest.writeString(this.workPart);
+        dest.writeString(this.projectID);
+        dest.writeString(this.qilWear);
+        dest.writeString(this.wearPrice);
+        dest.writeString(this.wearCount);
+        dest.writeString(this.remark);
+        dest.writeString(this.userID);
+        dest.writeString(this.staffName);
+        dest.writeString(this.projectName);
+        dest.writeString(this.vehicleTypeName);
+        dest.writeString(this.wearUser);
+        dest.writeString(this.workTimes);
+        dest.writeString(this.Intwenty);
+        dest.writeString(this.Onforty);
+        dest.writeString(this.Ontwenty);
+        dest.writeString(this.price);
+        dest.writeString(this.squareQuantity);
+        dest.writeString(this.eightBelow);
+        dest.writeString(this.sixBelow);
+        dest.writeString(this.remainder);
+        dest.writeString(this.washing);
+        dest.writeString(this.water);
+        dest.writeString(this.inOrderqua);
+        dest.writeString(this.onOrderqua);
+        dest.writeString(this.onOrderprice);
+        dest.writeString(this.onOrderpriceCount);
+        dest.writeString(this.quantityCount);
+    }
+
+    public StatisticalList() {
+    }
+
+    protected StatisticalList(Parcel in) {
+        this.slID = in.readString();
+        this.slDateTime = in.readString();
+        this.plateNumber = in.readString();
+        this.CarTypeID = in.readString();
+        this.workSite = in.readString();
+        this.workPart = in.readString();
+        this.projectID = in.readString();
+        this.qilWear = in.readString();
+        this.wearPrice = in.readString();
+        this.wearCount = in.readString();
+        this.remark = in.readString();
+        this.userID = in.readString();
+        this.staffName = in.readString();
+        this.projectName = in.readString();
+        this.vehicleTypeName = in.readString();
+        this.wearUser = in.readString();
+        this.workTimes = in.readString();
+        this.Intwenty = in.readString();
+        this.Onforty = in.readString();
+        this.Ontwenty = in.readString();
+        this.price = in.readString();
+        this.squareQuantity = in.readString();
+        this.eightBelow = in.readString();
+        this.sixBelow = in.readString();
+        this.remainder = in.readString();
+        this.washing = in.readString();
+        this.water = in.readString();
+        this.inOrderqua = in.readString();
+        this.onOrderqua = in.readString();
+        this.onOrderprice = in.readString();
+        this.onOrderpriceCount = in.readString();
+        this.quantityCount = in.readString();
+    }
+
+    public static final Parcelable.Creator<StatisticalList> CREATOR = new Parcelable.Creator<StatisticalList>() {
+        @Override
+        public StatisticalList createFromParcel(Parcel source) {
+            return new StatisticalList(source);
+        }
+
+        @Override
+        public StatisticalList[] newArray(int size) {
+            return new StatisticalList[size];
+        }
+    };
 }

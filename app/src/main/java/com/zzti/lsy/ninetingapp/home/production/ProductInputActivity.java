@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
+import com.zzti.lsy.ninetingapp.entity.StatisticalList;
 import com.zzti.lsy.ninetingapp.home.adapter.TitleFragmentPagerAdapter;
 import com.zzti.lsy.ninetingapp.home.pm.ProductionFragment;
 import com.zzti.lsy.ninetingapp.home.pm.RepertoryListFragment;
@@ -39,6 +40,8 @@ public class ProductInputActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         int tag = UIUtils.getInt4Intent(this, "TAG");//0代表的是录入 1代表的是修改
+        StatisticalList statisticalList = getIntent().getParcelableExtra("StatisticalList");
+
         if (tag == 0) {
             setTitle("生产录入");
         } else {
@@ -47,6 +50,9 @@ public class ProductInputActivity extends BaseActivity {
         List<Fragment> fragments = new ArrayList<>();
         Bundle bundle = new Bundle();
         bundle.putInt("TAG", tag);
+        if (statisticalList != null) {
+            bundle.putParcelable("statisticalList", statisticalList);
+        }
         GCInputFragment gcInputFragment = GCInputFragment.newInstance();
         gcInputFragment.setArguments(bundle);
         fragments.add(gcInputFragment);
@@ -57,6 +63,11 @@ public class ProductInputActivity extends BaseActivity {
         TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"罐车", "泵车"});
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        if (statisticalList != null && statisticalList.getVehicleTypeName().contains("罐车")) {
+            mTabLayout.getTabAt(0).select();
+        } else if(statisticalList != null && statisticalList.getVehicleTypeName().contains("泵车")){
+            mTabLayout.getTabAt(1).select();
+        }
     }
 
     @OnClick({R.id.iv_toolbarBack})
