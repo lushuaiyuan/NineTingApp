@@ -98,10 +98,20 @@ public class DeviceFormActivity extends BaseActivity {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             CarInfoEntity carInfoEntity = ParseUtils.parseJson(jsonArray.getString(i), CarInfoEntity.class);
-                            String AVEDate = carInfoEntity.getAVEDate().split("T")[0];
-                            carInfoEntity.setAVEDate(AVEDate);
-                            String IPDate = carInfoEntity.getIPDate().split("T")[0];
-                            carInfoEntity.setIPDate(IPDate);
+                            String dLDate = carInfoEntity.getDLDate().split("T")[0];
+                            carInfoEntity.setDLDate(dLDate);
+                            String registerTime = carInfoEntity.getRegisterTime().split("T")[0];
+                            carInfoEntity.setRegisterTime(registerTime);
+                            String yearTime = carInfoEntity.getRegisterTime().split("T")[0];
+                            carInfoEntity.setYearTime(yearTime);
+                            String qStartTime = carInfoEntity.getqStartTime().split("T")[0];
+                            carInfoEntity.setqStartTime(qStartTime);
+                            String qOverTime = carInfoEntity.getqOverTime().split("T")[0];
+                            carInfoEntity.setqOverTime(qOverTime);
+                            String sStartTime = carInfoEntity.getsStartTime().split("T")[0];
+                            carInfoEntity.setsStartTime(sStartTime);
+                            String sOverTime = carInfoEntity.getsOverTime().split("T")[0];
+                            carInfoEntity.setsOverTime(sOverTime);
                             carInfoEntities.add(carInfoEntity);
                         }
                     } catch (JSONException e) {
@@ -127,14 +137,31 @@ public class DeviceFormActivity extends BaseActivity {
         //普通列
         Column<String> column1 = new Column<>("车牌号", "plateNumber");
         column1.setFixed(true);
-        Column<Integer> column2 = new Column<>("存放地点", "projectName");
-        Column<Long> column3 = new Column<>("车辆类型", "vehicleTypeName");
-        Column<String> column4 = new Column<>("年检日期", "AVEDate");
-        Column<String> column5 = new Column<>("保险购买日期", "IPDate");
-        Column<String> column6 = new Column<>("识别码", "VIN");
-        Column<String> column7 = new Column<>("发动机号", "engineNumber");
+        Column<Integer> column2 = new Column<>("项目部", "projectName");
+        Column<String> column3 = new Column<>("汽车类型", "vehicleTypeName");
+        Column<String> column4 = new Column<>("排放量名称", "dischargeName");
+        Column<Long> column5 = new Column<>("车辆来源", "CarSource");
+        Column<String> column6 = new Column<>("新旧程度", "oldLevel");
+        Column<String> column7 = new Column<>("行驶证保存情况", "drivingStatus");
+        Column<String> column8 = new Column<>("识别码", "VIN");
+        Column<String> column9 = new Column<>("发动机编号", "engineNumber");
+        Column<String> column10 = new Column<>("行驶证发放日期", "DLDate");
+        Column<String> column11 = new Column<>("登记日期", "registerTime");
+        Column<String> column12 = new Column<>("年检日期", "yearTime");
+        Column<String> column13 = new Column<>("车辆所属项目部ID", "projectID");
+        Column<String> column14 = new Column<>("年检时限", "yearExprie");
+        Column<String> column15 = new Column<>("强制保险生效时间", "qStartTime");
+        Column<String> column16 = new Column<>("强制保险到期时间", "qOverTime");
+        Column<String> column17 = new Column<>("强制保险公司", "qCompany");
+        Column<String> column18 = new Column<>("强险保单原件所在地", "qAddress");
+        Column<String> column19 = new Column<>("商业保险生效日期", "sStartTime");
+        Column<String> column20 = new Column<>("商业保险到期日期", "sOverTime");
+        Column<String> column21 = new Column<>("商业保险公司", "sCompany");
+        Column<String> column22 = new Column<>("商险保单原件所在地", "sAddress");
+
         //表格数据 datas是需要填充的数据
-        TableData<CarInfoEntity> tableData = new TableData<>("设备", carInfoEntities, column1, column2, column3, column4, column5, column6, column7);
+        TableData<CarInfoEntity> tableData = new TableData<>("设备", carInfoEntities, column1, column2, column3, column4, column5, column6, column7, column8,
+                column9, column10, column11, column12, column13, column14, column15, column16, column17, column18, column19, column20, column21,column22);
         //table.setZoom(true,3);是否缩放
         smartTable.setTableData(tableData);
     }

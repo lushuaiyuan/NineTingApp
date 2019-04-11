@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.entity.CarInfoEntity;
@@ -27,6 +28,7 @@ import com.zzti.lsy.ninetingapp.entity.FactoryInfoEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.event.EventMessage;
+import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.CarStatusAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.CarTypeAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.DisChargedAdapter;
@@ -367,11 +369,37 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
         carInfoEntity.setsAddress(etSAddress.getText().toString());
         carInfoEntity.setDischargeID(dischargeID);
 
-        Intent intent = new Intent(mActivity, YearInsuranceActivity.class);
-        intent.putExtra("carInfoEntity", carInfoEntity);
-        intent.putExtra("initQuantity", etInitQuantity.getText().toString());
-        intent.putExtra("initTravelKm", etInitTravelKm.getText().toString());
-        startActivity(intent);
+//        Intent intent = new Intent(mActivity, YearInsuranceActivity.class);
+//        intent.putExtra("carInfoEntity", carInfoEntity);
+//        intent.putExtra("initQuantity", etInitQuantity.getText().toString());
+//        intent.putExtra("initTravelKm", etInitTravelKm.getText().toString());
+//        startActivity(intent);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("carJson", new Gson().toJson(carInfoEntity));
+        params.put("initQuantity",  etInitQuantity.getText().toString());
+        params.put("initTravelKm", etInitTravelKm.getText().toString());
+        OkHttpManager.postFormBody(Urls.POST_ADDINCAR, params, tvCarType, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    Intent intent = new Intent(mActivity, SuccessActivity.class);
+                    intent.putExtra("TAG", 6);
+                    startActivity(intent);
+                    mActivity.finish();
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+        });
 
     }
 

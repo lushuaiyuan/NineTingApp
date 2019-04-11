@@ -50,26 +50,24 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
     TextView tvCarType;//车辆类型
     @BindView(R.id.tv_emission_standard)
     TextView tvEmissionStandard;//排放量
-    @BindView(R.id.tv_address)
-    TextView tvAddress;//存放地点
+    @BindView(R.id.tv_projectName)
+    TextView tvProjectName;//项目部
     @BindView(R.id.tv_map)
     TextView tvMap;//查看地图
-    @BindView(R.id.tv_manufacturer)
-    TextView tvManufacturer;//生产厂家
+    @BindView(R.id.tv_carSource)
+    TextView tvCarSource;//车辆来源
+    @BindView(R.id.tv_oldLevel)
+    TextView tvOldLevel;//新旧程度
+    @BindView(R.id.tv_drivingStatus)
+    TextView tvDrivingStatus;//行驶证保存情况
     @BindView(R.id.tv_vin)
     TextView tvVin;//识别码
     @BindView(R.id.tv_engine_number)
     TextView tvEngineNumber;//发动机编号
-    @BindView(R.id.tv_buyTime)
-    TextView tvBuyTime;//购买日期
-    @BindView(R.id.tv_buyMoney)
-    TextView tvBuyMoney;//购买金额
-    @BindView(R.id.tv_drivingNumber)
-    TextView tvDrivingNumber;//行驶证号码
-    @BindView(R.id.tv_drivingNumber_giveTime)
-    TextView tvDrivingNumberGiveTime;//行驶证发放日期
-    @BindView(R.id.tv_drivingNumber_validityTime)
-    TextView tvDrivingNumberValidityTime;//行驶证有效期
+    @BindView(R.id.tv_DLDate)
+    TextView tvDLDate;//行驶证注册日期
+    @BindView(R.id.tv_registerTime)
+    TextView tvRegisterTime;//登记日期
 
     //项目部
     private PopupWindow popupWindowProject;
@@ -105,15 +103,14 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
         initPop();
         tvCarType.setText(carInfoEntity.getVehicleTypeName());
         tvEmissionStandard.setText(carInfoEntity.getDischargeName());
-        tvAddress.setText(carInfoEntity.getProjectName());
-        tvManufacturer.setText(carInfoEntity.getFactoryName());
+        tvProjectName.setText(carInfoEntity.getProjectName());
+        tvCarSource.setText(carInfoEntity.getCarSource());
+        tvOldLevel.setText(carInfoEntity.getOldLevel());
+        tvDrivingStatus.setText(carInfoEntity.getDrivingStatus());
         tvVin.setText(carInfoEntity.getVIN());
         tvEngineNumber.setText(carInfoEntity.getEngineNumber());
-        tvBuyTime.setText(carInfoEntity.getPurchaseDate().split("T")[0]);
-        tvBuyMoney.setText(carInfoEntity.getPrice());
-        tvDrivingNumber.setText(carInfoEntity.getDrivingLicenseNumber());
-        tvDrivingNumberGiveTime.setText(carInfoEntity.getDLDate().split("T")[0]);
-        tvDrivingNumberValidityTime.setText(carInfoEntity.getDLValidDate().split("T")[0]);
+        tvDLDate.setText(carInfoEntity.getDLDate().split("T")[0]);
+        tvRegisterTime.setText(carInfoEntity.getRegisterTime().split("T")[0]);
         beforeProjectID = carInfoEntity.getProjectID();
         beforeProjectName = carInfoEntity.getProjectName();
     }
@@ -156,7 +153,7 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
      * 获取项目部
      */
     private void getProject() {
-        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, null, tvAddress, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, null, tvProjectName, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -185,17 +182,17 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
         });
     }
 
-    @OnClick({R.id.tv_map, R.id.btn_save, R.id.tv_address})
+    @OnClick({R.id.tv_map, R.id.btn_save, R.id.tv_project})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_map:
                 Intent intent = new Intent(mActivity, MapActivity.class);
                 intent.putExtra("plateNumber", carInfoEntity.getPlateNumber());
                 intent.putExtra("project", carInfoEntity.getProjectName());
-                intent.putExtra("status", carInfoEntity.getStatus());
+//                intent.putExtra("status", carInfoEntity.getStatus());
                 startActivity(intent);
                 break;
-            case R.id.tv_address:
+            case R.id.tv_project:
 //                if (projectEntities.size() > 0) {
 //                    //设置背景色
 //                    setBackgroundAlpha(0.5f);
@@ -238,10 +235,10 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
     private void saveData() {
         showDia();
         carInfoEntity.setProjectID(projectID);
-        carInfoEntity.setProjectName(tvAddress.getText().toString());
+        carInfoEntity.setProjectName(tvProjectName.getText().toString());
         HashMap<String, String> params = new HashMap<>();
         params.put("carJson", new Gson().toJson(carInfoEntity));
-        OkHttpManager.postFormBody(Urls.POST_UPDATCARINFO, params, tvAddress, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_UPDATCARINFO, params, tvProjectName, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -282,7 +279,7 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        tvAddress.setText(projectEntities.get(i).getProjectName());
+        tvProjectName.setText(projectEntities.get(i).getProjectName());
         projectID = projectEntities.get(i).getProjectID();
         popupWindowProject.dismiss();
     }

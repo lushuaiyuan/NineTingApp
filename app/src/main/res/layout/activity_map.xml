@@ -93,7 +93,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="状态"
-            android:textSize="@dimen/dp14" />
+            android:textSize="@dimen/dp14"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </RelativeLayout>

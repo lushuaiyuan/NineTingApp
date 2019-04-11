@@ -145,17 +145,17 @@ public class DeviceDetailActivity extends BaseActivity {
             radioButtonBxNs.setChecked(true);
         }
 
-        String status = carInfoEntity.getStatus();
-        if (status.equals("0")) {
-            tvStatus.setText("存放中");
-            tvStatus.setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
-        } else if (status.equals("1")) {
-            tvStatus.setText("工作中");
-            tvStatus.setTextColor(App.get().getResources().getColor(R.color.color_ffb947));
-        } else if (status.equals("2")) {
-            tvStatus.setText("维修中");
-            tvStatus.setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
-        }
+//        String status = carInfoEntity.getStatus();
+//        if (status.equals("0")) {
+//            tvStatus.setText("存放中");
+//            tvStatus.setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
+//        } else if (status.equals("1")) {
+//            tvStatus.setText("工作中");
+//            tvStatus.setTextColor(App.get().getResources().getColor(R.color.color_ffb947));
+//        } else if (status.equals("2")) {
+//            tvStatus.setText("维修中");
+//            tvStatus.setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
+//        }
         String projectName = carInfoEntity.getProjectName();
         tvProjectAddress.setText(projectName);
     }

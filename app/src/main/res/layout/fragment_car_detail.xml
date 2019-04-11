@@ -83,12 +83,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="存放地点"
+                        android:text="项目部"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_address"
+                        android:id="@+id/tv_projectName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -131,12 +131,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="生产厂家"
+                        android:text="车辆来源"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_manufacturer"
+                        android:id="@+id/tv_carSource"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -145,6 +145,52 @@
                         android:textSize="@dimen/dp15" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp15"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="新旧程度"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp13" />
+
+                    <TextView
+                        android:id="@+id/tv_oldLevel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="多大的"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp15"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="行驶证保存情况"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp13" />
+
+                    <TextView
+                        android:id="@+id/tv_drivingStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="多大的"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -168,6 +214,7 @@
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp15" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -193,6 +240,8 @@
                         android:textSize="@dimen/dp15" />
                 </LinearLayout>
 
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -203,12 +252,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="购买日期"
+                        android:text="行驶证注册日期"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_buyTime"
+                        android:id="@+id/tv_DLDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -227,12 +276,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="购买金额"
+                        android:text="登记日期"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_buyMoney"
+                        android:id="@+id/tv_registerTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -242,30 +291,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp15"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="行驶证号码"
-                        android:textColor="@color/color_999999"
-                        android:textSize="@dimen/dp13" />
-
-                    <TextView
-                        android:id="@+id/tv_drivingNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="多大的"
-                        android:textColor="@color/color_333333"
-                        android:textSize="@dimen/dp15" />
-                </LinearLayout>
-
-                <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp15"
@@ -290,6 +316,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp15"

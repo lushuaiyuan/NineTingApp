@@ -170,10 +170,10 @@ public class YearInsuranceActivity extends BaseActivity implements AdapterView.O
             UIUtils.showT("请选择保险类型");
             return;
         }
-        carInfoEntity.setAVEDate(tvNsEndTime.getText().toString());
-        carInfoEntity.setIPDate(tvBxBuyTime.getText().toString());
-        carInfoEntity.setIEDate(tvBxEndTime.getText().toString());
-        carInfoEntity.setInsuranceID(insuranceID);
+//        carInfoEntity.setAVEDate(tvNsEndTime.getText().toString());
+//        carInfoEntity.setIPDate(tvBxBuyTime.getText().toString());
+//        carInfoEntity.setIEDate(tvBxEndTime.getText().toString());
+//        carInfoEntity.setInsuranceID(insuranceID);
         showDia();
         HashMap<String, String> params = new HashMap<>();
         params.put("carJson", new Gson().toJson(carInfoEntity));

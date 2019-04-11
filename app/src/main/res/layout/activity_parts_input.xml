@@ -82,17 +82,7 @@
 
                 <EditText
                     android:id="@+id/et_price"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:padding="@dimen/dp10"
-                    android:paddingLeft="@dimen/dp20"
-                    android:paddingRight="@dimen/dp20"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,7 +129,6 @@
                     android:layout_width="@dimen/dp200"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:background="@null"
                     android:gravity="center"
                     android:padding="@dimen/dp10"
                     android:textColor="@color/color_999999"

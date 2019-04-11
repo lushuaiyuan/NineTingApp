@@ -42,8 +42,8 @@ import butterknife.BindView;
 public class MapActivity extends BaseActivity {
     @BindView(R.id.tv_carNumber)
     TextView tvCarNumber;
-    @BindView(R.id.tv_state)
-    TextView tvState;
+//    @BindView(R.id.tv_state)
+//    TextView tvState;
     @BindView(R.id.tv_projectAddress)
     TextView tvProjectAddress;
     @BindView(R.id.tv_last_updateTime)
@@ -67,17 +67,17 @@ public class MapActivity extends BaseActivity {
         String plateNumber = UIUtils.getStr4Intent(this, "plateNumber");
         tvCarNumber.setText(plateNumber);
         tvProjectAddress.setText(UIUtils.getStr4Intent(this, "project"));
-        String status = UIUtils.getStr4Intent(this, "status");
-        if (TextUtils.equals(status, "0")) {
-            tvState.setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
-            tvState.setText("存放中");
-        } else if (TextUtils.equals(status, "1")) {
-            tvState.setTextColor(App.get().getResources().getColor(R.color.color_ffb947));
-            tvState.setText("工作中");
-        } else if (TextUtils.equals(status, "2")) {
-            tvState.setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
-            tvState.setText("维修中");
-        }
+//        String status = UIUtils.getStr4Intent(this, "status");
+//        if (TextUtils.equals(status, "0")) {
+//            tvState.setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
+//            tvState.setText("存放中");
+//        } else if (TextUtils.equals(status, "1")) {
+//            tvState.setTextColor(App.get().getResources().getColor(R.color.color_ffb947));
+//            tvState.setText("工作中");
+//        } else if (TextUtils.equals(status, "2")) {
+//            tvState.setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
+//            tvState.setText("维修中");
+//        }
         showDia();
         getLocation(plateNumber);
     }

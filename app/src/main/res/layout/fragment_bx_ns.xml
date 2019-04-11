@@ -230,7 +230,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_sybxDay"
+                            android:id="@+id/tv_sbxDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="507"
@@ -276,12 +276,64 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="年审到期时间"
+                        android:text="年检日期"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_ns_EndTime"
+                        android:id="@+id/tv_yearTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="多大的"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp15"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="年检时限"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp13" />
+
+                    <EditText
+                        android:id="@+id/tv_yearExprie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_shape_gray"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:padding="@dimen/dp8"
+                        android:gravity="right"
+                        android:text="多大的"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp15"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="强制保险到期时间"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp13" />
+
+                    <TextView
+                        android:id="@+id/tv_qbx_EndTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -300,12 +352,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="保险到期日期"
+                        android:text="强制保险公司"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_bx_EndTime"
+                        android:id="@+id/tv_qbx_company"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -324,12 +376,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="保险类型"
+                        android:text="强险保单原件所在地"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_bxType"
+                        android:id="@+id/tv_qbx_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -343,51 +395,103 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp15"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="保险内容"
+                        android:text="商业保险到期时间"
                         android:textColor="@color/color_999999"
                         android:textSize="@dimen/dp13" />
 
                     <TextView
-                        android:id="@+id/tv_bxContent"
+                        android:id="@+id/tv_sbx_EndTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp10"
-                        android:lineSpacingExtra="@dimen/dp3"
-                        android:lineSpacingMultiplier="1.2"
-                        android:text="一般来说大家认可的汽车全保险指：交强险+啊速度发阿斯顿阿斯顿啊速度发"
+                        android:gravity="right"
+                        android:text="多大的"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/dp15" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp15"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="商业保险公司"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp13" />
+
+                    <TextView
+                        android:id="@+id/tv_sbx_company"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="多大的"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp15"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="商险保单原件所在地"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dp13" />
+
+                    <TextView
+                        android:id="@+id/tv_sbx_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="多大的"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dp15" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="@dimen/dp40"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp20">
 
                 <Button
-                    android:id="@+id/btn_alertBx"
+                    android:id="@+id/btn_alertqBx"
                     style="@style/MyButton"
                     android:layout_width="0dp"
-                    android:layout_marginBottom="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp30"
-                    android:layout_marginRight="@dimen/dp30"
-                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginLeft="@dimen/dp10"
                     android:layout_weight="1"
-                    android:text="保险更改" />
+                    android:text="强险续保" />
+
+                <Button
+                    android:id="@+id/btn_alertsBx"
+                    style="@style/MyButton"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_weight="1"
+                    android:text="商险续保" />
 
                 <Button
                     android:id="@+id/btn_alertNs"
                     style="@style/MyButton"
                     android:layout_width="0dp"
-                    android:layout_marginBottom="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp30"
-                    android:layout_marginRight="@dimen/dp30"
-                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10"
                     android:layout_weight="1"
                     android:text="年审更改" />
             </LinearLayout>

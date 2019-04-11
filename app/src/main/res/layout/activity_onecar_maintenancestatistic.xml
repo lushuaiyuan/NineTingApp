@@ -145,7 +145,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="维修状态"
-            android:textSize="@dimen/dp14" />
+            android:textSize="@dimen/dp14"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

@@ -46,8 +46,8 @@ public class OneCarMaintenanceStatisticActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.tv_carNumber)
     TextView tvCarNumber;
-    @BindView(R.id.tv_state)
-    TextView tvState;
+//    @BindView(R.id.tv_state)
+//    TextView tvState;
     @BindView(R.id.tv_projectAddress)
     TextView tvProjectAddress;
     @BindView(R.id.tv_constructionAddress)
@@ -189,16 +189,16 @@ public class OneCarMaintenanceStatisticActivity extends BaseActivity {
         tvTitle.setText("统计");
         carInfoEntity = (CarInfoEntity) getIntent().getSerializableExtra("carInfoEntity");
         tvCarNumber.setText(carInfoEntity.getPlateNumber());
-        if (TextUtils.equals(carInfoEntity.getStatus(), "0")) {
-            tvState.setTextColor(getResources().getColor(R.color.color_6bcfd6));
-            tvState.setText("存放中");
-        } else if (TextUtils.equals(carInfoEntity.getStatus(), "1")) {
-            tvState.setTextColor(getResources().getColor(R.color.color_ffb947));
-            tvState.setText("工作中");
-        } else if (TextUtils.equals(carInfoEntity.getStatus(), "2")) {
-            tvState.setTextColor(getResources().getColor(R.color.color_fe81b3));
-            tvState.setText("维修中");
-        }
+//        if (TextUtils.equals(carInfoEntity.getStatus(), "0")) {
+//            tvState.setTextColor(getResources().getColor(R.color.color_6bcfd6));
+//            tvState.setText("存放中");
+//        } else if (TextUtils.equals(carInfoEntity.getStatus(), "1")) {
+//            tvState.setTextColor(getResources().getColor(R.color.color_ffb947));
+//            tvState.setText("工作中");
+//        } else if (TextUtils.equals(carInfoEntity.getStatus(), "2")) {
+//            tvState.setTextColor(getResources().getColor(R.color.color_fe81b3));
+//            tvState.setText("维修中");
+//        }
         tvProjectAddress.setText(carInfoEntity.getProjectName());
         tvServiceType.setText(carInfoEntity.getVehicleTypeName());
     }

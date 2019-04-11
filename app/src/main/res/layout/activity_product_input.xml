@@ -59,17 +59,8 @@
 
                 <EditText
                     android:id="@+id/et_amount"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:padding="@dimen/dp10"
-                    android:paddingLeft="@dimen/dp20"
-                    android:paddingRight="@dimen/dp20"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    style="@style/MyEditText"
+                    android:layout_marginTop="0dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,20 +82,7 @@
 
             <EditText
                 android:id="@+id/et_eight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/select_shape"
-                android:gravity="center"
-                android:maxLines="1"
-                android:padding="@dimen/dp10"
-                android:paddingLeft="@dimen/dp20"
-                android:paddingRight="@dimen/dp20"
-                android:textColor="@color/color_999999"
-                android:textSize="@dimen/dp14" />
+                style="@style/MyEditText" />
 
             <TextView
                 style="@style/MyEditTextTitle"
@@ -113,19 +91,7 @@
 
             <EditText
                 android:id="@+id/et_six"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/select_shape"
-                android:gravity="center"
-                android:maxLines="1"
-                android:padding="@dimen/dp10"
-                android:paddingLeft="@dimen/dp20"
-                android:paddingRight="@dimen/dp20"
-                android:textColor="@color/color_999999"
-                android:textSize="@dimen/dp14" />
+                style="@style/MyEditText" />
 
             <TextView
                 style="@style/MyEditTextTitle"
@@ -142,17 +108,7 @@
 
                 <EditText
                     android:id="@+id/et_fillThe"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:padding="@dimen/dp10"
-                    android:paddingLeft="@dimen/dp20"
-                    android:paddingRight="@dimen/dp20"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -181,17 +137,7 @@
 
                 <EditText
                     android:id="@+id/et_remainMaterial"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:padding="@dimen/dp10"
-                    android:paddingLeft="@dimen/dp20"
-                    android:paddingRight="@dimen/dp20"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -220,17 +166,8 @@
 
                 <EditText
                     android:id="@+id/et_washTime"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:padding="@dimen/dp10"
-                    android:paddingLeft="@dimen/dp20"
-                    android:paddingRight="@dimen/dp20"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    android:layout_marginTop="0dp"
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -266,14 +203,8 @@
 
                 <EditText
                     android:id="@+id/et_oilMass"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:padding="@dimen/dp10"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    android:layout_marginTop="0dp"
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -308,15 +239,9 @@
 
 
                 <EditText
+                    android:layout_marginTop="0dp"
                     android:id="@+id/et_distance"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:padding="@dimen/dp10"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -351,14 +276,8 @@
 
                 <EditText
                     android:id="@+id/et_overTime"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:padding="@dimen/dp10"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    android:layout_marginTop="0dp"
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -384,17 +303,7 @@
 
             <EditText
                 android:id="@+id/et_overTime_TrainNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/select_shape"
-                android:gravity="center"
-                android:padding="@dimen/dp10"
-                android:textColor="@color/color_999999"
-                android:textSize="@dimen/dp14" />
+                style="@style/MyEditText"/>
 
 
             <TextView
@@ -418,14 +327,7 @@
 
                 <EditText
                     android:id="@+id/et_timeConsuming"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:padding="@dimen/dp10"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -458,15 +360,8 @@
 
                 <EditText
                     android:id="@+id/et_travelKm"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:padding="@dimen/dp10"
-                    android:text="0"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    android:layout_marginTop="0dp"
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -500,15 +395,8 @@
 
                 <EditText
                     android:id="@+id/et_washing"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:padding="@dimen/dp10"
-                    android:text="0"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    android:layout_marginTop="0dp"
+                    style="@style/MyEditText" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -541,15 +429,8 @@
 
                 <EditText
                     android:id="@+id/et_water"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:padding="@dimen/dp10"
-                    android:text="0"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp14" />
+                    android:layout_marginTop="0dp"
+                    style="@style/MyEditText"/>
 
                 <TextView
                     android:layout_width="wrap_content"
