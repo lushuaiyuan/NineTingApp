@@ -55,12 +55,8 @@ public class GCInputFragment extends BaseFragment {
     EditText etWorkPart;//施工部位
     @BindView(R.id.et_workTimes)
     EditText etWorkTimes;//车次
-    @BindView(R.id.et_intwenty)
-    EditText etIntwenty;//20公里以内
-    @BindView(R.id.et_ontwenty)
-    EditText etOntwenty;//20公里至40公里
-    @BindView(R.id.et_onforty)
-    EditText etOnforty;//40公里以上
+    @BindView(R.id.et_distance)
+    EditText etDistance;//运距
     @BindView(R.id.et_price)
     EditText etPrice;//单价
     @BindView(R.id.et_squareQuantity)
@@ -184,9 +180,7 @@ public class GCInputFragment extends BaseFragment {
             etWorkSite.setText(statisticalList.getWorkSite());
             etWorkPart.setText(statisticalList.getWorkPart());
             etWorkTimes.setText(statisticalList.getWorkTimes());
-            etIntwenty.setText(statisticalList.getIntwenty());
-            etOntwenty.setText(statisticalList.getOntwenty());
-            etOnforty.setText(statisticalList.getOnforty());
+            etDistance.setText(statisticalList.getDistance());
             etPrice.setText(statisticalList.getPrice());
             etSquareQuantity.setText(statisticalList.getSquareQuantity());
             etSixBelow.setText(statisticalList.getSixBelow());
@@ -248,16 +242,8 @@ public class GCInputFragment extends BaseFragment {
                     UIUtils.showT("车次不能为空");
                     return;
                 }
-                if (StringUtil.isNullOrEmpty(etIntwenty.getText().toString())) {
-                    UIUtils.showT("20公里以内不能为空");
-                    return;
-                }
-                if (StringUtil.isNullOrEmpty(etOntwenty.getText().toString())) {
-                    UIUtils.showT("20公里至40公里不能为空");
-                    return;
-                }
-                if (StringUtil.isNullOrEmpty(etOnforty.getText().toString())) {
-                    UIUtils.showT("40公里以内不能为空");
+                if (StringUtil.isNullOrEmpty(etDistance.getText().toString())) {
+                    UIUtils.showT("运距不能为空");
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etPrice.getText().toString())) {
@@ -321,9 +307,7 @@ public class GCInputFragment extends BaseFragment {
                 statisticalList.setWorkSite(etWorkSite.getText().toString());//施工地点
                 statisticalList.setWorkPart(etWorkPart.getText().toString());//施工部位
                 statisticalList.setWorkTimes(etWorkTimes.getText().toString());//车次
-                statisticalList.setIntwenty(etIntwenty.getText().toString());//20公里以内
-                statisticalList.setOntwenty(etOntwenty.getText().toString());//20公里至40公里
-                statisticalList.setOnforty(etOnforty.getText().toString());//40公里以上
+                statisticalList.setDistance(etDistance.getText().toString());//运距
                 statisticalList.setPrice(etPrice.getText().toString());//单价
                 statisticalList.setSquareQuantity(etSquareQuantity.getText().toString());//方量
                 statisticalList.setSixBelow(etSixBelow.getText().toString());//6方以下
@@ -367,6 +351,7 @@ public class GCInputFragment extends BaseFragment {
             url = Urls.RECORD_ADDRECORD;
         } else if (tag == 1) {
             url = Urls.RECORD_UPDATERECORD;
+            params.put("updateReason", "11");
         }
 
         OkHttpManager.postFormBody(url, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
@@ -385,9 +370,7 @@ public class GCInputFragment extends BaseFragment {
                     etWorkSite.getText().clear();
                     etWorkPart.getText().clear();
                     etWorkTimes.getText().clear();
-                    etIntwenty.getText().clear();
-                    etOntwenty.getText().clear();
-                    etOnforty.getText().clear();
+                    etDistance.getText().clear();
                     etPrice.getText().clear();
                     etSquareQuantity.getText().clear();
                     etSixBelow.getText().clear();

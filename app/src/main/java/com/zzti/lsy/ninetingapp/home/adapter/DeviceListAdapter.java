@@ -21,16 +21,16 @@ public class DeviceListAdapter extends BaseQuickAdapter<CarInfoEntity, BaseViewH
     @Override
     protected void convert(BaseViewHolder helper, CarInfoEntity item) {
         helper.setText(R.id.tv_carNumber, item.getPlateNumber());
-        if (TextUtils.equals(item.getStatus(), "0")) {
-            ((TextView) helper.getView(R.id.tv_state)).setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
-            helper.setText(R.id.tv_state, "存放中");
-        } else if (TextUtils.equals(item.getStatus(), "1")) {
-            ((TextView) helper.getView(R.id.tv_state)).setTextColor(App.get().getResources().getColor(R.color.color_ffb947));
-            helper.setText(R.id.tv_state, "工作中");
-        } else if (TextUtils.equals(item.getStatus(), "2")) {
-            ((TextView) helper.getView(R.id.tv_state)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
-            helper.setText(R.id.tv_state, "维修中");
-        }
+//        if (TextUtils.equals(item.getStatus(), "0")) {
+//            ((TextView) helper.getView(R.id.tv_state)).setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
+//            helper.setText(R.id.tv_state, "存放中");
+//        } else if (TextUtils.equals(item.getStatus(), "1")) {
+//            ((TextView) helper.getView(R.id.tv_state)).setTextColor(App.get().getResources().getColor(R.color.color_ffb947));
+//            helper.setText(R.id.tv_state, "工作中");
+//        } else if (TextUtils.equals(item.getStatus(), "2")) {
+//            ((TextView) helper.getView(R.id.tv_state)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
+//            helper.setText(R.id.tv_state, "维修中");
+//        }
         helper.setText(R.id.tv_projectAddress, item.getProjectName());
         helper.setText(R.id.tv_carType, item.getVehicleTypeName());
         if (flag == 3) {

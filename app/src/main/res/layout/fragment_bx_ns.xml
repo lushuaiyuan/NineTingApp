@@ -131,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dp5"
-                            android:text="保险"
+                            android:text="强险"
                             android:textColor="@color/color_666666"
                             android:textSize="@dimen/dp15" />
                     </LinearLayout>
@@ -150,7 +150,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_bxDay"
+                            android:id="@+id/tv_qbxDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="507"
@@ -174,6 +174,86 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@id/ll_bx"
                     android:background="@drawable/proamount_shape" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_sybx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/circular_selector">
+
+                <LinearLayout
+                    android:id="@+id/ll_sybx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp15">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/icon_sybx" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:text="商业保险"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/dp15" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="@dimen/dp40"
+                        android:layout_centerInParent="true"
+                        android:background="@color/color_e5e5e5" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center_horizontal">
+
+
+                        <TextView
+                            android:id="@+id/tv_sybxDay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="507"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/dp22"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="天"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/dp12" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dp3"
+                    android:layout_height="match_parent"
+                    android:layout_alignBottom="@id/ll_sybx"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/ll_sybx"
+                    android:background="@drawable/sybx_shape" />
             </RelativeLayout>
 
             <LinearLayout

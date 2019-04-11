@@ -221,8 +221,8 @@
                 android:background="@drawable/select_shape">
 
 
-                <EditText
-                    android:id="@+id/et_onOrderpriceCount"
+                <TextView
+                    android:id="@+id/tv_onOrderpriceCount"
                     style="@style/MyEditText"
                     android:layout_width="@dimen/dp200"
                     android:layout_centerHorizontal="true"

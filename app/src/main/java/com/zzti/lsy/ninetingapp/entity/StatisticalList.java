@@ -32,9 +32,7 @@ public class StatisticalList implements Parcelable {
     private String wearUser;//加油负责人 共有
 
     private String workTimes;//车次 罐车
-    private String Intwenty;//20公里以内 罐车
-    private String Onforty;//20公里至40公里 罐车
-    private String Ontwenty;//40公里以上 罐车
+    private String distance;//运距
     private String price;//单价 罐车
     private String squareQuantity;///方量 罐车
     private String eightBelow;//8方以下 罐车
@@ -51,6 +49,13 @@ public class StatisticalList implements Parcelable {
     private String quantityCount;//合计方量 共有 罐车：用户填写 泵车：外单方量+内单方量
 
 
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
 
     public String getSlID() {
         return slID;
@@ -188,29 +193,6 @@ public class StatisticalList implements Parcelable {
         this.workTimes = workTimes;
     }
 
-    public String getIntwenty() {
-        return Intwenty;
-    }
-
-    public void setIntwenty(String intwenty) {
-        Intwenty = intwenty;
-    }
-
-    public String getOnforty() {
-        return Onforty;
-    }
-
-    public void setOnforty(String onforty) {
-        Onforty = onforty;
-    }
-
-    public String getOntwenty() {
-        return Ontwenty;
-    }
-
-    public void setOntwenty(String ontwenty) {
-        Ontwenty = ontwenty;
-    }
 
     public String getPrice() {
         return price;
@@ -332,10 +314,8 @@ public class StatisticalList implements Parcelable {
         dest.writeString(this.vehicleTypeName);
         dest.writeString(this.wearUser);
         dest.writeString(this.workTimes);
-        dest.writeString(this.Intwenty);
-        dest.writeString(this.Onforty);
-        dest.writeString(this.Ontwenty);
         dest.writeString(this.price);
+        dest.writeString(this.distance);
         dest.writeString(this.squareQuantity);
         dest.writeString(this.eightBelow);
         dest.writeString(this.sixBelow);
@@ -370,9 +350,7 @@ public class StatisticalList implements Parcelable {
         this.vehicleTypeName = in.readString();
         this.wearUser = in.readString();
         this.workTimes = in.readString();
-        this.Intwenty = in.readString();
-        this.Onforty = in.readString();
-        this.Ontwenty = in.readString();
+        this.distance = in.readString();
         this.price = in.readString();
         this.squareQuantity = in.readString();
         this.eightBelow = in.readString();

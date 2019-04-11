@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/dp8"
+        android:paddingLeft="@dimen/dp8"
+        android:paddingRight="@dimen/dp8"
+        android:paddingTop="@dimen/dp8">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/input_shape_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_startTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="开始时间"
+                android:padding="@dimen/dp8"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp14" />
+
+            <ImageView
+                android:id="@+id/iv_clearStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp8"
+                android:src="@mipmap/icon_clear"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <View
+            style="@style/MyView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp1"
+            android:layout_margin="@dimen/dp8"
+            android:layout_weight="0.5"
+            android:background="@color/color_e5e5e5" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/input_shape_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_endTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="结束时间"
+                android:padding="@dimen/dp8"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp14" />
+
+            <ImageView
+                android:id="@+id/iv_clearEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp8"
+                android:src="@mipmap/icon_clear"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:background="@mipmap/iv_search"
+            android:padding="@dimen/dp10" />
+
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.bin.david.form.core.SmartTable
+            android:id="@+id/smartTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

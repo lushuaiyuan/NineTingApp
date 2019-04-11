@@ -63,30 +63,47 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
     TextView tvCarType;
     @BindView(R.id.tv_emission_standard)
     TextView tvEmissionStandard; //排放标准
-    @BindView(R.id.tv_carStatus)
-    TextView tvCarStauts;//车辆状态
-    @BindView(R.id.tv_factory)
-    TextView tvFactory;//生产厂家
-    @BindView(R.id.tv_project)
-    TextView tvProject;//项目部
+    @BindView(R.id.et_carSource)
+    EditText etCarSource;//车辆来源
+    @BindView(R.id.et_oldLevel)
+    EditText etOldLevel;//新旧程度
+    @BindView(R.id.et_drivingStatus)
+    EditText etDrivingStatus;//行驶证保存情况
     @BindView(R.id.et_vin)
     EditText etVin;//识别码
     @BindView(R.id.et_engine_number)
     EditText etEngineNumber;//发动机号
-    @BindView(R.id.tv_buyTime)
-    TextView tvBuyTime;//购买时间
-    @BindView(R.id.et_buyMoney)
-    EditText etBuyMoney;//购买金额
-    @BindView(R.id.et_drivingNumber)
-    EditText etDrivingNumber;//行驶证号码
-    @BindView(R.id.tv_drivingNumber_giveTime)
-    TextView tvDrivingNumberGiveTime;//行驶证发放日期
-    @BindView(R.id.et_drivingNumber_validityTime)
-    EditText etDrivingNumberValidityTime;//行驶证有效期
+    @BindView(R.id.tv_dLDate)
+    TextView tvDLDate;//行驶证注册日期
+    @BindView(R.id.tv_registerTime)
+    TextView tvRegisterTime;//登记日期
+    @BindView(R.id.tv_yearTime)
+    TextView tvYearTime;//年检日期
+    @BindView(R.id.et_yearExprie)
+    EditText etYearExprie;//年检时限
+    @BindView(R.id.tv_qStartTime)
+    TextView tvQStartTime;//强制保险生效时间
+    @BindView(R.id.tv_qOverTime)
+    TextView tvQOverTime;//强制保险到期时间
+    @BindView(R.id.et_qCompany)
+    EditText etQCompany;//强制保险公司
+    @BindView(R.id.et_qAddress)
+    EditText etQAddress;//强险保单原件所在地
+
+    @BindView(R.id.tv_sStartTime)
+    TextView tvSStartTime;//商业保险生效日期
+    @BindView(R.id.tv_sOverTime)
+    TextView tvSOverTime;//商业保险到期日期
+    @BindView(R.id.et_sCompany)
+    EditText etSCompany;//商业保险公司
+    @BindView(R.id.et_sAddress)
+    EditText etSAddress;//商险保单原件所在地
+    @BindView(R.id.et_dischargeName)
+    EditText etDischargeName;//排放名称
     @BindView(R.id.et_initQuantity)
-    EditText etInitQuantity;//初始方量
+    EditText etInitQuantity;//初始化方量
     @BindView(R.id.et_initTravelKm)
-    EditText etInitTravelKm;//初始公里数
+    EditText etInitTravelKm;//初始化公里数
 
 
     //车辆类型pop
@@ -99,11 +116,11 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
     private ListView mListViewDisCharged;
     private DisChargedAdapter disChargedAdapter;
     private List<DisChargeEntity> disChargeEntities;
-    //生产厂家pop
-    private PopupWindow popupWindowFactory;
-    private ListView mListViewFactory;
-    private FactoryAdapter factoryAdapter;
-    private List<FactoryInfoEntity> factoryInfoEntities;
+//    //生产厂家pop
+//    private PopupWindow popupWindowFactory;
+//    private ListView mListViewFactory;
+//    private FactoryAdapter factoryAdapter;
+//    private List<FactoryInfoEntity> factoryInfoEntities;
 
 //    //项目部
 //    private PopupWindow popupWindowProject;
@@ -112,10 +129,10 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
 //    private List<ProjectEntity> projectEntities;
 
     //车辆状态
-    private PopupWindow popupWindowCarStatus;
-    private ListView mListViewCarStatus;
-    private CarStatusAdapter carStatusAdapter;
-    private List<CarStatusEntity> carStatusEntities;
+//    private PopupWindow popupWindowCarStatus;
+//    private ListView mListViewCarStatus;
+//    private CarStatusAdapter carStatusAdapter;
+//    private List<CarStatusEntity> carStatusEntities;
 
 
     private void initCarTypePop() {
@@ -174,90 +191,6 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
         popupWindowDisCharged.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-    private void initFactoryPop() {
-        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
-        contentview.setFocusable(true); // 这个很重要
-        contentview.setFocusableInTouchMode(true);
-        popupWindowFactory = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindowFactory.setFocusable(true);
-        popupWindowFactory.setOutsideTouchable(true);
-        //设置消失监听
-        popupWindowFactory.setOnDismissListener(this);
-        popupWindowFactory.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        contentview.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindowFactory.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        mListViewFactory = contentview.findViewById(R.id.pop_list);
-        factoryInfoEntities = new ArrayList<>();
-        factoryAdapter = new FactoryAdapter(factoryInfoEntities);
-        mListViewFactory.setAdapter(factoryAdapter);
-        mListViewFactory.setOnItemClickListener(this);
-        popupWindowFactory.setAnimationStyle(R.style.anim_bottomPop);
-    }
-
-//    private void initProjectPop() {
-//        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
-//        contentview.setFocusable(true); // 这个很重要
-//        contentview.setFocusableInTouchMode(true);
-//        popupWindowProject = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//        popupWindowProject.setFocusable(true);
-//        popupWindowProject.setOutsideTouchable(true);
-//        //设置消失监听
-//        popupWindowProject.setOnDismissListener(this);
-//        popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
-//        contentview.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if (keyCode == KeyEvent.KEYCODE_BACK) {
-//                    popupWindowProject.dismiss();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//        mListViewProject = contentview.findViewById(R.id.pop_list);
-//        projectEntities = new ArrayList<>();
-//        projectAdapter = new ProjectAdapter(projectEntities);
-//        mListViewProject.setAdapter(projectAdapter);
-//        mListViewProject.setOnItemClickListener(this);
-//        popupWindowProject.setAnimationStyle(R.style.anim_bottomPop);
-//    }
-
-    private void initCarStatusPop() {
-        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
-        contentview.setFocusable(true); // 这个很重要
-        contentview.setFocusableInTouchMode(true);
-        popupWindowCarStatus = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindowCarStatus.setFocusable(true);
-        popupWindowCarStatus.setOutsideTouchable(true);
-        //设置消失监听
-        popupWindowCarStatus.setOnDismissListener(this);
-        popupWindowCarStatus.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        contentview.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindowCarStatus.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        mListViewCarStatus = contentview.findViewById(R.id.pop_list);
-        carStatusEntities = new ArrayList<>();
-        carStatusAdapter = new CarStatusAdapter(carStatusEntities);
-        mListViewCarStatus.setAdapter(carStatusAdapter);
-        mListViewCarStatus.setOnItemClickListener(this);
-        popupWindowCarStatus.setAnimationStyle(R.style.anim_bottomPop);
-    }
-
     @Override
     protected boolean openEventBus() {
         return true;
@@ -280,13 +213,6 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
     protected void initView() {
         initCarTypePop();
         initStandardPop();
-        initFactoryPop();
-//        initProjectPop();
-        initCarStatusPop();
-        etBuyMoney.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        etInitQuantity.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        etInitTravelKm.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        tvProject.setText(SpUtils.getInstance().getString(SpUtils.PROJECT, ""));
         projectID = SpUtils.getInstance().getString(SpUtils.PROJECTID, "");
     }
 
@@ -297,9 +223,9 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
 
     private int tag;
 
-    @OnClick({R.id.tv_carType, R.id.tv_emission_standard, R.id.tv_carStatus, R.id.tv_factory, R.id.tv_buyTime, R.id.tv_drivingNumber_giveTime, R.id.btn_inputYearInsurance})
+    @OnClick({R.id.tv_carType, R.id.tv_emission_standard, R.id.tv_dLDate, R.id.tv_registerTime, R.id.tv_yearTime, R.id.tv_qStartTime, R.id.tv_qOverTime, R.id.tv_sStartTime, R.id.btn_inputYearInsurance})
     public void viewClick(View view) {
-        hideSoftInput(etBuyMoney);
+        hideSoftInput(etCarNumber);
         switch (view.getId()) {
             case R.id.tv_carType://获取车辆类型
                 carTypeEntities.clear();
@@ -313,27 +239,23 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
                 showDia();
                 getChargeType();
                 break;
-            case R.id.tv_carStatus://车辆状态
-                tag = 5;
-                showCarStatus();
-                break;
-            case R.id.tv_factory://生产厂家
-                factoryInfoEntities.clear();
-                tag = 3;
-                showDia();
-                getCarFactory();
-                break;
-//            case R.id.tv_project://项目部
-//                projectEntities.clear();
-//                tag = 4;
-//                showDia();
-//                getProject();
-//                break;
-            case R.id.tv_buyTime://选择购买日期
+            case R.id.tv_dLDate://行驶证注册日期
                 showCustomTime(1);
                 break;
-            case R.id.tv_drivingNumber_giveTime://行驶证发放日期
+            case R.id.tv_registerTime://登记日期
                 showCustomTime(2);
+                break;
+            case R.id.tv_yearTime://年检日期
+                showCustomTime(3);
+                break;
+            case R.id.tv_qStartTime://强制保险生效时间
+                showCustomTime(4);
+                break;
+            case R.id.tv_qOverTime://强制保险到期时间
+                showCustomTime(5);
+                break;
+            case R.id.tv_sStartTime://商业保险生效日期
+                showCustomTime(6);
                 break;
             case R.id.btn_inputYearInsurance:
                 setData();
@@ -342,97 +264,109 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
         }
     }
 
-    //0存放中、1工作中、2维修中
-    private void showCarStatus() {
-        carStatusEntities.clear();
-        CarStatusEntity carStatusEntity1 = new CarStatusEntity("0", "存放中");
-        CarStatusEntity carStatusEntity2 = new CarStatusEntity("1", "工作中");
-        CarStatusEntity carStatusEntity3 = new CarStatusEntity("2", "维修中");
-        carStatusEntities.add(carStatusEntity1);
-        carStatusEntities.add(carStatusEntity2);
-        carStatusEntities.add(carStatusEntity3);
-        carStatusAdapter.notifyDataSetChanged();
-        setBackgroundAlpha(0.5f);
-        popupWindowCarStatus.showAtLocation(tvCarStauts, Gravity.BOTTOM, 0, 0);
-    }
-
 
     private void setData() {
-        hideSoftInput(etBuyMoney);
+        hideSoftInput(etCarNumber);
         CarInfoEntity carInfoEntity = new CarInfoEntity();
         if (StringUtil.isNullOrEmpty(etCarNumber.getText().toString())) {
-            UIUtils.showT("请输入车牌号");
+            UIUtils.showT("车牌号不能为空");
             return;
         }
         if (StringUtil.isNullOrEmpty(tvCarType.getText().toString())) {
-            UIUtils.showT("请选择车辆类型");
+            UIUtils.showT("车辆类型不能为空");
             return;
         }
         if (StringUtil.isNullOrEmpty(tvEmissionStandard.getText().toString())) {
-            UIUtils.showT("请选择排放标准");
+            UIUtils.showT("排放标准不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvCarStauts.getText().toString())) {
-            UIUtils.showT("请选择车辆状态");
+        if (StringUtil.isNullOrEmpty(etCarSource.getText().toString())) {
+            UIUtils.showT("车辆来源不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvFactory.getText().toString())) {
-            UIUtils.showT("请选择厂家");
+        if (StringUtil.isNullOrEmpty(etOldLevel.getText().toString())) {
+            UIUtils.showT("新旧程度不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvProject.getText().toString())) {
-            UIUtils.showT("请选择项目部");
+        if (StringUtil.isNullOrEmpty(etDrivingStatus.getText().toString())) {
+            UIUtils.showT("行驶证保存情况不能为空");
             return;
         }
         if (StringUtil.isNullOrEmpty(etVin.getText().toString())) {
-            UIUtils.showT("请输入识别码");
+            UIUtils.showT("车辆识别码不能为空");
             return;
         }
         if (StringUtil.isNullOrEmpty(etEngineNumber.getText().toString())) {
-            UIUtils.showT("请输入发动机号");
+            UIUtils.showT("发动机号不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvBuyTime.getText().toString())) {
-            UIUtils.showT("请选择购买日期");
+        if (StringUtil.isNullOrEmpty(tvDLDate.getText().toString())) {
+            UIUtils.showT("行驶证注册日期不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(etDrivingNumber.getText().toString())) {
-            UIUtils.showT("请输入行驶证号码");
+        if (StringUtil.isNullOrEmpty(tvRegisterTime.getText().toString())) {
+            UIUtils.showT("登记日期不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvDrivingNumberGiveTime.getText().toString())) {
-            UIUtils.showT("请选择行驶证发放日期");
+        if (StringUtil.isNullOrEmpty(tvYearTime.getText().toString())) {
+            UIUtils.showT("年检日期不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(etDrivingNumberValidityTime.getText().toString())) {
-            UIUtils.showT("请输入行驶证有效期");
+        if (StringUtil.isNullOrEmpty(etYearExprie.getText().toString())) {
+            UIUtils.showT("年检时限不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(etInitQuantity.getText().toString())) {
-            UIUtils.showT("请输入初始方量");
+        if (StringUtil.isNullOrEmpty(tvQStartTime.getText().toString())) {
+            UIUtils.showT("强制保险生效时间不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(etInitTravelKm.getText().toString())) {
-            UIUtils.showT("请输入初始公里数");
+        if (StringUtil.isNullOrEmpty(etQCompany.getText().toString())) {
+            UIUtils.showT("强制保险公司不能为空");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(etQAddress.getText().toString())) {
+            UIUtils.showT("强险保单原件所在地不能为空");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(tvSStartTime.getText().toString())) {
+            UIUtils.showT("商业保险生效日期不能为空");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(tvSOverTime.getText().toString())) {
+            UIUtils.showT("商业保险到期日期不能为空");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(etSCompany.getText().toString())) {
+            UIUtils.showT("商业保险公司不能为空");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(etSAddress.getText().toString())) {
+            UIUtils.showT("商险保单原件所在地");
             return;
         }
         carInfoEntity.setPlateNumber(etCarNumber.getText().toString());
         carInfoEntity.setCarTypeID(CarTypeID);
-        carInfoEntity.setStatus(carStatus);
         carInfoEntity.setDischargeID(dischargeID);
-        carInfoEntity.setFactoryID(FactoryID);
-        carInfoEntity.setProjectID(projectID);
+        carInfoEntity.setCarSource(etCarSource.getText().toString());
+        carInfoEntity.setOldLevel(etOldLevel.getText().toString());
+        carInfoEntity.setDrivingStatus(etDrivingStatus.getText().toString());
         carInfoEntity.setVIN(etVin.getText().toString());
         carInfoEntity.setEngineNumber(etEngineNumber.getText().toString());
-        carInfoEntity.setPurchaseDate(tvBuyTime.getText().toString());
-        if (StringUtil.isNullOrEmpty(etBuyMoney.getText().toString())) {
-            carInfoEntity.setPrice("0.00");
-        } else {
-            carInfoEntity.setPrice(etBuyMoney.getText().toString());
-        }
-        carInfoEntity.setDrivingLicenseNumber(etDrivingNumber.getText().toString());
-        carInfoEntity.setDLDate(tvDrivingNumberGiveTime.getText().toString());
-        carInfoEntity.setDLValidDate(DateUtil.getAfterMonth(tvDrivingNumberGiveTime.getText().toString(), Integer.parseInt(etDrivingNumberValidityTime.getText().toString()) * 12));
+        carInfoEntity.setDLDate(tvDLDate.getText().toString());
+        carInfoEntity.setRegisterTime(tvRegisterTime.getText().toString());
+        carInfoEntity.setProjectID(projectID);
+        carInfoEntity.setYearTime(tvYearTime.getText().toString());
+        carInfoEntity.setYearExprie(etYearExprie.getText().toString());
+        carInfoEntity.setqStartTime(tvQStartTime.getText().toString());
+        carInfoEntity.setqOverTime(tvQOverTime.getText().toString());
+        carInfoEntity.setqCompany(etQCompany.getText().toString());
+        carInfoEntity.setqAddress(etQAddress.getText().toString());
+        carInfoEntity.setsStartTime(tvSStartTime.getText().toString());
+        carInfoEntity.setsOverTime(tvSOverTime.getText().toString());
+        carInfoEntity.setsCompany(etSCompany.getText().toString());
+        carInfoEntity.setsAddress(etSAddress.getText().toString());
+        carInfoEntity.setDischargeID(dischargeID);
+
         Intent intent = new Intent(mActivity, YearInsuranceActivity.class);
         intent.putExtra("carInfoEntity", carInfoEntity);
         intent.putExtra("initQuantity", etInitQuantity.getText().toString());
@@ -441,107 +375,6 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
 
     }
 
-    /**
-     * 获取项目部
-     */
-//    private void getProject() {
-//        HashMap<String, String> params = new HashMap<>();
-//        OkHttpManager.postFormBody(Urls.POST_GETPROJECT, params, tvProject, new OkHttpManager.OnResponse<String>() {
-//            @Override
-//            public String analyseResult(String result) {
-//                return result;
-//            }
-//
-//            @Override
-//            public void onSuccess(String s) {
-//                cancelDia();
-//                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-//                if (msgInfo.getCode() == 200) {
-//                    try {
-//                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            ProjectEntity projectEntity = ParseUtils.parseJson(jsonArray.getString(i), ProjectEntity.class);
-//                            projectEntities.add(projectEntity);
-//                        }
-//                        if (projectEntities.size() > 0) {
-//                            //设置背景色
-//                            setBackgroundAlpha(0.5f);
-//                            if (projectEntities.size() >= 5) {
-//                                //动态设置listView的高度
-//                                View listItem = projectAdapter.getView(0, null, mListViewProject);
-//                                listItem.measure(0, 0);
-//                                int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
-//                                mListViewProject.getLayoutParams().height = totalHei;
-//                                ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
-//                                params.height = totalHei;
-//                                mListViewProject.setLayoutParams(params);
-//                            }
-//                            popupWindowProject.showAtLocation(tvProject, Gravity.BOTTOM, 0, 0);
-//                        } else {
-//                            UIUtils.showT("暂无数据");
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
-//                    loginOut();
-//                } else {
-//                    UIUtils.showT(msgInfo.getMsg());
-//                }
-//            }
-//        });
-//    }
-
-    /**
-     * 获取汽车的生产厂家
-     */
-    private void getCarFactory() {
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETFACTORY, params, tvFactory, new OkHttpManager.OnResponse<String>() {
-            @Override
-            public String analyseResult(String result) {
-                return result;
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                cancelDia();
-                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                if (msgInfo.getCode() == 200) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            FactoryInfoEntity factoryInfoEntity = ParseUtils.parseJson(jsonArray.getString(i), FactoryInfoEntity.class);
-                            factoryInfoEntities.add(factoryInfoEntity);
-                        }
-                        if (factoryInfoEntities.size() > 0) {
-                            //设置背景色
-                            setBackgroundAlpha(0.5f);
-                            if (factoryInfoEntities.size() >= 5) {
-                                //动态设置listView的高度
-                                View listItem = factoryAdapter.getView(0, null, mListViewFactory);
-                                listItem.measure(0, 0);
-                                int totalHei = (listItem.getMeasuredHeight() + mListViewFactory.getDividerHeight()) * 5;
-                                mListViewFactory.getLayoutParams().height = totalHei;
-                                ViewGroup.LayoutParams params = mListViewFactory.getLayoutParams();
-                                params.height = totalHei;
-                                mListViewFactory.setLayoutParams(params);
-                            }
-                            popupWindowFactory.showAtLocation(tvFactory, Gravity.BOTTOM, 0, 0);
-                        } else {
-                            UIUtils.showT("暂无数据");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
-                    loginOut();
-                } else {
-                    UIUtils.showT(msgInfo.getMsg());
-                }
-            }
-        });
-    }
 
     /**
      * 获取排放标准
@@ -645,9 +478,7 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
 
     private String CarTypeID;
     private String dischargeID;
-    private String FactoryID;
     private String projectID;
-    private String carStatus;
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -659,20 +490,6 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
             tvEmissionStandard.setText(disChargeEntities.get(position).getDischargeName());
             dischargeID = disChargeEntities.get(position).getDischargeID();
             popupWindowDisCharged.dismiss();
-        } else if (tag == 3) {//生产厂家
-            tvFactory.setText(factoryInfoEntities.get(position).getFactoryName());
-            FactoryID = factoryInfoEntities.get(position).getFactoryID();
-            popupWindowFactory.dismiss();
-        }
-//        else if (tag == 4) {//生产厂家
-//            tvProject.setText(projectEntities.get(position).getProjectName());
-//            projectID = projectEntities.get(position).getProjectID();
-//            popupWindowProject.dismiss();
-//        }
-        else if (tag == 5) {//车辆状态
-            tvCarStauts.setText(carStatusEntities.get(position).getName());
-            carStatus = carStatusEntities.get(position).getId();
-            popupWindowCarStatus.dismiss();
         }
     }
 
@@ -688,9 +505,17 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
             @Override
             public void onTimeSelect(Date date, View v) {
                 if (tag == 1) {
-                    tvBuyTime.setText(DateUtil.getDate(date));
+                    tvDLDate.setText(DateUtil.getDate(date));
                 } else if (tag == 2) {
-                    tvDrivingNumberGiveTime.setText(DateUtil.getDate(date));
+                    tvRegisterTime.setText(DateUtil.getDate(date));
+                } else if (tag == 3) {
+                    tvYearTime.setText(DateUtil.getDate(date));
+                } else if (tag == 4) {
+                    tvQStartTime.setText(DateUtil.getDate(date));
+                } else if (tag == 5) {
+                    tvQOverTime.setText(DateUtil.getDate(date));
+                } else if (tag == 6) {
+                    tvSStartTime.setText(DateUtil.getDate(date));
                 }
             }
         }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})

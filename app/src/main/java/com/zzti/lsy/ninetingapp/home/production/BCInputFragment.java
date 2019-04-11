@@ -60,8 +60,8 @@ public class BCInputFragment extends BaseFragment {
     EditText etOnOrderqua;//外单方量 泵车 如果填写外单方量 那么外单单价必填
     @BindView(R.id.et_onOrderprice)
     EditText etOnOrderprice;//外单单价
-    @BindView(R.id.et_onOrderpriceCount)
-    EditText etOnOrderpriceCount;//外单金额 泵车  外单方量*外单单价
+    @BindView(R.id.tv_onOrderpriceCount)
+    TextView tvOnOrderpriceCount;//外单金额 泵车  外单方量*外单单价
 
     @BindView(R.id.et_qilWear)
     EditText etQilWear;//加油升数
@@ -158,9 +158,9 @@ public class BCInputFragment extends BaseFragment {
                 if (!StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
                     double onOrderPrice = Double.parseDouble(etOnOrderprice.getText().toString());
                     double onOrderqua = Double.parseDouble(editable.toString());
-                    etOnOrderpriceCount.setText(String.valueOf(onOrderPrice * onOrderqua));
+                    tvOnOrderpriceCount.setText(String.valueOf(onOrderPrice * onOrderqua));
                 } else {
-                    etOnOrderpriceCount.setText("");
+                    tvOnOrderpriceCount.setText("");
                 }
             }
         });
@@ -180,9 +180,9 @@ public class BCInputFragment extends BaseFragment {
                 if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
                     double onOrderqua = Double.parseDouble(etOnOrderqua.getText().toString());
                     double onOrderPrice = Double.parseDouble(editable.toString());
-                    etOnOrderpriceCount.setText(String.valueOf(onOrderPrice * onOrderqua));
+                    tvOnOrderpriceCount.setText(String.valueOf(onOrderPrice * onOrderqua));
                 } else {
-                    etOnOrderpriceCount.setText("");
+                    tvOnOrderpriceCount.setText("");
                 }
             }
         });
@@ -261,7 +261,7 @@ public class BCInputFragment extends BaseFragment {
             if (!StringUtil.isNullOrEmpty(statisticalList.getOnOrderqua())) {
                 etOnOrderqua.setText(statisticalList.getOnOrderqua());
                 etOnOrderprice.setText(statisticalList.getOnOrderprice());
-                etOnOrderpriceCount.setText(statisticalList.getOnOrderpriceCount());
+                tvOnOrderpriceCount.setText(statisticalList.getOnOrderpriceCount());
             }
 
             etQilWear.setText(statisticalList.getQilWear());
@@ -323,7 +323,7 @@ public class BCInputFragment extends BaseFragment {
                     return;
                 }
 
-                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString()) && StringUtil.isNullOrEmpty(etOnOrderpriceCount.getText().toString())) {
+                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString()) && StringUtil.isNullOrEmpty(tvOnOrderpriceCount.getText().toString())) {
                     UIUtils.showT("外单金额不能为空");//外单金额
                     return;
                 }
@@ -363,7 +363,7 @@ public class BCInputFragment extends BaseFragment {
                 if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString())) {
                     statisticalList.setOnOrderqua(etOnOrderqua.getText().toString());//外单方量
                     statisticalList.setOnOrderqua(etOnOrderprice.getText().toString());//外单单价
-                    statisticalList.setOnOrderpriceCount(etOnOrderpriceCount.getText().toString());//外单金额
+                    statisticalList.setOnOrderpriceCount(tvOnOrderpriceCount.getText().toString());//外单金额
                 }
                 statisticalList.setQilWear(etQilWear.getText().toString());//加油升数
                 statisticalList.setWashing(etWearPrice.getText().toString());//油价
@@ -401,6 +401,7 @@ public class BCInputFragment extends BaseFragment {
             url = Urls.RECORD_ADDRECORD;
         } else if (tag == 1) {
             url = Urls.RECORD_UPDATERECORD;
+            params.put("updateReason", "11");
         }
 
         OkHttpManager.postFormBody(url, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
@@ -421,7 +422,7 @@ public class BCInputFragment extends BaseFragment {
                     etInOrderqua.getText().clear();
                     etOnOrderqua.getText().clear();
                     etOnOrderprice.getText().clear();
-                    etOnOrderpriceCount.getText().clear();
+                    tvOnOrderpriceCount.setText("");
 
                     etQilWear.getText().clear();
                     etWearPrice.getText().clear();

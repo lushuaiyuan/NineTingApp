@@ -49,34 +49,34 @@
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="车辆状态" />
+                android:text="车辆来源" />
 
-            <TextView
-                android:id="@+id/tv_carStatus"
+            <EditText
+                android:id="@+id/et_carSource"
                 style="@style/MyEditText"
-                android:hint="点击选择" />
+                android:hint="请输入" />
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="生产厂家" />
+                android:text="新旧程度" />
 
-            <TextView
-                android:id="@+id/tv_factory"
+            <EditText
+                android:id="@+id/et_oldLevel"
                 style="@style/MyEditText"
-                android:hint="点击选择" />
+                android:hint="请输入" />
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="项目部" />
+                android:text="行驶证保存情况" />
 
-            <TextView
-                android:id="@+id/tv_project"
+            <EditText
+                android:id="@+id/et_drivingStatus"
                 style="@style/MyEditText"
-                android:hint="点击选择" />
+                android:hint="请输入" />
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="识别码" />
+                android:text="车辆识别码" />
 
             <EditText
                 android:id="@+id/et_vin"
@@ -92,20 +92,34 @@
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="购买日期" />
+                android:text="行驶证注册日期" />
 
             <TextView
-                android:id="@+id/tv_buyTime"
+                android:id="@+id/tv_dLDate"
                 style="@style/MyEditText"
                 android:hint="点击选择" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp15"
-                android:text="购买金额"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp15" />
+                style="@style/MyEditTextTitle"
+                android:text="登记日期" />
+
+            <TextView
+                android:id="@+id/tv_registerTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="年检日期" />
+
+            <TextView
+                android:id="@+id/tv_yearTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="年检时限" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -117,61 +131,7 @@
 
 
                 <EditText
-                    android:id="@+id/et_buyMoney"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:padding="@dimen/dp8"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp15" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:text="元"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp13" />
-
-
-            </RelativeLayout>
-
-            <TextView
-                style="@style/MyEditTextTitle"
-                android:text="行驶证号码" />
-
-            <EditText
-                android:id="@+id/et_drivingNumber"
-                style="@style/MyEditText" />
-
-            <TextView
-                style="@style/MyEditTextTitle"
-                android:text="行驶证发放日期" />
-
-            <TextView
-                android:id="@+id/tv_drivingNumber_giveTime"
-                style="@style/MyEditText"
-                android:hint="点击选择" />
-
-            <TextView
-                style="@style/MyEditTextTitle"
-                android:text="行驶证有效期" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp8"
-                android:background="@drawable/select_shape">
-
-
-                <EditText
-                    android:id="@+id/et_drivingNumber_validityTime"
+                    android:id="@+id/et_yearExprie"
                     android:layout_width="@dimen/dp200"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -194,6 +154,91 @@
 
 
             </RelativeLayout>
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="强制保险生效时间" />
+
+            <TextView
+                android:id="@+id/tv_qStartTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="强制保险到期时间" />
+
+            <TextView
+                android:id="@+id/tv_qOverTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="强制保险公司" />
+
+
+            <EditText
+                android:id="@+id/et_qCompany"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="强险保单原件所在地" />
+
+
+            <EditText
+                android:id="@+id/et_qAddress"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="商业保险生效日期" />
+
+            <TextView
+                android:id="@+id/tv_sStartTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="商业保险到期日期" />
+
+            <TextView
+                android:id="@+id/tv_sOverTime"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="商业保险公司" />
+
+            <EditText
+                android:id="@+id/et_sCompany"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="商险保单原件所在地" />
+
+            <EditText
+                android:id="@+id/et_sAddress"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="排放名称" />
+
+            <EditText
+                android:id="@+id/et_dischargeName"
+                style="@style/MyEditText"
+                android:hint="请输入" />
 
             <TextView
                 style="@style/MyEditTextTitle"
