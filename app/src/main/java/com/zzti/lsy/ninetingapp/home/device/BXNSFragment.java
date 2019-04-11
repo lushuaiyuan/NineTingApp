@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
@@ -20,6 +23,7 @@ import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
@@ -28,6 +32,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -59,12 +65,12 @@ public class BXNSFragment extends BaseFragment {
     TextView tvSbxCompany;//商业保险公司
     @BindView(R.id.tv_sbx_address)
     TextView tvSbxAddress;//商险保单原件所在地
-//    @BindView(R.id.btn_alertqBx)
-//    Button btnAlertQBx;
-//    @BindView(R.id.btn_alertsBx)
-//    Button btnAlertSNs;
-//    @BindView(R.id.btn_alertNs)
-//    Button btnAlertNs;
+    @BindView(R.id.btn_alertNs)
+    Button btnAlertNs;//年审更改
+    @BindView(R.id.btn_alertqBx)
+    Button btnAlertqBx;//强险续保
+    @BindView(R.id.btn_alertsBx)
+    Button btnAlertsBx;
 
 
     private CarInfoEntity carInfoEntity;
@@ -93,22 +99,34 @@ public class BXNSFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        String nsEndTime = DateUtil.getAfterMonth(carInfoEntity.getYearTime(), Integer.parseInt(carInfoEntity.getYearExprie()) * 12);
-        int t1 = DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), nsEndTime);
-        tvNsDay.setText(String.valueOf(t1));
-        int t2 = DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), tvQbxEndTime.getText().toString().split("T")[0]);
-        tvQbxDay.setText(String.valueOf(t2));
-        int t3 = DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), tvSbxEndTime.getText().toString().split("T")[0]);
-        tvSbxDay.setText(String.valueOf(t3));
-        tvYearTime.setText(carInfoEntity.getYearTime());
+        tvYearTime.setText(carInfoEntity.getYearTime().split("T")[0]);
         tvYearExprie.setText(carInfoEntity.getYearExprie());
-        tvSbxEndTime.setText(carInfoEntity.getsOverTime());
+        tvSbxEndTime.setText(carInfoEntity.getsOverTime().split("T")[0]);
         tvSbxAddress.setText(carInfoEntity.getsAddress());
         tvSbxCompany.setText(carInfoEntity.getsCompany());
-        tvQbxEndTime.setText(carInfoEntity.getqOverTime());
+        tvQbxEndTime.setText(carInfoEntity.getqOverTime().split("T")[0]);
         tvQbxAddress.setText(carInfoEntity.getqAddress());
         tvQbxCompany.setText(carInfoEntity.getqCompany());
-
+        String nsEndTime = DateUtil.getAfterMonth(tvYearTime.getText().toString(), Integer.parseInt(carInfoEntity.getYearExprie()) * 12);
+        int t1 = DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), nsEndTime);
+        tvNsDay.setText(String.valueOf(t1));
+        int t2 = DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), tvQbxEndTime.getText().toString());
+        tvQbxDay.setText(String.valueOf(t2));
+        int t3 = DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), tvSbxEndTime.getText().toString());
+        tvSbxDay.setText(String.valueOf(t3));
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 5) {
+            btnAlertNs.setVisibility(View.VISIBLE);
+            btnAlertqBx.setVisibility(View.VISIBLE);
+            btnAlertsBx.setVisibility(View.VISIBLE);
+            tvYearExprie.setBackground(getResources().getDrawable(R.drawable.select_shape));
+            tvYearTime.setTextColor(getResources().getColor(R.color.color_6bcfd6));
+        } else {
+            btnAlertNs.setVisibility(View.GONE);
+            btnAlertqBx.setVisibility(View.GONE);
+            btnAlertsBx.setVisibility(View.GONE);
+            tvYearExprie.setBackground(null);
+            tvYearTime.setTextColor(getResources().getColor(R.color.color_333333));
+        }
     }
 
     @Override
@@ -121,46 +139,13 @@ public class BXNSFragment extends BaseFragment {
         beforeYOverDate = DateUtil.getAfterMonth(carInfoEntity.getYearTime(), Integer.parseInt(carInfoEntity.getYearExprie()) * 12);
     }
 
-//    /**
-//     * 获取保险类型
-//     */
-//    private void getBxType() {
-//        OkHttpManager.postFormBody(Urls.POST_GETINSURANCETYPE, null, tvNsDay, new OkHttpManager.OnResponse<String>() {
-//            @Override
-//            public String analyseResult(String result) {
-//                return result;
-//            }
-//
-//            @Override
-//            public void onSuccess(String s) {
-//                cancelDia();
-//                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-//                if (msgInfo.getCode() == 200) {
-//                    try {
-//                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            InsuranceEntity insuranceEntity = ParseUtils.parseJson(jsonArray.getString(i), InsuranceEntity.class);
-//                            if (insuranceEntity.getInsuranceID().equals(carInfoEntity.getInsuranceID())) {
-//                                tvBxContent.setText(insuranceEntity.getInsuranceContent());
-//                                return;
-//                            }
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
-//                    loginOut();
-//                } else {
-//                    UIUtils.showT(msgInfo.getMsg());
-//                }
-//            }
-//        });
-//    }
 
-
-    @OnClick({R.id.btn_alertqBx, R.id.btn_alertsBx, R.id.btn_alertNs})
+    @OnClick({R.id.tv_yearTime, R.id.btn_alertqBx, R.id.btn_alertsBx, R.id.btn_alertNs})
     public void viewClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_yearTime:
+                showCustomTime();
+                break;
             case R.id.btn_alertqBx://修改强保险
                 alertData(1);
                 break;
@@ -168,13 +153,44 @@ public class BXNSFragment extends BaseFragment {
                 alertData(2);
                 break;
             case R.id.btn_alertNs://修改年审
+                if (StringUtil.isNullOrEmpty(tvYearExprie.getText().toString())) {
+                    UIUtils.showT("年检时限不能为空");
+                    break;
+                }
                 alertData(3);
                 break;
         }
     }
 
+
+    /**
+     * 显示时间选择器
+     */
+    private void showCustomTime() {
+        Calendar instance = Calendar.getInstance();
+        instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
+        //时间选择器
+        TimePickerView pvTime = new TimePickerBuilder(mActivity, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                tvYearTime.setText(DateUtil.getDate(date));
+            }
+        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel(" 年", " 月", " 日", "", "", "")
+                .isCenterLabel(false).build();
+        pvTime.show();
+    }
+
     private void alertData(final int type) {
-        MAlertDialog.show(mActivity, "提示", "是否确定延期一年？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+        String content = "";
+        if (type == 1) {
+            content = "强险是否确定延期一年？";
+        } else if (type == 2) {
+            content = "商险是否确定延期一年？";
+        } else if (type == 3) {
+            content = "是否修改年检时间？";
+        }
+        MAlertDialog.show(mActivity, "提示", content, false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
             @Override
             public void onConfirmClick(String msg) {
                 saveData(type);
@@ -195,7 +211,7 @@ public class BXNSFragment extends BaseFragment {
             String aveDate = DateUtil.getAfterMonth(beforeSOverDate, 12);
             carInfoEntity.setsOverTime(aveDate);
         } else if (type == 3) {//年审
-            //TODO
+            carInfoEntity.setYearTime(tvYearTime.getText().toString());
             carInfoEntity.setYearExprie(tvYearExprie.getText().toString());
         } else {
             return;
@@ -229,7 +245,7 @@ public class BXNSFragment extends BaseFragment {
                     } else {//年审
                         //TODO
                         String yOverDate = DateUtil.getAfterMonth(carInfoEntity.getYearTime(), Integer.parseInt(tvYearExprie.getText().toString()) * 12);
-                        int dayBetweenTwo = DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(),yOverDate );
+                        int dayBetweenTwo = DateUtil.getDayBetweenTwo(DateUtil.getCurrentDate(), yOverDate);
                         tvNsDay.setText(String.valueOf(dayBetweenTwo));
                     }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {

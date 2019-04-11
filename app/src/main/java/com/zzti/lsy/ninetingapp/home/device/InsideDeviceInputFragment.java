@@ -100,8 +100,6 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
     EditText etSCompany;//商业保险公司
     @BindView(R.id.et_sAddress)
     EditText etSAddress;//商险保单原件所在地
-    @BindView(R.id.et_dischargeName)
-    EditText etDischargeName;//排放名称
     @BindView(R.id.et_initQuantity)
     EditText etInitQuantity;//初始化方量
     @BindView(R.id.et_initTravelKm)
@@ -225,7 +223,7 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
 
     private int tag;
 
-    @OnClick({R.id.tv_carType, R.id.tv_emission_standard, R.id.tv_dLDate, R.id.tv_registerTime, R.id.tv_yearTime, R.id.tv_qStartTime, R.id.tv_qOverTime, R.id.tv_sStartTime, R.id.btn_inputYearInsurance})
+    @OnClick({R.id.tv_carType, R.id.tv_emission_standard, R.id.tv_dLDate, R.id.tv_registerTime, R.id.tv_yearTime, R.id.tv_qStartTime, R.id.tv_qOverTime, R.id.tv_sStartTime, R.id.tv_sOverTime, R.id.btn_inputYearInsurance})
     public void viewClick(View view) {
         hideSoftInput(etCarNumber);
         switch (view.getId()) {
@@ -258,6 +256,9 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
                 break;
             case R.id.tv_sStartTime://商业保险生效日期
                 showCustomTime(6);
+                break;
+            case R.id.tv_sOverTime://商业保险到期日期
+                showCustomTime(7);
                 break;
             case R.id.btn_inputYearInsurance:
                 setData();
@@ -376,7 +377,7 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
 //        startActivity(intent);
         HashMap<String, String> params = new HashMap<>();
         params.put("carJson", new Gson().toJson(carInfoEntity));
-        params.put("initQuantity",  etInitQuantity.getText().toString());
+        params.put("initQuantity", etInitQuantity.getText().toString());
         params.put("initTravelKm", etInitTravelKm.getText().toString());
         OkHttpManager.postFormBody(Urls.POST_ADDINCAR, params, tvCarType, new OkHttpManager.OnResponse<String>() {
             @Override
@@ -544,6 +545,8 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
                     tvQOverTime.setText(DateUtil.getDate(date));
                 } else if (tag == 6) {
                     tvSStartTime.setText(DateUtil.getDate(date));
+                } else if (tag == 7) {
+                    tvSOverTime.setText(DateUtil.getDate(date));
                 }
             }
         }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})

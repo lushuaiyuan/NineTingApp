@@ -17,7 +17,7 @@ public class SpUtils {
     public static String StAFFNAME = "staffName";
     public static final String LOGINSTATE = "loginState";//登录状态
     /**
-     * 操作员类型  1机械师理  2项目经理 3配件管理员 4设备管理员 5统计员 0总经理
+     * 操作员类型  1车队长  2项目经理 3库管 5统计员 0总经理
      */
     public static final String OPTYPE = "opType";
     public static final String SESSIONID = "sessionId";//身份验证

@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -26,6 +27,7 @@ import com.zzti.lsy.ninetingapp.home.adapter.ProjectAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
@@ -68,7 +70,8 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
     TextView tvDLDate;//行驶证注册日期
     @BindView(R.id.tv_registerTime)
     TextView tvRegisterTime;//登记日期
-
+    @BindView(R.id.btn_save)
+    Button btnSave;
     //项目部
     private PopupWindow popupWindowProject;
     private ListView mListViewProject;
@@ -113,6 +116,13 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
         tvRegisterTime.setText(carInfoEntity.getRegisterTime().split("T")[0]);
         beforeProjectID = carInfoEntity.getProjectID();
         beforeProjectName = carInfoEntity.getProjectName();
+        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 5) {
+            tvProjectName.setTextColor(getResources().getColor(R.color.color_6bcfd6));
+            btnSave.setVisibility(View.VISIBLE);
+        } else {
+            tvProjectName.setTextColor(getResources().getColor(R.color.color_333333));
+            btnSave.setVisibility(View.GONE);
+        }
     }
 
     private void initPop() {
@@ -182,7 +192,7 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
         });
     }
 
-    @OnClick({R.id.tv_map, R.id.btn_save, R.id.tv_project})
+    @OnClick({R.id.tv_map, R.id.btn_save, R.id.tv_projectName})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_map:
@@ -192,25 +202,25 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
 //                intent.putExtra("status", carInfoEntity.getStatus());
                 startActivity(intent);
                 break;
-            case R.id.tv_project:
-//                if (projectEntities.size() > 0) {
-//                    //设置背景色
-//                    setBackgroundAlpha(0.5f);
-//                    if (projectEntities.size() >= 5) {
-//                        //动态设置listView的高度
-//                        View listItem = projectAdapter.getView(0, null, mListViewProject);
-//                        listItem.measure(0, 0);
-//                        int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
-//                        mListViewProject.getLayoutParams().height = totalHei;
-//                        ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
-//                        params.height = totalHei;
-//                        mListViewProject.setLayoutParams(params);
-//                    }
-//                    setBackgroundAlpha(0.5f);
-//                    popupWindowProject.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
-//                } else {
-//                    UIUtils.showT(C.Constant.NODATA);
-//                }
+            case R.id.tv_projectName:
+                if (projectEntities.size() > 0) {
+                    //设置背景色
+                    setBackgroundAlpha(0.5f);
+                    if (projectEntities.size() >= 5) {
+                        //动态设置listView的高度
+                        View listItem = projectAdapter.getView(0, null, mListViewProject);
+                        listItem.measure(0, 0);
+                        int totalHei = (listItem.getMeasuredHeight() + mListViewProject.getDividerHeight()) * 5;
+                        mListViewProject.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = mListViewProject.getLayoutParams();
+                        params.height = totalHei;
+                        mListViewProject.setLayoutParams(params);
+                    }
+                    setBackgroundAlpha(0.5f);
+                    popupWindowProject.showAtLocation(tvProjectName, Gravity.BOTTOM, 0, 0);
+                } else {
+                    UIUtils.showT(C.Constant.NODATA);
+                }
                 break;
             case R.id.btn_save:
                 if (StringUtil.isNullOrEmpty(projectID)) {

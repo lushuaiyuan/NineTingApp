@@ -231,14 +231,6 @@
                 style="@style/MyEditText"
                 android:hint="请输入" />
 
-            <TextView
-                style="@style/MyEditTextTitle"
-                android:text="排放名称" />
-
-            <EditText
-                android:id="@+id/et_dischargeName"
-                style="@style/MyEditText"
-                android:hint="请输入" />
 
             <TextView
                 style="@style/MyEditTextTitle"
@@ -324,7 +316,7 @@
                 android:layout_marginLeft="@dimen/dp30"
                 android:layout_marginRight="@dimen/dp30"
                 android:layout_marginTop="@dimen/dp20"
-                android:text="录入保险年审" />
+                android:text="提交" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
