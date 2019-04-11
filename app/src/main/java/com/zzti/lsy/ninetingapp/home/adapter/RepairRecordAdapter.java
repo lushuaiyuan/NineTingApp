@@ -20,10 +20,10 @@ public class RepairRecordAdapter extends BaseQuickAdapter<RepairinfoEntity, Base
 
     @Override
     protected void convert(BaseViewHolder helper, RepairinfoEntity item) {
-        helper.setText(R.id.tv_carNumber, item.getPlateNumber())
-                .setText(R.id.tv_content, item.getRepairContent())
-                .setText(R.id.tv_plantStartTime, item.getRepairBeginTime().split("T")[0])
-                .setText(R.id.tv_plantEndTime, item.getRepairOverTime().split("T")[0]);
+        helper.setText(R.id.tv_carNumber, item.getPlateNumber());
+//                .setText(R.id.tv_content, item.getRepairContent())
+//                .setText(R.id.tv_plantStartTime, item.getRepairBeginTime().split("T")[0])
+//                .setText(R.id.tv_plantEndTime, item.getRepairOverTime().split("T")[0]);
         if (item.getStatus().equals("0")) {
             helper.setText(R.id.tv_status, "总经理已审批");
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));

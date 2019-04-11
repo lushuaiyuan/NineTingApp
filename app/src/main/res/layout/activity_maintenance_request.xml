@@ -59,6 +59,42 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp1"
+                android:background="@drawable/white_gray_selector"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingTop="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="车辆类型"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/tv_carType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/dp15" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/ll_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +141,8 @@
                 android:paddingBottom="@dimen/dp10"
                 android:paddingLeft="@dimen/dp16"
                 android:paddingRight="@dimen/dp16"
-                android:paddingTop="@dimen/dp10">
+                android:paddingTop="@dimen/dp10"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -137,7 +174,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_maintenanceType"
+                android:id="@+id/fan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp1"
@@ -147,7 +184,8 @@
                 android:paddingBottom="@dimen/dp10"
                 android:paddingLeft="@dimen/dp16"
                 android:paddingRight="@dimen/dp16"
-                android:paddingTop="@dimen/dp10">
+                android:paddingTop="@dimen/dp10"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -185,7 +223,8 @@
                 android:paddingBottom="@dimen/dp10"
                 android:paddingLeft="@dimen/dp16"
                 android:paddingRight="@dimen/dp16"
-                android:paddingTop="@dimen/dp10">
+                android:paddingTop="@dimen/dp10"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -282,7 +321,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="所需金额"
+                    android:text="维修费用"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
 
@@ -309,7 +348,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_maintenanceStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp1"
@@ -324,75 +362,35 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="计划开始维修时间"
+                    android:text="维修总费用"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
 
                 <TextView
-                    android:id="@+id/tv_maintenanceStartTime"
+                    android:id="@+id/tv_totalMoney"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp5"
                     android:layout_weight="1"
-                    android:background="@null"
                     android:gravity="right"
-                    android:hint="请选择"
-                    android:padding="@dimen/dp5"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_right_arrow" />
+                    android:src="@mipmap/icon_right_arrow"
+                    android:visibility="invisible" />
             </LinearLayout>
 
+
             <LinearLayout
-                android:id="@+id/ll_maintenanceEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp21"
                 android:layout_marginTop="@dimen/dp1"
-                android:background="@drawable/white_gray_selector"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16"
-                android:paddingTop="@dimen/dp10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="计划维修时间"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dp15" />
-
-                <TextView
-                    android:id="@+id/tv_maintenanceEndTime"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="请选择"
-                    android:padding="@dimen/dp5"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dp15" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_right_arrow" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp20"
                 android:background="@color/color_white"
-                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="@dimen/dp10"
                 android:paddingLeft="@dimen/dp16"
                 android:paddingRight="@dimen/dp16"
@@ -401,20 +399,29 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="维修内容"
+                    android:text="维修厂商"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
 
                 <EditText
-                    android:id="@+id/et_inputContent"
-                    android:layout_width="match_parent"
+                    android:id="@+id/et_repairFactory"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_weight="1"
                     android:background="@null"
-                    android:gravity="top"
-                    android:hint="请输入维修内容"
-                    android:minHeight="@dimen/dp100"
+                    android:gravity="right"
+                    android:hint="请输入"
+                    android:maxLines="1"
+                    android:padding="@dimen/dp5"
+                    android:textColor="@color/color_333333"
                     android:textSize="@dimen/dp15" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <LinearLayout
@@ -461,7 +468,7 @@
                     android:textSize="@dimen/dp15" />
 
                 <EditText
-                    android:id="@+id/et_inputRemark"
+                    android:id="@+id/et_remark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp10"

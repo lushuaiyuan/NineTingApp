@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -64,35 +66,30 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * 维修申请
  */
-public class RepairRequestActivity extends TakePhotoActivity implements PopupWindow.OnDismissListener, View.OnClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener, AdapterView.OnItemClickListener {
+public class RepairRequestActivity extends TakePhotoActivity implements PopupWindow.OnDismissListener, View.OnClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.tv_carNumber)
-    TextView tvCarNumber;
+    TextView tvCarNumber;//车牌号
+    @BindView(R.id.tv_carType)
+    TextView tvCarType;//车辆类型
     @BindView(R.id.tv_address)
-    TextView tvAddress;
-    @BindView(R.id.et_constructionAddress)
-    EditText etConstructionAddress;
-    @BindView(R.id.tv_maintenanceType)
-    TextView tvMaintenanceType;
-    @BindView(R.id.tv_maintenanceReason)
-    TextView tvMaintenanceReason;
+    TextView tvAddress;//地址
     @BindView(R.id.recycleView_detail)
-    RecyclerView recycleViewDetail;
-    @BindView(R.id.tv_maintenanceStartTime)
-    TextView tvMaintenanceStartTime;//计划开始维修时间
-    @BindView(R.id.tv_maintenanceEndTime)
-    TextView tvMaintenanceEndTime;//计划结束维修时间
-    @BindView(R.id.et_inputContent)
-    EditText etInputContent;//维修内容
-    @BindView(R.id.recycleView_photo)
-    RecyclerView recyclerViewPhoto;
-    @BindView(R.id.et_inputRemark)
-    EditText etInputRemark;//维修原因
+    RecyclerView recycleViewDetail;//配件
     @BindView(R.id.et_money)
     EditText etMoney;//维修金额
+    @BindView(R.id.tv_totalMoney)
+    TextView tvTotalMoney;//维修总金额
+    @BindView(R.id.et_repairFactory)
+    EditText etRepairFactory;//维修厂商
+    @BindView(R.id.recycleView_photo)
+    RecyclerView recyclerViewPhoto;//照片
+    @BindView(R.id.et_remark)
+    EditText etRemark;//维修原因
 
 
     //照片
@@ -104,18 +101,6 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
     private TextView tvCancel;
     private PhotoAdapter photoAdapter;
     private List<String> pics;
-    //维修类型
-    private PopupWindow popupWindowType;
-    private ListView mListViewType;
-    private RepairTypeAdapter repairTypeAdapter;
-    private List<RepairTypeEntity> repairTypeEntities;
-
-    //维修原因
-    private PopupWindow popupWindowCause;
-    private ListView mListViewCause;
-    private RepairCauseAdapter repairCauseAdapter;
-    private List<RepairCauseEntity> repairCauseEntities;
-
     //维修明细
     private RequiredPartsAdapter requiredPartsAdapter;
     private List<RequiredParts> requiredPartsList;
@@ -161,93 +146,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         recyclerViewPhoto.setAdapter(photoAdapter);
         photoAdapter.setOnItemClickListener(this);
         photoAdapter.setOnItemLongClickListener(this);
-
-
-        getRepairType();
-        getRepairCause();
-
         repairinfoEntity = new RepairinfoEntity();
-    }
-
-    /**
-     * 获取维修原因
-     */
-    private void getRepairCause() {
-        showDia();
-        OkHttpManager.postFormBody(Urls.POST_GETREPAIRTYPE, null, tvAddress, new OkHttpManager.OnResponse<String>() {
-            @Override
-            public String analyseResult(String result) {
-                return result;
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                cancelDia();
-                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                if (msgInfo.getCode() == 200) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            RepairTypeEntity repairTypeEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairTypeEntity.class);
-                            repairTypeEntities.add(repairTypeEntity);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
-                    loginOut();
-                } else {
-                    UIUtils.showT(msgInfo.getMsg());
-                }
-            }
-
-            @Override
-            public void onFailed(int code, String msg, String url) {
-                super.onFailed(code, msg, url);
-                cancelDia();
-            }
-        });
-    }
-
-    /**
-     * 获取维修类型
-     */
-    private void getRepairType() {
-        showDia();
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETREPAIRCAUSE, params, tvAddress, new OkHttpManager.OnResponse<String>() {
-            @Override
-            public String analyseResult(String result) {
-                return result;
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                cancelDia();
-                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                if (msgInfo.getCode() == 200) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            RepairCauseEntity repairCauseEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairCauseEntity.class);
-                            repairCauseEntities.add(repairCauseEntity);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
-                    loginOut();
-                } else {
-                    UIUtils.showT(msgInfo.getMsg());
-                }
-            }
-
-            @Override
-            public void onFailed(int code, String msg, String url) {
-                super.onFailed(code, msg, url);
-                cancelDia();
-            }
-        });
     }
 
     private void initView() {
@@ -260,67 +159,40 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         recyclerViewPhoto.setHasFixedSize(true);
         recyclerViewPhoto.setNestedScrollingEnabled(false);
         initPopPic();
-        initRepairTypePop();
-        initRepairCausePop();
         etMoney.setOnFocusChangeListener(new MyOnFocusChangeListener());
+        etMoney.addTextChangedListener(new MyTextChangedListener());
     }
 
-    private void initRepairCausePop() {
-        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
-        contentview.setFocusable(true); // 这个很重要
-        contentview.setFocusableInTouchMode(true);
-        popupWindowCause = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindowCause.setFocusable(true);
-        popupWindowCause.setOutsideTouchable(true);
-        //设置消失监听
-        popupWindowCause.setOnDismissListener(this);
-        popupWindowCause.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        contentview.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindowCause.dismiss();
-                    return true;
-                }
-                return false;
+    class MyTextChangedListener implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            double partMoney = 0;
+            for (int i = 0; i < requiredPartsList.size(); i++) {
+                RequiredParts requiredParts = requiredPartsList.get(i);
+                String rpNumber = requiredParts.getRpNumber();
+                String purchasedPrice = requiredParts.getPurchasedPrice();
+                double money = Integer.parseInt(rpNumber) * Double.parseDouble(purchasedPrice);
+                partMoney += money;
             }
-        });
-        mListViewCause = contentview.findViewById(R.id.pop_list);
-        repairCauseEntities = new ArrayList<>();
-        repairCauseAdapter = new RepairCauseAdapter(repairCauseEntities);
-        mListViewCause.setAdapter(repairCauseAdapter);
-        mListViewCause.setOnItemClickListener(this);
-        popupWindowCause.setAnimationStyle(R.style.anim_bottomPop);
+
+            double money = Double.parseDouble(editable.toString());
+            tvTotalMoney.setText(String.valueOf(partMoney + money));
+
+        }
     }
 
-    private void initRepairTypePop() {
-        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
-        contentview.setFocusable(true); // 这个很重要
-        contentview.setFocusableInTouchMode(true);
-        popupWindowType = new PopupWindow(contentview, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindowType.setFocusable(true);
-        popupWindowType.setOutsideTouchable(true);
-        //设置消失监听
-        popupWindowType.setOnDismissListener(this);
-        popupWindowType.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        contentview.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindowType.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        mListViewType = contentview.findViewById(R.id.pop_list);
-        repairTypeEntities = new ArrayList<>();
-        repairTypeAdapter = new RepairTypeAdapter(repairTypeEntities);
-        repairTypeAdapter.setTag(1);//背景色为白色
-        mListViewType.setAdapter(repairTypeAdapter);
-        mListViewType.setOnItemClickListener(this);
-        popupWindowType.setAnimationStyle(R.style.anim_bottomPop);
-    }
+    private String partsMoney;
 
     private void initPopPic() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_photo, null);
@@ -351,56 +223,14 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         popupWindowPic.setAnimationStyle(R.style.anim_bottomPop);
     }
 
-    @OnClick({R.id.ll_carNumber, R.id.ll_maintenanceType, R.id.ll_maintenanceReason, R.id.tv_addDetail, R.id.ll_maintenanceStartTime, R.id.ll_maintenanceEndTime, R.id.btn_submit})
+    @OnClick({R.id.ll_carNumber, R.id.tv_addDetail, R.id.btn_submit})
     public void viewClick(View view) {
-        hideSoftInput(etInputContent);
+        hideSoftInput(etMoney);
         switch (view.getId()) {
             case R.id.ll_carNumber://选择车辆
                 Intent intent = new Intent(this, DeviceListActivity.class);
                 intent.putExtra("FLAG", 1);
                 startActivityForResult(intent, 1);
-                break;
-            case R.id.ll_maintenanceType://维修类型
-                tag = 1;
-                if (repairTypeEntities.size() > 0) {
-                    hideSoftInput(tvAddress);
-                    //设置背景色
-                    setBackgroundAlpha(0.5f);
-                    if (repairTypeEntities.size() >= 5) {
-                        //动态设置listView的高度
-                        View listItem = repairTypeAdapter.getView(0, null, mListViewType);
-                        listItem.measure(0, 0);
-                        int totalHei = (listItem.getMeasuredHeight() + mListViewType.getDividerHeight()) * 5;
-                        mListViewType.getLayoutParams().height = totalHei;
-                        ViewGroup.LayoutParams params = mListViewType.getLayoutParams();
-                        params.height = totalHei;
-                        mListViewType.setLayoutParams(params);
-                    }
-                    popupWindowType.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
-                } else {
-                    UIUtils.showT(Constant.NONDATA);
-                }
-                break;
-            case R.id.ll_maintenanceReason://维修原因
-                tag = 2;
-                if (repairCauseEntities.size() > 0) {
-                    hideSoftInput(tvAddress);
-                    //设置背景色
-                    setBackgroundAlpha(0.5f);
-                    if (repairCauseEntities.size() >= 5) {
-                        //动态设置listView的高度
-                        View listItem = repairCauseAdapter.getView(0, null, mListViewCause);
-                        listItem.measure(0, 0);
-                        int totalHei = (listItem.getMeasuredHeight() + mListViewCause.getDividerHeight()) * 5;
-                        mListViewCause.getLayoutParams().height = totalHei;
-                        ViewGroup.LayoutParams params = mListViewCause.getLayoutParams();
-                        params.height = totalHei;
-                        mListViewCause.setLayoutParams(params);
-                    }
-                    popupWindowCause.showAtLocation(tvAddress, Gravity.BOTTOM, 0, 0);
-                } else {
-                    UIUtils.showT(Constant.NONDATA);
-                }
                 break;
             case R.id.tv_addDetail://增加明细
                 etMoney.clearFocus();
@@ -433,12 +263,6 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 requiredParts2.setType(0);
                 requiredPartsList.add(requiredParts2);
                 requiredPartsAdapter.notifyDataSetChanged();
-                break;
-            case R.id.ll_maintenanceStartTime://计划开始维修时间
-                showCustomTime(1);
-                break;
-            case R.id.ll_maintenanceEndTime://计划结束维修时间
-                showCustomTime(2);
                 break;
             case R.id.btn_submit://提交
                 submitData();
@@ -480,54 +304,42 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
      */
     private void submitData() {
         if (StringUtil.isNullOrEmpty(tvCarNumber.getText().toString())) {
-            UIUtils.showT("请选择车牌号");
+            UIUtils.showT("车牌号不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(etConstructionAddress.getText().toString())) {
-            UIUtils.showT("请输入施工地点");
+        if (StringUtil.isNullOrEmpty(tvCarType.getText().toString())) {
+            UIUtils.showT("车辆类型不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvMaintenanceType.getText().toString())) {
-            UIUtils.showT("请选择维修类型");
-            return;
-        }
-        if (StringUtil.isNullOrEmpty(tvMaintenanceReason.getText().toString())) {
-            UIUtils.showT("请选择维修原因");
+        if (StringUtil.isNullOrEmpty(tvAddress.getText().toString())) {
+            UIUtils.showT("项目不能为空");
             return;
         }
         if (StringUtil.isNullOrEmpty(etMoney.getText().toString())) {
-            UIUtils.showT("请输入维修金额");
+            UIUtils.showT("维修金额不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvMaintenanceStartTime.getText().toString())) {
-            UIUtils.showT("请选择计划开始维修时间");
+        if (StringUtil.isNullOrEmpty(tvTotalMoney.getText().toString())) {
+            UIUtils.showT("维修总金额不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvMaintenanceEndTime.getText().toString())) {
-            UIUtils.showT("请选择计划结束维修时间");
-            return;
-        }
-        if (StringUtil.isNullOrEmpty(etInputContent.getText().toString())) {
-            UIUtils.showT("请输入维修内容");
+        if (StringUtil.isNullOrEmpty(etRepairFactory.getText().toString())) {
+            UIUtils.showT("维修厂商不能为空");
             return;
         }
         repairinfoEntity.setPlateNumber(tvCarNumber.getText().toString());//车牌号
-        repairinfoEntity.setRepairContent(etInputContent.getText().toString());//维修内容
+        repairinfoEntity.setVehicleTypeID(vehicleTypeID);//车辆类型
+        repairinfoEntity.setRepairParts(String.valueOf(Double.parseDouble(tvTotalMoney.getText().toString()) - Double.parseDouble(etMoney.getText().toString())));//维修配件金额
         repairinfoEntity.setRepairMoney(etMoney.getText().toString());//维修金额
-        repairinfoEntity.setRepairCauseID(repairCauseID);//维修原因ID
-        repairinfoEntity.setRepairTypeID(repairTypeID);//维修类型
+        repairinfoEntity.setRepairAllMoney(tvTotalMoney.getText().toString());//维修总费用
         repairinfoEntity.setProjectID(spUtils.getString(SpUtils.PROJECTID, ""));//项目部ID
-        repairinfoEntity.setJobLocation(etConstructionAddress.getText().toString());//地址
-        repairinfoEntity.setRepairBeginTime(tvMaintenanceStartTime.getText().toString());//计划开始维修时间
-        repairinfoEntity.setRepairOverTime(tvMaintenanceEndTime.getText().toString());//计划结束维修时间
         repairinfoEntity.setUserID(spUtils.getString(SpUtils.USERID, ""));//申请人ID
-        if (StringUtil.isNullOrEmpty(etInputRemark.getText().toString())) {
+        repairinfoEntity.setRepairFactory(etRepairFactory.getText().toString());//维修厂商
+        if (StringUtil.isNullOrEmpty(etRemark.getText().toString())) {
             repairinfoEntity.setRemark("");//备注
         } else {
-            repairinfoEntity.setRemark(etInputRemark.getText().toString());
+            repairinfoEntity.setRemark(etRemark.getText().toString());
         }
-        repairinfoEntity.setCauseName(tvMaintenanceReason.getText().toString());
-        repairinfoEntity.setTypeName(tvMaintenanceType.getText().toString());
         repairinfoEntity.setStaffName(spUtils.getString(SpUtils.StAFFNAME, ""));
         if (pics.size() >= 2) {//有图片
             String devPicture = "";
@@ -541,7 +353,18 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         } else {
             repairinfoEntity.setDevPicture("");
         }
-        submitNet();
+        new MAlertDialog().show(this, "温馨提示", "是否提交？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+            @Override
+            public void onConfirmClick(String msg) {
+                submitNet();
+            }
+
+            @Override
+            public void onCancelClick() {
+
+            }
+        }, true);
+
     }
 
     /**
@@ -592,29 +415,6 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         });
     }
 
-    /**
-     * 显示时间选择器
-     */
-    private void showCustomTime(final int tag) {
-        Calendar instance = Calendar.getInstance();
-        instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
-        //时间选择器
-        TimePickerView pvTime = new TimePickerBuilder(RepairRequestActivity.this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {
-                if (tag == 1) {
-                    tvMaintenanceStartTime.setText(DateUtil.getDate(date));
-                } else if (tag == 2) {
-                    tvMaintenanceEndTime.setText(DateUtil.getDate(date));
-                }
-
-            }
-        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel(" 年", " 月", " 日", "", "", "")
-                .isCenterLabel(false).build();
-        pvTime.show();
-
-    }
 
     @Override
     public void onDismiss() {
@@ -672,7 +472,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        hideSoftInput(etInputContent);
+        hideSoftInput(etMoney);
         if (StringUtil.isNullOrEmpty(pics.get(position))) {
             setBackgroundAlpha(0.5f);
             popupWindowPic.showAtLocation(view, Gravity.BOTTOM, 0, 0);
@@ -711,8 +511,14 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.tv_delete:
+                RequiredParts requiredParts = requiredPartsList.get(position);
+                String rpNumber = requiredParts.getRpNumber();
+                String purchasedPrice = requiredParts.getPurchasedPrice();
+                double deleteMoney = Integer.parseInt(rpNumber) * Double.parseDouble(purchasedPrice);
                 requiredPartsList.remove(position);
                 requiredPartsAdapter.notifyDataSetChanged();
+                double totalMoney1 = Double.parseDouble(tvTotalMoney.getText().toString());
+                tvTotalMoney.setText(String.valueOf(totalMoney1 - deleteMoney));
                 break;
             case R.id.ib_sub:
                 RequiredParts requiredParts1 = requiredPartsList.get(position);
@@ -722,6 +528,14 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 amount1--;
                 requiredParts1.setRpNumber(String.valueOf(amount1));
                 requiredPartsAdapter.notifyItemChanged(position);
+                if (!StringUtil.isNullOrEmpty(tvTotalMoney.getText().toString())) {
+                    //TODO
+                    double totalMoney = Double.parseDouble(tvTotalMoney.getText().toString());
+                    double purchasePrice = Double.parseDouble(requiredParts1.getPurchasedPrice());
+                    tvTotalMoney.setText(String.valueOf(totalMoney - purchasePrice));
+                } else {
+
+                }
                 break;
             case R.id.ib_add:
                 RequiredParts requiredParts2 = requiredPartsList.get(position);
@@ -759,6 +573,25 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 }
                 requiredParts2.setRpNumber(String.valueOf(amount2));
                 requiredPartsAdapter.notifyItemChanged(position);
+                if (!StringUtil.isNullOrEmpty(etMoney.getText().toString())) {
+                    //TODO
+                    double money = Double.parseDouble(etMoney.getText().toString());
+                    double purchasePrice = Double.parseDouble(requiredParts2.getPurchasedPrice());
+                    if (!StringUtil.isNullOrEmpty(tvTotalMoney.getText().toString())) {
+                        double totalMoney = Double.parseDouble(tvTotalMoney.getText().toString());
+                        tvTotalMoney.setText(String.valueOf(totalMoney + money + purchasePrice));
+                    } else {
+                        tvTotalMoney.setText(String.valueOf(money + purchasePrice));
+                    }
+                } else {
+                    if (!StringUtil.isNullOrEmpty(tvTotalMoney.getText().toString())) {
+                        double purchasePrice = Double.parseDouble(requiredParts2.getPurchasedPrice());
+                        double totalMoney = Double.parseDouble(tvTotalMoney.getText().toString());
+                        tvTotalMoney.setText(String.valueOf(totalMoney + purchasePrice));
+                    } else {
+                        tvTotalMoney.setText(requiredParts2.getPurchasedPrice());
+                    }
+                }
                 break;
 
         }
@@ -800,12 +633,17 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
 
     }
 
+    private String vehicleTypeID;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 2) {
-            if (data != null)
+            if (data != null) {
                 tvCarNumber.setText(data.getStringExtra("carNumber"));
+                tvCarType.setText(data.getStringExtra("carType"));
+                vehicleTypeID = data.getStringExtra("carTypeID");
+            }
         }
         if (requestCode == 2 && requestCode == 2) {
             if (data != null) {
@@ -824,22 +662,26 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 requiredPartsList.get(selectPosition).setPartsNumber(data.getStringExtra("partsNumber"));
                 requiredPartsList.get(selectPosition).setType(0);
                 requiredPartsAdapter.notifyItemChanged(selectPosition);
+                if (!StringUtil.isNullOrEmpty(etMoney.getText().toString())) {
+                    double money = Double.parseDouble(etMoney.getText().toString());
+                    double purchasePrice = Double.parseDouble(requiredPartsList.get(selectPosition).getPurchasedPrice());
+                    if (!StringUtil.isNullOrEmpty(tvTotalMoney.getText().toString())) {
+                        double totalMoney = Double.parseDouble(tvTotalMoney.getText().toString());
+                        tvTotalMoney.setText(String.valueOf(totalMoney + money + purchasePrice));
+                    } else {
+                        tvTotalMoney.setText(String.valueOf(money + purchasePrice));
+                    }
+                } else {
+                    if (!StringUtil.isNullOrEmpty(tvTotalMoney.getText().toString())) {
+                        double purchasePrice = Double.parseDouble(requiredPartsList.get(selectPosition).getPurchasedPrice());
+                        double totalMoney = Double.parseDouble(tvTotalMoney.getText().toString());
+                        tvTotalMoney.setText(String.valueOf(totalMoney + purchasePrice));
+                    } else {
+                        tvTotalMoney.setText(requiredPartsList.get(selectPosition).getPurchasedPrice());
+                    }
+                }
             }
         }
     }
 
-    private int tag;
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (tag == 1) {
-            tvMaintenanceType.setText(repairTypeEntities.get(i).getTypeName());
-            repairTypeID = repairTypeEntities.get(i).getTypeID();
-            popupWindowType.dismiss();
-        } else if (tag == 2) {
-            tvMaintenanceReason.setText(repairCauseEntities.get(i).getCauseName());
-            repairCauseID = repairCauseEntities.get(i).getCauseID();
-            popupWindowCause.dismiss();
-        }
-    }
 }

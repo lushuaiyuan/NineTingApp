@@ -253,5 +253,7 @@ public class PartsOutRecordActivity extends BaseActivity {
 
         tableConfig.setColumnTitleVerticalPadding(DensityUtils.dp2px(8));   //设置标题的间距  列标题上下
         tableConfig.setColumnTitleHorizontalPadding(DensityUtils.dp2px(10));   //设置标题的间距  列标题左右
+
+        tableConfig.setMinTableWidth(UIUtils.getWidth(this));
     }
 }

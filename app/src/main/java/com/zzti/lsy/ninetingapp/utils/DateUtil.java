@@ -504,7 +504,12 @@ public class DateUtil {
      */
     public static String getAfterMonth(String inputDate, int number) {
         Calendar c = Calendar.getInstance();//获得一个日历的实例
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = null;
+        if (inputDate.split("-").length == 2) {
+            sdf = new SimpleDateFormat("yyyy-MM");
+        }else{
+            sdf = new SimpleDateFormat("yyyy-MM-dd");
+        }
         Date date = null;
         try {
             date = sdf.parse(inputDate);//初始日期

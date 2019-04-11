@@ -135,11 +135,11 @@ public class MaintenanceReportActivity extends BaseActivity {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             RepairinfoEntity repairinfoEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairinfoEntity.class);
-                            if (repairinfoEntity.getRepairContent().length() > 5) {
-                                repairinfoEntity.setShowContent(repairinfoEntity.getRepairContent().substring(0, 4) + "...");
-                            } else {
-                                repairinfoEntity.setShowContent(repairinfoEntity.getRepairContent());
-                            }
+//                            if (repairinfoEntity.getRepairContent().length() > 5) {
+//                                repairinfoEntity.setShowContent(repairinfoEntity.getRepairContent().substring(0, 4) + "...");
+//                            } else {
+//                                repairinfoEntity.setShowContent(repairinfoEntity.getRepairContent());
+//                            }
                             repairinfoEntities.add(repairinfoEntity);
                         }
                     } catch (JSONException e) {
@@ -211,6 +211,8 @@ public class MaintenanceReportActivity extends BaseActivity {
 
         tableConfig.setColumnTitleVerticalPadding(DensityUtils.dp2px(8));   //设置标题的间距  列标题上下
         tableConfig.setColumnTitleHorizontalPadding(DensityUtils.dp2px(10));   //设置标题的间距  列标题左右
+
+        tableConfig.setMinTableWidth(UIUtils.getWidth(this));
     }
 
 

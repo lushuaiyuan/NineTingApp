@@ -224,11 +224,11 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
         tvCarNumber.setText(repairinfoEntity.getPlateNumber());
         tvProjectAddress.setText(repairinfoEntity.getProjectName());
         tvConstructionAddress.setText("adfa");
-        tvServiceType.setText(repairinfoEntity.getTypeName());
-        tvMaintenanceStartTime.setText(repairinfoEntity.getRepairBeginTime().split("T")[0]);
-        tvMaintenanceEndTime.setText(repairinfoEntity.getRepairOverTime().split("T")[0]);
-        tvReason.setText(repairinfoEntity.getCauseName());
-        tvContent.setText(repairinfoEntity.getRepairContent());
+//        tvServiceType.setText(repairinfoEntity.getTypeName());
+//        tvMaintenanceStartTime.setText(repairinfoEntity.getRepairBeginTime().split("T")[0]);
+//        tvMaintenanceEndTime.setText(repairinfoEntity.getRepairOverTime().split("T")[0]);
+//        tvReason.setText(repairinfoEntity.getCauseName());
+//        tvContent.setText(repairinfoEntity.getRepairContent());
         tvRemark.setText(repairinfoEntity.getRemark());
     }
 

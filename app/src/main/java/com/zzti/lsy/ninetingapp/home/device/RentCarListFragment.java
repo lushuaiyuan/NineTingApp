@@ -78,6 +78,7 @@ public class RentCarListFragment extends BaseFragment implements BaseQuickAdapte
     }
 
     private boolean myIsVisibleToUser;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -206,6 +207,8 @@ public class RentCarListFragment extends BaseFragment implements BaseQuickAdapte
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent();
         intent.putExtra("carNumber", rentCarEntities.get(position).getPlateNumber());
+        intent.putExtra("carType", "罐车");
+        intent.putExtra("carTypeID", "8");
         mActivity.setResult(2, intent);
         mActivity.finish();
     }
