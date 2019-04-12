@@ -9,9 +9,6 @@ import android.widget.TextView;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.TitleFragmentPagerAdapter;
-import com.zzti.lsy.ninetingapp.home.device.BxFragment;
-import com.zzti.lsy.ninetingapp.home.device.NsFragment;
-import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import java.util.ArrayList;

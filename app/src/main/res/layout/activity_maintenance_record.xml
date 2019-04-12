@@ -37,9 +37,9 @@
             android:layout_marginRight="@dimen/dp40"
             android:background="@null"
             android:ellipsize="end"
-            android:maxLines="1"
             android:gravity="center"
             android:hint="车牌号"
+            android:maxLines="1"
             android:padding="@dimen/dp8"
             android:textSize="@dimen/dp13" />
 
@@ -51,7 +51,8 @@
         android:layout_marginLeft="@dimen/dp16"
         android:layout_marginRight="@dimen/dp16"
         android:background="@drawable/condition_white_shape"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/rl_handleState"
@@ -74,7 +75,6 @@
                 android:textSize="@dimen/dp14" />
 
         </RelativeLayout>
-
 
 
     </LinearLayout>

@@ -27,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="状态"
-            android:textSize="@dimen/dp14" />
+            android:textSize="@dimen/dp14"
+            android:visibility="gone" />
     </LinearLayout>
 
     <View

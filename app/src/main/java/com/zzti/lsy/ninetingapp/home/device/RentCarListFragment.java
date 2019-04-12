@@ -207,8 +207,8 @@ public class RentCarListFragment extends BaseFragment implements BaseQuickAdapte
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent();
         intent.putExtra("carNumber", rentCarEntities.get(position).getPlateNumber());
-        intent.putExtra("carType", "罐车");
-        intent.putExtra("carTypeID", "8");
+        intent.putExtra("carType", rentCarEntities.get(position).getVehicleTypeName());
+        intent.putExtra("carTypeID", rentCarEntities.get(position).getVehicleTypeID());
         mActivity.setResult(2, intent);
         mActivity.finish();
     }

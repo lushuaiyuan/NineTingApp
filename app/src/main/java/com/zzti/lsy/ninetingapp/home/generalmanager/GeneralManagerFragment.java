@@ -51,7 +51,7 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
     RecyclerView mRecycleViewBj;
     @BindView(R.id.tv_lookMore_ns)
     TextView tvLookMoreNs;
-    @BindView(R.id.tv_lookMore_bx)
+    @BindView(R.id.tv_lookMore_qbx)
     TextView tvLookMoreBx;
     @BindView(R.id.tv_today)
     TextView tvToday;
@@ -259,7 +259,7 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
         return fragment;
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu6, R.id.rl_menu7, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu6, R.id.rl_menu7, R.id.tv_lookMore_ns, R.id.tv_lookMore_qbx})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1://项目模块
@@ -289,7 +289,7 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
                 intent1.putExtra("TAG", 1);
                 startActivity(intent1);
                 break;
-            case R.id.tv_lookMore_bx:
+            case R.id.tv_lookMore_qbx:
                 Intent intent2 = new Intent(mActivity, BxNsActivity.class);
                 intent2.putExtra("TAG", 0);
                 startActivity(intent2);

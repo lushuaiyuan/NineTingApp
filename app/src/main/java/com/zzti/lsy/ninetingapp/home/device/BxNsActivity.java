@@ -39,10 +39,11 @@ public class BxNsActivity extends BaseActivity {
 
     private void initData() {
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new BxFragment());
+        fragments.add(new QBxFragment());
+        fragments.add(new SBxFragment());
         fragments.add(new NsFragment());
 
-        TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"保险", "年审"});
+        TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"强险", "商业险", "年审"});
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -51,6 +52,8 @@ public class BxNsActivity extends BaseActivity {
             mTabLayout.getTabAt(0).select();
         } else if (tag == 1) {
             mTabLayout.getTabAt(1).select();
+        } else if (tag == 2) {
+            mTabLayout.getTabAt(2).select();
         }
 
     }

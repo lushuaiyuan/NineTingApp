@@ -344,12 +344,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp16"
                             android:layout_weight="1"
-                            android:text="保险提醒"
+                            android:text="强险提醒"
                             android:textColor="@color/color_666666"
                             android:textSize="@dimen/dp18" />
 
                         <TextView
-                            android:id="@+id/tv_lookMore_bx"
+                            android:id="@+id/tv_lookMore_qbx"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp16"
@@ -360,14 +360,49 @@
 
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycleView_bx"
+                        android:id="@+id/recycleView_qbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingLeft="@dimen/dp16"
+                        android:paddingRight="@dimen/dp16" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp16"
+                            android:layout_weight="1"
+                            android:text="商险提醒"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/dp18" />
+
+                        <TextView
+                            android:id="@+id/tv_lookMore_sbx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp16"
+                            android:text="查看更多"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/dp12" />
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycleView_sbx"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp20"
                         android:clipToPadding="false"
                         android:paddingLeft="@dimen/dp16"
                         android:paddingRight="@dimen/dp16" />
-
 
                     <TextView
                         android:layout_width="match_parent"

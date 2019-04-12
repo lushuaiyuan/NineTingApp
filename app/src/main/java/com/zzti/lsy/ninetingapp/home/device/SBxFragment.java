@@ -16,8 +16,8 @@ import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.event.C;
-import com.zzti.lsy.ninetingapp.home.adapter.BXAdapter;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
+import com.zzti.lsy.ninetingapp.home.adapter.NSAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
@@ -32,21 +32,20 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 保险
+ * 商业险
  */
-public class BxFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
+public class SBxFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
     private List<NsBxEntity> homeHintEntities;
-    private BXAdapter bxAdapter;
+    private NSAdapter nsAdapter;
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_list;
     }
-
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -62,6 +61,7 @@ public class BxFragment extends BaseFragment implements BaseQuickAdapter.OnItemC
     }
 
     private boolean myIsVisibleToUser;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -75,9 +75,10 @@ public class BxFragment extends BaseFragment implements BaseQuickAdapter.OnItemC
         smartRefreshLayout.setEnableLoadMore(false);
         mRecycleView.setLayoutManager(new LinearLayoutManager(mActivity));
         homeHintEntities = new ArrayList<>();
-        bxAdapter = new BXAdapter(homeHintEntities);
-        mRecycleView.setAdapter(bxAdapter);
-        bxAdapter.setOnItemClickListener(this);
+        nsAdapter = new NSAdapter(homeHintEntities);
+        mRecycleView.setAdapter(nsAdapter);
+        nsAdapter.setOnItemClickListener(this);
+
     }
 
     @Override
@@ -116,7 +117,7 @@ public class BxFragment extends BaseFragment implements BaseQuickAdapter.OnItemC
                         if (jsonArray.length() > 0) {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 NsBxEntity nsBxEntity = ParseUtils.parseJson(jsonArray.getString(i), NsBxEntity.class);
-                                if (nsBxEntity.getTypeName().equals("保险")) {
+                                if (nsBxEntity.getTypeName().equals("商业险")) {
                                     homeHintEntities.add(nsBxEntity);
                                 }
                             }
@@ -131,7 +132,7 @@ public class BxFragment extends BaseFragment implements BaseQuickAdapter.OnItemC
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
-                bxAdapter.notifyDataSetChanged();
+                nsAdapter.notifyDataSetChanged();
             }
 
             @Override

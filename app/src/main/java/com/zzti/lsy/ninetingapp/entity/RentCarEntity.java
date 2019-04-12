@@ -18,6 +18,26 @@ public class RentCarEntity {
     public String overTime;
     /// 所属项目部
     public String projectID;
+    //车辆类型
+    private String vehicleTypeName;
+    //车辆类型ID
+    private String vehicleTypeID;
+
+    public String getVehicleTypeName() {
+        return vehicleTypeName;
+    }
+
+    public void setVehicleTypeName(String vehicleTypeName) {
+        this.vehicleTypeName = vehicleTypeName;
+    }
+
+    public String getVehicleTypeID() {
+        return vehicleTypeID;
+    }
+
+    public void setVehicleTypeID(String vehicleTypeID) {
+        this.vehicleTypeID = vehicleTypeID;
+    }
 
     public String getPlateNumber() {
         return plateNumber;

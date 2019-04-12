@@ -24,22 +24,22 @@ public class RepairRecordAdapter extends BaseQuickAdapter<RepairinfoEntity, Base
                 .setText(R.id.tv_repairAllMoney, item.getRepairAllMoney())
                 .setText(R.id.tv_repairApplyTime, item.getRepairApplyTime().split("T")[0])
                 .setText(R.id.tv_repairFactory, item.getRepairFactory());
-        if (item.getStatus().equals("0")) {
-            helper.setText(R.id.tv_status, "总经理已审批");
-            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
-        } else if (item.getStatus().equals("1")) {
-            helper.setText(R.id.tv_status, "待总经理审批");
-            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
-        } else if (item.getStatus().equals("2")) {
-            helper.setText(R.id.tv_status, "待项目经理审批");
-            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
-        } else if (item.getStatus().equals("3")) {
-            helper.setText(R.id.tv_status, "已撤销");
-            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_bae886));
-        } else if (item.getStatus().equals("-1")) {
-            helper.setText(R.id.tv_status, "已拒绝");
-            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_red));
-        }
+//        if (item.getStatus().equals("0")) {
+//            helper.setText(R.id.tv_status, "总经理已审批");
+//            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
+//        } else if (item.getStatus().equals("1")) {
+//            helper.setText(R.id.tv_status, "待总经理审批");
+//            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_fe81b3));
+//        } else if (item.getStatus().equals("2")) {
+//            helper.setText(R.id.tv_status, "待项目经理审批");
+//            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_6bcfd6));
+//        } else if (item.getStatus().equals("3")) {
+//            helper.setText(R.id.tv_status, "已撤销");
+//            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_bae886));
+//        } else if (item.getStatus().equals("-1")) {
+//            helper.setText(R.id.tv_status, "已拒绝");
+//            ((TextView) helper.getView(R.id.tv_status)).setTextColor(App.get().getResources().getColor(R.color.color_red));
+//        }
     }
 
 }

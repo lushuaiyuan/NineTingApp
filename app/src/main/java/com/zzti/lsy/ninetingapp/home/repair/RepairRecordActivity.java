@@ -54,13 +54,13 @@ import butterknife.OnClick;
 /**
  * 维修记录
  */
-public class RepairRecordActivity extends BaseActivity implements AdapterView.OnItemClickListener, BaseQuickAdapter.OnItemClickListener {
+public class RepairRecordActivity extends BaseActivity implements  BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.et_search)
     EditText etSearch;
-    @BindView(R.id.rl_handleState)
-    RelativeLayout rlHandleState;
-    @BindView(R.id.tv_handleState)
-    TextView tvHandleState;
+//    @BindView(R.id.rl_handleState)
+//    RelativeLayout rlHandleState;
+//    @BindView(R.id.tv_handleState)
+//    TextView tvHandleState;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
@@ -81,7 +81,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
 
     private int condition = 1;
     private String repairTypeID;
-    private String statusID = "";
+//    private String statusID = "";
 
 
     @Override
@@ -116,10 +116,10 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageIndex = 1;
                 wherestr = "";
-                statusID = "";
+//                statusID = "";
                 repairTypeID = "";
                 etSearch.setText("");
-                tvHandleState.setText("处理状态");
+//                tvHandleState.setText("处理状态");
 //                tvRepairType.setText("维修类型");
                 repairinfoEntities.clear();
                 getRecord();
@@ -230,22 +230,22 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         smartRefreshLayout.setEnableLoadMore(true);
         //使上拉加载具有弹性效果：
         smartRefreshLayout.setEnableAutoLoadMore(false);
-        initPopStatus();
+//        initPopStatus();
 //        initPopRepairType();
 
-        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-            tvHandleState.setText("待总经理审批");
-            statusID = "1";
-            wherestr += " and status=" + statusID;
-        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-            tvHandleState.setText("待项目经理审批");
-            statusID = "2";
-            wherestr += " and status=" + statusID;
-        }
+//        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
+//            tvHandleState.setText("待总经理审批");
+//            statusID = "1";
+//            wherestr += " and status=" + statusID;
+//        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+//            tvHandleState.setText("待项目经理审批");
+//            statusID = "2";
+//            wherestr += " and status=" + statusID;
+//        }
     }
 
 
-    @OnClick({R.id.iv_search, R.id.rl_handleState})
+    @OnClick({R.id.iv_search})
     public void viewClick(View view) {
         hideSoftInput(etSearch);
         switch (view.getId()) {
@@ -260,10 +260,10 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
                 repairinfoEntities.clear();
                 getRecord();
                 break;
-            case R.id.rl_handleState://处理状态
-                condition = 1;
-                popupWindowStatus.showAsDropDown(rlHandleState, 0, 0, Gravity.LEFT);
-                break;
+//            case R.id.rl_handleState://处理状态
+//                condition = 1;
+//                popupWindowStatus.showAsDropDown(rlHandleState, 0, 0, Gravity.LEFT);
+//                break;
 //            case R.id.rl_repairType://维修类型
 //                condition = 2;
 //                if (repairTypeEntities.size() > 0) {
@@ -314,85 +314,85 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
 //        popupWindowRepairType.setAnimationStyle(R.style.anim_upPop);
 //    }
 
-    private void initPopStatus() {
-        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
-        contentview.setFocusable(true); // 这个很重要
-        contentview.setFocusableInTouchMode(true);
-        popupWindowStatus = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindowStatus.setFocusable(true);
-        popupWindowStatus.setOutsideTouchable(true);
-        //设置消失监听
-        popupWindowStatus.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        contentview.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindowStatus.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        lvStatus = contentview.findViewById(R.id.pop_list);
-        conditions = new ArrayList<>();
-        ConditionEntity conditionEntity0 = new ConditionEntity();
-        conditionEntity0.setName("总经理已审批");
-        conditionEntity0.setId("0");
-        ConditionEntity conditionEntity1 = new ConditionEntity();
-        conditionEntity1.setName("待总经理审批");
-        conditionEntity1.setId("1");
-        ConditionEntity conditionEntity2 = new ConditionEntity();
-        conditionEntity2.setName("待项目经理审批");
-        conditionEntity2.setId("2");
-        ConditionEntity conditionEntity3 = new ConditionEntity();
-        conditionEntity3.setName("已撤销");
-        conditionEntity3.setId("3");
-        ConditionEntity conditionEntity4 = new ConditionEntity();
-        conditionEntity4.setName("已拒绝");
-        conditionEntity4.setId("-1");
+//    private void initPopStatus() {
+//        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+//        contentview.setFocusable(true); // 这个很重要
+//        contentview.setFocusableInTouchMode(true);
+//        popupWindowStatus = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+//        popupWindowStatus.setFocusable(true);
+//        popupWindowStatus.setOutsideTouchable(true);
+//        //设置消失监听
+//        popupWindowStatus.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//        contentview.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_BACK) {
+//                    popupWindowStatus.dismiss();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        lvStatus = contentview.findViewById(R.id.pop_list);
+//        conditions = new ArrayList<>();
+//        ConditionEntity conditionEntity0 = new ConditionEntity();
+//        conditionEntity0.setName("总经理已审批");
+//        conditionEntity0.setId("0");
+//        ConditionEntity conditionEntity1 = new ConditionEntity();
+//        conditionEntity1.setName("待总经理审批");
+//        conditionEntity1.setId("1");
+//        ConditionEntity conditionEntity2 = new ConditionEntity();
+//        conditionEntity2.setName("待项目经理审批");
+//        conditionEntity2.setId("2");
+//        ConditionEntity conditionEntity3 = new ConditionEntity();
+//        conditionEntity3.setName("已撤销");
+//        conditionEntity3.setId("3");
+//        ConditionEntity conditionEntity4 = new ConditionEntity();
+//        conditionEntity4.setName("已拒绝");
+//        conditionEntity4.setId("-1");
+//
+//        conditions.add(conditionEntity0);
+//        conditions.add(conditionEntity1);
+//        conditions.add(conditionEntity2);
+//        conditions.add(conditionEntity3);
+//        conditions.add(conditionEntity4);
+//
+//        conditionAdapter = new ConditionAdapter(conditions);
+//        conditionAdapter.setTag(0);
+//        lvStatus.setAdapter(conditionAdapter);
+//        lvStatus.setOnItemClickListener(this);
+//        popupWindowStatus.setAnimationStyle(R.style.anim_upPop);
+//    }
 
-        conditions.add(conditionEntity0);
-        conditions.add(conditionEntity1);
-        conditions.add(conditionEntity2);
-        conditions.add(conditionEntity3);
-        conditions.add(conditionEntity4);
 
-        conditionAdapter = new ConditionAdapter(conditions);
-        conditionAdapter.setTag(0);
-        lvStatus.setAdapter(conditionAdapter);
-        lvStatus.setOnItemClickListener(this);
-        popupWindowStatus.setAnimationStyle(R.style.anim_upPop);
-    }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        wherestr = "";
-        pageIndex = 1;
-        if (condition == 1) {//处理状态
-            tvHandleState.setText(conditions.get(i).getName());
-            statusID = conditions.get(i).getId();
-            wherestr += " and status=" + statusID;
-            if (!StringUtil.isNullOrEmpty(repairTypeID)) {
-                wherestr += " and repairTypeID=" + repairTypeID;
-            }
-            popupWindowStatus.dismiss();
-            showDia();
-            repairinfoEntities.clear();
-            getRecord();
-        } else if (condition == 2) {//维修类型
-//            tvRepairType.setText(repairTypeEntities.get(i).getTypeName());
-            repairTypeID = repairTypeEntities.get(i).getTypeID();
-            wherestr += " and repairTypeID=" + repairTypeID;
-            if (!StringUtil.isNullOrEmpty(statusID)) {
-                wherestr += " and status=" + statusID;
-            }
-            popupWindowRepairType.dismiss();
-            showDia();
-            repairinfoEntities.clear();
-            getRecord();
-        }
-    }
+//    @Override
+//    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//        wherestr = "";
+//        pageIndex = 1;
+//        if (condition == 1) {//处理状态
+////            tvHandleState.setText(conditions.get(i).getName());
+////            statusID = conditions.get(i).getId();
+//            wherestr += " and status=" + statusID;
+//            if (!StringUtil.isNullOrEmpty(repairTypeID)) {
+//                wherestr += " and repairTypeID=" + repairTypeID;
+//            }
+//            popupWindowStatus.dismiss();
+//            showDia();
+//            repairinfoEntities.clear();
+//            getRecord();
+//        } else if (condition == 2) {//维修类型
+////            tvRepairType.setText(repairTypeEntities.get(i).getTypeName());
+//            repairTypeID = repairTypeEntities.get(i).getTypeID();
+//            wherestr += " and repairTypeID=" + repairTypeID;
+//            if (!StringUtil.isNullOrEmpty(statusID)) {
+//                wherestr += " and status=" + statusID;
+//            }
+//            popupWindowRepairType.dismiss();
+//            showDia();
+//            repairinfoEntities.clear();
+//            getRecord();
+//        }
+//    }
 
     private int selectPosition;
 

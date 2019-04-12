@@ -5,34 +5,28 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
-import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.RepairinfoEntity;
-import com.zzti.lsy.ninetingapp.event.C;
-import com.zzti.lsy.ninetingapp.event.EventMessage;
-import com.zzti.lsy.ninetingapp.event.PartsPurchaseMsg;
-import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.entity.RequiredParts;
+import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.home.adapter.RequiredPartsAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.photo.PhotoActivity;
 import com.zzti.lsy.ninetingapp.photo.PhotoAdapter;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
-import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -64,16 +58,14 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
     TextView tvRepairApplyTime;//维修申请时间
     @BindView(R.id.tv_staffName)
     TextView tvStaffName;//维修申请人
-    @BindView(R.id.tv_state)
-    TextView tvState;//状态
+    //    @BindView(R.id.tv_state)
+//    TextView tvState;//状态
     @BindView(R.id.recycleView_detail)
     RecyclerView recycleViewDetail;
     @BindView(R.id.recycleView_photo)
     RecyclerView recyclerViewPhoto;
     @BindView(R.id.tv_remark)
     TextView tvRemark;//维修原因
-    @BindView(R.id.btn_operator1)
-    Button btnOperator1;//操作按钮
     @BindView(R.id.btn_operator2)
     Button btnOperator2;//操作按钮
     //照片
@@ -161,64 +153,6 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
         photoAdapter.setOnItemClickListener(this);
         recyclerViewPhoto.setAdapter(photoAdapter);
         setData(repairinfoEntity);
-
-        //（3为已撤销 2为默认未审批 1项目经理审批 0总经理审批通过 -1拒绝）
-        if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-            if (repairinfoEntity.getStatus().equals("2")) {
-                tvState.setText("待项目经理审批");
-                btnOperator1.setVisibility(View.VISIBLE);
-                btnOperator2.setVisibility(View.VISIBLE);
-                btnOperator1.setText("通过");
-                btnOperator2.setText("拒绝");
-            } else {
-                btnOperator1.setVisibility(View.GONE);
-                btnOperator2.setVisibility(View.GONE);
-                if (repairinfoEntity.getStatus().equals("1")) {
-                    tvState.setText("待总经理审批");
-                }
-            }
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-            if (repairinfoEntity.getStatus().equals("1")) {
-                tvState.setText("待总经理审批");
-                btnOperator2.setVisibility(View.VISIBLE);
-                btnOperator1.setVisibility(View.VISIBLE);
-                btnOperator1.setText("通过");
-                btnOperator2.setText("拒绝");
-            } else {
-                btnOperator2.setVisibility(View.GONE);
-                btnOperator1.setVisibility(View.GONE);
-                if (repairinfoEntity.getStatus().equals("2")) {
-                    tvState.setText("待项目经理审批");
-                }
-            }
-        } else if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
-            if (repairinfoEntity.getStatus().equals("2")) {
-                tvState.setText("待项目经理审批");
-                btnOperator1.setVisibility(View.VISIBLE);
-                btnOperator2.setVisibility(View.GONE);
-                btnOperator1.setText("撤销");
-            } else {
-                btnOperator1.setVisibility(View.GONE);
-                btnOperator2.setVisibility(View.GONE);
-                if (repairinfoEntity.getStatus().equals("1")) {
-                    tvState.setText("待总经理审批");
-                }
-            }
-        }
-
-        if (repairinfoEntity.getStatus().equals("-1")) {
-            tvState.setText("已拒绝");
-            btnOperator1.setVisibility(View.GONE);
-            btnOperator2.setVisibility(View.GONE);
-        } else if (repairinfoEntity.getStatus().equals("3")) {
-            tvState.setText("已撤销");
-            btnOperator1.setVisibility(View.GONE);
-            btnOperator2.setVisibility(View.GONE);
-        } else if (repairinfoEntity.getStatus().equals("0")) {
-            tvState.setText("总经理已审批");
-            btnOperator1.setVisibility(View.GONE);
-            btnOperator2.setVisibility(View.GONE);
-        }
     }
 
     private void setData(RepairinfoEntity repairinfoEntity) {
@@ -233,42 +167,14 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
         tvRemark.setText(repairinfoEntity.getRemark());
     }
 
-    @OnClick({R.id.btn_operator1, R.id.btn_operator2})
+    @OnClick({R.id.btn_operator2})
     public void viewClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_operator1:
-                String content = "";
-                if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-                    content = "是否同意当前申请？";
-                } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-                    content = "是否同意当前申请？";
-                } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
-                    content = "是否撤销当前申请？";
-                }
-                MAlertDialog.show(this, "提示", content, false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
-                    @Override
-                    public void onConfirmClick(String msg) {
-                        showDia();
-                        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 1) {//机械师
-                            cancelOrder();
-                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
-                            approvalOrder(0);
-                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
-                            approvalOrder(1);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelClick() {
-
-                    }
-                }, true);
-                break;
             case R.id.btn_operator2:
-                MAlertDialog.show(this, "提示", "是否拒绝当前申请？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
+                MAlertDialog.show(this, "提示", "是否确认退库？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
                     @Override
                     public void onConfirmClick(String msg) {
-                        approvalOrder(-1);
+                        cancel();
                     }
 
                     @Override
@@ -281,81 +187,12 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
     }
 
     /**
-     * 审批订单
-     *
-     * @param status 0 总经理审批  1项目经理审批
+     * 退库操作
      */
-    private void approvalOrder(final int status) {
-        repairinfoEntity.setStatus(String.valueOf(status));
-        HashMap<String, String> params = new HashMap<>();
-        params.put("repairJson", new Gson().toJson(repairinfoEntity));
-        OkHttpManager.postFormBody(Urls.APPROVE_REPAIR, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
-            @Override
-            public String analyseResult(String result) {
-                return result;
-            }
+    private void cancel() {
 
-            @Override
-            public void onSuccess(String s) {
-                cancelDia();
-                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                if (msgInfo.getCode() == 200) {
-//                    Intent intent = new Intent();
-//                    intent.putExtra("status", status);
-//                    setResult(2, intent);
-                    EventBus.getDefault().post(new EventMessage(C.EventCode.F, status));
-                    finish();
-                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
-                    loginOut();
-                } else {
-                    UIUtils.showT(msgInfo.getMsg());
-                }
-            }
-
-
-            @Override
-            public void onFailed(int code, String msg, String url) {
-                super.onFailed(code, msg, url);
-                cancelDia();
-            }
-        });
     }
 
-
-    /**
-     * 撤销订单
-     */
-    private void cancelOrder() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("repairID", repairinfoEntity.getRepairID());
-        OkHttpManager.postFormBody(Urls.POST_CANCELREPAIR, params, recycleViewDetail, new OkHttpManager.OnResponse<String>() {
-            @Override
-            public String analyseResult(String result) {
-                return result;
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                cancelDia();
-                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                if (msgInfo.getCode() == 200) {
-                    setResult(2);
-                    UIUtils.showT("撤销成功");
-                    finish();
-                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
-                    loginOut();
-                } else {
-                    UIUtils.showT(msgInfo.getMsg());
-                }
-            }
-
-            @Override
-            public void onFailed(int code, String msg, String url) {
-                super.onFailed(code, msg, url);
-                cancelDia();
-            }
-        });
-    }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

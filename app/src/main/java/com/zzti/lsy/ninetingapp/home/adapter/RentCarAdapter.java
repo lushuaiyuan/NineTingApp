@@ -21,6 +21,7 @@ public class RentCarAdapter extends BaseQuickAdapter<RentCarEntity, BaseViewHold
     protected void convert(BaseViewHolder helper, RentCarEntity item) {
         helper.setText(R.id.tv_carNumber, item.getPlateNumber())
                 .setText(R.id.tv_carOwner, item.getOwnerName())
+                .setText(R.id.tv_carType, item.getVehicleTypeName())
                 .setText(R.id.tv_rentStartTime, item.getStartTime().split("T")[0])
                 .setText(R.id.tv_rentEndTime, item.getOverTime().split("T")[0]);
     }

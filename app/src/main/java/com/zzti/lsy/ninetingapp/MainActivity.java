@@ -52,15 +52,17 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    //1机械师理  2项目经理 3配件管理员 4设备管理员 5统计员 6机械师理
+                    //1车队长  2项目经理 3库管  5统计员 0总经理
                     case R.id.radio_button_home:
                         if (spUtils.getInt(SpUtils.OPTYPE, -1) == 5) { //统计员
                             mFragment = mFragments[0];
-                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//配件管理员
+                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 3) {//库管
                             mFragment = mFragments[1];
-                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 4) {//设备管理员
-                            mFragment = mFragments[2];
-                        } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
+                        }
+//                        else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 4) {//设备管理员
+//                            mFragment = mFragments[2];
+//                        }
+                        else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 2) {//项目经理
                             mFragment = mFragments[3];
                         } else if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
                             mFragment = mFragments[4];

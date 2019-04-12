@@ -31,7 +31,14 @@
             <TextView
                 style="@style/MyEditTextTitle"
                 android:text="行驶证号码" />
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="车辆类型" />
 
+            <TextView
+                android:id="@+id/tv_carType"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
             <EditText
                 android:id="@+id/et_drivingNumber"
                 style="@style/MyEditText" />

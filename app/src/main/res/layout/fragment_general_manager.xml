@@ -333,7 +333,7 @@
                             android:textSize="@dimen/dp18" />
 
                         <TextView
-                            android:id="@+id/tv_lookMore_bx"
+                            android:id="@+id/tv_lookMore_qbx"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp16"

@@ -6,12 +6,12 @@ package com.zzti.lsy.ninetingapp.entity;
 public class NsBxEntity {
     private String plateNumber;//车牌号
     private String expireDate;//到期时间
-    private String typeName;//保险、年审
+    private String typeName;//强险、商业险、年审
+    private String vehicleTypeName;//车辆类型
     private String projectID;//项目地点
     public String projectName;//项目部名称
     public String insuranceName;//保险名称
     public String buyTime;//保险购买时间
-    private String vehicleTypeName;//车辆类型
     private String alarm;
 
     public String getAlarm() {

@@ -138,7 +138,6 @@
                     android:textSize="@dimen/dp15" />
 
 
-
                 <TextView
                     android:id="@+id/tv_repairFactory_title"
                     android:layout_width="wrap_content"
@@ -178,6 +177,7 @@
                     android:layout_toRightOf="@+id/tv_repairApplyTime_title"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />
+
                 <TextView
                     android:id="@+id/tv_staffName_title"
                     android:layout_width="wrap_content"
@@ -197,6 +197,7 @@
                     android:layout_toRightOf="@+id/tv_staffName_title"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />
+
                 <TextView
                     android:id="@+id/tv_state"
                     android:layout_width="wrap_content"
@@ -204,7 +205,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:text="维修状态"
-                    android:textSize="@dimen/dp14" />
+                    android:textSize="@dimen/dp14"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <!--<ScrollView-->
@@ -312,9 +314,6 @@
 
             </LinearLayout>
 
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -342,7 +341,16 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
+
 
     <View style="@style/MyView" />
 
@@ -358,7 +366,8 @@
             android:layout_weight="1"
             android:background="@null"
             android:textColor="@color/color_6bcfd7"
-            android:textSize="@dimen/dp15" />
+            android:textSize="@dimen/dp15"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_operator1"

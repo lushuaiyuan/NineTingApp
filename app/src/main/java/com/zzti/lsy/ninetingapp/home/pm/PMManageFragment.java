@@ -15,7 +15,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseFragment;
 import com.zzti.lsy.ninetingapp.entity.AlarmItemEntity;
-import com.zzti.lsy.ninetingapp.entity.ConditionEntity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.NsBxEntity;
 import com.zzti.lsy.ninetingapp.entity.RecordCountEntity;
@@ -27,8 +26,6 @@ import com.zzti.lsy.ninetingapp.home.adapter.HomeNsAdapter;
 import com.zzti.lsy.ninetingapp.home.device.BxNsActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceDetailActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
-import com.zzti.lsy.ninetingapp.home.generalmanager.ApprovalActivity;
-import com.zzti.lsy.ninetingapp.home.generalmanager.PactListActivity;
 import com.zzti.lsy.ninetingapp.home.parts.PartsListActivity;
 import com.zzti.lsy.ninetingapp.home.production.ProductStatisticsActivity;
 import com.zzti.lsy.ninetingapp.home.repair.RepairRecordActivity;
@@ -63,19 +60,29 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     TextView tvYear;
     @BindView(R.id.tv_lookMore_ns)
     TextView tvLookMoreNs;
-    @BindView(R.id.tv_lookMore_bx)
-    TextView tvLookMoreBx;
     @BindView(R.id.recycleView_ns)
     RecyclerView mRecycleViewNs;
+
+    @BindView(R.id.tv_lookMore_qbx)
+    TextView tvLookMoreQBx;
+    @BindView(R.id.recycleView_qbx)
+    RecyclerView mRecycleViewQBx;
+
+    @BindView(R.id.tv_lookMore_sbx)
+    TextView tvLookMoreSBx;
+    @BindView(R.id.recycleView_sbx)
+    RecyclerView mRecycleViewSBx;
+
     @BindView(R.id.recycleView_by)
     RecyclerView mRecycleViewBy;
-    @BindView(R.id.recycleView_bx)
-    RecyclerView mRecycleViewBx;
+
     private List<NsBxEntity> homeHintEntitiesNs;
-    private List<NsBxEntity> homeHintEntitiesBx;
+    private List<NsBxEntity> homeHintEntitiesQBx;
+    private List<NsBxEntity> homeHintEntitiesSBx;
     private List<NsBxEntity> homeHintEntitiesBy;
     private List<AlarmItemEntity> alarmItemEntities;
-    private HomeBxAdapter homeBxAdapter;
+    private HomeBxAdapter homeQBxAdapter;
+    private HomeBxAdapter homeSBxAdapter;
     private HomeNsAdapter homeNsAdapter;
     private HomeByAdapter homeByAdapter;
     private AlarmAdapter alarmAdapter;
@@ -94,7 +101,8 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
 
     @Override
     protected void initData() {
-        homeHintEntitiesBx = new ArrayList<>();
+        homeHintEntitiesQBx = new ArrayList<>();
+        homeHintEntitiesSBx = new ArrayList<>();
         homeHintEntitiesNs = new ArrayList<>();
         alarmItemEntities = new ArrayList<>();
         homeHintEntitiesBy = new ArrayList<>();
@@ -114,15 +122,23 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         homeNsAdapter.setOnItemClickListener(this);
 
 
-        LinearLayoutManager linearLayoutManagerBx = new LinearLayoutManager(getContext());
-        linearLayoutManagerBx.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRecycleViewBx.setLayoutManager(linearLayoutManagerBx);
-        homeBxAdapter = new HomeBxAdapter(homeHintEntitiesBx);
-        mRecycleViewBx.setAdapter(homeBxAdapter);
-        homeBxAdapter.setOnItemClickListener(this);
+        LinearLayoutManager linearLayoutManagerQBx = new LinearLayoutManager(getContext());
+        linearLayoutManagerQBx.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecycleViewQBx.setLayoutManager(linearLayoutManagerQBx);
+        homeQBxAdapter = new HomeBxAdapter(homeHintEntitiesQBx);
+        mRecycleViewQBx.setAdapter(homeQBxAdapter);
+        homeQBxAdapter.setOnItemClickListener(this);
+
+
+        LinearLayoutManager linearLayoutManagerSBx = new LinearLayoutManager(getContext());
+        linearLayoutManagerSBx.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecycleViewSBx.setLayoutManager(linearLayoutManagerSBx);
+        homeSBxAdapter = new HomeBxAdapter(homeHintEntitiesSBx);
+        mRecycleViewSBx.setAdapter(homeSBxAdapter);
+        homeSBxAdapter.setOnItemClickListener(this);
 
         LinearLayoutManager linearLayoutManagerBy = new LinearLayoutManager(getContext());
-        linearLayoutManagerBx.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManagerBy.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecycleViewBy.setLayoutManager(linearLayoutManagerBy);
         homeByAdapter = new HomeByAdapter(homeHintEntitiesBy);
         mRecycleViewBy.setAdapter(homeByAdapter);
@@ -204,10 +220,11 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
      * 获取提醒实体类
      */
     private void getCarExpire() {
-        homeHintEntitiesBx.clear();
+        homeHintEntitiesQBx.clear();
+        homeHintEntitiesSBx.clear();
         homeHintEntitiesNs.clear();
         homeHintEntitiesBy.clear();
-        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, null, mRecycleViewBx, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, null, mRecycleViewQBx, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -226,8 +243,10 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                                 NsBxEntity nsBxEntity = ParseUtils.parseJson(jsonArray.getString(i), NsBxEntity.class);
                                 if (nsBxEntity.getTypeName().equals("年审")) {
                                     homeHintEntitiesNs.add(nsBxEntity);
-                                } else if (nsBxEntity.getTypeName().equals("保险")) {
-                                    homeHintEntitiesBx.add(nsBxEntity);
+                                } else if (nsBxEntity.getTypeName().equals("强险")) {
+                                    homeHintEntitiesQBx.add(nsBxEntity);
+                                } else if (nsBxEntity.getTypeName().equals("商业险")) {
+                                    homeHintEntitiesSBx.add(nsBxEntity);
                                 } else if (nsBxEntity.getTypeName().equals("保养")) {
                                     homeHintEntitiesBy.add(nsBxEntity);
                                 }
@@ -242,19 +261,30 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                                     homeHintEntitiesNs.subList(0, 4);
                                 }
                             }
-                            if (homeHintEntitiesBx.size() == 0) {
-                                tvLookMoreBx.setText("暂无数据");
-                                tvLookMoreBx.setEnabled(false);
+                            if (homeHintEntitiesQBx.size() == 0) {
+                                tvLookMoreQBx.setText("暂无数据");
+                                tvLookMoreQBx.setEnabled(false);
                             } else {
-                                tvLookMoreBx.setText("查看更多");
-                                tvLookMoreBx.setEnabled(true);
-                                if (homeHintEntitiesBx.size() > 5) {
-                                    homeHintEntitiesBx.subList(0, 4);
+                                tvLookMoreQBx.setText("查看更多");
+                                tvLookMoreQBx.setEnabled(true);
+                                if (homeHintEntitiesQBx.size() > 5) {
+                                    homeHintEntitiesQBx.subList(0, 4);
+                                }
+                            }
+                            if (homeHintEntitiesSBx.size() == 0) {
+                                tvLookMoreSBx.setText("暂无数据");
+                                tvLookMoreSBx.setEnabled(false);
+                            } else {
+                                tvLookMoreSBx.setText("查看更多");
+                                tvLookMoreSBx.setEnabled(true);
+                                if (homeHintEntitiesSBx.size() > 5) {
+                                    homeHintEntitiesSBx.subList(0, 4);
                                 }
                             }
                         } else {
                             tvLookMoreNs.setVisibility(View.GONE);
-                            tvLookMoreBx.setVisibility(View.GONE);
+                            tvLookMoreQBx.setVisibility(View.GONE);
+                            tvLookMoreSBx.setVisibility(View.GONE);
                             UIUtils.showT("暂无保险、年审、保养数据");
                         }
                     } catch (JSONException e) {
@@ -265,7 +295,8 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
-                homeBxAdapter.notifyDataSetChanged();
+                homeQBxAdapter.notifyDataSetChanged();
+                homeSBxAdapter.notifyDataSetChanged();
                 homeNsAdapter.notifyDataSetChanged();
                 homeByAdapter.notifyDataSetChanged();
             }
@@ -284,7 +315,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
         return fragment;
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.rl_menu7, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.rl_menu7, R.id.tv_lookMore_ns, R.id.tv_lookMore_qbx})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1://授权
@@ -313,7 +344,7 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
                 intent1.putExtra("TAG", 1);
                 startActivity(intent1);
                 break;
-            case R.id.tv_lookMore_bx:
+            case R.id.tv_lookMore_qbx:
                 Intent intent2 = new Intent(mActivity, BxNsActivity.class);
                 intent2.putExtra("TAG", 0);
                 startActivity(intent2);
@@ -325,8 +356,11 @@ public class PMManageFragment extends BaseFragment implements BaseQuickAdapter.O
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(mActivity, DeviceDetailActivity.class);
-        if (adapter == homeBxAdapter) {
-            intent.putExtra("carNumber", homeHintEntitiesBx.get(position).getPlateNumber());
+        if (adapter == homeQBxAdapter) {
+            intent.putExtra("carNumber", homeHintEntitiesQBx.get(position).getPlateNumber());
+        }
+        if (adapter == homeSBxAdapter) {
+            intent.putExtra("carNumber", homeHintEntitiesSBx.get(position).getPlateNumber());
         } else if (adapter == homeNsAdapter) {
             intent.putExtra("carNumber", homeHintEntitiesNs.get(position).getPlateNumber());
         }

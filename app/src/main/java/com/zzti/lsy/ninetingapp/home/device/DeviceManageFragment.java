@@ -42,13 +42,19 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
     RecyclerView mRecycleViewNs;
     @BindView(R.id.tv_lookMore_ns)
     TextView tvLookMoreNs;
-    @BindView(R.id.tv_lookMore_bx)
-    TextView tvLookMoreBx;
-    @BindView(R.id.recycleView_bx)
-    RecyclerView mRecycleViewBx;
+    @BindView(R.id.tv_lookMore_qbx)
+    TextView tvLookMoreQBx;
+    @BindView(R.id.recycleView_qbx)
+    RecyclerView mRecycleViewQBx;
+    @BindView(R.id.recycleView_sbx)
+    RecyclerView mRecycleViewSBx;
+    @BindView(R.id.tv_lookMore_sbx)
+    TextView tvLookMoreSBx;
     private List<NsBxEntity> homeHintEntitiesNs;
-    private List<NsBxEntity> homeHintEntitiesBx;
-    private HomeBxAdapter homeBxAdapter;
+    private List<NsBxEntity> homeHintEntitiesQBx;
+    private List<NsBxEntity> homeHintEntitiesSBx;
+    private HomeBxAdapter homeQBxAdapter;
+    private HomeBxAdapter homeSBxAdapter;
     private HomeNsAdapter homeNsAdapter;
 
     public static DeviceManageFragment newInstance() {
@@ -70,7 +76,8 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
 
     @Override
     protected void initData() {
-        homeHintEntitiesBx = new ArrayList<>();
+        homeHintEntitiesQBx = new ArrayList<>();
+        homeHintEntitiesSBx = new ArrayList<>();
         homeHintEntitiesNs = new ArrayList<>();
 
         LinearLayoutManager linearLayoutManagerNs = new LinearLayoutManager(getContext());
@@ -81,12 +88,20 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
         homeNsAdapter.setOnItemClickListener(this);
 
 
-        LinearLayoutManager linearLayoutManagerBx = new LinearLayoutManager(getContext());
-        linearLayoutManagerBx.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRecycleViewBx.setLayoutManager(linearLayoutManagerBx);
-        homeBxAdapter = new HomeBxAdapter(homeHintEntitiesBx);
-        mRecycleViewBx.setAdapter(homeBxAdapter);
-        homeBxAdapter.setOnItemClickListener(this);
+        LinearLayoutManager linearLayoutManagerQBx = new LinearLayoutManager(getContext());
+        linearLayoutManagerQBx.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecycleViewQBx.setLayoutManager(linearLayoutManagerQBx);
+        homeQBxAdapter = new HomeBxAdapter(homeHintEntitiesQBx);
+        mRecycleViewQBx.setAdapter(homeQBxAdapter);
+        homeQBxAdapter.setOnItemClickListener(this);
+
+        LinearLayoutManager linearLayoutManagerSBx = new LinearLayoutManager(getContext());
+        linearLayoutManagerQBx.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecycleViewSBx.setLayoutManager(linearLayoutManagerSBx);
+        homeSBxAdapter = new HomeBxAdapter(homeHintEntitiesSBx);
+        mRecycleViewSBx.setAdapter(homeSBxAdapter);
+        homeSBxAdapter.setOnItemClickListener(this);
+
 
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -104,9 +119,10 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
      * 获取提醒实体类
      */
     private void getCarExpire() {
-        homeHintEntitiesBx.clear();
+        homeHintEntitiesQBx.clear();
+        homeHintEntitiesSBx.clear();
         homeHintEntitiesNs.clear();
-        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, null, mRecycleViewBx, new OkHttpManager.OnResponse<String>() {
+        OkHttpManager.postFormBody(Urls.POST_GETCAREXPIRE, null, mRecycleViewQBx, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
                 return result;
@@ -125,8 +141,10 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
                                 NsBxEntity nsBxEntity = ParseUtils.parseJson(jsonArray.getString(i), NsBxEntity.class);
                                 if (nsBxEntity.getTypeName().equals("年审")) {
                                     homeHintEntitiesNs.add(nsBxEntity);
-                                } else if (nsBxEntity.getTypeName().equals("保险")) {
-                                    homeHintEntitiesBx.add(nsBxEntity);
+                                } else if (nsBxEntity.getTypeName().equals("强险")) {
+                                    homeHintEntitiesQBx.add(nsBxEntity);
+                                }else if (nsBxEntity.getTypeName().equals("商业险")) {
+                                    homeHintEntitiesSBx.add(nsBxEntity);
                                 }
                             }
                             if (homeHintEntitiesNs.size() == 0) {
@@ -139,19 +157,30 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
                                     homeHintEntitiesNs.subList(0, 4);
                                 }
                             }
-                            if (homeHintEntitiesBx.size() == 0) {
-                                tvLookMoreBx.setText("暂无数据");
-                                tvLookMoreBx.setEnabled(false);
+                            if (homeHintEntitiesQBx.size() == 0) {
+                                tvLookMoreQBx.setText("暂无数据");
+                                tvLookMoreQBx.setEnabled(false);
                             } else {
-                                tvLookMoreBx.setText("查看更多");
-                                tvLookMoreBx.setEnabled(true);
-                                if (homeHintEntitiesBx.size() > 5) {
-                                    homeHintEntitiesBx.subList(0, 4);
+                                tvLookMoreQBx.setText("查看更多");
+                                tvLookMoreQBx.setEnabled(true);
+                                if (homeHintEntitiesQBx.size() > 5) {
+                                    homeHintEntitiesQBx.subList(0, 4);
+                                }
+                            }
+                            if (homeHintEntitiesSBx.size() == 0) {
+                                tvLookMoreSBx.setText("暂无数据");
+                                tvLookMoreSBx.setEnabled(false);
+                            } else {
+                                tvLookMoreSBx.setText("查看更多");
+                                tvLookMoreSBx.setEnabled(true);
+                                if (homeHintEntitiesSBx.size() > 5) {
+                                    homeHintEntitiesSBx.subList(0, 4);
                                 }
                             }
                         } else {
                             tvLookMoreNs.setVisibility(View.GONE);
-                            tvLookMoreBx.setVisibility(View.GONE);
+                            tvLookMoreQBx.setVisibility(View.GONE);
+                            tvLookMoreSBx.setVisibility(View.GONE);
                             UIUtils.showT("暂无保险年审数据");
                         }
                     } catch (JSONException e) {
@@ -162,7 +191,8 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
-                homeBxAdapter.notifyDataSetChanged();
+                homeQBxAdapter.notifyDataSetChanged();
+                homeSBxAdapter.notifyDataSetChanged();
                 homeNsAdapter.notifyDataSetChanged();
             }
 
@@ -175,7 +205,7 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
         });
     }
 
-    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.tv_lookMore_ns, R.id.tv_lookMore_bx})
+    @OnClick({R.id.rl_menu1, R.id.rl_menu2, R.id.rl_menu3, R.id.rl_menu4, R.id.rl_menu5, R.id.rl_menu6, R.id.tv_lookMore_ns, R.id.tv_lookMore_qbx, R.id.tv_lookMore_sbx})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_menu1: //设备列表
@@ -196,14 +226,19 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
             case R.id.rl_menu6://查看表格
                 startActivity(new Intent(mActivity, DeviceFormActivity.class));
                 break;
-            case R.id.tv_lookMore_bx:
+            case R.id.tv_lookMore_qbx:
                 Intent intent1 = new Intent(mActivity, BxNsActivity.class);
                 intent1.putExtra("TAG", 0);
                 startActivity(intent1);
                 break;
+            case R.id.tv_lookMore_sbx:
+                Intent intent3 = new Intent(mActivity, BxNsActivity.class);
+                intent3.putExtra("TAG", 1);
+                startActivity(intent3);
+                break;
             case R.id.tv_lookMore_ns:
                 Intent intent2 = new Intent(mActivity, BxNsActivity.class);
-                intent2.putExtra("TAG", 1);
+                intent2.putExtra("TAG", 2);
                 startActivity(intent2);
                 break;
         }
@@ -212,9 +247,11 @@ public class DeviceManageFragment extends BaseFragment implements BaseQuickAdapt
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(mActivity, DeviceDetailActivity.class);
-        if (adapter == homeBxAdapter) {
-            intent.putExtra("carNumber", homeHintEntitiesBx.get(position).getPlateNumber());
-        } else if (adapter == homeNsAdapter) {
+        if (adapter == homeQBxAdapter) {
+            intent.putExtra("carNumber", homeHintEntitiesQBx.get(position).getPlateNumber());
+        } else if (adapter == homeSBxAdapter) {
+            intent.putExtra("carNumber", homeHintEntitiesSBx.get(position).getPlateNumber());
+        }else if (adapter == homeNsAdapter) {
             intent.putExtra("carNumber", homeHintEntitiesNs.get(position).getPlateNumber());
         }
         intent.putExtra("TAG", 1);
