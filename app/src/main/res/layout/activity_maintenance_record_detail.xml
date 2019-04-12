@@ -80,12 +80,12 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_projectAddress_Title"
                     android:layout_marginTop="@dimen/dp15"
-                    android:text="施工工地"
+                    android:text="维修配件金额"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp14" />
 
                 <TextView
-                    android:id="@+id/tv_constructionAddress"
+                    android:id="@+id/tv_repairParts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/tv_construction_Title"
@@ -102,12 +102,12 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_construction_Title"
                     android:layout_marginTop="@dimen/dp15"
-                    android:text="维修类型"
+                    android:text="维修费用"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp14" />
 
                 <TextView
-                    android:id="@+id/tv_serviceType"
+                    android:id="@+id/tv_repairMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/tv_service_Title"
@@ -123,12 +123,12 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_service_Title"
                     android:layout_marginTop="@dimen/dp15"
-                    android:text="维修原因"
+                    android:text="维修总费用"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/dp14" />
 
                 <TextView
-                    android:id="@+id/tv_reason"
+                    android:id="@+id/tv_repairAllMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/tv_reason_Title"
@@ -137,6 +137,66 @@
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />
 
+
+
+                <TextView
+                    android:id="@+id/tv_repairFactory_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_reason_Title"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:text="维修厂商"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_repairFactory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tv_repairFactory_title"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_toRightOf="@+id/tv_repairFactory_title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/tv_repairApplyTime_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_repairFactory_title"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:text="申请时间"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_repairApplyTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tv_repairApplyTime_title"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_toRightOf="@+id/tv_repairApplyTime_title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+                <TextView
+                    android:id="@+id/tv_staffName_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_repairApplyTime_title"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:text="申请人"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_staffName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tv_staffName_title"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_toRightOf="@+id/tv_staffName_title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
                 <TextView
                     android:id="@+id/tv_state"
                     android:layout_width="wrap_content"
@@ -145,7 +205,6 @@
                     android:layout_centerVertical="true"
                     android:text="维修状态"
                     android:textSize="@dimen/dp14" />
-
             </RelativeLayout>
 
             <!--<ScrollView-->
@@ -226,71 +285,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_maintenanceStartTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@color/color_white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16"
-                android:paddingTop="@dimen/dp10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="计划维修开始时间"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dp15" />
-
-                <TextView
-                    android:id="@+id/tv_maintenanceStartTime"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:padding="@dimen/dp5"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dp15" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_maintenanceEndTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp1"
-                android:background="@color/color_white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16"
-                android:paddingTop="@dimen/dp10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="计划维修结束时间"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dp15" />
-
-                <TextView
-                    android:id="@+id/tv_maintenanceEndTime"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:padding="@dimen/dp5"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dp15" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -319,31 +313,6 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@color/color_white"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/dp16"
-                android:paddingTop="@dimen/dp10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="维修内容"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dp15" />
-
-                <TextView
-                    android:id="@+id/tv_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:textSize="@dimen/dp15" />
-            </LinearLayout>
 
 
             <LinearLayout

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
@@ -48,27 +49,27 @@ import butterknife.OnClick;
  */
 public class RepairRecordDetailActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.tv_carNumber)
-    TextView tvCarNumber;
+    TextView tvCarNumber;//车牌号
     @BindView(R.id.tv_projectAddress)
-    TextView tvProjectAddress;
-    @BindView(R.id.tv_constructionAddress)
-    TextView tvConstructionAddress;
-    @BindView(R.id.tv_serviceType)
-    TextView tvServiceType;
-    @BindView(R.id.tv_reason)
-    TextView tvReason;
+    TextView tvProjectAddress;//项目部
+    @BindView(R.id.tv_repairParts)
+    TextView tvRepairParts;//维修配件费用
+    @BindView(R.id.tv_repairMoney)
+    TextView tvRepairMoney;//维修费用
+    @BindView(R.id.tv_repairAllMoney)
+    TextView tvRepairAllMoney;//维修总费用
+    @BindView(R.id.tv_repairFactory)
+    TextView tvRepairFactory;//维修厂商
+    @BindView(R.id.tv_repairApplyTime)
+    TextView tvRepairApplyTime;//维修申请时间
+    @BindView(R.id.tv_staffName)
+    TextView tvStaffName;//维修申请人
     @BindView(R.id.tv_state)
-    TextView tvState;
+    TextView tvState;//状态
     @BindView(R.id.recycleView_detail)
     RecyclerView recycleViewDetail;
-    @BindView(R.id.tv_maintenanceStartTime)
-    TextView tvMaintenanceStartTime;//计划维修开始时间
-    @BindView(R.id.tv_maintenanceEndTime)
-    TextView tvMaintenanceEndTime;//计划维修结束时间
     @BindView(R.id.recycleView_photo)
     RecyclerView recyclerViewPhoto;
-    @BindView(R.id.tv_content)
-    TextView tvContent;//维修内容
     @BindView(R.id.tv_remark)
     TextView tvRemark;//维修原因
     @BindView(R.id.btn_operator1)
@@ -223,12 +224,12 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
     private void setData(RepairinfoEntity repairinfoEntity) {
         tvCarNumber.setText(repairinfoEntity.getPlateNumber());
         tvProjectAddress.setText(repairinfoEntity.getProjectName());
-        tvConstructionAddress.setText("adfa");
-//        tvServiceType.setText(repairinfoEntity.getTypeName());
-//        tvMaintenanceStartTime.setText(repairinfoEntity.getRepairBeginTime().split("T")[0]);
-//        tvMaintenanceEndTime.setText(repairinfoEntity.getRepairOverTime().split("T")[0]);
-//        tvReason.setText(repairinfoEntity.getCauseName());
-//        tvContent.setText(repairinfoEntity.getRepairContent());
+        tvRepairParts.setText(repairinfoEntity.getRepairParts());
+        tvRepairMoney.setText(repairinfoEntity.getRepairMoney());
+        tvRepairAllMoney.setText(repairinfoEntity.getRepairAllMoney());
+        tvRepairFactory.setText(repairinfoEntity.getRepairFactory());
+        tvRepairApplyTime.setText(repairinfoEntity.getRepairApplyTime().split("T")[0]);
+        tvStaffName.setText(repairinfoEntity.getStaffName());
         tvRemark.setText(repairinfoEntity.getRemark());
     }
 

@@ -76,33 +76,6 @@
         </RelativeLayout>
 
 
-        <View
-            android:layout_width="@dimen/dp1"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
-            android:background="@color/color_e5e5e5" />
-
-        <RelativeLayout
-            android:id="@+id/rl_repairType"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/tv_repairType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_weight="1"
-                android:drawablePadding="@dimen/dp5"
-                android:drawableRight="@mipmap/icon_down_arrow"
-                android:padding="@dimen/dp10"
-                android:text="维修类型"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp14" />
-        </RelativeLayout>
 
     </LinearLayout>
 

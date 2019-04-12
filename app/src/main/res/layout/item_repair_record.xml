@@ -45,12 +45,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="维修内容"
+            android:text="维修总费用"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/dp15" />
 
         <TextView
-            android:id="@+id/tv_content"
+            android:id="@+id/tv_repairAllMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp15"
@@ -72,12 +72,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="计划开始时间"
+            android:text="维修申请时间"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/dp15" />
 
         <TextView
-            android:id="@+id/tv_plantStartTime"
+            android:id="@+id/tv_repairApplyTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp15"
@@ -94,12 +94,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="计划结束时间"
+            android:text="维修厂商"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/dp15" />
 
         <TextView
-            android:id="@+id/tv_plantEndTime"
+            android:id="@+id/tv_repairFactory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp15"

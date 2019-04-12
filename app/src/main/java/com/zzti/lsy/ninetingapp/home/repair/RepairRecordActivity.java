@@ -59,12 +59,8 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     EditText etSearch;
     @BindView(R.id.rl_handleState)
     RelativeLayout rlHandleState;
-    @BindView(R.id.rl_repairType)
-    RelativeLayout rlRepairType;
     @BindView(R.id.tv_handleState)
     TextView tvHandleState;
-    @BindView(R.id.tv_repairType)
-    TextView tvRepairType;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.mRecycleView)
@@ -124,56 +120,56 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
                 repairTypeID = "";
                 etSearch.setText("");
                 tvHandleState.setText("处理状态");
-                tvRepairType.setText("维修类型");
+//                tvRepairType.setText("维修类型");
                 repairinfoEntities.clear();
                 getRecord();
             }
         });
         showDia();
-        getRepairType();
+//        getRepairType();
         getRecord();
     }
 
     /**
      * 获取维修类型
      */
-    private void getRepairType() {
-        showDia();
-        HashMap<String, String> params = new HashMap<>();
-        OkHttpManager.postFormBody(Urls.POST_GETREPAIRTYPE, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
-            @Override
-            public String analyseResult(String result) {
-                return result;
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                cancelDia();
-                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
-                if (msgInfo.getCode() == 200) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            RepairTypeEntity repairTypeEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairTypeEntity.class);
-                            repairTypeEntities.add(repairTypeEntity);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
-                    loginOut();
-                } else {
-                    UIUtils.showT(msgInfo.getMsg());
-                }
-            }
-
-            @Override
-            public void onFailed(int code, String msg, String url) {
-                super.onFailed(code, msg, url);
-                cancelDia();
-            }
-        });
-    }
+//    private void getRepairType() {
+//        showDia();
+//        HashMap<String, String> params = new HashMap<>();
+//        OkHttpManager.postFormBody(Urls.POST_GETREPAIRTYPE, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
+//            @Override
+//            public String analyseResult(String result) {
+//                return result;
+//            }
+//
+//            @Override
+//            public void onSuccess(String s) {
+//                cancelDia();
+//                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+//                if (msgInfo.getCode() == 200) {
+//                    try {
+//                        JSONArray jsonArray = new JSONArray(msgInfo.getData());
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            RepairTypeEntity repairTypeEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairTypeEntity.class);
+//                            repairTypeEntities.add(repairTypeEntity);
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+//                    loginOut();
+//                } else {
+//                    UIUtils.showT(msgInfo.getMsg());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailed(int code, String msg, String url) {
+//                super.onFailed(code, msg, url);
+//                cancelDia();
+//            }
+//        });
+//    }
 
     /**
      * 获取数据
@@ -235,7 +231,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
         //使上拉加载具有弹性效果：
         smartRefreshLayout.setEnableAutoLoadMore(false);
         initPopStatus();
-        initPopRepairType();
+//        initPopRepairType();
 
         if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理
             tvHandleState.setText("待总经理审批");
@@ -249,7 +245,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
     }
 
 
-    @OnClick({R.id.iv_search, R.id.rl_handleState, R.id.rl_repairType})
+    @OnClick({R.id.iv_search, R.id.rl_handleState})
     public void viewClick(View view) {
         hideSoftInput(etSearch);
         switch (view.getId()) {
@@ -268,55 +264,55 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
                 condition = 1;
                 popupWindowStatus.showAsDropDown(rlHandleState, 0, 0, Gravity.LEFT);
                 break;
-            case R.id.rl_repairType://维修类型
-                condition = 2;
-                if (repairTypeEntities.size() > 0) {
-
-                    if (repairTypeEntities.size() >= 4) {
-                        //动态设置listView的高度
-                        View listItem = repairTypeAdapter.getView(0, null, lvRepairType);
-                        listItem.measure(0, 0);
-                        int totalHei = (listItem.getMeasuredHeight() + lvRepairType.getDividerHeight()) * 4;
-                        lvRepairType.getLayoutParams().height = totalHei;
-                        ViewGroup.LayoutParams params = lvRepairType.getLayoutParams();
-                        params.height = totalHei;
-                        lvRepairType.setLayoutParams(params);
-                    }
-                    popupWindowRepairType.showAsDropDown(rlRepairType, 0, 0, Gravity.LEFT);
-                } else {
-                    UIUtils.showT("暂无数据");
-                }
-                break;
+//            case R.id.rl_repairType://维修类型
+//                condition = 2;
+//                if (repairTypeEntities.size() > 0) {
+//
+//                    if (repairTypeEntities.size() >= 4) {
+//                        //动态设置listView的高度
+//                        View listItem = repairTypeAdapter.getView(0, null, lvRepairType);
+//                        listItem.measure(0, 0);
+//                        int totalHei = (listItem.getMeasuredHeight() + lvRepairType.getDividerHeight()) * 4;
+//                        lvRepairType.getLayoutParams().height = totalHei;
+//                        ViewGroup.LayoutParams params = lvRepairType.getLayoutParams();
+//                        params.height = totalHei;
+//                        lvRepairType.setLayoutParams(params);
+//                    }
+//                    popupWindowRepairType.showAsDropDown(rlRepairType, 0, 0, Gravity.LEFT);
+//                } else {
+//                    UIUtils.showT("暂无数据");
+//                }
+//                break;
         }
     }
 
-    private void initPopRepairType() {
-        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
-        contentview.setFocusable(true); // 这个很重要
-        contentview.setFocusableInTouchMode(true);
-        popupWindowRepairType = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindowRepairType.setFocusable(true);
-        popupWindowRepairType.setOutsideTouchable(true);
-        //设置消失监听
-        popupWindowRepairType.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        contentview.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindowRepairType.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        lvRepairType = contentview.findViewById(R.id.pop_list);
-        repairTypeEntities = new ArrayList<>();
-        repairTypeAdapter = new RepairTypeAdapter(repairTypeEntities);
-        repairTypeAdapter.setTag(2);//背景色为黑色
-        lvRepairType.setAdapter(repairTypeAdapter);
-        lvRepairType.setOnItemClickListener(this);
-        popupWindowRepairType.setAnimationStyle(R.style.anim_upPop);
-    }
+//    private void initPopRepairType() {
+//        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+//        contentview.setFocusable(true); // 这个很重要
+//        contentview.setFocusableInTouchMode(true);
+//        popupWindowRepairType = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+//        popupWindowRepairType.setFocusable(true);
+//        popupWindowRepairType.setOutsideTouchable(true);
+//        //设置消失监听
+//        popupWindowRepairType.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//        contentview.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_BACK) {
+//                    popupWindowRepairType.dismiss();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        lvRepairType = contentview.findViewById(R.id.pop_list);
+//        repairTypeEntities = new ArrayList<>();
+//        repairTypeAdapter = new RepairTypeAdapter(repairTypeEntities);
+//        repairTypeAdapter.setTag(2);//背景色为黑色
+//        lvRepairType.setAdapter(repairTypeAdapter);
+//        lvRepairType.setOnItemClickListener(this);
+//        popupWindowRepairType.setAnimationStyle(R.style.anim_upPop);
+//    }
 
     private void initPopStatus() {
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
@@ -385,7 +381,7 @@ public class RepairRecordActivity extends BaseActivity implements AdapterView.On
             repairinfoEntities.clear();
             getRecord();
         } else if (condition == 2) {//维修类型
-            tvRepairType.setText(repairTypeEntities.get(i).getTypeName());
+//            tvRepairType.setText(repairTypeEntities.get(i).getTypeName());
             repairTypeID = repairTypeEntities.get(i).getTypeID();
             wherestr += " and repairTypeID=" + repairTypeID;
             if (!StringUtil.isNullOrEmpty(statusID)) {

@@ -96,33 +96,13 @@
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dp15" />
 
-        <TextView
-            android:id="@+id/tv_construction_Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_projectAddress_Title"
-            android:layout_marginTop="@dimen/dp15"
-            android:text="存放地"
-            android:textColor="@color/color_999999"
-            android:textSize="@dimen/dp14" />
-
-        <TextView
-            android:id="@+id/tv_constructionAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/tv_construction_Title"
-            android:layout_marginLeft="@dimen/dp15"
-            android:layout_toRightOf="@id/tv_construction_Title"
-            android:text="大"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/dp15" />
 
 
         <TextView
             android:id="@+id/tv_service_Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_construction_Title"
+            android:layout_below="@id/tv_projectAddress_Title"
             android:layout_marginTop="@dimen/dp15"
             android:text="类型"
             android:textColor="@color/color_999999"

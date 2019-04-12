@@ -111,7 +111,7 @@ public class MaintenanceReportActivity extends BaseActivity {
         repairinfoEntities.clear();
         whereStr = "status = 0";
         if (!StringUtil.isNullOrEmpty(etSearch.getText().toString())) {
-            whereStr += " and (repairContent like \'%" + etSearch.getText().toString() + "%\' or plateNumber like \'" + etSearch.getText().toString() + "%\')";
+            whereStr += " plateNumber like \'%" + etSearch.getText().toString() + "%\')";
         }
         if (!StringUtil.isNullOrEmpty(tvStartTime.getText().toString()) && !StringUtil.isNullOrEmpty(tvEndTime.getText().toString())) {
             whereStr += " and '" + tvStartTime.getText().toString() + "'<repairApplyTime and repairApplyTime<'" + tvEndTime.getText().toString() + "'";
@@ -135,11 +135,6 @@ public class MaintenanceReportActivity extends BaseActivity {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             RepairinfoEntity repairinfoEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairinfoEntity.class);
-//                            if (repairinfoEntity.getRepairContent().length() > 5) {
-//                                repairinfoEntity.setShowContent(repairinfoEntity.getRepairContent().substring(0, 4) + "...");
-//                            } else {
-//                                repairinfoEntity.setShowContent(repairinfoEntity.getRepairContent());
-//                            }
                             repairinfoEntities.add(repairinfoEntity);
                         }
                     } catch (JSONException e) {
@@ -167,11 +162,14 @@ public class MaintenanceReportActivity extends BaseActivity {
         Column<String> column1 = new Column<>("车牌号", "plateNumber");
         column1.setFixed(true);
         Column<String> column2 = new Column<>("项目部", "projectName");
-        Column<String> column3 = new Column<>("维修原因", "causeName");
-        Column<String> column4 = new Column<>("维修内容", "showContent");
-        Column<String> column5 = new Column<>("维修金额", "repairMoney");
+        Column<String> column3 = new Column<>("维修配件金额", "repairParts");
+        Column<String> column4 = new Column<>("维修费用", "repairMoney");
+        Column<String> column5 = new Column<>("维修总费用", "repairAllMoney");
+        Column<String> column6 = new Column<>("维修厂商", "repairFactory");
+        Column<String> column7 = new Column<>("申请时间", "repairApplyTime");
+        Column<String> column8 = new Column<>("申请人", "staffName");
         //表格数据 datas是需要填充的数据
-        TableData<RepairinfoEntity> tableData = new TableData<>("维修记录", repairinfoEntities, column1, column2, column3, column4, column5);
+        TableData<RepairinfoEntity> tableData = new TableData<>("维修记录", repairinfoEntities, column1, column2, column3, column4, column5, column6, column7, column8);
         //table.setZoom(true,3);是否缩放
         mSmartTable.setTableData(tableData);
         column1.setOnColumnItemClickListener(new MyColumnItemClickListener());
@@ -179,6 +177,9 @@ public class MaintenanceReportActivity extends BaseActivity {
         column3.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column4.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column5.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column6.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column7.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column8.setOnColumnItemClickListener(new MyColumnItemClickListener());
     }
 
     class MyColumnItemClickListener implements OnColumnItemClickListener<String> {

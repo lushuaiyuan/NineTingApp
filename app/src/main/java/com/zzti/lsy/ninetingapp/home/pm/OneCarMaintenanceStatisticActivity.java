@@ -50,8 +50,8 @@ public class OneCarMaintenanceStatisticActivity extends BaseActivity {
 //    TextView tvState;
     @BindView(R.id.tv_projectAddress)
     TextView tvProjectAddress;
-    @BindView(R.id.tv_constructionAddress)
-    TextView tvConstructionAddress;
+//    @BindView(R.id.tv_constructionAddress)
+//    TextView tvConstructionAddress;
     @BindView(R.id.tv_serviceType)
     TextView tvServiceType;
     @BindView(R.id.chart)
