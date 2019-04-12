@@ -65,18 +65,18 @@
                     android:id="@+id/rb_exist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="已有"
                     android:clickable="true"
+                    android:text="已有"
                     android:textSize="@dimen/dp15" />
 
                 <RadioButton
-                    android:visibility="gone"
                     android:id="@+id/rb_purchase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
                     android:text="现采"
-                    android:textSize="@dimen/dp15" />
+                    android:textSize="@dimen/dp15"
+                    android:visibility="gone" />
 
             </RadioGroup>
         </LinearLayout>
@@ -219,6 +219,47 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/view"
+            style="@style/MyView" />
+
+        <LinearLayout
+            android:id="@+id/ll_cancelling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:text="退库数量"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <EditText
+                android:id="@+id/et_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp15" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_right_arrow"
+                android:visibility="invisible" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

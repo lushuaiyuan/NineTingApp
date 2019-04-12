@@ -1,6 +1,8 @@
 package com.zzti.lsy.ninetingapp.home.adapter;
 
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.entity.RequiredParts;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
+import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import java.util.List;
 
@@ -18,8 +21,11 @@ import java.util.List;
  * 维修记录明细
  */
 public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseViewHolder> {
+    private List<RequiredParts> carMaintenanceEntities;
+
     public RequiredPartsAdapter(List<RequiredParts> carMaintenanceEntities) {
         super(R.layout.item_required_parts, carMaintenanceEntities);
+        this.carMaintenanceEntities = carMaintenanceEntities;
     }
 
     @Override
@@ -77,10 +83,18 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
         } else {
             etPrice.setText("");
         }
-        if (!StringUtil.isNullOrEmpty(item.getRpNumber())) { //所需配件数量
-            helper.setText(R.id.tv_partsAmount, item.getRpNumber());
+        if (type == 2) {//记录
+            if (!StringUtil.isNullOrEmpty(item.getNumber())) { //所需配件数量
+                helper.setText(R.id.tv_partsAmount, item.getNumber());
+            } else {
+                helper.setText(R.id.tv_partsAmount, "");
+            }
         } else {
-            helper.setText(R.id.tv_partsAmount, "");
+            if (!StringUtil.isNullOrEmpty(item.getRpNumber())) { //所需配件数量
+                helper.setText(R.id.tv_partsAmount, item.getRpNumber());
+            } else {
+                helper.setText(R.id.tv_partsAmount, "");
+            }
         }
         if (!StringUtil.isNullOrEmpty(item.getPartsNumber())) {//配件库存
             helper.setText(R.id.tv_amount, "库存" + item.getPartsNumber());
@@ -103,7 +117,13 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
             }
             helper.getView(R.id.tv_amount).setVisibility(View.VISIBLE);
             helper.addOnClickListener(R.id.ib_sub).addOnClickListener(R.id.ib_add).addOnClickListener(R.id.tv_delete);
+            helper.getView(R.id.view).setVisibility(View.GONE);
+            helper.getView(R.id.ll_cancelling).setVisibility(View.GONE);
         } else {
+            helper.getView(R.id.view).setVisibility(View.VISIBLE);
+            helper.getView(R.id.ll_cancelling).setVisibility(View.VISIBLE);
+            ((EditText) helper.getView(R.id.et_number)).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            ((EditText) helper.getView(R.id.et_number)).addTextChangedListener(new MyTextWatcher(item));
             disableRadioGroup(radioGroup);
             helper.getView(R.id.imageView).setVisibility(View.GONE);
             helper.getView(R.id.tv_delete).setVisibility(View.GONE);
@@ -123,6 +143,38 @@ public class RequiredPartsAdapter extends BaseQuickAdapter<RequiredParts, BaseVi
     private void enableRadioGroup(RadioGroup testRadioGroup) {
         for (int i = 0; i < testRadioGroup.getChildCount(); i++) {
             testRadioGroup.getChildAt(i).setEnabled(true);
+        }
+    }
+
+    class MyTextWatcher implements TextWatcher {
+        private RequiredParts requiredParts;
+
+        public MyTextWatcher(RequiredParts requiredParts) {
+            this.requiredParts = requiredParts;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (!StringUtil.isNullOrEmpty(editable.toString())) {
+                if (Integer.parseInt(editable.toString()) > Integer.parseInt(requiredParts.getNumber())) {
+                    UIUtils.showT("输入数量不能大于当前剩余数量");
+                    editable.clear();
+                } else {
+                    requiredParts.setRpNumber(editable.toString());
+                }
+            } else {
+                requiredParts.setRpNumber("0");
+            }
         }
     }
 

@@ -342,12 +342,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
@@ -359,15 +353,6 @@
         android:layout_height="wrap_content">
 
 
-        <Button
-            android:id="@+id/btn_operator2"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp45"
-            android:layout_weight="1"
-            android:background="@null"
-            android:textColor="@color/color_6bcfd7"
-            android:textSize="@dimen/dp15"
-            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_operator1"
@@ -375,6 +360,7 @@
             android:layout_height="@dimen/dp45"
             android:layout_weight="1"
             android:background="@color/color_6bcfd7"
+            android:text="退库"
             android:textColor="@color/color_white"
             android:textSize="@dimen/dp15" />
     </LinearLayout>

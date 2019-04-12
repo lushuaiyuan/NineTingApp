@@ -2,6 +2,7 @@ package com.zzti.lsy.ninetingapp.home.repair;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
 import com.zzti.lsy.ninetingapp.entity.MsgInfo;
@@ -66,8 +68,8 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
     RecyclerView recyclerViewPhoto;
     @BindView(R.id.tv_remark)
     TextView tvRemark;//维修原因
-    @BindView(R.id.btn_operator2)
-    Button btnOperator2;//操作按钮
+    @BindView(R.id.btn_operator1)
+    Button btnOperator1;//操作按钮
     //照片
     private PhotoAdapter photoAdapter;
     private List<String> pics;
@@ -120,6 +122,8 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             RequiredParts requiredParts = ParseUtils.parseJson(jsonArray.getString(i), RequiredParts.class);
+                            requiredParts.setNumber(requiredParts.getRpNumber());
+                            requiredParts.setRpNumber("0");
                             requiredPartsList.add(requiredParts);
                         }
                     } catch (JSONException e) {
@@ -167,10 +171,10 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
         tvRemark.setText(repairinfoEntity.getRemark());
     }
 
-    @OnClick({R.id.btn_operator2})
+    @OnClick({R.id.btn_operator1})
     public void viewClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_operator2:
+            case R.id.btn_operator1:
                 MAlertDialog.show(this, "提示", "是否确认退库？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
                     @Override
                     public void onConfirmClick(String msg) {
@@ -190,7 +194,28 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
      * 退库操作
      */
     private void cancel() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("partsJson", new Gson().toJson(requiredPartsList));
+        OkHttpManager.postFormBody(Urls.REPAIR_UPDATEREPAIRPARTS, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
 
+            @Override
+            public void onSuccess(String s) {
+                cancelDia();
+                MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
+                if (msgInfo.getCode() == 200) {
+                    UIUtils.showT("修改成功");
+                    finish();
+                } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
+                    loginOut();
+                } else {
+                    UIUtils.showT(msgInfo.getMsg());
+                }
+            }
+        });
     }
 
 

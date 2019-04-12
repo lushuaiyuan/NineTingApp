@@ -12,6 +12,15 @@ public class RequiredParts {
     private String partsModel;//配件类型
     private String purchasedPrice;//配件单价
     private Integer type;//模式 已有为0  现采为1
+    private String number;//退库数量
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
     public String getPurchasedPrice() {
         return purchasedPrice;
