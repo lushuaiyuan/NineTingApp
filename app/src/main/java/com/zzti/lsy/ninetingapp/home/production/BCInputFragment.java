@@ -279,6 +279,7 @@ public class BCInputFragment extends BaseFragment {
             case R.id.tv_carNumber:
                 Intent intent = new Intent(mActivity, DeviceListActivity.class);
                 intent.putExtra("FLAG", 1);//获取车牌号
+                intent.putExtra("Tag", "泵车");//选择条件
                 startActivityForResult(intent, 1);
                 break;
             case R.id.tv_wearUser:

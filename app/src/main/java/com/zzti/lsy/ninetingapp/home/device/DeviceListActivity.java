@@ -52,9 +52,11 @@ public class DeviceListActivity extends BaseActivity {
         String projectID = UIUtils.getStr4Intent(this, "projectID");
         String projectName = UIUtils.getStr4Intent(this, "projectName");
         String carNumber = UIUtils.getStr4Intent(this, "carNumber");
+        String tag = UIUtils.getStr4Intent(this, "Tag");
         List<Fragment> fragments = new ArrayList<>();
         Bundle bundle = new Bundle();
         bundle.putSerializable("FLAG", flag);
+        bundle.putSerializable("Tag", tag);
         bundle.putSerializable("projectID", projectID);
         bundle.putSerializable("projectName", projectName);
         bundle.putSerializable("carNumber", carNumber);

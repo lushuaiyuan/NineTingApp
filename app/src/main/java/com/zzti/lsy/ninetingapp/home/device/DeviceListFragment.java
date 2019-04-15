@@ -68,8 +68,8 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
 
     @BindView(R.id.rl_searchCarNumber)
     RelativeLayout rlSearchCarNumber;
-    @BindView(R.id.ll_condition)
-    LinearLayout llCondition;
+    //    @BindView(R.id.ll_condition)
+//    LinearLayout llCondition;
     @BindView(R.id.rl_project)
     RelativeLayout rlProject;
     @BindView(R.id.tv_project)
@@ -82,10 +82,10 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
     RecyclerView mRecycleView;
     @BindView(R.id.et_search)
     EditText etSearch;
-    @BindView(R.id.rl_carStatus)
-    RelativeLayout rlCarStatus;
-    @BindView(R.id.tv_carStatus)
-    TextView tvCarStatus;
+    //    @BindView(R.id.rl_carStatus)
+//    RelativeLayout rlCarStatus;
+//    @BindView(R.id.tv_carStatus)
+//    TextView tvCarStatus;
     @BindView(R.id.rl_carType)
     RelativeLayout rlCarType;
     @BindView(R.id.tv_carType)
@@ -115,11 +115,13 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
     private String carNumber;//对比的基准车牌号
     private int type;//查询条件
     private String wherestr = "";//查询条件
-    private String status;//状态id
+    //    private String status;//状态id
     private String CarTypeID;//类型id
     private String projectID;//项目部id
     private String projectName;//项目部名称
     private int pageIndex = 1;//页码
+
+    private String tag;//罐车/泵车
 
     public static DeviceListFragment newInstance() {
         DeviceListFragment fragment = new DeviceListFragment();
@@ -132,6 +134,33 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
         return R.layout.fragment_device_list;
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        myIsVisibleToUser = isVisibleToUser;
+        if (isVisibleToUser && getActivity() != null && carInfoEntities.size() == 0) {
+            if (UIUtils.isNetworkConnected()) {
+                showDia();
+                myIsVisibleToUser = false;
+                getCarType();
+                getCarList();
+                if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理角色
+                    getProject();
+                }
+            }
+        }
+    }
+
+    private boolean myIsVisibleToUser;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setUserVisibleHint(myIsVisibleToUser);
+    }
+
+
     @Override
     protected boolean openEventBus() {
         return true;
@@ -141,7 +170,7 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowProject = new PopupWindow(contentview, UIUtils.getWidth(mActivity) / 3 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowProject = new PopupWindow(contentview, UIUtils.getWidth(mActivity) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowProject.setFocusable(true);
         popupWindowProject.setOutsideTouchable(true);
         popupWindowProject.setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -168,9 +197,9 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
         if (rlProject.getVisibility() == View.VISIBLE) {
-            popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(mActivity) / 3 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
-        } else {
             popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(mActivity) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        } else {
+            popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(mActivity) - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
         }
         popupWindowCarType.setFocusable(true);
         popupWindowCarType.setOutsideTouchable(true);
@@ -194,36 +223,36 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
         popupWindowCarType.setAnimationStyle(R.style.anim_upPop);
     }
 
-    private void initCarStatusPop() {
-        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
-        contentview.setFocusable(true); // 这个很重要
-        contentview.setFocusableInTouchMode(true);
-        if (rlProject.getVisibility() == View.VISIBLE) {
-            popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(mActivity) / 3 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
-        } else {
-            popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(mActivity) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
-        }
-        popupWindowCarStatus.setFocusable(true);
-        popupWindowCarStatus.setOutsideTouchable(true);
-        popupWindowCarStatus.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        contentview.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    popupWindowCarStatus.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        mListViewCarStatus = contentview.findViewById(R.id.pop_list);
-        carStatusEntities = new ArrayList<>();
-        carStatusAdapter = new CarStatusAdapter(carStatusEntities);
-        mListViewCarStatus.setAdapter(carStatusAdapter);
-        carStatusAdapter.setTag(1);
-        mListViewCarStatus.setOnItemClickListener(this);
-        popupWindowCarStatus.setAnimationStyle(R.style.anim_upPop);
-    }
+//    private void initCarStatusPop() {
+//        View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
+//        contentview.setFocusable(true); // 这个很重要
+//        contentview.setFocusableInTouchMode(true);
+//        if (rlProject.getVisibility() == View.VISIBLE) {
+//            popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(mActivity) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+//        } else {
+//            popupWindowCarStatus = new PopupWindow(contentview, UIUtils.getWidth(mActivity) - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+//        }
+//        popupWindowCarStatus.setFocusable(true);
+//        popupWindowCarStatus.setOutsideTouchable(true);
+//        popupWindowCarStatus.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//        contentview.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_BACK) {
+//                    popupWindowCarStatus.dismiss();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        mListViewCarStatus = contentview.findViewById(R.id.pop_list);
+//        carStatusEntities = new ArrayList<>();
+//        carStatusAdapter = new CarStatusAdapter(carStatusEntities);
+//        mListViewCarStatus.setAdapter(carStatusAdapter);
+//        carStatusAdapter.setTag(1);
+//        mListViewCarStatus.setOnItemClickListener(this);
+//        popupWindowCarStatus.setAnimationStyle(R.style.anim_upPop);
+//    }
 
     @Override
     protected void initData() {
@@ -239,10 +268,12 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
             public void onRefresh(final RefreshLayout refreshlayout) {
                 pageIndex = 1;
                 etSearch.setText("");
-                tvCarStatus.setText("车辆状态");
-                status = "";
-                tvCarType.setText("车辆类型");
-                CarTypeID = "";
+//                tvCarStatus.setText("车辆状态");
+//                status = "";
+                if (StringUtil.isNullOrEmpty(tag)) {
+                    tvCarType.setText("车辆类型");
+                    CarTypeID = "";
+                }
                 tvProject.setText("项目部");
                 projectID = "";
                 carInfoEntities.clear();
@@ -255,14 +286,6 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
                 getCarList();
             }
         });
-        if (UIUtils.isNetworkConnected()) {
-            showDia();
-            getCarList();
-            getCarType();
-            if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理角色
-                getProject();
-            }
-        }
     }
 
 
@@ -277,11 +300,14 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
         if (!StringUtil.isNullOrEmpty(projectID)) {
             wherestr += " and projectID=" + projectID;
         }
-        if (!StringUtil.isNullOrEmpty(status)) {
-            wherestr += " and status=" + status;
-        }
+//        if (!StringUtil.isNullOrEmpty(status)) {
+//            wherestr += " and status=" + status;
+//        }
         if (!StringUtil.isNullOrEmpty(CarTypeID)) {
             wherestr += " and CarTypeID=" + CarTypeID;
+        }
+        if (!StringUtil.isNullOrEmpty(tag)) {
+            wherestr += " and vehicleTypeName like \'" + tag + "%\'";
         }
         HashMap<String, String> params = new HashMap<>();
         if (wherestr.length() > 0) {
@@ -346,16 +372,18 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
             projectID = arguments.getString("projectID");
             projectName = arguments.getString("projectName");
             flag = arguments.getInt("FLAG");
+            tag = arguments.getString("Tag");
             carNumber = arguments.getString("carNumber");
             if (!StringUtil.isNullOrEmpty(carNumber))
                 carSelect.add(carNumber);
+
         }
     }
 
     @Override
     protected void initView() {
-        initCarStatusPop();
-        initCarTypePop();
+//        initCarStatusPop();
+
         if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 0) {//总经理才显示项目部的查询条件
             initProjectPop();
             rlProject.setVisibility(View.VISIBLE);
@@ -369,6 +397,13 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
         } else {
             btnContrast.setVisibility(View.GONE);
         }
+        if (!StringUtil.isNullOrEmpty(tag)) {
+            tvCarType.setText(tag);
+            rlCarType.setEnabled(false);
+            tvCarType.setEnabled(false);
+            rlCarType.setClickable(false);
+        }
+        initCarTypePop();
         smartRefreshLayout.setEnableLoadMore(true);
         smartRefreshLayout.setEnableRefresh(true);
         //使上拉加载具有弹性效果：
@@ -419,7 +454,7 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
         }
     }
 
-    @OnClick({R.id.iv_search, R.id.rl_project, R.id.rl_carStatus, R.id.rl_carType, R.id.btn_contrast})
+    @OnClick({R.id.iv_search, R.id.rl_project, R.id.rl_carType, R.id.btn_contrast})
     public void viewClick(View view) {
         hideSoftInput(etSearch);
         switch (view.getId()) {
@@ -455,10 +490,10 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
                     UIUtils.showT("暂无数据");
                 }
                 break;
-            case R.id.rl_carStatus:
-                type = 1;
-                showCarStatus();
-                break;
+//            case R.id.rl_carStatus:
+//                type = 1;
+//                showCarStatus();
+//                break;
             case R.id.rl_carType:
                 type = 2;
                 if (carTypeEntities.size() > 0) {
@@ -561,29 +596,30 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
         });
     }
 
-    //0存放中、1工作中、2维修中
-    private void showCarStatus() {
-        carStatusEntities.clear();
-        CarStatusEntity carStatusEntity1 = new CarStatusEntity("0", "存放中");
-        CarStatusEntity carStatusEntity2 = new CarStatusEntity("1", "工作中");
-        CarStatusEntity carStatusEntity3 = new CarStatusEntity("2", "维修中");
-        carStatusEntities.add(carStatusEntity1);
-        carStatusEntities.add(carStatusEntity2);
-        carStatusEntities.add(carStatusEntity3);
-        carStatusAdapter.notifyDataSetChanged();
-        popupWindowCarStatus.showAsDropDown(rlCarStatus, 0, 0, Gravity.LEFT);
-    }
+//    //0存放中、1工作中、2维修中
+//    private void showCarStatus() {
+//        carStatusEntities.clear();
+//        CarStatusEntity carStatusEntity1 = new CarStatusEntity("0", "存放中");
+//        CarStatusEntity carStatusEntity2 = new CarStatusEntity("1", "工作中");
+//        CarStatusEntity carStatusEntity3 = new CarStatusEntity("2", "维修中");
+//        carStatusEntities.add(carStatusEntity1);
+//        carStatusEntities.add(carStatusEntity2);
+//        carStatusEntities.add(carStatusEntity3);
+//        carStatusAdapter.notifyDataSetChanged();
+//        popupWindowCarStatus.showAsDropDown(rlCarStatus, 0, 0, Gravity.LEFT);
+//    }
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wherestr = "";
         pageIndex = 1;
-        if (type == 1) {
-            tvCarStatus.setText(carStatusEntities.get(i).getName());
-            status = carStatusEntities.get(i).getId();
-            popupWindowCarStatus.dismiss();
-        } else if (type == 2) {
+//        if (type == 1) {
+//            tvCarStatus.setText(carStatusEntities.get(i).getName());
+//            status = carStatusEntities.get(i).getId();
+//            popupWindowCarStatus.dismiss();
+//        } else
+        if (type == 2) {
             tvCarType.setText(carTypeEntities.get(i).getVehicleTypeName());
             CarTypeID = carTypeEntities.get(i).getVehicleTypeID();
             popupWindowCarType.dismiss();
@@ -605,10 +641,12 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
             wherestr = "";
             pageIndex = 1;
             etSearch.setText("");
-            tvCarStatus.setText("车辆状态");
-            status = "";
-            tvCarType.setText("车辆类型");
-            CarTypeID = "";
+//            tvCarStatus.setText("车辆状态");
+//            status = "";
+            if (StringUtil.isNullOrEmpty(tag)) {
+                tvCarType.setText("车辆类型");
+                CarTypeID = "";
+            }
             tvProject.setText("项目部");
             projectID = "";
             carInfoEntities.clear();

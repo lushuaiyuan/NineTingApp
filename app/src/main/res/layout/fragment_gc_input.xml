@@ -103,51 +103,24 @@
 
 
             <EditText
+                android:id="@+id/et_distance"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="运距"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+
+            <EditText
                 android:id="@+id/et_workTimes"
                 style="@style/MyEditText"
                 android:hint="请输入" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp15"
-                android:text="20公里以内"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp15" />
-
-
-            <EditText
-                android:id="@+id/et_intwenty"
-                style="@style/MyEditText"
-                android:hint="请输入" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp15"
-                android:text="20公里至40公里"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp15" />
-
-
-            <EditText
-                android:id="@+id/et_ontwenty"
-                style="@style/MyEditText"
-                android:hint="请输入" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp15"
-                android:text="40公里以上"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp15" />
-
-
-            <EditText
-                android:id="@+id/et_onforty"
-                style="@style/MyEditText"
-                android:hint="请输入" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -455,13 +428,12 @@
                 android:background="@drawable/select_shape">
 
 
-                <EditText
-                    android:id="@+id/et_quantityCount"
+                <TextView
+                    android:id="@+id/tv_quantityCount"
                     style="@style/MyEditText"
                     android:layout_width="@dimen/dp200"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
-                    android:hint="请输入"
                     android:maxLines="1" />
 
                 <TextView

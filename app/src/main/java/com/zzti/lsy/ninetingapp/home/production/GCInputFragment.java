@@ -78,8 +78,8 @@ public class GCInputFragment extends BaseFragment {
     EditText etWearPrice;//油价
     @BindView(R.id.et_wearCount)
     EditText etWearCount;//加油金额    根据加油升数和油价自动计算（可编辑）
-    @BindView(R.id.et_quantityCount)
-    EditText etQuantityCount;//合计方量
+    @BindView(R.id.tv_quantityCount)
+    TextView tvQuantityCount;//合计方量
     @BindView(R.id.tv_wearUser)
     TextView tvWearUser;//加油负责人
     @BindView(R.id.et_remark)
@@ -111,6 +111,24 @@ public class GCInputFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        etSquareQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!StringUtil.isNullOrEmpty(editable.toString()))
+                    tvQuantityCount.setText(editable.toString());
+            }
+        });
         etQilWear.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -191,7 +209,7 @@ public class GCInputFragment extends BaseFragment {
             etQilWear.setText(statisticalList.getQilWear());
             etWearPrice.setText(statisticalList.getWearPrice());
             etWearCount.setText(statisticalList.getWearCount());
-            etQuantityCount.setText(statisticalList.getQuantityCount());
+            tvQuantityCount.setText(statisticalList.getQuantityCount());
             tvWearUser.setText(statisticalList.getWearUser());
             etRemark.setText(statisticalList.getRemark());
         }
@@ -203,6 +221,7 @@ public class GCInputFragment extends BaseFragment {
             case R.id.tv_carNumber:
                 Intent intent = new Intent(mActivity, DeviceListActivity.class);
                 intent.putExtra("FLAG", 1);//获取车牌号
+                intent.putExtra("Tag", "罐车");//选择条件
                 startActivityForResult(intent, 1);
                 break;
             case R.id.tv_wearUser:
@@ -286,7 +305,7 @@ public class GCInputFragment extends BaseFragment {
                     UIUtils.showT("加油金额不能为空");
                     return;
                 }
-                if (StringUtil.isNullOrEmpty(etQuantityCount.getText().toString())) {
+                if (StringUtil.isNullOrEmpty(tvQuantityCount.getText().toString())) {
                     UIUtils.showT("合计方量不能为空");
                     return;
                 }
@@ -318,7 +337,7 @@ public class GCInputFragment extends BaseFragment {
                 statisticalList.setQilWear(etQilWear.getText().toString());//加油升数
                 statisticalList.setWashing(etWearPrice.getText().toString());//油价
                 statisticalList.setWearCount(etWearCount.getText().toString());//加油金额
-                statisticalList.setQuantityCount(etQuantityCount.getText().toString());//合计方量
+                statisticalList.setQuantityCount(tvQuantityCount.getText().toString());//合计方量
                 statisticalList.setWearUser(tvWearUser.getText().toString());//加油负责人
                 if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {//备注
                     statisticalList.setRemark(etRemark.getText().toString());
@@ -372,7 +391,7 @@ public class GCInputFragment extends BaseFragment {
                     etWorkTimes.getText().clear();
                     etDistance.getText().clear();
                     etPrice.getText().clear();
-                    etSquareQuantity.getText().clear();
+                    tvQuantityCount.setText("");
                     etSixBelow.getText().clear();
                     etEightBelow.getText().clear();
                     etRemainder.setText("0");
@@ -381,7 +400,7 @@ public class GCInputFragment extends BaseFragment {
                     etQilWear.getText().clear();
                     etWearPrice.getText().clear();
                     etWearCount.getText().clear();
-                    etQuantityCount.getText().clear();
+                    tvQuantityCount.setText("");
                     tvWearUser.setText("");
                     etRemark.getText().clear();
 

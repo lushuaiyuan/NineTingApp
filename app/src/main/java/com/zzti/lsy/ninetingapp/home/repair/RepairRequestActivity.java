@@ -185,9 +185,12 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 double money = Integer.parseInt(rpNumber) * Double.parseDouble(purchasedPrice);
                 partMoney += money;
             }
-
-            double money = Double.parseDouble(editable.toString());
-            tvTotalMoney.setText(String.valueOf(partMoney + money));
+            if (!StringUtil.isNullOrEmpty(editable.toString())) {
+                double money = Double.parseDouble(editable.toString());
+                tvTotalMoney.setText(String.valueOf(partMoney + money));
+            } else {
+                tvTotalMoney.setText(String.valueOf(partMoney + 0));
+            }
 
         }
     }
