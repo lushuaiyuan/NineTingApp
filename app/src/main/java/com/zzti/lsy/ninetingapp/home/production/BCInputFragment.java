@@ -18,6 +18,7 @@ import com.zzti.lsy.ninetingapp.entity.StatisticalList;
 import com.zzti.lsy.ninetingapp.event.C;
 import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.home.device.DeviceListActivity;
+import com.zzti.lsy.ninetingapp.home.generalmanager.PactListActivity;
 import com.zzti.lsy.ninetingapp.home.generalmanager.StaffListActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
@@ -53,15 +54,8 @@ public class BCInputFragment extends BaseFragment {
     EditText etWorkSite;//施工地点
     @BindView(R.id.et_workPart)
     EditText etWorkPart;//施工部位
-
-    @BindView(R.id.et_inOrderqua)
-    EditText etInOrderqua;//内单方量
-    @BindView(R.id.et_onOrderqua)
-    EditText etOnOrderqua;//外单方量 泵车 如果填写外单方量 那么外单单价必填
-    @BindView(R.id.et_onOrderprice)
-    EditText etOnOrderprice;//外单单价
-    @BindView(R.id.tv_onOrderpriceCount)
-    TextView tvOnOrderpriceCount;//外单金额 泵车  外单方量*外单单价
+    @BindView(R.id.et_price)
+    EditText etPrice;//泵送单价
 
     @BindView(R.id.et_qilWear)
     EditText etQilWear;//加油升数
@@ -69,8 +63,25 @@ public class BCInputFragment extends BaseFragment {
     EditText etWearPrice;//油价
     @BindView(R.id.et_wearCount)
     EditText etWearCount;//加油金额    根据加油升数和油价自动计算（可编辑）
+
+    @BindView(R.id.et_inOrderqua)
+    EditText etInOrderqua;//泵送方量
+    @BindView(R.id.et_acountQua)
+    EditText etAcountQua;//结算方量
+    @BindView(R.id.et_inOrderpriceCount)
+    EditText etInOrderpriceCount;//泵送金额 结算方量*泵送单价
+    @BindView(R.id.et_onOrderqua)
+    EditText etOnOrderqua;//外单方量 泵车 如果填写外单方量 那么外单单价必填
+    @BindView(R.id.et_onOrderprice)
+    EditText etOnOrderprice;//外单单价
+    @BindView(R.id.tv_onOrderpriceCount)
+    TextView tvOnOrderpriceCount;//外单金额 泵车  外单方量*外单单价
+
     @BindView(R.id.et_quantityCount)
-    EditText etQuantityCount;//合计方量 外单方量+内单方量
+    EditText etQuantityCount;//合计方量 结算方量+外单方量
+    @BindView(R.id.tv_pactName)
+    TextView tvPactName;//外单合同ID 如果外单方量填写 那么必选 否则置灰不选
+
     @BindView(R.id.tv_wearUser)
     TextView tvWearUser;//加油负责人
     @BindView(R.id.et_remark)
@@ -79,6 +90,7 @@ public class BCInputFragment extends BaseFragment {
     @BindView(R.id.btn_submit)
     Button btnOperator;//操作按钮
 
+    private String pactID;//外单合同ID 如果外单方量填写 那么必选 否则置灰不选
 
     private int tag;//0代表的是录入 1代表的是修改
     private String carTypeID;//车辆类型ID
@@ -104,7 +116,30 @@ public class BCInputFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        etInOrderqua.addTextChangedListener(new TextWatcher() {
+        etPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!StringUtil.isNullOrEmpty(etAcountQua.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
+                    double acountQua = Double.parseDouble(etAcountQua.getText().toString());
+                    double price = Double.parseDouble(editable.toString());
+                    etInOrderpriceCount.setText(String.valueOf(price * acountQua));
+                } else {
+                    etInOrderpriceCount.setText("");
+                }
+            }
+        });
+
+        etAcountQua.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -128,7 +163,14 @@ public class BCInputFragment extends BaseFragment {
                         etQuantityCount.setText(etOnOrderqua.toString());
                     }
                 }
-
+                //泵送金额
+                if (!StringUtil.isNullOrEmpty(etPrice.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
+                    double price = Double.parseDouble(etPrice.getText().toString());
+                    double acountQua = Double.parseDouble(editable.toString());
+                    etInOrderpriceCount.setText(String.valueOf(price * acountQua));
+                } else {
+                    etInOrderpriceCount.setText("");
+                }
             }
         });
         etOnOrderqua.addTextChangedListener(new TextWatcher() {
@@ -144,15 +186,21 @@ public class BCInputFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!StringUtil.isNullOrEmpty(etInOrderqua.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
-                    double inorderqua = Double.parseDouble(etInOrderqua.getText().toString());
+                if (StringUtil.isNullOrEmpty(editable.toString())) {
+                    tvPactName.setEnabled(false);
+                } else {
+                    tvPactName.setEnabled(true);
+                    tvPactName.setHint("请选择合同");
+                }
+                if (!StringUtil.isNullOrEmpty(etAcountQua.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
+                    double inorderqua = Double.parseDouble(etAcountQua.getText().toString());
                     double onOrderqua = Double.parseDouble(editable.toString());
                     etQuantityCount.setText(String.valueOf(onOrderqua + inorderqua));
                 } else {
-                    if (StringUtil.isNullOrEmpty(etInOrderqua.getText().toString())) {
+                    if (StringUtil.isNullOrEmpty(etAcountQua.getText().toString())) {
                         etQuantityCount.setText(editable.toString());
                     } else {
-                        etQuantityCount.setText(etInOrderqua.toString());
+                        etQuantityCount.setText(etAcountQua.toString());
                     }
                 }
                 if (!StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
@@ -248,32 +296,38 @@ public class BCInputFragment extends BaseFragment {
             slID = statisticalList.getSlID();
             projectID = statisticalList.getProjectID();
             tvTime.setText(statisticalList.getSlDateTime());
-            tvStaffName.setText(statisticalList.getStaffName());
             tvProjectName.setText(statisticalList.getProjectName());
+            tvStaffName.setText(statisticalList.getStaffName());
             tvCarNumber.setText(statisticalList.getPlateNumber());
             tvCarNumber.setEnabled(false);
             tvCarNumber.setBackgroundColor(getResources().getColor(R.color.color_white));
             tvCarType.setText(statisticalList.getVehicleTypeName());
             etWorkSite.setText(statisticalList.getWorkSite());
             etWorkPart.setText(statisticalList.getWorkPart());
-            //TODO
+            etPrice.setText(statisticalList.getPrice());
+            etQilWear.setText(statisticalList.getQilWear());
+            etWearPrice.setText(statisticalList.getWearPrice());
+            etWearCount.setText(statisticalList.getWearCount());
             etInOrderqua.setText(statisticalList.getInOrderqua());
+            etAcountQua.setText(statisticalList.getAcountQua());
+            etInOrderpriceCount.setText(statisticalList.getInOrderpriceCount());
+            //TODO
             if (!StringUtil.isNullOrEmpty(statisticalList.getOnOrderqua())) {
                 etOnOrderqua.setText(statisticalList.getOnOrderqua());
                 etOnOrderprice.setText(statisticalList.getOnOrderprice());
                 tvOnOrderpriceCount.setText(statisticalList.getOnOrderpriceCount());
             }
-
-            etQilWear.setText(statisticalList.getQilWear());
-            etWearPrice.setText(statisticalList.getWearPrice());
-            etWearCount.setText(statisticalList.getWearCount());
             etQuantityCount.setText(statisticalList.getQuantityCount());
+            tvPactName.setText(statisticalList.getPactName());
+            pactID = statisticalList.getPactID();
             tvWearUser.setText(statisticalList.getWearUser());
-            etRemark.setText(statisticalList.getRemark());
+            if (!StringUtil.isNullOrEmpty(statisticalList.getRemark())) {
+                etRemark.setText(statisticalList.getRemark());
+            }
         }
     }
 
-    @OnClick({R.id.tv_carNumber, R.id.tv_wearUser, R.id.btn_submit})
+    @OnClick({R.id.tv_carNumber, R.id.tv_pactName, R.id.tv_wearUser, R.id.btn_submit})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_carNumber:
@@ -281,6 +335,15 @@ public class BCInputFragment extends BaseFragment {
                 intent.putExtra("FLAG", 1);//获取车牌号
                 intent.putExtra("Tag", "泵车");//选择条件
                 startActivityForResult(intent, 1);
+                break;
+            case R.id.tv_pactName://合同名称
+                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString())) {
+                    Intent intent2 = new Intent(mActivity, PactListActivity.class);
+                    intent2.putExtra("flag", 1);
+                    startActivityForResult(intent2, 1);
+                } else {
+                    UIUtils.showT("请先输入外单方量");
+                }
                 break;
             case R.id.tv_wearUser:
                 Intent intent1 = new Intent(mActivity, StaffListActivity.class);
@@ -315,17 +378,8 @@ public class BCInputFragment extends BaseFragment {
                     UIUtils.showT("施工部位不能为空");
                     return;
                 }
-                if (StringUtil.isNullOrEmpty(etInOrderqua.getText().toString())) {
-                    UIUtils.showT("内单方量不能为空");
-                    return;
-                }
-                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString())) {
-                    UIUtils.showT("外单方量不为空的时候，外单单价也不能为空");//外单方量 泵车 如果填写外单方量 那么外单单价必填
-                    return;
-                }
-
-                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString()) && StringUtil.isNullOrEmpty(tvOnOrderpriceCount.getText().toString())) {
-                    UIUtils.showT("外单金额不能为空");//外单金额
+                if (StringUtil.isNullOrEmpty(etPrice.getText().toString())) {
+                    UIUtils.showT("泵送单价不能为空");
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etQilWear.getText().toString())) {
@@ -338,6 +392,31 @@ public class BCInputFragment extends BaseFragment {
                 }
                 if (StringUtil.isNullOrEmpty(etWearCount.getText().toString())) {
                     UIUtils.showT("加油金额不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etInOrderqua.getText().toString())) {
+                    UIUtils.showT("泵送方量不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etAcountQua.getText().toString())) {
+                    UIUtils.showT("结算方量不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etInOrderpriceCount.getText().toString())) {
+                    UIUtils.showT("泵送金额不能为空");
+                    return;
+                }
+
+                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString())) {
+                    UIUtils.showT("外单方量不为空的时候，外单单价也不能为空");//外单方量 泵车 如果填写外单方量 那么外单单价必填
+                    return;
+                }
+                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && StringUtil.isNullOrEmpty(tvPactName.getText().toString())) {
+                    UIUtils.showT("外单方量不为空的时候，外单合同名称也不能为空");//外单方量 泵车 如果填写外单方量 那么外单合同名称必填
+                    return;
+                }
+                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString()) && StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString()) && StringUtil.isNullOrEmpty(tvOnOrderpriceCount.getText().toString())) {
+                    UIUtils.showT("外单金额不能为空");//外单金额
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etQuantityCount.getText().toString())) {
@@ -360,16 +439,22 @@ public class BCInputFragment extends BaseFragment {
                 }
                 statisticalList.setWorkSite(etWorkSite.getText().toString());//施工地点
                 statisticalList.setWorkPart(etWorkPart.getText().toString());//施工部位
-                statisticalList.setInOrderqua(etInOrderqua.getText().toString());//内单方量
-                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString())) {
-                    statisticalList.setOnOrderqua(etOnOrderqua.getText().toString());//外单方量
-                    statisticalList.setOnOrderqua(etOnOrderprice.getText().toString());//外单单价
-                    statisticalList.setOnOrderpriceCount(tvOnOrderpriceCount.getText().toString());//外单金额
-                }
+                statisticalList.setPrice(etPrice.getText().toString());//泵送单价
                 statisticalList.setQilWear(etQilWear.getText().toString());//加油升数
                 statisticalList.setWashing(etWearPrice.getText().toString());//油价
                 statisticalList.setWearCount(etWearCount.getText().toString());//加油金额
+                statisticalList.setInOrderqua(etInOrderqua.getText().toString());//泵送方量
+                statisticalList.setAcountQua(etAcountQua.getText().toString());//结算方量
+                statisticalList.setInOrderpriceCount(etInOrderpriceCount.getText().toString());//泵送金额
+                if (!StringUtil.isNullOrEmpty(etOnOrderqua.getText().toString())) {
+                    statisticalList.setOnOrderqua(etOnOrderqua.getText().toString());//外单方量
+                    statisticalList.setOnOrderprice(etOnOrderprice.getText().toString());//外单单价
+                    statisticalList.setOnOrderpriceCount(tvOnOrderpriceCount.getText().toString());//外单金额
+                }
                 statisticalList.setQuantityCount(etQuantityCount.getText().toString());//合计方量
+                statisticalList.setPactName(tvPactName.getText().toString());//合同名称
+                statisticalList.setPactID(pactID);//合同ID
+
                 statisticalList.setWearUser(tvWearUser.getText().toString());//加油负责人
                 if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {//备注
                     statisticalList.setRemark(etRemark.getText().toString());
@@ -420,15 +505,20 @@ public class BCInputFragment extends BaseFragment {
                     tvCarType.setText("");
                     etWorkSite.getText().clear();
                     etWorkPart.getText().clear();
+                    etPrice.getText().clear();
+                    etQilWear.getText().clear();
+                    etWearPrice.getText().clear();
+                    etWearCount.getText().clear();
                     etInOrderqua.getText().clear();
+                    etAcountQua.getText().clear();
+                    etInOrderpriceCount.getText().clear();
                     etOnOrderqua.getText().clear();
                     etOnOrderprice.getText().clear();
                     tvOnOrderpriceCount.setText("");
 
-                    etQilWear.getText().clear();
-                    etWearPrice.getText().clear();
-                    etWearCount.getText().clear();
+
                     etQuantityCount.getText().clear();
+                    tvPactName.setText("");
                     tvWearUser.setText("");
                     etRemark.getText().clear();
 
@@ -461,6 +551,9 @@ public class BCInputFragment extends BaseFragment {
             }
         } else if (requestCode == 2 && resultCode == 2) {
             tvWearUser.setText(data.getStringExtra("wearName"));
+        } else if (requestCode == 1 && resultCode == 3) {
+            pactID = data.getStringExtra("pactID");
+            tvPactName.setText(data.getStringExtra("pactName"));
         }
     }
 

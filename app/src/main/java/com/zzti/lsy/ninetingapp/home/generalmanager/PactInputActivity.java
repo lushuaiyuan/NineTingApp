@@ -16,6 +16,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.base.BaseActivity;
@@ -30,8 +33,10 @@ import com.zzti.lsy.ninetingapp.home.SuccessActivity;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.ProjectAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.RepairTypeAdapter;
+import com.zzti.lsy.ninetingapp.home.parts.PartsInputActivity;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
 import com.zzti.lsy.ninetingapp.network.Urls;
+import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
 import com.zzti.lsy.ninetingapp.utils.SpUtils;
@@ -43,6 +48,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -76,8 +83,8 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
     EditText etPactInMoney;
     @BindView(R.id.et_pactOutMoney)
     EditText etPactOutMoney;
-    @BindView(R.id.et_pactTime)
-    EditText etPactTime;
+    @BindView(R.id.tv_pactTime)
+    TextView tvPactTime;
     @BindView(R.id.btn_inputPact)
     Button btnInputPact;
 
@@ -134,7 +141,6 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
             etPactMoney.setEnabled(false);
             etPactID.setEnabled(false);
             llAddMoney.setVisibility(View.VISIBLE);
-            etPactTime.setEnabled(false);
             PactInfo pactInfo = (PactInfo) getIntent().getSerializableExtra("PACTINFO");
             setData(pactInfo);
         }
@@ -151,7 +157,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         tvPactSchedule.setText(pactInfo.getPactSchedule());
         tvPactType.setText(pactInfo.getPactType());
         etPactMoney.setText(pactInfo.getPactMoney());
-        etPactTime.setText(pactInfo.getPactTime());
+        tvPactTime.setText(pactInfo.getPactTime().split("T")[0]);
         etPactID.setText(pactInfo.getPactID());
         etPactInMoney.setText(pactInfo.getPactInMoney());
         etPactContent.setText(pactInfo.getPactContent());
@@ -211,15 +217,12 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
         lvPactSchedule = contentview.findViewById(R.id.pop_list);
         conditionsPactSchedules = new ArrayList<>();
         ConditionEntity conditionEntity0 = new ConditionEntity();
-        conditionEntity0.setName("未执行");
+        conditionEntity0.setName("已结清");
         ConditionEntity conditionEntity1 = new ConditionEntity();
-        conditionEntity1.setName("执行中");
-        ConditionEntity conditionEntity2 = new ConditionEntity();
-        conditionEntity2.setName("已结束");
+        conditionEntity1.setName("未结清");
 
         conditionsPactSchedules.add(conditionEntity0);
         conditionsPactSchedules.add(conditionEntity1);
-        conditionsPactSchedules.add(conditionEntity2);
 
         conditionAdapterPactSchedule = new ConditionAdapter(conditionsPactSchedules);
         conditionAdapterPactSchedule.setTag(1);//背景色为黑色
@@ -303,7 +306,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
 
     private int condition = 1;
 
-    @OnClick({R.id.tv_pactType, R.id.tv_project, R.id.tv_pactSchedule, R.id.btn_inputPact})
+    @OnClick({R.id.tv_pactType, R.id.tv_project, R.id.tv_pactSchedule, R.id.tv_pactTime, R.id.btn_inputPact})
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_pactType://合同类型
@@ -320,6 +323,9 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                 condition = 2;
                 setBackgroundAlpha(0.5f);
                 popupWindowPactSchedule.showAtLocation(etPactContent, Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.tv_pactTime://合同到期时间
+                showCustomTime();
                 break;
             case R.id.btn_inputPact://录入合同
                 if (tag == 0) {//录入合同
@@ -360,8 +366,8 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                         UIUtils.showT("合同未收金额不能为空");
                         break;
                     }
-                    if (StringUtil.isNullOrEmpty(etPactTime.getText().toString())) {
-                        UIUtils.showT("合同周期不能为空");
+                    if (StringUtil.isNullOrEmpty(tvPactTime.getText().toString())) {
+                        UIUtils.showT("合同到期时间不能为空");
                         break;
                     }
                     PactInfo pactInfo = new PactInfo();
@@ -370,7 +376,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                     pactInfo.setPactMoney(etPactMoney.getText().toString());
                     pactInfo.setPactInMoney(etPactInMoney.getText().toString());
                     pactInfo.setPactOutMoney(etPactOutMoney.getText().toString());
-                    pactInfo.setPactTime(etPactTime.getText().toString());
+                    pactInfo.setPactTime(tvPactTime.getText().toString());
                     pactInfo.setPactRealMoney(etPactRealMoney.getText().toString());
                     pactInfo.setPactSchedule(tvPactSchedule.getText().toString());
                     pactInfo.setPactType(tvPactType.getText().toString());
@@ -398,6 +404,26 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                 }
                 break;
         }
+    }
+
+    /**
+     * 显示时间选择器
+     */
+    private void showCustomTime() {
+        Calendar instance = Calendar.getInstance();
+        instance.set(DateUtil.getCurYear(), DateUtil.getCurMonth(), DateUtil.getCurDay());
+        //时间选择器
+        TimePickerView pvTime = new TimePickerBuilder(PactInputActivity.this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                tvPactTime.setText(DateUtil.getDate(date));
+
+            }
+        }).setDate(instance).setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel(" 年", " 月", " 日", "", "", "")
+                .isCenterLabel(false).build();
+        pvTime.show();
+
     }
 
 

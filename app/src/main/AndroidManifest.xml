@@ -118,9 +118,6 @@
             android:name=".home.production.ProductInputActivity"
             android:windowSoftInputMode="adjustResize" />
         <!--生产录入-->
-        <activity
-            android:name=".home.production.ProductInputActivity1"
-            android:windowSoftInputMode="adjustResize" />
         <!--生产表格-->
         <activity android:name=".home.production.FormListActivity" />
         <!--单车生产明细-->

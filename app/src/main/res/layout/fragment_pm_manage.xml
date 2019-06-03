@@ -122,6 +122,7 @@
                     android:background="@color/color_white"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/dp16"
+                    android:paddingBottom="@dimen/dp16"
                     android:paddingRight="@dimen/dp16"
                     android:paddingTop="@dimen/dp10">
 

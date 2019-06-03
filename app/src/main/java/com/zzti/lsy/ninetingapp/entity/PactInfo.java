@@ -7,11 +7,12 @@ import java.io.Serializable;
  * 合同实体类
  */
 public class PactInfo implements Serializable {
-    private String pactID;//合同编号
+    private String pactID;//合同ID 系统生成
     private String pactType;//合同类型
+    private String pactName;//合同名称/编号
     private String pactContent;//合同简介
-    private String pactSchedule;//合同进度
-    private String pactTime;//合同周期
+    private String pactSchedule;//合同状态（已结清、未结清）
+    private String pactTime;//合同到期时间
     private String pactMoney;//合同总金额
     private String pactRealMoney;//应收金额
     private String pactOutMoney;//合同未收款
@@ -123,5 +124,13 @@ public class PactInfo implements Serializable {
 
     public void setPactInMoney(String pactInMoney) {
         this.pactInMoney = pactInMoney;
+    }
+
+    public String getPactName() {
+        return pactName;
+    }
+
+    public void setPactName(String pactName) {
+        this.pactName = pactName;
     }
 }

@@ -95,8 +95,132 @@
 
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="泵送单价"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+
+            <EditText
+                android:id="@+id/et_price"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+
+            <TextView
+                android:id="@+id/tv_oilMass_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="加油升数"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+            <RelativeLayout
+                android:id="@+id/rl_oilMass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_qilWear"
+                    style="@style/MyEditText"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:hint="请输入"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="L"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+
+            </RelativeLayout>
+
+            <TextView
                 style="@style/MyEditTextTitle"
-                android:text="内单方量" />
+                android:text="油价" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_wearPrice"
+                    style="@style/MyEditText"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:hint="请输入"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="元"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="加油金额" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_wearCount"
+                    style="@style/MyEditText"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:hint="请输入"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="元"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="泵送方量" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -127,6 +251,76 @@
                     android:textSize="@dimen/dp13" />
 
             </RelativeLayout>
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="结算方量" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_acountQua"
+                    style="@style/MyEditText"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:hint="请输入"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="m³"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="泵送金额" />
+            <!--泵送金额 结算方量*泵送单价-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_inOrderpriceCount"
+                    style="@style/MyEditText"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:hint="请输入"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="m³"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -243,115 +437,13 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_oilMass_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp15"
-                android:text="加油升数"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/dp15" />
-
-            <RelativeLayout
-                android:id="@+id/rl_oilMass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/select_shape">
-
-
-                <EditText
-                    android:id="@+id/et_qilWear"
-                    style="@style/MyEditText"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="0dp"
-                    android:hint="请输入"
-                    android:maxLines="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:text="L"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp13" />
-
-
-            </RelativeLayout>
+                style="@style/MyEditTextTitle"
+                android:text="外单合同" />
 
             <TextView
-                style="@style/MyEditTextTitle"
-                android:text="油价" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/select_shape">
-
-
-                <EditText
-                    android:id="@+id/et_wearPrice"
-                    style="@style/MyEditText"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="0dp"
-                    android:hint="请输入"
-                    android:maxLines="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:text="元"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp13" />
-
-            </RelativeLayout>
-
-
-            <TextView
-                style="@style/MyEditTextTitle"
-                android:text="加油金额" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/select_shape">
-
-
-                <EditText
-                    android:id="@+id/et_wearCount"
-                    style="@style/MyEditText"
-                    android:layout_width="@dimen/dp200"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="0dp"
-                    android:hint="请输入"
-                    android:maxLines="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:text="元"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dp13" />
-
-            </RelativeLayout>
+                android:id="@+id/tv_pact"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
 
             <TextView
                 style="@style/MyEditTextTitle"
@@ -395,6 +487,15 @@
 
             <TextView
                 android:id="@+id/tv_wearUser"
+                style="@style/MyEditText"
+                android:hint="点击选择" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="外单合同" />
+
+            <TextView
+                android:id="@+id/tv_pactName"
                 style="@style/MyEditText"
                 android:hint="点击选择" />
 

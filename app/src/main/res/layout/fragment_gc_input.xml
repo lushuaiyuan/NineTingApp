@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
+    android:background="@color/color_f5f5f5"
     android:orientation="vertical">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/color_white"
         android:fillViewport="true"
         android:scrollbars="none">
 
@@ -69,13 +71,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp15"
-                android:text="施工地点"
+                android:text="站内编号"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+
+            <EditText
+                android:id="@+id/et_siteNumber"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="工程名称"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/dp15" />
 
 
             <EditText
                 android:id="@+id/et_workSite"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="生产厂家"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+
+            <EditText
+                android:id="@+id/et_produce"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:text="委托单位"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp15" />
+
+
+            <EditText
+                android:id="@+id/et_requester"
                 style="@style/MyEditText"
                 android:hint="请输入" />
 
@@ -175,7 +219,7 @@
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="6方以下" />
+                android:text="8方以下车次" />
 
 
             <EditText
@@ -192,6 +236,41 @@
                 android:id="@+id/et_eightBelow"
                 style="@style/MyEditText"
                 android:hint="请输入" />
+
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="补方" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/select_shape">
+
+
+                <EditText
+                    android:id="@+id/et_additionQuantity"
+                    style="@style/MyEditText"
+                    android:layout_width="@dimen/dp200"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:hint="请输入"
+                    android:maxLines="1"
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="m³"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp13" />
+
+            </RelativeLayout>
 
             <TextView
                 style="@style/MyEditTextTitle"
@@ -213,7 +292,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
                     android:hint="请输入"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -251,7 +331,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
                     android:hint="请输入"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -289,7 +370,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
                     android:hint="请输入"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -428,12 +510,13 @@
                 android:background="@drawable/select_shape">
 
 
-                <TextView
-                    android:id="@+id/tv_quantityCount"
+                <EditText
+                    android:id="@+id/et_quantityCount"
                     style="@style/MyEditText"
                     android:layout_width="@dimen/dp200"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
+                    android:hint="请输入"
                     android:maxLines="1" />
 
                 <TextView
@@ -451,7 +534,7 @@
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="加油负责人选择" />
+                android:text="司机" />
 
             <TextView
                 android:id="@+id/tv_wearUser"

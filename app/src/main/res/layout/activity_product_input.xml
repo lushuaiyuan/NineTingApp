@@ -86,7 +86,7 @@
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="6方以下" />
+                android:text="8方以下车次" />
 
 
             <EditText

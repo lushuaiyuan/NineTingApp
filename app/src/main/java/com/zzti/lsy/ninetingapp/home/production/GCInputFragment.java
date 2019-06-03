@@ -49,8 +49,14 @@ public class GCInputFragment extends BaseFragment {
     TextView tvCarNumber;//车牌号
     @BindView(R.id.tv_carType)
     TextView tvCarType;//车辆类型
+    @BindView(R.id.et_siteNumber)
+    EditText etSiteNumber;//站内编号
     @BindView(R.id.et_workSite)
-    EditText etWorkSite;//施工地点
+    EditText etWorkSite;//工程名称
+    @BindView(R.id.et_produce)
+    EditText etProduce;//生产厂家
+    @BindView(R.id.et_requester)
+    EditText etRequester;//委托单位
     @BindView(R.id.et_workPart)
     EditText etWorkPart;//施工部位
     @BindView(R.id.et_workTimes)
@@ -62,9 +68,11 @@ public class GCInputFragment extends BaseFragment {
     @BindView(R.id.et_squareQuantity)
     EditText etSquareQuantity;//方量
     @BindView(R.id.et_sixBelow)
-    EditText etSixBelow;//6方以下
+    EditText etSixBelow;//8方以下车次
     @BindView(R.id.et_eightBelow)
     EditText etEightBelow;//8方以下
+    @BindView(R.id.et_additionQuantity)
+    EditText etAdditionQuantity;//补方
     @BindView(R.id.et_remainder)
     EditText etRemainder;//剩料
     @BindView(R.id.et_washing)
@@ -78,10 +86,10 @@ public class GCInputFragment extends BaseFragment {
     EditText etWearPrice;//油价
     @BindView(R.id.et_wearCount)
     EditText etWearCount;//加油金额    根据加油升数和油价自动计算（可编辑）
-    @BindView(R.id.tv_quantityCount)
-    TextView tvQuantityCount;//合计方量
+    @BindView(R.id.et_quantityCount)
+    EditText etQuantityCount;//合计方量
     @BindView(R.id.tv_wearUser)
-    TextView tvWearUser;//加油负责人
+    TextView tvWearUser;//司机
     @BindView(R.id.et_remark)
     EditText etRemark;//备注
     @BindView(R.id.btn_submit)
@@ -111,24 +119,6 @@ public class GCInputFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        etSquareQuantity.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!StringUtil.isNullOrEmpty(editable.toString()))
-                    tvQuantityCount.setText(editable.toString());
-            }
-        });
         etQilWear.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -195,21 +185,25 @@ public class GCInputFragment extends BaseFragment {
             tvCarNumber.setEnabled(false);
             tvCarNumber.setBackgroundColor(getResources().getColor(R.color.color_white));
             tvCarType.setText(statisticalList.getVehicleTypeName());
+            etSiteNumber.setText(statisticalList.getSiteNumber());
             etWorkSite.setText(statisticalList.getWorkSite());
+            etProduce.setText(statisticalList.getProduce());
+            etRequester.setText(statisticalList.getRequester());
             etWorkPart.setText(statisticalList.getWorkPart());
             etWorkTimes.setText(statisticalList.getWorkTimes());
             etDistance.setText(statisticalList.getDistance());
             etPrice.setText(statisticalList.getPrice());
             etSquareQuantity.setText(statisticalList.getSquareQuantity());
-            etSixBelow.setText(statisticalList.getSixBelow());
+            etSixBelow.setText(statisticalList.getEightBelowtime());
             etEightBelow.setText(statisticalList.getEightBelow());
+            etSquareQuantity.setText(statisticalList.getSquareQuantity());
             etRemainder.setText(statisticalList.getRemainder());
             etWashing.setText(statisticalList.getWashing());
             etWater.setText(statisticalList.getWater());
             etQilWear.setText(statisticalList.getQilWear());
             etWearPrice.setText(statisticalList.getWearPrice());
             etWearCount.setText(statisticalList.getWearCount());
-            tvQuantityCount.setText(statisticalList.getQuantityCount());
+            etQuantityCount.setText(statisticalList.getQuantityCount());
             tvWearUser.setText(statisticalList.getWearUser());
             etRemark.setText(statisticalList.getRemark());
         }
@@ -249,8 +243,20 @@ public class GCInputFragment extends BaseFragment {
                     UIUtils.showT("车辆类型不能为空");
                     return;
                 }
+                if (StringUtil.isNullOrEmpty(etSiteNumber.getText().toString())) {
+                    UIUtils.showT("站内编号不能为空");
+                    return;
+                }
                 if (StringUtil.isNullOrEmpty(etWorkSite.getText().toString())) {
-                    UIUtils.showT("施工地不能为空");
+                    UIUtils.showT("工程名称不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etProduce.getText().toString())) {
+                    UIUtils.showT("生产厂家不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etRequester.getText().toString())) {
+                    UIUtils.showT("委托单位不能为空");
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etWorkPart.getText().toString())) {
@@ -274,11 +280,15 @@ public class GCInputFragment extends BaseFragment {
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etSixBelow.getText().toString())) {
-                    UIUtils.showT("6方以下不能为空");
+                    UIUtils.showT("8方以下车次不能为空");
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etEightBelow.getText().toString())) {
                     UIUtils.showT("8方以下不能为空");
+                    return;
+                }
+                if (StringUtil.isNullOrEmpty(etAdditionQuantity.getText().toString())) {
+                    UIUtils.showT("补方不能为空");
                     return;
                 }
                 if (StringUtil.isNullOrEmpty(etRemainder.getText().toString())) {
@@ -305,7 +315,7 @@ public class GCInputFragment extends BaseFragment {
                     UIUtils.showT("加油金额不能为空");
                     return;
                 }
-                if (StringUtil.isNullOrEmpty(tvQuantityCount.getText().toString())) {
+                if (StringUtil.isNullOrEmpty(etQuantityCount.getText().toString())) {
                     UIUtils.showT("合计方量不能为空");
                     return;
                 }
@@ -323,21 +333,25 @@ public class GCInputFragment extends BaseFragment {
                 if (!StringUtil.isNullOrEmpty(carTypeID)) {
                     statisticalList.setCarTypeID(carTypeID);//车辆类型
                 }
-                statisticalList.setWorkSite(etWorkSite.getText().toString());//施工地点
+                statisticalList.setSiteNumber(etSiteNumber.getText().toString());//站内编号
+                statisticalList.setWorkSite(etWorkSite.getText().toString());//工程名称
+                statisticalList.setProduce(etProduce.getText().toString());//生产厂家
+                statisticalList.setRequester(etRequester.getText().toString());//委托单位
                 statisticalList.setWorkPart(etWorkPart.getText().toString());//施工部位
                 statisticalList.setWorkTimes(etWorkTimes.getText().toString());//车次
                 statisticalList.setDistance(etDistance.getText().toString());//运距
                 statisticalList.setPrice(etPrice.getText().toString());//单价
                 statisticalList.setSquareQuantity(etSquareQuantity.getText().toString());//方量
-                statisticalList.setSixBelow(etSixBelow.getText().toString());//6方以下
+                statisticalList.setEightBelowtime(etSixBelow.getText().toString());//8方以下车次
                 statisticalList.setEightBelow(etEightBelow.getText().toString());//8方以下
+                statisticalList.setAdditionQuantity(etAdditionQuantity.getText().toString());//补方
                 statisticalList.setRemainder(etRemainder.getText().toString());//剩料
                 statisticalList.setWashing(etWashing.getText().toString());//洗料
                 statisticalList.setWater(etWater.getText().toString());//水
                 statisticalList.setQilWear(etQilWear.getText().toString());//加油升数
                 statisticalList.setWashing(etWearPrice.getText().toString());//油价
                 statisticalList.setWearCount(etWearCount.getText().toString());//加油金额
-                statisticalList.setQuantityCount(tvQuantityCount.getText().toString());//合计方量
+                statisticalList.setQuantityCount(etQuantityCount.getText().toString());//合计方量
                 statisticalList.setWearUser(tvWearUser.getText().toString());//加油负责人
                 if (!StringUtil.isNullOrEmpty(etRemark.getText().toString())) {//备注
                     statisticalList.setRemark(etRemark.getText().toString());
@@ -370,7 +384,6 @@ public class GCInputFragment extends BaseFragment {
             url = Urls.RECORD_ADDRECORD;
         } else if (tag == 1) {
             url = Urls.RECORD_UPDATERECORD;
-            params.put("updateReason", "11");
         }
 
         OkHttpManager.postFormBody(url, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
@@ -386,21 +399,24 @@ public class GCInputFragment extends BaseFragment {
                 if (msgInfo.getCode() == 200) {
                     tvCarNumber.setText("");
                     tvCarType.setText("");
+                    etSiteNumber.getText().clear();
                     etWorkSite.getText().clear();
+                    etProduce.getText().clear();
+                    etRequester.getText().clear();
                     etWorkPart.getText().clear();
                     etWorkTimes.getText().clear();
                     etDistance.getText().clear();
                     etPrice.getText().clear();
-                    tvQuantityCount.setText("");
+                    etQuantityCount.getText().clear();
                     etSixBelow.getText().clear();
                     etEightBelow.getText().clear();
+                    etAdditionQuantity.setText("0");
                     etRemainder.setText("0");
                     etWashing.setText("0");
                     etWater.setText("0");
                     etQilWear.getText().clear();
                     etWearPrice.getText().clear();
                     etWearCount.getText().clear();
-                    tvQuantityCount.setText("");
                     tvWearUser.setText("");
                     etRemark.getText().clear();
 

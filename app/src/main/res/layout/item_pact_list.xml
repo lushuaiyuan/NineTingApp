@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="合同编号"
+            android:text="合同名称/编号"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/dp15" />
 
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="合同进度"
+            android:text="合同状态"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/dp15" />
 

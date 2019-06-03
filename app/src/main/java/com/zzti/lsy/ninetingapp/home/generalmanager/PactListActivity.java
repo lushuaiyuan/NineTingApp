@@ -205,15 +205,12 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
         mListViewPactSchedule = contentview.findViewById(R.id.pop_list);
         pactSchedules = new ArrayList<>();
         ConditionEntity conditionEntity0 = new ConditionEntity();
-        conditionEntity0.setName("未执行");
+        conditionEntity0.setName("已结清");
         ConditionEntity conditionEntity1 = new ConditionEntity();
-        conditionEntity1.setName("执行中");
-        ConditionEntity conditionEntity2 = new ConditionEntity();
-        conditionEntity2.setName("已结束");
+        conditionEntity1.setName("未结清");
 
         pactSchedules.add(conditionEntity0);
         pactSchedules.add(conditionEntity1);
-        pactSchedules.add(conditionEntity2);
         pactSchedulesAdapter = new ConditionAdapter(pactSchedules);
         mListViewPactSchedule.setAdapter(pactSchedulesAdapter);
         pactSchedulesAdapter.setTag(0);
@@ -244,8 +241,8 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
                 pactType = "";
                 etSearch.setText("");
                 tvProject.setText("项目部");
-                tvPactSchedule.setText("合同类型");
-                tvPactType.setText("合同进度");
+                tvPactType.setText("合同类型");
+                tvPactSchedule.setText("合同状态");
                 pactInfos.clear();
                 getPactList();
             }
@@ -358,7 +355,7 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
         mSmartRefreshLayout.setEnableRefresh(true);
         //使上拉加载具有弹性效果：
         mSmartRefreshLayout.setEnableAutoLoadMore(false);
-
+        flag = UIUtils.getInt4Intent(this, "flag");
         if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理才显示项目部的查询条件
             rlProject.setVisibility(View.VISIBLE);
             view1.setVisibility(View.VISIBLE);
@@ -372,14 +369,23 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
     }
 
     private int selcetPosition;
+    private int flag;
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        selcetPosition = position;
-        Intent intent = new Intent(this, PactInputActivity.class);
-        intent.putExtra("TAG", 1);//修改
-        intent.putExtra("PACTINFO", pactInfos.get(position));
-        startActivityForResult(intent, 1);
+        if (flag == 0) {
+            selcetPosition = position;
+            Intent intent = new Intent(this, PactInputActivity.class);
+            intent.putExtra("TAG", 1);//修改
+            intent.putExtra("PACTINFO", pactInfos.get(position));
+            startActivityForResult(intent, 1);
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("pactName", pactInfos.get(position).getPactName());
+            intent.putExtra("pactID", pactInfos.get(position).getPactID());
+            setResult(3, intent);
+            finish();
+        }
     }
 
     @Override
