@@ -349,7 +349,7 @@ public class GCInputFragment extends BaseFragment {
                 statisticalList.setWashing(etWashing.getText().toString());//洗料
                 statisticalList.setWater(etWater.getText().toString());//水
                 statisticalList.setQilWear(etQilWear.getText().toString());//加油升数
-                statisticalList.setWashing(etWearPrice.getText().toString());//油价
+                statisticalList.setWearPrice(etWearPrice.getText().toString());//油价
                 statisticalList.setWearCount(etWearCount.getText().toString());//加油金额
                 statisticalList.setQuantityCount(etQuantityCount.getText().toString());//合计方量
                 statisticalList.setWearUser(tvWearUser.getText().toString());//加油负责人

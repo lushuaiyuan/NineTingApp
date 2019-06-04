@@ -235,20 +235,24 @@ public class BCFormFragment extends BaseFragment {
         Column<String> column5 = new Column<>("车辆类型", "vehicleTypeName");
         Column<String> column6 = new Column<>("施工地点", "workSite");
         Column<String> column7 = new Column<>("施工部位", "workPart");
-        Column<String> column8 = new Column<>("内单方量", "inOrderqua");
-        Column<String> column9 = new Column<>("外单方量", "onOrderqua");
-        Column<String> column10 = new Column<>("外单单价", "onOrderprice");
-        Column<String> column11 = new Column<>("外单金额", "onOrderpriceCount");
-        Column<String> column12 = new Column<>("加油升数", "qilWear");
-        Column<String> column13 = new Column<>("油价", "wearPrice");
-        Column<String> column14 = new Column<>("加油金额", "wearCount");
-        Column<String> column15 = new Column<>("合计方量", "quantityCount");
-        Column<String> column16 = new Column<>("加油负责人", "wearUser");
-        Column<String> column17 = new Column<>("备注", "remark");
+        Column<String> column8 = new Column<>("泵送单价", "price");
+        Column<String> column9 = new Column<>("加油升数", "qilWear");
+        Column<String> column10 = new Column<>("油价", "wearPrice");
+        Column<String> column11 = new Column<>("加油金额", "wearCount");
+        Column<String> column12 = new Column<>("泵送方量", "inOrderqua");
+        Column<String> column13 = new Column<>("结算方量", "acountQua");
+        Column<String> column14 = new Column<>("泵送金额", "inOrderpriceCount");
+        Column<String> column15 = new Column<>("外单方量", "onOrderqua");
+        Column<String> column16 = new Column<>("外单单价", "onOrderprice");
+        Column<String> column17 = new Column<>("外单金额", "onOrderpriceCount");
+        Column<String> column18 = new Column<>("外单合同", "pactName");
+        Column<String> column19 = new Column<>("合计方量", "quantityCount");
+        Column<String> column20 = new Column<>("加油负责人", "wearUser");
+        Column<String> column21 = new Column<>("备注", "remark");
 
 
         //表格数据 datas是需要填充的数据
-        TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14, column15, column16, column17);
+        TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14, column15, column16, column17,column18, column19, column20, column21);
         mSmartTable.setTableData(tableData);
         column1.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column2.setOnColumnItemClickListener(new MyColumnItemClickListener());
@@ -267,6 +271,10 @@ public class BCFormFragment extends BaseFragment {
         column15.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column16.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column17.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column18.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column19.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column20.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column21.setOnColumnItemClickListener(new MyColumnItemClickListener());
     }
 
     public static BCFormFragment newInstance() {
