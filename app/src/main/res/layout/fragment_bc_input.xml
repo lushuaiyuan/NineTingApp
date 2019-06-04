@@ -436,14 +436,6 @@
 
             </RelativeLayout>
 
-            <TextView
-                style="@style/MyEditTextTitle"
-                android:text="外单合同" />
-
-            <TextView
-                android:id="@+id/tv_pact"
-                style="@style/MyEditText"
-                android:hint="点击选择" />
 
             <TextView
                 style="@style/MyEditTextTitle"

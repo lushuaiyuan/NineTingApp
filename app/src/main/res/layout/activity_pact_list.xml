@@ -134,6 +134,62 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:paddingTop="@dimen/dp5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总金额："
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:id="@+id/tv_totalMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp16"
+            android:text="未收款："
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:id="@+id/tv_noMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp16"
+            android:text="已收款："
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:id="@+id/tv_nowMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp14" />
+    </LinearLayout>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
@@ -144,7 +200,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingTop="@dimen/dp16" />
+            android:paddingTop="@dimen/dp8" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

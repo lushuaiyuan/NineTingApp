@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.JsonObject;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -43,6 +44,7 @@ import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,6 +79,14 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.mRecycleView)
     RecyclerView mRecycleView;
+
+    @BindView(R.id.tv_totalMoney)
+    TextView tvTotalMoney;
+    @BindView(R.id.tv_noMoney)
+    TextView tvNoMoney;
+    @BindView(R.id.tv_nowMoney)
+    TextView tvNowMoney;
+
     private List<PactInfo> pactInfos;
     private PactListAdapter pactListAdapter;
 
@@ -245,6 +255,7 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
                 tvPactSchedule.setText("合同状态");
                 pactInfos.clear();
                 getPactList();
+                getPactMoney();
             }
         });
         if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理角色
@@ -252,7 +263,42 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
             getProject();
         }
         showDia();
+        getPactMoney();
         getPactList();
+    }
+
+    /**
+     * 获取合同金额
+     */
+    private void getPactMoney() {
+        OkHttpManager.postFormBody(Urls.ADMIN_GETPACTMONEY, null, tvNoMoney, new OkHttpManager.OnResponse<String>() {
+            @Override
+            public String analyseResult(String result) {
+                return result;
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.optInt("code") == 200) {
+                        JSONObject jsonObject1 = new JSONObject(jsonObject.optString("data"));
+                        tvTotalMoney.setText(jsonObject1.optString("allMoney"));
+                        tvNoMoney.setText(jsonObject1.optString("noMoney"));
+                        tvNowMoney.setText(jsonObject1.optString("nowMoney"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
+                endRefresh(mSmartRefreshLayout);
+            }
+        });
     }
 
     /**

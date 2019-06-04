@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_f5f5f5"
+    android:background="@color/color_white"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
@@ -121,8 +121,8 @@
                     android:layout_height="wrap_content"
                     android:background="@color/color_white"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/dp16"
                     android:paddingBottom="@dimen/dp16"
+                    android:paddingLeft="@dimen/dp16"
                     android:paddingRight="@dimen/dp16"
                     android:paddingTop="@dimen/dp10">
 
@@ -181,7 +181,6 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/dp8"
                     android:paddingLeft="@dimen/dp16"
-                    android:paddingTop="@dimen/dp16"
                     android:text="油耗报警"
                     android:textColor="@color/color_red"
                     android:textSize="@dimen/dp15" />
@@ -209,7 +208,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_white"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/dp8"
                     android:paddingLeft="@dimen/dp16"
@@ -220,6 +218,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@color/color_f5f5f5"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -244,6 +243,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@color/color_f5f5f5"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -268,6 +268,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@color/color_f5f5f5"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -287,6 +288,7 @@
                             android:textColor="@color/color_666666"
                             android:textSize="@dimen/dp15" />
                     </LinearLayout>
+
                 </LinearLayout>
 
 
