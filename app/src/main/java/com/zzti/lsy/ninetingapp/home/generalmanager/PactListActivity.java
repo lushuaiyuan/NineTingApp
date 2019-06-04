@@ -74,7 +74,8 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
     RelativeLayout rlPactSchedule;
     @BindView(R.id.tv_pactSchedule)
     TextView tvPactSchedule;
-
+    @BindView(R.id.ll_money)
+    LinearLayout llMoney;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.mRecycleView)
@@ -245,14 +246,16 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageIndex = 1;
-                wherestr = "";
-                projectID = "";
-                pactSchedule = "";
-                pactType = "";
                 etSearch.setText("");
                 tvProject.setText("项目部");
-                tvPactType.setText("合同类型");
+                projectID = "";
+                if (flag != 1) {
+                    wherestr = "";
+                    tvPactType.setText("合同类型");
+                    pactType = "";
+                }
                 tvPactSchedule.setText("合同状态");
+                pactSchedule = "";
                 pactInfos.clear();
                 getPactList();
                 getPactMoney();
@@ -263,7 +266,9 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
             getProject();
         }
         showDia();
-        getPactMoney();
+        if (flag != 1) {
+            getPactMoney();
+        }
         getPactList();
     }
 
@@ -279,6 +284,8 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
 
             @Override
             public void onSuccess(String s) {
+                cancelDia();
+                endRefresh(mSmartRefreshLayout);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.optInt("code") == 200) {
@@ -402,6 +409,13 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
         //使上拉加载具有弹性效果：
         mSmartRefreshLayout.setEnableAutoLoadMore(false);
         flag = UIUtils.getInt4Intent(this, "flag");
+        if (flag == 1) {
+            rlPactType.setEnabled(false);
+            tvPactType.setText("外单合同");
+            llMoney.setVisibility(View.GONE);
+            pactType = "外单合同";
+            wherestr += " and pactType=\'外单合同\'";
+        }
         if (spUtils.getInt(SpUtils.OPTYPE, -1) == 0) {//总经理才显示项目部的查询条件
             rlProject.setVisibility(View.VISIBLE);
             view1.setVisibility(View.VISIBLE);
@@ -438,13 +452,8 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 2) {
-            double addMoney = Double.parseDouble(data.getStringExtra("addMoney"));
-            double pactInMoney = Double.parseDouble(pactInfos.get(selcetPosition).getPactInMoney());
-            double pactOutMoney = Double.parseDouble(pactInfos.get(selcetPosition).getPactOutMoney());
-
-            pactInfos.get(selcetPosition).setPactInMoney(String.valueOf(pactInMoney + addMoney));
-            pactInfos.get(selcetPosition).setPactOutMoney(String.valueOf(pactOutMoney - addMoney));
-            pactListAdapter.notifyItemChanged(selcetPosition);
+            showDia();
+            getPactMoney();
         }
     }
 

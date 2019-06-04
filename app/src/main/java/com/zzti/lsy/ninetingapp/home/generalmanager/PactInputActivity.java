@@ -447,9 +447,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    Intent intent = new Intent();
-                    intent.putExtra("addMoney", etAddMoney.getText().toString());
-                    setResult(2, intent);
+                    setResult(2);
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
