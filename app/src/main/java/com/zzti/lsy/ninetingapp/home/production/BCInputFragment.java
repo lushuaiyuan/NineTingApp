@@ -188,6 +188,7 @@ public class BCInputFragment extends BaseFragment {
             public void afterTextChanged(Editable editable) {
                 if (StringUtil.isNullOrEmpty(editable.toString())) {
                     tvPactName.setEnabled(false);
+                    tvPactName.setHint("");
                 } else {
                     tvPactName.setEnabled(true);
                     tvPactName.setHint("请选择合同");
@@ -200,7 +201,7 @@ public class BCInputFragment extends BaseFragment {
                     if (StringUtil.isNullOrEmpty(etAcountQua.getText().toString())) {
                         etQuantityCount.setText(editable.toString());
                     } else {
-                        etQuantityCount.setText(etAcountQua.toString());
+                        etQuantityCount.setText(etAcountQua.getText().toString());
                     }
                 }
                 if (!StringUtil.isNullOrEmpty(etOnOrderprice.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {

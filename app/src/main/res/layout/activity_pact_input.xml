@@ -28,7 +28,7 @@
                 android:text="合同名称/编号" />
 
             <EditText
-                android:id="@+id/et_pactID"
+                android:id="@+id/et_pactName"
                 style="@style/MyEditText"
                 android:hint="请输入合同名称/编号" />
 

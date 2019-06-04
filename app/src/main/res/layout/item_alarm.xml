@@ -8,7 +8,7 @@
         android:layout_width="@dimen/dp120"
         android:layout_height="@dimen/dp100"
         android:layout_marginRight="@dimen/dp10"
-        android:background="@drawable/circular_selector">
+        android:background="@drawable/item_circular_selector">
 
         <TextView
             android:id="@+id/tv_title"

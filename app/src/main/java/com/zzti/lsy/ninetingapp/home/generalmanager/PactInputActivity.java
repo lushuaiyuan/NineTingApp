@@ -61,8 +61,8 @@ import butterknife.OnClick;
  * 合同录入界面
  */
 public class PactInputActivity extends BaseActivity implements AdapterView.OnItemClickListener, PopupWindow.OnDismissListener {
-    @BindView(R.id.et_pactID)
-    EditText etPactID;
+    @BindView(R.id.et_pactName)
+    EditText etPactName;
     @BindView(R.id.et_pactContent)
     EditText etPactContent;
     @BindView(R.id.tv_pactType)
@@ -139,7 +139,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
             etPactOutMoney.setEnabled(false);
             etPactContent.setEnabled(false);
             etPactMoney.setEnabled(false);
-            etPactID.setEnabled(false);
+            etPactName.setEnabled(false);
             llAddMoney.setVisibility(View.VISIBLE);
             PactInfo pactInfo = (PactInfo) getIntent().getSerializableExtra("PACTINFO");
             setData(pactInfo);
@@ -153,12 +153,13 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
      * @param pactInfo
      */
     private void setData(PactInfo pactInfo) {
+        pactID = pactInfo.getPactID();
         tvProject.setText(pactInfo.getProjectName());
         tvPactSchedule.setText(pactInfo.getPactSchedule());
         tvPactType.setText(pactInfo.getPactType());
         etPactMoney.setText(pactInfo.getPactMoney());
         tvPactTime.setText(pactInfo.getPactTime().split("T")[0]);
-        etPactID.setText(pactInfo.getPactID());
+        etPactName.setText(pactInfo.getPactName());
         etPactInMoney.setText(pactInfo.getPactInMoney());
         etPactContent.setText(pactInfo.getPactContent());
         etPactOutMoney.setText(pactInfo.getPactOutMoney());
@@ -329,8 +330,8 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                 break;
             case R.id.btn_inputPact://录入合同
                 if (tag == 0) {//录入合同
-                    if (StringUtil.isNullOrEmpty(etPactID.getText().toString())) {
-                        UIUtils.showT("合同编号不能为空");
+                    if (StringUtil.isNullOrEmpty(etPactName.getText().toString())) {
+                        UIUtils.showT("合同名称/编号不能为空");
                         break;
                     }
                     if (StringUtil.isNullOrEmpty(tvPactType.getText().toString())) {
@@ -371,7 +372,7 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
                         break;
                     }
                     PactInfo pactInfo = new PactInfo();
-                    pactInfo.setPactID(etPactID.getText().toString());
+                    pactInfo.setPactName(etPactName.getText().toString());
                     pactInfo.setPactContent(etPactContent.getText().toString());
                     pactInfo.setPactMoney(etPactMoney.getText().toString());
                     pactInfo.setPactInMoney(etPactInMoney.getText().toString());
@@ -426,14 +427,15 @@ public class PactInputActivity extends BaseActivity implements AdapterView.OnIte
 
     }
 
+    private String pactID;
 
     /**
      * 更新合同
      */
     private void alertPact() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("pactID", etPactID.getText().toString());
-        params.put("addMoney", etPactInMoney.getText().toString());
+        params.put("pactID", pactID);
+        params.put("addMoney", etAddMoney.getText().toString());
         OkHttpManager.postFormBody(Urls.ADMIN_UPDATEPACT, params, tvPactSchedule, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {

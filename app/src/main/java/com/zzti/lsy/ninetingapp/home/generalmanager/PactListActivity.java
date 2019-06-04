@@ -419,7 +419,7 @@ public class PactListActivity extends BaseActivity implements BaseQuickAdapter.O
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        if (flag == 0) {
+        if (flag == -1) {
             selcetPosition = position;
             Intent intent = new Intent(this, PactInputActivity.class);
             intent.putExtra("TAG", 1);//修改
