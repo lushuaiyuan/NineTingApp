@@ -29,7 +29,9 @@ import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -482,15 +484,16 @@ public class BCInputFragment extends BaseFragment {
     private void submitInputData() {
         cancelDia();
         HashMap<String, String> params = new HashMap<>();
-        params.put("RecordJson", new Gson().toJson(statisticalList));
         String url = "";
         if (tag == 0) {
+            params.put("RecordJson", new Gson().toJson(statisticalList));
             url = Urls.RECORD_ADDRECORD;
         } else if (tag == 1) {
+            List<StatisticalList> statisticalLists = new ArrayList<>();
+            statisticalLists.add(statisticalList);
+            params.put("RecordJson", new Gson().toJson(statisticalLists));
             url = Urls.RECORD_UPDATERECORD;
-            params.put("updateReason", "11");
         }
-
         OkHttpManager.postFormBody(url, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
