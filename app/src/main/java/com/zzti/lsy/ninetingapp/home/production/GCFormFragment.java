@@ -243,20 +243,21 @@ public class GCFormFragment extends BaseFragment {
         Column<String> column12 = new Column<>("运距", "distance");
         Column<String> column13 = new Column<>("单价", "price");
         Column<String> column14 = new Column<>("方量", "squareQuantity");
-        Column<String> column15 = new Column<>("8方以下车次", "eightBelowtime");
-        Column<String> column16 = new Column<>("8方以下", "eightBelow");
-        Column<String> column17 = new Column<>("补方", "additionQuantity");
-        Column<String> column18 = new Column<>("剩料", "remainder");
-        Column<String> column19 = new Column<>("洗料", "washing");
-        Column<String> column20 = new Column<>("水", "water");
-        Column<String> column21 = new Column<>("加油升数", "qilWear");
-        Column<String> column22 = new Column<>("油价", "wearPrice");
-        Column<String> column23 = new Column<>("加油金额", "wearCount");
-        Column<String> column24 = new Column<>("合计方量", "quantityCount");
-        Column<String> column25 = new Column<>("司机", "wearUser");
-        Column<String> column26 = new Column<>("备注", "remark");
+        Column<String> column15 = new Column<>("总金额", "inOrderpriceCount");
+        Column<String> column16 = new Column<>("8方以下车次", "eightBelowtime");
+        Column<String> column17 = new Column<>("8方以下", "eightBelow");
+        Column<String> column18 = new Column<>("补方", "additionQuantity");
+        Column<String> column19 = new Column<>("剩料", "remainder");
+        Column<String> column20 = new Column<>("洗料", "washing");
+        Column<String> column21 = new Column<>("水", "water");
+        Column<String> column22 = new Column<>("加油升数", "qilWear");
+        Column<String> column23 = new Column<>("油价", "wearPrice");
+        Column<String> column24 = new Column<>("加油金额", "wearCount");
+        Column<String> column25 = new Column<>("合计方量", "quantityCount");
+        Column<String> column26 = new Column<>("司机", "wearUser");
+        Column<String> column27 = new Column<>("备注", "remark");
         //表格数据 datas是需要填充的数据
-        TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14, column15, column16, column17, column18, column19, column20, column21, column22, column23, column24, column25, column26);
+        TableData<StatisticalList> tableData = new TableData<>("每日方量流水明细", statisticalLists, column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14, column15, column16, column17, column18, column19, column20, column21, column22, column23, column24, column25, column26, column27);
         mSmartTable.setTableData(tableData);
         column1.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column2.setOnColumnItemClickListener(new MyColumnItemClickListener());
@@ -284,6 +285,7 @@ public class GCFormFragment extends BaseFragment {
         column24.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column25.setOnColumnItemClickListener(new MyColumnItemClickListener());
         column26.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        column27.setOnColumnItemClickListener(new MyColumnItemClickListener());
     }
 
     public static GCFormFragment newInstance() {

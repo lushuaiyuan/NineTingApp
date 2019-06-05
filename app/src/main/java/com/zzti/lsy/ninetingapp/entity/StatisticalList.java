@@ -47,7 +47,7 @@ public class StatisticalList implements Parcelable {
 
     private String inOrderqua;//泵送方量 泵车
     private String acountQua;//结算方量 泵车
-    private String inOrderpriceCount;// 泵车：泵送金额 结算方量*泵送单价
+    private String inOrderpriceCount;// 罐车：方量合计*单价   泵车：泵送金额 结算方量*泵送单价
     private String onOrderqua;//外单方量 泵车 如果填写外单方量 那么外单单价必填
     private String onOrderprice;//外单单价 泵车
     private String onOrderpriceCount;//外单金额 泵车

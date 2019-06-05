@@ -69,6 +69,8 @@ public class GCInputFragment extends BaseFragment {
     EditText etPrice;//单价
     @BindView(R.id.et_squareQuantity)
     EditText etSquareQuantity;//方量
+    @BindView(R.id.et_inOrderpriceCount)
+    EditText etInOrderpriceCount;
     @BindView(R.id.et_sixBelow)
     EditText etSixBelow;//8方以下车次
     @BindView(R.id.et_eightBelow)
@@ -121,6 +123,51 @@ public class GCInputFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        etPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!StringUtil.isNullOrEmpty(etSquareQuantity.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
+                    double squareQuantity = Double.parseDouble(etSquareQuantity.getText().toString());
+                    double price = Double.parseDouble(editable.toString());
+                    etInOrderpriceCount.setText(String.valueOf(price * squareQuantity));
+                } else {
+                    etInOrderpriceCount.setText("");
+                }
+            }
+        });
+        etSquareQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!StringUtil.isNullOrEmpty(etPrice.getText().toString()) && !StringUtil.isNullOrEmpty(editable.toString())) {
+                    double price = Double.parseDouble(etPrice.getText().toString());
+                    double squareQuantity = Double.parseDouble(editable.toString());
+                    etInOrderpriceCount.setText(String.valueOf(price * squareQuantity));
+                } else {
+                    etInOrderpriceCount.setText("");
+                }
+            }
+        });
+
         etQilWear.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -196,6 +243,7 @@ public class GCInputFragment extends BaseFragment {
             etDistance.setText(statisticalList.getDistance());
             etPrice.setText(statisticalList.getPrice());
             etSquareQuantity.setText(statisticalList.getSquareQuantity());
+            etInOrderpriceCount.setText(statisticalList.getInOrderpriceCount());
             etSixBelow.setText(statisticalList.getEightBelowtime());
             etEightBelow.setText(statisticalList.getEightBelow());
             etSquareQuantity.setText(statisticalList.getSquareQuantity());
@@ -281,6 +329,10 @@ public class GCInputFragment extends BaseFragment {
                     UIUtils.showT("方量不能为空");
                     return;
                 }
+                if (StringUtil.isNullOrEmpty(etInOrderpriceCount.getText().toString())) {
+                    UIUtils.showT("总金额不能为空");
+                    return;
+                }
                 if (StringUtil.isNullOrEmpty(etSixBelow.getText().toString())) {
                     UIUtils.showT("8方以下车次不能为空");
                     return;
@@ -344,6 +396,7 @@ public class GCInputFragment extends BaseFragment {
                 statisticalList.setDistance(etDistance.getText().toString());//运距
                 statisticalList.setPrice(etPrice.getText().toString());//单价
                 statisticalList.setSquareQuantity(etSquareQuantity.getText().toString());//方量
+                statisticalList.setInOrderpriceCount(etInOrderpriceCount.getText().toString());//总金额
                 statisticalList.setEightBelowtime(etSixBelow.getText().toString());//8方以下车次
                 statisticalList.setEightBelow(etEightBelow.getText().toString());//8方以下
                 statisticalList.setAdditionQuantity(etAdditionQuantity.getText().toString());//补方
