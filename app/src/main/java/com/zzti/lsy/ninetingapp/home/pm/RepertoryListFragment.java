@@ -79,7 +79,7 @@ public class RepertoryListFragment extends BaseFragment implements AdapterView.O
     private ConditionAdapter projectAdapter;
     private List<ConditionEntity> projectEntities;
 
-    private int pageIndex = 1;
+    private int pageIndex = 0;
     private String wherestr = "";
     private int type;
     private String projectID;
@@ -127,7 +127,7 @@ public class RepertoryListFragment extends BaseFragment implements AdapterView.O
         initStatusPop();
         initProjectPop();
         mSmartRefreshLayout.setEnableRefresh(true);
-        mSmartRefreshLayout.setEnableLoadMore(true);
+        mSmartRefreshLayout.setEnableLoadMore(false);
         //使上拉加载具有弹性效果：
         mSmartRefreshLayout.setEnableAutoLoadMore(false);
     }
@@ -262,9 +262,9 @@ public class RepertoryListFragment extends BaseFragment implements AdapterView.O
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
-                        mSmartRefreshLayout.finishLoadMoreWithNoMoreData();
-                    }
+//                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
+//                        mSmartRefreshLayout.finishLoadMoreWithNoMoreData();
+//                    }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
