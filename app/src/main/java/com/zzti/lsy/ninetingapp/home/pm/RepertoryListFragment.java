@@ -270,6 +270,9 @@ public class RepertoryListFragment extends BaseFragment implements AdapterView.O
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
+                if (updateApplies.size() == 0) {
+                    UIUtils.showT(C.Constant.NODATA);
+                }
                 authorizationAdapter.notifyDataSetChanged();
             }
 
@@ -385,7 +388,7 @@ public class RepertoryListFragment extends BaseFragment implements AdapterView.O
     @Override
     public void onEventMianThread(EventMessage paramEventCenter) {
         super.onEventMianThread(paramEventCenter);
-        if(paramEventCenter.getEventCode()  == C.EventCode.I){
+        if (paramEventCenter.getEventCode() == C.EventCode.I) {
             updateApplies.clear();
             getUpdateApplies();
         }

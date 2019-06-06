@@ -17,6 +17,7 @@ public final class C {
         public static final int G = 0X777777;
         public static final int H = 0X888888;
         public static final int I = 0X999999;
+        public static final int J = 0X100000;
     }
 
     public static final class Constant {

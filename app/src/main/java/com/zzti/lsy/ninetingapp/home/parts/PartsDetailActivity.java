@@ -21,7 +21,9 @@ import com.zzti.lsy.ninetingapp.view.MAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -133,7 +135,9 @@ public class PartsDetailActivity extends BaseActivity {
         showDia();
         partsInfoEntity.setPartsNumber(etAmount.getText().toString());
         HashMap<String, String> params = new HashMap<>();
-        params.put("jsonList", new Gson().toJson(partsInfoEntity));
+        List<PartsInfoEntity> partsInfoEntities = new ArrayList<>();
+        partsInfoEntities.add(partsInfoEntity);
+        params.put("jsonList", new Gson().toJson(partsInfoEntities));
         params.put("type", "0");
         OkHttpManager.postFormBody(Urls.PARTS_UPDATENUMBER, params, tvFactory, new OkHttpManager.OnResponse<String>() {
             @Override
@@ -143,7 +147,7 @@ public class PartsDetailActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String s) {
-                showDia();
+                cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
                     finish();

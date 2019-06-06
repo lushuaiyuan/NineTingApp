@@ -1,5 +1,6 @@
 package com.zzti.lsy.ninetingapp.home.pm;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,6 +31,7 @@ import com.zzti.lsy.ninetingapp.entity.MsgInfo;
 import com.zzti.lsy.ninetingapp.entity.ProjectEntity;
 import com.zzti.lsy.ninetingapp.entity.UpdateApply;
 import com.zzti.lsy.ninetingapp.event.C;
+import com.zzti.lsy.ninetingapp.event.EventMessage;
 import com.zzti.lsy.ninetingapp.home.adapter.AuthorizationAdapter;
 import com.zzti.lsy.ninetingapp.home.adapter.ConditionAdapter;
 import com.zzti.lsy.ninetingapp.network.OkHttpManager;
@@ -372,7 +374,23 @@ public class ProductionFragment extends BaseFragment implements AdapterView.OnIt
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        //TODO 进入详情
+        UpdateApply updateApply = updateApplies.get(position);
+        Intent intent = new Intent(mActivity, UpdateApplyDetailActivity.class);
+        intent.putExtra("updateApply", updateApply);
+        startActivity(intent);
+    }
 
+    @Override
+    protected boolean openEventBus() {
+        return true;
+    }
+
+    @Override
+    public void onEventMianThread(EventMessage paramEventCenter) {
+        super.onEventMianThread(paramEventCenter);
+        if (paramEventCenter.getEventCode() == C.EventCode.J) {
+            updateApplies.clear();
+            getUpdateApplies();
+        }
     }
 }

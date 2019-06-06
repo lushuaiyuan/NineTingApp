@@ -37,43 +37,62 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:background="@color/color_white"
+        android:id="@+id/ll_condition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/dp5"
-        android:paddingLeft="@dimen/dp16"
-        android:paddingRight="@dimen/dp16"
-        android:paddingTop="@dimen/dp5">
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="@drawable/condition_white_shape"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="查询时间"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/dp15" />
-
-        <TextView
-            android:id="@+id/tv_selectTime"
+        <RelativeLayout
+            android:id="@+id/rl_carType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
             android:layout_weight="1"
-            android:gravity="center"
-            android:hint="选择查询时间"
-            android:padding="@dimen/dp5"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/dp15" />
+            android:gravity="center">
 
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="@dimen/dp20"
-            android:layout_height="@dimen/dp20"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp10"
-            android:background="@mipmap/iv_search"
-            android:padding="@dimen/dp40" />
+            <TextView
+                android:id="@+id/tv_carType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@mipmap/icon_down_arrow"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="车辆类型"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp14" />
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="@dimen/dp1"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@color/color_e5e5e5" />
+
+        <RelativeLayout
+            android:id="@+id/rl_selectTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_selectTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@mipmap/icon_down_arrow"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="查询时间"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp14" />
+        </RelativeLayout>
     </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

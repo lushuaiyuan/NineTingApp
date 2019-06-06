@@ -59,7 +59,7 @@ public class UpdateApplyDetailActivity extends BaseActivity {
         tvApplyTime.setText(updateApply.getApplyTime().replace("T", " "));
         tvApplyUser.setText(updateApply.getApplyUser());
         tvProjectName.setText(updateApply.getProjectName());
-        tvUpdateInfo.setText(updateApply.getUpdateInfo().replace(";","\n"));
+        tvUpdateInfo.setText(updateApply.getUpdateInfo().replace(";", "\n"));
         if (updateApply.getType().equals("0")) {//库存修改
             tvType.setText("库存修改");
         } else {//生产记录修改
@@ -104,13 +104,23 @@ public class UpdateApplyDetailActivity extends BaseActivity {
                 cancelDia();
                 MsgInfo msgInfo = ParseUtils.parseJson(s, MsgInfo.class);
                 if (msgInfo.getCode() == 200) {
-                    EventBus.getDefault().post(new EventMessage(C.EventCode.I, null));
+                    if(tvType.getText().toString().equals("库存修改")) {
+                        EventBus.getDefault().post(new EventMessage(C.EventCode.I, null));
+                    }else{
+                        EventBus.getDefault().post(new EventMessage(C.EventCode.J, null));
+                    }
                     finish();
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                 }
+            }
+
+            @Override
+            public void onFailed(int code, String msg, String url) {
+                super.onFailed(code, msg, url);
+                cancelDia();
             }
         });
     }

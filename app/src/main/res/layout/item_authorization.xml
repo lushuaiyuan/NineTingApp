@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/white_gray_selector"
+    android:layout_marginTop="@dimen/dp8"
     android:orientation="vertical">
 
     <LinearLayout
