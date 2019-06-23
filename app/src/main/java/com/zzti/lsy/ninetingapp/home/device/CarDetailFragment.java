@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -69,7 +70,7 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
     @BindView(R.id.tv_DLDate)
     TextView tvDLDate;//行驶证注册日期
     @BindView(R.id.tv_registerTime)
-    TextView tvRegisterTime;//登记日期
+    TextView tvRegisterTime;//设备所属
     @BindView(R.id.btn_save)
     Button btnSave;
     //项目部
@@ -113,9 +114,10 @@ public class CarDetailFragment extends BaseFragment implements PopupWindow.OnDis
         tvVin.setText(carInfoEntity.getVIN());
         tvEngineNumber.setText(carInfoEntity.getEngineNumber());
         tvDLDate.setText(carInfoEntity.getDLDate().split("T")[0]);
-        tvRegisterTime.setText(carInfoEntity.getRegisterTime().split("T")[0]);
+        tvRegisterTime.setText(carInfoEntity.getDeviceUse());
         beforeProjectID = carInfoEntity.getProjectID();
         beforeProjectName = carInfoEntity.getProjectName();
+
         if (SpUtils.getInstance().getInt(SpUtils.OPTYPE, -1) == 5) {
             tvProjectName.setTextColor(getResources().getColor(R.color.color_6bcfd6));
             btnSave.setVisibility(View.VISIBLE);

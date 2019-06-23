@@ -13,7 +13,7 @@ public class CarInfoEntity implements Serializable {
     private String VIN;//识别码
     private String engineNumber;//发动机编号
     private String DLDate;//行驶证发放日期
-    private String registerTime;//登记日期
+    private String deviceUse;//设备所属
     private String yearTime;//年检日期
     private String projectID;//车辆所属项目部ID
     private String yearExprie;//年检时限
@@ -28,6 +28,24 @@ public class CarInfoEntity implements Serializable {
     private String dischargeName;//排放量名称
     private String vehicleTypeName;//汽车类型
     private String projectName;//车辆所属项目部名称
+    private String qName;//强险保险人
+    private String sName;//商险保险人
+
+    public String getqName() {
+        return qName;
+    }
+
+    public void setqName(String qName) {
+        this.qName = qName;
+    }
+
+    public String getsName() {
+        return sName;
+    }
+
+    public void setsName(String sName) {
+        this.sName = sName;
+    }
 
     public String getCarSource() {
         return CarSource;
@@ -53,12 +71,12 @@ public class CarInfoEntity implements Serializable {
         this.drivingStatus = drivingStatus;
     }
 
-    public String getRegisterTime() {
-        return registerTime;
+    public String getDeviceUse() {
+        return deviceUse;
     }
 
-    public void setRegisterTime(String registerTime) {
-        this.registerTime = registerTime;
+    public void setDeviceUse(String deviceUse) {
+        this.deviceUse = deviceUse;
     }
 
     public String getYearTime() {

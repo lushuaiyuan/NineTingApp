@@ -101,12 +101,28 @@
 
             <TextView
                 style="@style/MyEditTextTitle"
-                android:text="登记日期" />
+                android:text="设备所属" />
 
-            <TextView
-                android:id="@+id/tv_registerTime"
+            <EditText
+                android:id="@+id/et_registerTime"
                 style="@style/MyEditText"
-                android:hint="点击选择" />
+                android:hint="请输入" />
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="强险保险人" />
+
+            <EditText
+                android:id="@+id/et_qName"
+                style="@style/MyEditText"
+                android:hint="请输入" />
+            <TextView
+                style="@style/MyEditTextTitle"
+                android:text="商险保险人" />
+
+            <EditText
+                android:id="@+id/et_sName"
+                style="@style/MyEditText"
+                android:hint="请输入" />
 
             <TextView
                 style="@style/MyEditTextTitle"

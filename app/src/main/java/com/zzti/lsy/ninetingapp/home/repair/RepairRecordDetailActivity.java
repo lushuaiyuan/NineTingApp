@@ -48,6 +48,8 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
     TextView tvCarNumber;//车牌号
     @BindView(R.id.tv_projectAddress)
     TextView tvProjectAddress;//项目部
+    @BindView(R.id.tv_receiptNo)
+    TextView tvRecepitNo;//维修单号
     @BindView(R.id.tv_repairParts)
     TextView tvRepairParts;//维修配件费用
     @BindView(R.id.tv_repairMoney)
@@ -162,6 +164,7 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
     private void setData(RepairinfoEntity repairinfoEntity) {
         tvCarNumber.setText(repairinfoEntity.getPlateNumber());
         tvProjectAddress.setText(repairinfoEntity.getProjectName());
+        tvRecepitNo.setText(repairinfoEntity.getReceiptNo());
         tvRepairParts.setText(repairinfoEntity.getRepairParts());
         tvRepairMoney.setText(repairinfoEntity.getRepairMoney());
         tvRepairAllMoney.setText(repairinfoEntity.getRepairAllMoney());

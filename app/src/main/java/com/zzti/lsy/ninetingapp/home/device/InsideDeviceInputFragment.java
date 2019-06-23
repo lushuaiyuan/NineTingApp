@@ -77,8 +77,13 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
     EditText etEngineNumber;//发动机号
     @BindView(R.id.tv_dLDate)
     TextView tvDLDate;//行驶证注册日期
-    @BindView(R.id.tv_registerTime)
-    TextView tvRegisterTime;//登记日期
+    @BindView(R.id.et_registerTime)
+    EditText etRegisterTime;//设备所属
+    @BindView(R.id.et_qName)
+    EditText etQName;//强险保险人
+    @BindView(R.id.et_sName)
+    EditText etSName;//商险保险人
+
     @BindView(R.id.tv_yearTime)
     TextView tvYearTime;//年检日期
     @BindView(R.id.et_yearExprie)
@@ -223,7 +228,7 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
 
     private int tag;
 
-    @OnClick({R.id.tv_carType, R.id.tv_emission_standard, R.id.tv_dLDate, R.id.tv_registerTime, R.id.tv_yearTime, R.id.tv_qStartTime, R.id.tv_qOverTime, R.id.tv_sStartTime, R.id.tv_sOverTime, R.id.btn_inputYearInsurance})
+    @OnClick({R.id.tv_carType, R.id.tv_emission_standard, R.id.tv_dLDate, R.id.tv_yearTime, R.id.tv_qStartTime, R.id.tv_qOverTime, R.id.tv_sStartTime, R.id.tv_sOverTime, R.id.btn_inputYearInsurance})
     public void viewClick(View view) {
         hideSoftInput(etCarNumber);
         switch (view.getId()) {
@@ -242,9 +247,9 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
             case R.id.tv_dLDate://行驶证注册日期
                 showCustomTime(1);
                 break;
-            case R.id.tv_registerTime://登记日期
-                showCustomTime(2);
-                break;
+//            case R.id.tv_registerTime://登记日期
+//                showCustomTime(2);
+//                break;
             case R.id.tv_yearTime://年检日期
                 showCustomTime(3);
                 break;
@@ -307,8 +312,16 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
             UIUtils.showT("行驶证注册日期不能为空");
             return;
         }
-        if (StringUtil.isNullOrEmpty(tvRegisterTime.getText().toString())) {
-            UIUtils.showT("登记日期不能为空");
+        if (StringUtil.isNullOrEmpty(etRegisterTime.getText().toString())) {
+            UIUtils.showT("设备所属不能为空");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(etQName.getText().toString())) {
+            UIUtils.showT("强险保险人不能为空");
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(etSName.getText().toString())) {
+            UIUtils.showT("商险保险人不能为空");
             return;
         }
         if (StringUtil.isNullOrEmpty(tvYearTime.getText().toString())) {
@@ -356,7 +369,9 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
         carInfoEntity.setVIN(etVin.getText().toString());
         carInfoEntity.setEngineNumber(etEngineNumber.getText().toString());
         carInfoEntity.setDLDate(tvDLDate.getText().toString());
-        carInfoEntity.setRegisterTime(tvRegisterTime.getText().toString());
+        carInfoEntity.setDeviceUse(etRegisterTime.getText().toString());
+        carInfoEntity.setqName(etQName.getText().toString());
+        carInfoEntity.setsName(etSName.getText().toString());
         carInfoEntity.setProjectID(projectID);
         carInfoEntity.setYearTime(tvYearTime.getText().toString());
         carInfoEntity.setYearExprie(etYearExprie.getText().toString());
@@ -535,8 +550,6 @@ public class InsideDeviceInputFragment extends BaseFragment implements PopupWind
             public void onTimeSelect(Date date, View v) {
                 if (tag == 1) {
                     tvDLDate.setText(DateUtil.getDate(date));
-                } else if (tag == 2) {
-                    tvRegisterTime.setText(DateUtil.getDate(date));
                 } else if (tag == 3) {
                     tvYearTime.setText(DateUtil.getDate(date));
                 } else if (tag == 4) {

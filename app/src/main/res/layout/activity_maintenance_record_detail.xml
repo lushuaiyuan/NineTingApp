@@ -75,10 +75,30 @@
                     android:textSize="@dimen/dp15" />
 
                 <TextView
-                    android:id="@+id/tv_construction_Title"
+                    android:id="@+id/tv_receiptNo_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_projectAddress_Title"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:text="维修单号"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp14" />
+
+                <TextView
+                    android:id="@+id/tv_receiptNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/tv_receiptNo_title"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_toRightOf="@id/tv_receiptNo_title"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/tv_construction_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_receiptNo"
                     android:layout_marginTop="@dimen/dp15"
                     android:text="维修配件金额"
                     android:textColor="@color/color_999999"
@@ -91,7 +111,6 @@
                     android:layout_alignTop="@id/tv_construction_Title"
                     android:layout_marginLeft="@dimen/dp15"
                     android:layout_toRightOf="@id/tv_construction_Title"
-                    android:text="大"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />
 
@@ -113,7 +132,6 @@
                     android:layout_alignTop="@id/tv_service_Title"
                     android:layout_marginLeft="@dimen/dp15"
                     android:layout_toRightOf="@id/tv_service_Title"
-                    android:text="在用设备"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/dp15" />
 
@@ -351,7 +369,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
 
         <Button

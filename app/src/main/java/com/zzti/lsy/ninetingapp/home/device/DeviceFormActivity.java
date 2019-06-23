@@ -101,9 +101,7 @@ public class DeviceFormActivity extends BaseActivity {
                             CarInfoEntity carInfoEntity = ParseUtils.parseJson(jsonArray.getString(i), CarInfoEntity.class);
                             String dLDate = carInfoEntity.getDLDate().split("T")[0];
                             carInfoEntity.setDLDate(dLDate);
-                            String registerTime = carInfoEntity.getRegisterTime().split("T")[0];
-                            carInfoEntity.setRegisterTime(registerTime);
-                            String yearTime = carInfoEntity.getRegisterTime().split("T")[0];
+                            String yearTime = carInfoEntity.getYearExprie().split("T")[0];
                             carInfoEntity.setYearTime(yearTime);
                             String qStartTime = carInfoEntity.getqStartTime().split("T")[0];
                             carInfoEntity.setqStartTime(qStartTime);
@@ -147,7 +145,7 @@ public class DeviceFormActivity extends BaseActivity {
         Column<String> column8 = new Column<>("识别码", "VIN");
         Column<String> column9 = new Column<>("发动机编号", "engineNumber");
         Column<String> column10 = new Column<>("行驶证发放日期", "DLDate");
-        Column<String> column11 = new Column<>("登记日期", "registerTime");
+        Column<String> column11 = new Column<>("设备所属", "deviceUse");
         Column<String> column12 = new Column<>("年检日期", "yearTime");
         Column<String> column13 = new Column<>("车辆所属项目部ID", "projectID");
         Column<String> column14 = new Column<>("年检时限", "yearExprie");
@@ -159,10 +157,13 @@ public class DeviceFormActivity extends BaseActivity {
         Column<String> column20 = new Column<>("商业保险到期日期", "sOverTime");
         Column<String> column21 = new Column<>("商业保险公司", "sCompany");
         Column<String> column22 = new Column<>("商险保单原件所在地", "sAddress");
+        Column<String> column23 = new Column<>("强险保险人", "qName");
+        Column<String> column24 = new Column<>("商险保险人", "sName");
 
         //表格数据 datas是需要填充的数据
         TableData<CarInfoEntity> tableData = new TableData<>("设备", carInfoEntities, column1, column2, column3, column4, column5, column6, column7, column8,
-                column9, column10, column11, column12, column13, column14, column15, column16, column17, column18, column19, column20, column21,column22);
+                column9, column10, column11, column12, column13, column14, column15, column16,
+                column17, column18, column19, column20, column21, column22, column23, column24);
         //table.setZoom(true,3);是否缩放
         smartTable.setTableData(tableData);
     }

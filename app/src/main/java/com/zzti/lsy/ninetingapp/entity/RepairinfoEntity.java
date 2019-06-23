@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 维修申请实体类
  */
 public class RepairinfoEntity implements Serializable {
+    private String receiptNo;//维修单号
     private String repairID;//维修编号 实体中不用传 后台生成
     private String plateNumber; //车牌号 用户选择
     private String repairParts;//维修配件金额
@@ -22,6 +23,14 @@ public class RepairinfoEntity implements Serializable {
     private String staffName;//申请人姓名
     private String projectName;//项目部名称
     private String partsNumber;
+
+    public String getReceiptNo() {
+        return receiptNo;
+    }
+
+    public void setReceiptNo(String receiptNo) {
+        this.receiptNo = receiptNo;
+    }
 
     public String getRepairParts() {
         return repairParts;

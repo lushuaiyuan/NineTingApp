@@ -72,6 +72,7 @@ import butterknife.OnTextChanged;
  * 维修申请
  */
 public class RepairRequestActivity extends TakePhotoActivity implements PopupWindow.OnDismissListener, View.OnClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener {
+
     @BindView(R.id.tv_carNumber)
     TextView tvCarNumber;//车牌号
     @BindView(R.id.tv_carType)
@@ -80,6 +81,8 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
     TextView tvAddress;//地址
     @BindView(R.id.recycleView_detail)
     RecyclerView recycleViewDetail;//配件
+    @BindView(R.id.et_receiptNo)
+    EditText etReceiptNo;//维修单号
     @BindView(R.id.et_money)
     EditText etMoney;//维修金额
     @BindView(R.id.tv_totalMoney)
@@ -318,6 +321,10 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
             UIUtils.showT("项目不能为空");
             return;
         }
+        if (StringUtil.isNullOrEmpty(etReceiptNo.getText().toString())) {
+            UIUtils.showT("维修单号不能为空");
+            return;
+        }
         if (StringUtil.isNullOrEmpty(etMoney.getText().toString())) {
             UIUtils.showT("维修金额不能为空");
             return;
@@ -330,6 +337,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
             UIUtils.showT("维修厂商不能为空");
             return;
         }
+        repairinfoEntity.setReceiptNo(etReceiptNo.getText().toString());//维修单号
         repairinfoEntity.setPlateNumber(tvCarNumber.getText().toString());//车牌号
         repairinfoEntity.setVehicleTypeID(vehicleTypeID);//车辆类型
         repairinfoEntity.setRepairParts(String.valueOf(Double.parseDouble(tvTotalMoney.getText().toString()) - Double.parseDouble(etMoney.getText().toString())));//维修配件金额

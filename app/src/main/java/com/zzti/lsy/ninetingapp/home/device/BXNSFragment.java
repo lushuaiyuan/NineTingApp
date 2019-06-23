@@ -65,6 +65,10 @@ public class BXNSFragment extends BaseFragment {
     TextView tvSbxCompany;//商业保险公司
     @BindView(R.id.tv_sbx_address)
     TextView tvSbxAddress;//商险保单原件所在地
+    @BindView(R.id.tv_qName)
+    TextView tvQName;//强险保险人
+    @BindView(R.id.tv_sName)
+    TextView tvSName;//商险保险人
     @BindView(R.id.btn_alertNs)
     Button btnAlertNs;//年审更改
     @BindView(R.id.btn_alertqBx)
@@ -103,6 +107,8 @@ public class BXNSFragment extends BaseFragment {
         tvYearExprie.setText(carInfoEntity.getYearExprie());
         tvSbxEndTime.setText(carInfoEntity.getsOverTime().split("T")[0]);
         tvSbxAddress.setText(carInfoEntity.getsAddress());
+        tvQName.setText(carInfoEntity.getqName());
+        tvSName.setText(carInfoEntity.getsName());
         tvSbxCompany.setText(carInfoEntity.getsCompany());
         tvQbxEndTime.setText(carInfoEntity.getqOverTime().split("T")[0]);
         tvQbxAddress.setText(carInfoEntity.getqAddress());

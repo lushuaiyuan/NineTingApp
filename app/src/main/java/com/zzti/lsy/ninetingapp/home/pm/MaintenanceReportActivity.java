@@ -162,12 +162,13 @@ public class MaintenanceReportActivity extends BaseActivity {
         Column<String> column1 = new Column<>("车牌号", "plateNumber");
         column1.setFixed(true);
         Column<String> column2 = new Column<>("项目部", "projectName");
-        Column<String> column3 = new Column<>("维修配件金额", "repairParts");
-        Column<String> column4 = new Column<>("维修费用", "repairMoney");
-        Column<String> column5 = new Column<>("维修总费用", "repairAllMoney");
-        Column<String> column6 = new Column<>("维修厂商", "repairFactory");
-        Column<String> column7 = new Column<>("申请时间", "repairApplyTime");
-        Column<String> column8 = new Column<>("申请人", "staffName");
+        Column<String> column3 = new Column<>("维修单号", "etReceiptNo");
+        Column<String> column4 = new Column<>("维修配件金额", "repairParts");
+        Column<String> column5 = new Column<>("维修费用", "repairMoney");
+        Column<String> column6 = new Column<>("维修总费用", "repairAllMoney");
+        Column<String> column7 = new Column<>("维修厂商", "repairFactory");
+        Column<String> column8 = new Column<>("申请时间", "repairApplyTime");
+        Column<String> column9 = new Column<>("申请人", "staffName");
         //表格数据 datas是需要填充的数据
         TableData<RepairinfoEntity> tableData = new TableData<>("维修记录", repairinfoEntities, column1, column2, column3, column4, column5, column6, column7, column8);
         //table.setZoom(true,3);是否缩放
