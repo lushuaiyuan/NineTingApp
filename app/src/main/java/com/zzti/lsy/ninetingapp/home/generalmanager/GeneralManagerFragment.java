@@ -268,8 +268,6 @@ public class GeneralManagerFragment extends BaseFragment implements BaseQuickAda
             case R.id.rl_menu2://收款模块
                 startActivity(new Intent(mActivity, PactListActivity.class));
                 break;
-
-
             case R.id.rl_menu3://采购审批  包含配件审批 日用品审批 维修审批
                 startActivity(new Intent(mActivity, ApprovalActivity.class));
                 break;
