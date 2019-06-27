@@ -128,6 +128,9 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
                         if (jsonArray.length() > 0) {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 PartsInfoEntity partsInfoEntity = ParseUtils.parseJson(jsonArray.getString(i), PartsInfoEntity.class);
+                                if (StringUtil.isNullOrEmpty(partsInfoEntity.getAlarmNumber())) {
+                                    partsInfoEntity.setAlarmNumber("1");
+                                }
                                 partsInfoEntities.add(partsInfoEntity);
                             }
                         } else {
@@ -160,6 +163,10 @@ public class PartsListActivity extends BaseActivity implements BaseQuickAdapter.
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         if (tag == 1) {//维修申请进来
+            if(partsInfoEntities.get(position).getPartsNumber().equals("0")){
+                UIUtils.showT("当前配件库存为0");
+                return;
+            }
             String partsID = partsInfoEntities.get(position).getPartsID();
             String partsName = partsInfoEntities.get(position).getPartsName();
             String partsModel = partsInfoEntities.get(position).getPartsModel();

@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -58,6 +61,8 @@ import butterknife.OnClick;
 public class ProductRecordActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, AdapterView.OnItemClickListener {
     @BindView(R.id.et_search)
     EditText etCarNumber;
+    @BindView(R.id.rl_carType)
+    RelativeLayout rlCarType;
     @BindView(R.id.tv_carType)
     TextView tvCarType;
     @BindView(R.id.tv_selectTime)
@@ -96,7 +101,7 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
         View contentview = getLayoutInflater().inflate(R.layout.popup_list, null);
         contentview.setFocusable(true); // 这个很重要
         contentview.setFocusableInTouchMode(true);
-        popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(this) - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindowCarType = new PopupWindow(contentview, UIUtils.getWidth(this) / 2 - DensityUtils.dp2px(16), LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindowCarType.setFocusable(true);
         popupWindowCarType.setOutsideTouchable(true);
         popupWindowCarType.setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -137,7 +142,7 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
                 pageIndex = 1;
                 wherestr = "";
                 CarTypeID = "";
-                tvSelectTime.setText("");
+                tvSelectTime.setText("查询时间");
                 tvCarType.setText("车辆类型");
                 etCarNumber.setText("");
                 statisticalLists.clear();
@@ -145,8 +150,8 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
             }
         });
         showDia();
-        getProductRecord();
         getCarType();
+        getProductRecord();
     }
 
     /**
@@ -198,7 +203,21 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.rl_carType:
-
+                if (carTypeEntities.size() > 0) {
+                    if (carTypeEntities.size() >= 5) {
+                        //动态设置listView的高度
+                        View listItem = carTypeAdapter.getView(0, null, mListViewCarType);
+                        listItem.measure(0, 0);
+                        int totalHei = (listItem.getMeasuredHeight() + mListViewCarType.getDividerHeight()) * 5;
+                        mListViewCarType.getLayoutParams().height = totalHei;
+                        ViewGroup.LayoutParams params = mListViewCarType.getLayoutParams();
+                        params.height = totalHei;
+                        mListViewCarType.setLayoutParams(params);
+                    }
+                    popupWindowCarType.showAsDropDown(rlCarType, 0, 0, Gravity.LEFT);
+                } else {
+                    UIUtils.showT("暂无数据");
+                }
                 break;
             case R.id.rl_selectTime:
                 showCustomTime();
@@ -255,7 +274,8 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
                                 statisticalLists.add(statisticalList);
                             }
                         } else {
-                            UIUtils.showT("暂无数据");
+                            UIUtils.showT(C.Constant.NODATA);
+                            mSmartRefreshLayout.finishLoadMoreWithNoMoreData();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -264,6 +284,7 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
                     loginOut();
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
+                    mSmartRefreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 productRecordAdapter.notifyDataSetChanged();
             }

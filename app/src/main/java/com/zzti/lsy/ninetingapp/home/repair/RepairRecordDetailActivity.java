@@ -178,6 +178,16 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
     public void viewClick(View view) {
         switch (view.getId()) {
             case R.id.btn_operator1:
+                for (int i = 0; i < requiredPartsList.size(); i++) {
+                    if (StringUtil.isNullOrEmpty(requiredPartsList.get(i).getRpNumber()) || "0".equals(requiredPartsList.get(i).getRpNumber())) {
+                        UIUtils.showT(requiredPartsList.get(i).getPartsName() + "的退库数量不能为空");
+                        return;
+                    }
+                    if (requiredPartsList.get(i).getNumber().equals("0")) {
+                        UIUtils.showT(requiredPartsList.get(i).getPartsName() +"的库存为空，不能退库");
+                        return;
+                    }
+                }
                 MAlertDialog.show(this, "提示", "是否确认退库？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
                     @Override
                     public void onConfirmClick(String msg) {

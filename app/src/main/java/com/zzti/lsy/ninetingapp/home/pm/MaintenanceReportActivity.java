@@ -35,6 +35,7 @@ import com.zzti.lsy.ninetingapp.network.Urls;
 import com.zzti.lsy.ninetingapp.utils.DateUtil;
 import com.zzti.lsy.ninetingapp.utils.DensityUtils;
 import com.zzti.lsy.ninetingapp.utils.ParseUtils;
+import com.zzti.lsy.ninetingapp.utils.SpUtils;
 import com.zzti.lsy.ninetingapp.utils.StringUtil;
 import com.zzti.lsy.ninetingapp.utils.UIUtils;
 
@@ -135,6 +136,7 @@ public class MaintenanceReportActivity extends BaseActivity {
                         JSONArray jsonArray = new JSONArray(msgInfo.getData());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             RepairinfoEntity repairinfoEntity = ParseUtils.parseJson(jsonArray.getString(i), RepairinfoEntity.class);
+                            repairinfoEntity.setRepairApplyTime(repairinfoEntity.getRepairApplyTime().replace("T", " "));
                             repairinfoEntities.add(repairinfoEntity);
                         }
                     } catch (JSONException e) {
@@ -162,7 +164,7 @@ public class MaintenanceReportActivity extends BaseActivity {
         Column<String> column1 = new Column<>("车牌号", "plateNumber");
         column1.setFixed(true);
         Column<String> column2 = new Column<>("项目部", "projectName");
-        Column<String> column3 = new Column<>("维修单号", "etReceiptNo");
+        Column<String> column3 = new Column<>("维修单号", "receiptNo");
         Column<String> column4 = new Column<>("维修配件金额", "repairParts");
         Column<String> column5 = new Column<>("维修费用", "repairMoney");
         Column<String> column6 = new Column<>("维修总费用", "repairAllMoney");
@@ -170,17 +172,20 @@ public class MaintenanceReportActivity extends BaseActivity {
         Column<String> column8 = new Column<>("申请时间", "repairApplyTime");
         Column<String> column9 = new Column<>("申请人", "staffName");
         //表格数据 datas是需要填充的数据
-        TableData<RepairinfoEntity> tableData = new TableData<>("维修记录", repairinfoEntities, column1, column2, column3, column4, column5, column6, column7, column8);
+        TableData<RepairinfoEntity> tableData = new TableData<>("维修记录", repairinfoEntities, column1, column2, column3, column4, column5, column6, column7, column8, column9);
         //table.setZoom(true,3);是否缩放
         mSmartTable.setTableData(tableData);
-        column1.setOnColumnItemClickListener(new MyColumnItemClickListener());
-        column2.setOnColumnItemClickListener(new MyColumnItemClickListener());
-        column3.setOnColumnItemClickListener(new MyColumnItemClickListener());
-        column4.setOnColumnItemClickListener(new MyColumnItemClickListener());
-        column5.setOnColumnItemClickListener(new MyColumnItemClickListener());
-        column6.setOnColumnItemClickListener(new MyColumnItemClickListener());
-        column7.setOnColumnItemClickListener(new MyColumnItemClickListener());
-        column8.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        if (spUtils.getInt(SpUtils.OPTYPE, -1) == 5) {
+            column1.setOnColumnItemClickListener(new MyColumnItemClickListener());
+            column2.setOnColumnItemClickListener(new MyColumnItemClickListener());
+            column3.setOnColumnItemClickListener(new MyColumnItemClickListener());
+            column4.setOnColumnItemClickListener(new MyColumnItemClickListener());
+            column5.setOnColumnItemClickListener(new MyColumnItemClickListener());
+            column6.setOnColumnItemClickListener(new MyColumnItemClickListener());
+            column7.setOnColumnItemClickListener(new MyColumnItemClickListener());
+            column8.setOnColumnItemClickListener(new MyColumnItemClickListener());
+            column9.setOnColumnItemClickListener(new MyColumnItemClickListener());
+        }
     }
 
     class MyColumnItemClickListener implements OnColumnItemClickListener<String> {

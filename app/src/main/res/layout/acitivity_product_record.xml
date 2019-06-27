@@ -33,7 +33,16 @@
             android:maxLines="1"
             android:padding="@dimen/dp8"
             android:textSize="@dimen/dp15" />
-
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@mipmap/iv_search"
+            android:padding="@dimen/dp40" />
     </RelativeLayout>
 
     <LinearLayout

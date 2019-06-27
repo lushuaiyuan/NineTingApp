@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.zzti.lsy.ninetingapp.App;
 import com.zzti.lsy.ninetingapp.R;
 import com.zzti.lsy.ninetingapp.entity.PartsInfoEntity;
+import com.zzti.lsy.ninetingapp.utils.StringUtil;
 
 import java.util.List;
 
