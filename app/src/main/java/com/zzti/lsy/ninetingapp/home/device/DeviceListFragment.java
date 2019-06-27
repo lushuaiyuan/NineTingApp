@@ -256,7 +256,11 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
 
     @Override
     protected void initData() {
-        tvProject.setText(projectName);
+        if (StringUtil.isNullOrEmpty(projectName)) {
+            tvProject.setText("项目部");
+        } else {
+            tvProject.setText(projectName);
+        }
         mRecycleView.setLayoutManager(new LinearLayoutManager(mActivity));
         carInfoEntities = new ArrayList<>();
         deviceListAdapter = new DeviceListAdapter(carInfoEntities);

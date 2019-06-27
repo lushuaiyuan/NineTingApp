@@ -397,16 +397,19 @@ public class MaintenanceStatisticActivity extends BaseActivity implements View.O
                 break;
             case R.id.btn_search:
                 getRepaircount();
+                projectName = tvProject.getText().toString();
                 break;
 
             case R.id.tv_lookOneCar_maintenanceRecord://查看单车维修统计
                 Intent intent = new Intent(this, DeviceListActivity.class);
-//                intent.putExtra("TAG", 1);
+                intent.putExtra("projectName", projectName);
                 intent.putExtra("FLAG", 2);
                 startActivity(intent);
                 break;
         }
     }
+
+    String projectName = "";
 
     /**
      * 显示时间选择器
