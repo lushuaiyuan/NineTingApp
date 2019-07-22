@@ -320,6 +320,7 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
             params.put("wherestr", wherestr);
         }
         params.put("pageIndex", String.valueOf(pageIndex));
+        params.put("size", "5");
         OkHttpManager.postFormBody(Urls.POST_GETCARLIST, params, mRecycleView, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
@@ -353,8 +354,10 @@ public class DeviceListFragment extends BaseFragment implements AdapterView.OnIt
                     }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
+                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
+                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 deviceListAdapter.notifyDataSetChanged();
             }

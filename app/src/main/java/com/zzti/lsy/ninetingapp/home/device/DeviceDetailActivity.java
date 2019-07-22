@@ -71,6 +71,7 @@ public class DeviceDetailActivity extends BaseActivity {
         HashMap<String, String> params = new HashMap<>();
         params.put("wherestr", "plateNumber like \'" + tvCarNumber.getText().toString() + "%\'");
         params.put("pageIndex", "0");
+        params.put("size", "5");
         OkHttpManager.postFormBody(Urls.POST_GETCARLIST, params, tvCarNumber, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {

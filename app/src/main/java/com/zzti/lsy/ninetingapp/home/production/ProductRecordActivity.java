@@ -248,6 +248,7 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
     private void getProductRecord() {
         HashMap<String, String> params = new HashMap<>();
         params.put("pageIndex", String.valueOf(pageIndex));
+        params.put("size", "5");
         if (wherestr.length() > 0) {
             params.put("wherestr", wherestr.substring(5, wherestr.length()));
         } else {
@@ -280,8 +281,12 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    if (Integer.parseInt(msgInfo.getMsg()) == pageIndex) {
+                        mSmartRefreshLayout.finishLoadMoreWithNoMoreData();
+                    }
                 } else if (msgInfo.getCode() == C.Constant.HTTP_UNAUTHORIZED) {
                     loginOut();
+                    mSmartRefreshLayout.finishLoadMoreWithNoMoreData();
                 } else {
                     UIUtils.showT(msgInfo.getMsg());
                     mSmartRefreshLayout.finishLoadMoreWithNoMoreData();
@@ -292,7 +297,7 @@ public class ProductRecordActivity extends BaseActivity implements BaseQuickAdap
             @Override
             public void onFailed(int code, String msg, String url) {
                 super.onFailed(code, msg, url);
-
+                UIUtils.showT(msg);
             }
         });
     }

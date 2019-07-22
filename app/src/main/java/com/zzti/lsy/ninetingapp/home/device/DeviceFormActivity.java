@@ -84,6 +84,7 @@ public class DeviceFormActivity extends BaseActivity {
         HashMap<String, String> params = new HashMap<>();
         params.put("wherestr", "");
         params.put("pageIndex", "0");
+        params.put("size", "5");
         OkHttpManager.postFormBody(Urls.POST_GETCARLIST, params, smartTable, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {

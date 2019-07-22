@@ -180,6 +180,7 @@ public class GCFormFragment extends BaseFragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("pageIndex", String.valueOf(0));
         params.put("wherestr", whereStr);
+        params.put("size", "5");
         OkHttpManager.postFormBody(Urls.RECORD_GETRECORDLIST, params, mSmartTable, new OkHttpManager.OnResponse<String>() {
             @Override
             public String analyseResult(String result) {
