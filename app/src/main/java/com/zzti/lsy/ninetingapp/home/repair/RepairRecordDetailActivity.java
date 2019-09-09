@@ -150,6 +150,7 @@ public class RepairRecordDetailActivity extends BaseActivity implements BaseQuic
         recycleViewDetail.setNestedScrollingEnabled(false);
         repairinfoEntity = (RepairinfoEntity) getIntent().getSerializableExtra("RepairinfoEntity");
         recyclerViewPhoto.setLayoutManager(new GridLayoutManager(this, 4));
+        //TODO
         String[] devicePics = repairinfoEntity.getDevPicture().split("\\|");
         pics = Arrays.asList(devicePics);
         if (pics.size() == 4) {

@@ -305,6 +305,8 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         }
     }
 
+    private String imagebase64;
+
     /**
      * 提交数据
      */
@@ -360,9 +362,9 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
                 }
             }
             devPicture.substring(0, devPicture.length() - 1);
-            repairinfoEntity.setDevPicture(devPicture);
+            imagebase64 = devPicture;
         } else {
-            repairinfoEntity.setDevPicture("");
+            imagebase64 = "";
         }
         new MAlertDialog().show(this, "温馨提示", "是否提交？", false, "确定", "取消", new MAlertDialog.OnConfirmListener() {
             @Override
@@ -385,6 +387,7 @@ public class RepairRequestActivity extends TakePhotoActivity implements PopupWin
         showDia();
         HashMap<String, String> params = new HashMap<>();
         params.put("repairJson", new Gson().toJson(repairinfoEntity));
+        params.put("imagebase64", imagebase64);
         if (requiredPartsList.size() == 1) {//判断是否为空
             if (StringUtil.isNullOrEmpty(requiredPartsList.get(0).getPartsName())) {
                 params.put("partsJson", "");
